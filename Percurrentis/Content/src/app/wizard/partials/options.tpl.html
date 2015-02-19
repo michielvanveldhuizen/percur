@@ -1,0 +1,50 @@
+﻿<div data-ng-form="options">
+    <fieldset>
+        <div data-legend-title="Transportation"></div>
+
+        <p class="col-xs-12 clear-padding">
+            Please select one or more types of travel that you would like to request.
+            You will be able to request multiple types of travel at once, and also
+            multiple travels of the same type at once. You will not necessarily need
+            to make multiple travel requests for this.
+        </p>
+
+        <div data-wizard-step-switch 
+             data-ng-model="$parent.options.hasFlight"
+             data-label="Flight"
+             data-step="flights">
+        </div>
+        <div data-wizard-step-switch 
+             data-ng-model="$parent.options.hasFerry"
+             data-label="Ferry"
+             data-step="ferry">
+        </div>
+        <div data-wizard-step-switch 
+             data-ng-model="$parent.options.hasEurotunnel"
+             data-label="Eurotunnel"
+             data-step="eurotunnel">
+        </div>
+        <div data-wizard-step-switch 
+             data-ng-model="$parent.options.hasRentalCar"
+             data-label="Rental Car"
+             data-step="rentalcar">
+        </div>
+        <div data-wizard-step-switch 
+             data-ng-model="$parent.options.hasTaxi"
+             data-label="Taxi"
+             data-step="taxi">
+        </div>
+    </fieldset>
+
+    <fieldset>
+        <div data-legend-title="Accommodation"></div>
+
+        <p class="col-xs-12 clear-padding">
+            Please select whether you would want to have accommodation arranged.
+        </p>
+        <div data-wizard-step-switch 
+             data-ng-model="$parent.options.hasAccommodation"
+             data-label="Accommodation"
+             data-step="accommodation"></div>
+    </fieldset>
+</div>

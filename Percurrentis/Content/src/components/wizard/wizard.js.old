@@ -1,0 +1,336 @@
+﻿/* 
+ * Author:    Thomas Baart
+ * Contact:   mail@thomasbaart.nl
+ * Date:      26-02-2014
+ *
+ * Tests:     ./wizardSpecs.js
+ * Passes:    Yes, 26-02-2014
+ */
+
+(function () {
+    'use strict';
+
+    var moduleId = 'components.wizard',
+        serviceId = 'wizard';
+
+    angular.module(moduleId, [])
+    .factory(serviceId, function () {
+        return function (initialSteps) {
+            var mod = {},
+                steps = [],
+                index = 0;
+
+            // current
+            mod.current = function () {
+            };
+
+
+            // steps
+            // hasNext
+            // next
+            // hasPrev
+            // prev
+            // disable
+            // enable
+        };
+    });
+    
+    //.factory(serviceId, function () {
+    //    return function(initialSteps) {
+    //        var self = {},
+    //            mod = {};
+
+    //        self.index = 0;
+    //        self.steps = [];
+            
+    //        /**
+    //         * Find the human readable number of the current step, starting with 1.
+    //         * This only takes into account the enabled steps.
+    //         */
+    //        self.currentStepNumber = function () {
+    //            var result = 0;
+
+    //            for (var i = 0; i <= self.index; i += 1) {
+    //                if (!self.steps[i].disabled) {
+    //                    result += 1;
+    //                }
+    //            }
+
+    //            return result;
+    //        };
+
+    //        /**
+    //         * Finds the index of the step before the step at the current
+    //         * index that is enabled, skipping disabled steps.
+    //         */
+    //        self.indexOfPrevEnabled = function () {
+    //            for (var i = self.index - 1; i >= 0; i -= 1) {
+    //                if (self.steps[i].enabled) {
+    //                    return i;
+    //                }
+    //            }
+    //            return -1;
+    //        };
+
+    //        /**
+    //         * Finds the index of the step after the item at the current
+    //         * index that is enabled, skipping disabled steps.
+    //         */
+    //        self.indexOfNextEnabled = function () {
+    //            for (var i = self.index + 1; i < self.steps.length; i += 1) {
+    //                if (self.steps[i].enabled) {
+    //                    return i;
+    //                }
+    //            }
+    //            return -1;
+    //        };
+
+    //        /**
+    //         * Finds the index of the first enabled step.
+    //         */
+    //        self.indexOfFirstEnabled = function () {
+    //            for (var i = 0; i < self.steps.length; i += 1) {
+    //                if (self.steps[i].enabled) {
+    //                    return i;
+    //                }
+    //            }
+    //            return -1;
+    //        };
+
+    //        /**
+    //         * Finds the index of the last enabled step.
+    //         */
+    //        self.indexOfLastEnabled = function () {
+    //            for (var i = self.steps.length - 1; i >= 0; i -= 1) {
+    //                if (self.steps[i].enabled) {
+    //                    return i;
+    //                }
+    //            }
+    //            return -1;
+    //        };
+
+    //        /**
+    //         * Gets the count of enabled steps.
+    //         */
+    //        self.totalEnabled = function () {
+    //            var total = 0;
+
+    //            for (var i = 0; i < self.steps.length; i += 1) {
+    //                if (self.steps[i].enabled) {
+    //                    total += 1;
+    //                }
+    //            }
+
+    //            return total;
+    //        };
+
+    //        /**
+    //         * Gets statistics about this wizard, such as the current
+    //         * step number and the count of enabled steps.
+    //         */
+    //        mod.stats = function () {
+    //            return {
+    //                currentStepNumber: self.currentStepNumber(),
+    //                total: self.totalEnabled()
+    //            };
+    //        };
+
+    //        /**
+    //         * Gets the current step.
+    //         */
+    //        mod.current = function () {
+    //            if (self.index < self.steps.length) {
+    //                return self.steps[self.index];
+    //            } else {
+    //                return null;
+    //            }
+    //        };
+
+    //        /**
+    //         * Gets all steps associated with this wizard.
+    //         */
+    //        mod.getSteps = function () {
+    //            return self.steps;
+    //        };
+
+    //        /**
+    //         * Replaces all steps.
+    //         */
+    //        mod.setSteps = function (steps) {
+    //            if (!_.isArray(steps)) {
+    //                throw new TypeError('Argument is not an array');
+    //            }
+                
+    //            self.steps = [];
+
+    //            _.each(steps, function (value) {
+    //                if (_.isString(value)) {
+    //                    self.steps.push({ name: value, enabled: true });
+    //                } else if (_.isObject(value)) {
+    //                    if (!_.isString(value.name)) {
+    //                        throw new TypeError('Steps should have a name property as string');
+    //                    }
+
+    //                    var defaultStep = { enabled: true };
+
+    //                    self.steps.push(_.extend(defaultStep, value));
+    //                }
+    //            });
+    //        };
+
+    //        /**
+    //         * Returns true when the wizard can advance a step.
+    //         */
+    //        mod.hasNext = function () {
+    //            if (!(self.indexOfNextEnabled() >= 0)) {
+    //                return false;
+    //            }
+
+    //            var pre = true,
+    //                step = mod.current();
+
+    //            if (_.isFunction(step.isValid)) {
+    //                pre = step.isValid();
+    //            }
+
+    //            return pre;
+    //        };
+
+    //        /**
+    //         * Moves the wizard a step forward.
+    //         */
+    //        mod.next = function () {
+    //            if (mod.hasNext()) {
+
+    //                if (_.isFunction(mod.current().onNext)) {
+    //                    mod.current().onNext();
+    //                }
+
+    //                self.index = self.indexOfNextEnabled();
+    //                return true;
+    //            } else {
+    //                return false;
+    //            }
+    //        };
+
+    //        /**
+    //         * Returns true when the wizard can move a step backwards.
+    //         */
+    //        mod.hasPrev = function () {
+    //            return self.indexOfPrevEnabled() >= 0;
+    //        };
+
+    //        /**
+    //         * Moves the wizard a step backwards.
+    //         */
+    //        mod.prev = function () {
+    //            if (mod.hasPrev()) {
+    //                self.index = self.indexOfPrevEnabled();
+    //                return true;
+    //            } else {
+    //                return false;
+    //            }
+    //        };
+
+    //        /**
+    //         * Moves the wizard back to the first step.
+    //         */
+    //        mod.first = function () {
+    //            if (mod.canGoToFirst()) {
+    //                self.index = self.indexOfFirstEnabled();
+    //                return true;
+    //            } else {
+    //                return false;
+    //            }
+    //        };
+
+    //        /**
+    //         * Moves the wizard to the last step.
+    //         */
+    //        mod.last = function () {
+    //            if (mod.canGoToLast()) {
+    //                self.index = self.indexOfLastEnabled();
+    //                return true;
+    //            } else {
+    //                return false;
+    //            }
+    //        };
+
+    //        /**
+    //         * Returns true when the wizard can move back to the first step.
+    //         */
+    //        mod.canGoToFirst = function () {
+    //            return self.indexOfFirstEnabled() >= 0 && self.index !== self.indexOfFirstEnabled();
+    //        };
+
+    //        /**
+    //         * Returns true when the wizard can move to the last step.
+    //         */
+    //        mod.canGoToLast = function () {
+    //            if (!(self.indexOfLastEnabled() >= 0 && self.index !== self.indexOfLastEnabled())) {
+    //                return false;
+    //            }
+
+    //            var pre = true;
+
+    //            for (var i = self.index; i < self.steps.length; i += 1) {
+    //                if (_.isFunction(self.steps[i].isValid)) {
+    //                    pre = pre && self.steps[i].isValid();
+
+    //                    if (!pre) { return false; }
+    //                }
+    //            }
+
+    //            return pre;
+    //        };
+
+    //        /**
+    //         * Disables a step by index or by string or by array of either.
+    //         */
+    //        mod.setEnabled = function (arg, isEnabled) {
+    //            if (_.isArray(arg)) {
+    //                _.each(arg, function (value) { mod.setEnabled(value, isEnabled) });
+    //                return;
+    //            }
+
+    //            if (_.isString(arg)) {
+    //                arg = _.indexOf(_.pluck(self.steps, 'name'), arg);
+    //            }
+
+    //            if (_.isNumber(arg)) {
+    //                if (arg >= 0 && arg < self.steps.length) {
+    //                    self.steps[arg].enabled = isEnabled;
+    //                } else {
+    //                    throw Error('Index out of range');
+    //                }
+    //            } else {
+    //                throw TypeError('Invalid argument type');
+    //            }
+
+    //            if (!self.steps[self.index].enabled) {
+    //                self.index = self.indexOfNextEnabled();
+    //            }
+    //        };
+
+    //        /**
+    //         * Returns true when all steps are valid.
+    //         */
+    //        mod.isValid = function () {
+    //            return _.reduce(self.steps, function (memo, value) {
+    //                if (_.isFunction(value.isValid)) {
+    //                    return memo && value.isValid();
+    //                } else {
+    //                    return memo;
+    //                }
+    //            }, true);
+    //        };
+
+    //        /* Initialization */
+    //        if (_.isArray(initialSteps)) {
+    //            mod.setSteps(initialSteps);
+    //        }
+
+    //        return mod;
+    //    }
+    //});
+})();

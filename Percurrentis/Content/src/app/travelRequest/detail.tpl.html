@@ -1,0 +1,253 @@
+﻿<div data-ng-controller="requestDetailCtrl"
+     data-ng-class="{'has-approval-footer': inApprovalMode}">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="block">
+                <div class="block-title">
+                    <h4>Travel Request Details</h4>
+                </div>
+                <div class="form-horizontal">
+                    <div data-form-control-static data-label="Date of Submission">
+                        {{request.CreatedDate|date:'EEEE H:mm, d MMMM yyyy'}}
+                    </div>
+
+                    <div data-form-control-static data-label="State of Approval">
+                        <span class="label label-warning" data-ng-show="request.IsApproved == 0">Awaiting</span>
+                        <span class="label label-danger" data-ng-show="request.IsApproved == 1">Rejected</span>
+                        <span class="label label-success" data-ng-show="request.IsApproved == 2">Approved</span>
+                    </div>
+
+                    <div data-form-control-static data-label="Unique ID">
+                        {{request.Id}}
+                    </div>
+                </div>
+            </div>
+            <div class="block">
+                <div class="block-title">
+                    <h4>General Details</h4>
+                </div>
+                <div class="form-horizontal">
+                    <fieldset>
+                        <div data-legend-title="Request Details"></div>
+                        <div data-form-control-static data-label="Applicant">
+                            {{request.ApplicantID}}
+                        </div>
+                        <div data-form-control-static data-label="Quote or Order Number">
+                            {{request.QuoteOrOrderNumber || 'No quote or order number given.'}}
+                        </div>
+                        <div data-form-control-static data-label="Superior">
+                            {{supervisorName}}
+                        </div>
+                        <div data-form-control-static data-label="Trip Purpose">
+                            {{request.Purpose}}
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div data-legend-title="Customer"></div>
+                        <div data-form-control-static data-label="Customer">
+                            {{request.CustomerOrProspect.Name}}
+                        </div>
+                        <div data-form-control-static data-label="Address">
+                            <div data-address data-ng-model="request.CustomerOrProspect.Address"></div>
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+            <div class="block">
+                <div class="block-title">
+                    <h4>Personal Details</h4>
+                </div>
+                <div class="form-horizontal">
+                    <fieldset data-ng-repeat="traveller in request.RequestTravellers">
+                        <div data-legend-title="Traveller {{$index !== 0 ? $index+1 : ''}}"></div>
+                        <div data-form-control-static data-label="First Name">
+                            {{traveller.FirstName}}
+                        </div>
+                        <div data-form-control-static data-label="Last Name">
+                            {{traveller.FamilyName}}
+                        </div>
+                        <div data-form-control-static data-label="Full Name">
+                            {{traveller.FullName || 'No full name given.'}}
+                        </div>
+                        <div data-form-control-static data-label="Phone Number">
+                            {{traveller.PhoneNumberID || 'No number given.'}}
+                        </div>
+                        <div data-form-control-static data-label="Company">
+                            {{traveller.Company.Name}}
+                        </div>
+                    </fieldset>
+                    <p data-ng-show="request.RequestTravellers.length == 0">There are no travellers in this request.</p>
+                </div>
+            </div>
+            <div class="block">
+                <div class="block-title">
+                    <h4>Accommodation</h4>
+                </div>
+                <div class="form-horizontal">
+                    <fieldset data-ng-repeat="accommodation in request.Accommodations">
+                        <div data-legend-title="Accommodation {{$index !== 0 ? $index+1 : ''}}"></div>
+                        <div data-form-control-static data-label="Preferred Address">
+                            <div data-address data-ng-model="accommodation.Address">
+                                No preferred address given.
+                            </div>
+                        </div>
+                    </fieldset>
+                    <p data-ng-show="request.Accommodations.length == 0">There are no accommodations in this request.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="block">
+                <div class="block-title">
+                    <h4>Flights</h4>
+                </div>
+                <div class="form-horizontal">
+                    <fieldset data-ng-repeat="flight in request.FlightRequests">
+                        <div data-legend-title="Flight {{$index !== 0 ? $index+1 : ''}}"></div>
+                        <div data-form-control-static data-label="Flyer Member Card">
+                            {{flight.FlyerMemberCard.FMCNumber}}
+                        </div>
+                        <div data-form-control-static data-label="Departure">
+                            {{flight.DepartureAddress.City}} ({{flight.DepartureAddress.IATA_FAA}}), {{flight.DepartureAddress.Country}}
+                        </div>
+                        <div data-form-control-static data-label="Destination">
+                            {{flight.DestinationAddress.City}} ({{flight.DestinationAddress.IATA_FAA}}), {{flight.DestinationAddress.Country}}
+                        </div>
+                        <div data-form-control-static data-label="Date of Departure">
+                            {{flight.DepartureDate|date:'EEEE, d MMMM yyyy, H:mm'}}
+                        </div>
+                        <div data-form-control-static data-label="Way of Check-In">
+                            {{flight.IsOnlineCheckIn ? 'Online' : 'Airport'}}
+                        </div>
+                        <div data-form-control-static data-label="Large Equipment">
+                            {{flight.HasSpecialEquipment ? 'Yes' : 'No'}}
+                        </div>
+                        <div data-form-control-static data-label="Extra Luggage">
+                            {{flight.LargeLuggageCount ? flight.LargeLuggageCount + ' kg' : 'None' }}
+                        </div>
+                    </fieldset>
+                    <p data-ng-show="request.FlightRequests.length == 0">There are no flights in this request.</p>
+                </div>
+            </div>
+            <div class="block">
+                <div class="block-title">
+                    <h4>Ferry</h4>
+                </div>
+                <div class="form-horizontal">
+                    <fieldset data-ng-repeat="ferry in request.FerryRequests">
+                        <div data-legend-title="Ferry {{$index !== 0 ? $index+1 : ''}}"></div>
+                        <div data-form-control-static data-label="Departure">
+                            {{ferry.DepartureAddress.AddressName}}
+                        </div>
+                        <div data-form-control-static data-label="Destination">
+                            {{ferry.DestinationAddress.AddressName}}
+                        </div>
+                        <div data-form-control-static data-label="Date of Departure">
+                            {{ferry.DepartureDate|date:'EEEE, d MMMM yyyy, H:mm'}}
+                        </div>
+                        <div data-form-control-static data-label="License Plate">
+                            {{ferry.LicensePlate}}
+                        </div>
+                        <div data-form-control data-label="Car Dimensions">
+                            <div class="col-xs-6 clear-padding">
+                                <div class="col-xs-4 clear-padding">
+                                    <label class="control-label">Length</label>
+                                </div>
+                                <div class="col-xs-8 clear-padding">
+                                    <p class="form-control-static">{{ferry.CarLength}} cm</p>
+                                </div>
+                            </div>
+                            <div class="col-xs-6 clear-padding">
+                                <div class="col-xs-4 clear-padding">
+                                    <label class="control-label">Height</label>
+                                </div>
+                                <div class="col-xs-8 clear-padding">
+                                    <p class="form-control-static">{{ferry.CarHeight}} cm</p>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <p data-ng-show="request.FerryRequests.length == 0">There are no ferries in this request.</p>
+                </div>
+            </div>
+            <div class="block">
+                <div class="block-title">
+                    <h4>Eurotunnel</h4>
+                </div>
+                <div class="form-horizontal">
+                    <fieldset data-ng-repeat="tunnel in request.EuroTunnelRequests">
+                        <div data-legend-title="Eurotunnel {{$index !== 0 ? $index+1 : ''}}"></div>
+                        <div data-form-control-static data-label="Departure">
+                            {{tunnel.DepartureAddress.AddressName}}
+                        </div>
+                        <div data-form-control-static data-label="Destination">
+                            {{tunnel.DestinationAddress.AddressName}}
+                        </div>
+                        <div data-form-control-static data-label="Date of Departure">
+                            {{tunnel.DepartureDate|date:'EEEE, d MMMM yyyy, H:mm'}}
+                        </div>
+                        <div data-form-control-static data-label="License Plate">
+                            {{tunnel.LicensePlate || 'No licence plate given.'}}
+                        </div>
+                    </fieldset>
+                    <p data-ng-show="request.EuroTunnelRequests.length == 0">There are no eurotunnel travels in this request.</p>
+                </div>
+            </div>
+            <div class="block">
+                <div class="block-title">
+                    <h4>Rental Car</h4>
+                </div>
+                <div class="form-horizontal">
+                    <fieldset data-ng-repeat="car in request.RentalCarRequests">
+                        <div data-legend-title="Rental Car {{$index !== 0 ? $index+1 : ''}}"></div>
+                        <div data-form-control-static data-label="Start of Rental">
+                            {{car.StartDate|date:'EEEE, d MMMM yyyy'}}
+                        </div>
+                        <div data-form-control-static data-label="Time of Delivery">
+                            {{car.StartDate|date:'H:mm'}}
+                        </div>
+                        <div data-form-control-static data-label="End of Rental">
+                            {{car.EndDate|date:'EEEE, d MMMM yyyy'}}
+                        </div>
+                        <div data-form-control-static data-label="Delivery Address">
+                            <div data-address data-ng-model="car.Address">
+                                No address given.
+                            </div>
+                        </div>
+                        <div data-form-control-static data-label="Primary Driver">
+                            {{car.Driver.FirstName}} {{car.Driver.FamilyName}}
+                        </div>
+                        <div data-form-control-static data-label="Secondary Driver">
+                            {{car.SecondaryDriver.FirstName||'No secondary driver.'}} {{car.SecondaryDriver.FamilyName}}
+                        </div>
+                    </fieldset>
+                    <p data-ng-show="request.RentalCarRequests.length == 0">There are no rental cars in this request.</p>
+                </div>
+            </div>
+            <div class="block">
+                <div class="block-title">
+                    <h4>Taxi</h4>
+                </div>
+                <div class="form-horizontal">
+                    <fieldset data-ng-repeat="taxi in request.TaxiRequests">
+                        <div data-legend-title="Taxi {{$index !== 0 ? $index+1 : ''}}"></div>
+                        <div data-form-control-static data-label="Departure">
+                            <div data-address data-ng-model="taxi.DepartureAddress">
+                                No address given.
+                            </div>
+                        </div>
+                        <div data-form-control-static data-label="Destination">
+                            <div data-address data-ng-model="taxi.DestinationAddress">
+                                No address given.
+                            </div>
+                        </div>
+                        <div data-form-control-static data-label="Date of Departure">
+                            {{taxi.DepartureDate|date:'EEEE, d MMMM yyyy'}}
+                        </div>
+                    </fieldset>
+                    <p data-ng-show="request.TaxiRequests.length == 0">There are no taxis in this request.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

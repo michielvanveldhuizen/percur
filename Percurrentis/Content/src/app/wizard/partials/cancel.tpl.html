@@ -1,0 +1,19 @@
+﻿<div data-ng-form="cancel">
+    <p>
+        Are you sure that you want to cancel your request? Your request will not be saved, and your
+        request will not be submitted for approval.
+    </p>
+
+    <p class="text-danger">
+        <strong>Warning:</strong> This change can <strong>not</strong> be undone. You will not be
+        able to retrieve this request after cancelling. All information that was filled in will be lost.
+    </p>
+
+    <div data-form-control data-label="I am certain that I want to cancel this request">
+        <label class="switch switch-primary">
+            <input type="checkbox"
+                    data-ng-model="model.hasConfirmedCancel" />
+            <span></span>
+        </label>
+    </div> 
+</div>

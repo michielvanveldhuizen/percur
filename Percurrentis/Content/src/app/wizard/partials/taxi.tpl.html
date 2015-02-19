@@ -1,0 +1,141 @@
+﻿<div data-ng-form="taxi">
+    <fieldset data-ng-repeat="taxi in model.TaxiRequests track by $index">
+        
+        <div data-legend-title="Taxi">
+            <a data-ng-click="deleteTaxi(taxi)"
+               data-ng-hide="$first"
+               class="btn btn-sm btn-danger"
+               data-tooltip="Delete this taxi">
+                <i class="fa fa-times"></i>
+                Delete
+            </a>
+        </div>
+
+        <p class="sub-header">Departure</p>
+
+        <div data-form-control data-label="Date of Departure">
+            <div data-datepicker data-ng-model="taxi.DepartureDate"></div>
+        </div>
+
+        <div data-form-control data-label="Time of Departure">
+            <div data-timepicker
+                 data-show-meridian="false"
+                 data-minute-step="5"
+                 data-ng-model="taxi.DepartureDate"></div>
+        </div>
+
+        <div data-form-control data-label="Address Description">
+            <input type="text"
+                   class="form-control"
+                   data-ng-model="taxi.DepartureAddress.AddressName"
+                   placeholder="Address Description"
+                   data-z-validate />
+        </div>
+
+        <div data-form-control data-label="Street">
+            <input type="text"
+                   class="form-control"
+                   data-ng-model="taxi.DepartureAddress.Street"
+                   placeholder="Street and House Number"
+                   data-z-validate />
+        </div>
+
+        <div data-form-control data-label="City">
+            <input type="text"
+                   class="form-control"
+                   data-ng-model="taxi.DepartureAddress.City"
+                   placeholder="City"
+                   data-z-validate />
+        </div>
+
+        <div data-form-control data-label="Postal Code">
+            <input type="text"
+                   class="form-control"
+                   data-ng-model="taxi.DepartureAddress.PostalCode"
+                   placeholder="Postal Code"
+                   data-z-validate />
+        </div>
+
+        <div data-form-control data-label="State/Province">
+            <input type="text"
+                   class="form-control"
+                   data-ng-model="taxi.DepartureAddress.StateProvince"
+                   placeholder="State/Province"
+                   data-z-validate />
+        </div>
+        <div data-form-control data-label="Country">
+            <select class="form-control"
+                    data-ng-model="taxi.DepartureAddress.CountryRegion"
+                    data-placeholder="Country"
+                    data-chosen
+                    data-ng-options="country as country.Name for country in countries"
+                    data-z-validate></select>
+        </div>
+
+            <p class="sub-header">Destination</p>
+
+        <div data-form-control data-label="Address Description">
+            <input type="text"
+                   class="form-control"
+                   data-ng-model="taxi.DestinationAddress.AddressName"
+                   placeholder="Address Description"
+                   data-z-validate />
+        </div>
+
+        <div data-form-control data-label="Street">
+            <input type="text"
+                   class="form-control"
+                   data-ng-model="taxi.DestinationAddress.Street"
+                   placeholder="Street and House Number"
+                   data-z-validate />
+        </div>
+
+        <div data-form-control data-label="City">
+            <input type="text"
+                   class="form-control"
+                   data-ng-model="taxi.DestinationAddress.City"
+                   placeholder="City"
+                   data-z-validate />
+        </div>
+
+        <div data-form-control data-label="Postal Code">
+            <input type="text"
+                   class="form-control"
+                   data-ng-model="taxi.DestinationAddress.PostalCode"
+                   placeholder="Postal Code"
+                   data-z-validate />
+        </div>
+
+        <div data-form-control data-label="State/Province">
+            <input type="text"
+                   class="form-control"
+                   data-ng-model="taxi.DestinationAddress.StateProvince"
+                   placeholder="State/Province"
+                   data-z-validate />
+        </div>
+        <div data-form-control data-label="Country">
+            <select class="form-control"
+                    data-ng-model="taxi.DestinationAddress.CountryRegion"
+                    data-placeholder="Country"
+                    data-chosen
+                    data-ng-options="country as country.Name for country in countries"
+                    data-z-validate></select>
+        </div>
+</fieldset>
+    
+    <fieldset>
+        <div data-legend-title="Add Taxi"></div>
+
+        <div data-form-control data-label="Add Taxi">
+            <button class="btn btn-sm btn-success"
+                    data-ng-click="addTaxi()">
+                <i class="fa fa-plus"></i>
+                Add Taxi
+            </button>
+            <span class="help-block">
+                Add a taxi car when you need to make a trip to an extra location 
+                without going back to the place of departure first.
+            </span>
+        </div>
+    </fieldset>
+</div>

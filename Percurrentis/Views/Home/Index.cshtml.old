@@ -1,0 +1,29 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<script>
+    var activeProfile = {
+        'obj'      : 'window.activeProfile',
+        'username' : '@Html.Raw(HttpUtility.JavaScriptStringEncode(@User.Identity.Name))',
+        'roles'    : {},
+        'features' : {}
+    };
+
+    @{ var developer = @User.IsInRole("Travel_Agency_Project").ToString().ToLower(); }
+    activeProfile.roles.developer = @developer
+
+    console.log(activeProfile);
+</script>
+
+<section data-ng-app="app" data-ng-controller="mainController as main">
+    <div id="loadingwidget" data-loading-widget>
+        <p>Loading</p>
+    </div>
+    <div data-ng-view></div>
+</section>
+
+@section scripts {
+    @Scripts.Render("~/Content/AppFramework/lib")
+    @Scripts.Render("~/Content/AppFramework/app")
+}

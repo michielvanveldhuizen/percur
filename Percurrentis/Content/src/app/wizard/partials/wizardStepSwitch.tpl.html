@@ -1,0 +1,13 @@
+﻿<div class="form-group">
+    <label class="control-label col-xs-3">
+        {{ label }}
+    </label>
+    <div class="col-xs-9">
+        <label class="switch switch-primary">
+            <input type="checkbox"
+                    data-ng-model="model"
+                    data-ng-change="model ? $parent.wizard.enable(step) : $parent.wizard.disable(step)"/>
+            <span></span>
+        </label>
+    </div>
+</div>

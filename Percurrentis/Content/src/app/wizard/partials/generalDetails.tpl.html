@@ -1,0 +1,66 @@
+﻿<div data-ng-form="general">
+                    <h4>Due to technical reasons, please fill in <b><u>all</u></b> the fields available in the travel request. If information is unknown, please write down 'not applicable'. </h4>
+        <br />
+    <fieldset>
+        <div data-legend-title="Request Details"></div>
+
+        <div data-form-control data-label="Applicant">
+            <input type="text" 
+                    class="form-control"
+                    data-ng-model="model.ApplicantID"
+                    data-typeahead="employee.userName as employee.userName for employee in employees | filter:{userName:$viewValue} | limitTo:8"
+                    data-z-validate />
+        </div>
+
+        <div data-form-control data-label="Quote or Order Number">
+            <input type="text"
+                   data-ng-model="model.QuoteOrOrderNumber"
+                   class="form-control"
+                   placeholder="Quote or Order Number"
+                   data-z-validate />
+        </div>
+
+        <div data-form-control data-label="Responsible for approval">
+            <select type="text"
+                    data-ng-model="model.SuperiorID"
+                    data-chosen
+                    class="form-control"
+                    data-placeholder="Project Manager or Superior Name"
+                    data-ng-options="employee.objectGuid as employee.userName for employee in employees"
+                    data-z-validate></select>
+        </div>
+
+        <div data-form-control data-label="Trip Purpose">
+            <textarea class="form-control"
+                      data-ng-model="model.Purpose"
+                      rows="3"
+                      placeholder="Purpose"
+                      data-z-validate />
+        </div>
+
+        <div data-form-control data-label="Destination Country">
+            <select class="form-control"
+                    data-ng-model="model.Country"
+                    data-placeholder="Country"
+                    data-chosen
+                    data-ng-options="country as country.Name for country in countries"
+                    data-z-validate ></select>
+        </div>
+    </fieldset>
+    <fieldset>
+        <div data-legend-title="Customer or Prospect"></div>
+
+        <div data-form-control data-label="Customer/Prospect Name">
+            <input type="text"
+                   data-ng-model="model.CustomerOrProspect.Name"
+                   class="form-control"
+                   placeholder="Customer Name"
+                   data-z-validate />
+        </div>
+
+        <div data-address-form
+             data-countries="countries"
+             data-ng-if="options.knownCustomerAddress"
+             data-ng-model="model.CustomerOrProspect.Address"></div>
+    </fieldset>
+</div>

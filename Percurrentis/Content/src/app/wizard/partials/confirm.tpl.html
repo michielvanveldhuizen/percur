@@ -1,0 +1,25 @@
+﻿<div data-ng-form="confirm">
+    <p>
+        Please confirm your travel request. After submitting the request, it will automatically 
+        be sent to your supervisor for approval. It may also be sent to the project manager and 
+        to the Chief Operations Officer.
+    </p>
+
+    <p>
+        <strong class="text-danger">You may not modify this travel request after sending it.</strong>
+        Please check whether you have filled in the correct information.
+    </p>
+
+    <p>
+        After approval of your supervisor, the Travel Agency will process your request as soon 
+        as possible.
+    </p>
+
+    <div data-form-control data-label="Confirm Request">
+        <label class="switch switch-primary">
+            <input type="checkbox"
+                    data-ng-model="model.hasConfirmedSubmit" />
+            <span></span>
+        </label>
+    </div> 
+</div>

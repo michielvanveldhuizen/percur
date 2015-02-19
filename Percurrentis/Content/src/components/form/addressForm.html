@@ -1,0 +1,47 @@
+﻿<div data-form-control data-label="Address Description">
+    <input type="text" 
+           class="form-control"
+           data-ng-model="model.AddressName"
+           placeholder="Address Description"
+           data-z-validate />
+</div>
+
+<div data-form-control data-label="Street">
+    <input type="text" 
+           class="form-control"
+           data-ng-model="model.Street"
+           placeholder="Street and House Number"
+           data-z-validate />
+</div>
+
+<div data-form-control data-label="City">
+    <input type="text" 
+           class="form-control"
+           data-ng-model="model.City"
+           placeholder="City"
+           data-z-validate />
+</div>
+
+<div data-form-control data-label="Postal Code">
+    <input type="text" 
+           class="form-control"
+           data-ng-model="model.PostalCode"
+           placeholder="Postal Code"
+           data-z-validate />
+</div>
+
+<div data-form-control data-label="State/Province">
+     <input type="text" 
+            class="form-control"
+            data-ng-model="model.StateProvince"
+            placeholder="State/Province"
+            data-z-validate />
+</div>
+<div data-form-control data-label="Country">
+    <select class="form-control"
+            data-ng-model="model.CountryRegion"
+            data-placeholder="Country"
+            data-chosen
+            data-ng-options="country as country.Name for country in countries"
+            data-z-validate ></select>
+</div>

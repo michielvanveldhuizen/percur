@@ -1,0 +1,22 @@
+﻿<div data-ng-if="model.AddressName || model.Street || model.City || model.PostalCode || model.StateProvince || model.CountryRegion">
+<!-- Comment tags are necessary to control the amount of spaces.
+--><div><span data-ng-show="model.AddressName"><!--
+    --><strong>{{model.AddressName}}<br /></strong><!--
+--></span><!--
+--><span data-ng-show="model.Street"><!--
+    -->{{model.Street}}<br /><!--
+--></span><!--
+--><span data-ng-show="model.City"><!--
+    -->{{model.City}}<!--
+--></span><!--
+--><span data-ng-show="model.PostalCode"><!--
+    -->, {{model.PostalCode}}<!--
+--></span><span data-ng-show="model.City || model.PostalCode"><br /></span><!--
+--><span data-ng-show="model.PostalCode"><!--
+    -->{{model.StateProvince}}, <!--
+--></span><!--
+-->{{model.CountryRegion}}</div>
+</div>
+<div data-ng-if="!(model.AddressName || model.Street || model.City || model.PostalCode || model.StateProvince || model.CountryRegion)">
+    <div data-ng-transclude></div>
+</div>

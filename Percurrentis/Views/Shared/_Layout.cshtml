@@ -1,0 +1,190 @@
+﻿@{
+    ViewBag.UserName = string.IsNullOrEmpty(@ViewBag.UserName as string) ? @User.Identity.Name : ViewBag.UserName;
+}
+
+<!DOCTYPE html>
+<!--[if IE 8]>         <html class="no-js lt-ie9" data-ng-app="app"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" data-ng-app="app"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+
+        <title data-ng-bind="pageTitle + ' | CSi Percurrentis'">Home | CSi Percurrentis</title>
+
+        <meta name="robots" content="noindex, nofollow">
+
+        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1.0">
+
+        <!-- Icons -->
+        <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+        <!-- END Icons -->
+
+        <!-- Stylesheets -->
+        <!-- Bootstrap is included in its original form, unaltered -->
+        <link rel="stylesheet" href="~/Content/vendor/ProUI/css/bootstrap.min.css">
+
+        <!-- Related styles of various icon packs and plugins -->
+        <link rel="stylesheet" href="~/Content/vendor/ProUI/css/plugins.css">
+
+        <!-- The main stylesheet of this template. All Bootstrap overwrites are defined in here -->
+        <link rel="stylesheet" href="~/Content/vendor/ProUI/css/main.css">
+
+        <!-- Include a specific file here from css/themes/ folder to alter the default theme of the template -->
+        <link rel="stylesheet" href="~/Content/vendor/ProUI/css/themes/modern.css">
+
+        <!-- The themes stylesheet of this template (for using specific theme color in individual elements - must included last) -->
+        <link rel="stylesheet" href="~/Content/vendor/ProUI/css/themes.css">
+        <link rel="stylesheet" href="~/Content/src/assets/css/text.css">
+        <!-- END Stylesheets -->
+
+        @Scripts.Render("~/bundles/modernizr")
+
+        @RenderSection("PreScript", required: false)
+    </head>
+    <body>
+        <!-- Page Container -->
+        <!--
+            Available #page-container classes:
+
+            '' (None)                                       for a full main and alternative sidebar hidden by default (> 991px)
+
+            'sidebar-visible-lg'                            for a full main sidebar visible by default (> 991px)
+            'sidebar-partial'                               for a partial main sidebar which opens on mouse hover, hidden by default (> 991px)
+            'sidebar-partial sidebar-visible-lg'            for a partial main sidebar which opens on mouse hover, visible by default (> 991px)
+
+            'sidebar-alt-visible-lg'                        for a full alternative sidebar visible by default (> 991px)
+            'sidebar-alt-partial'                           for a partial alternative sidebar which opens on mouse hover, hidden by default (> 991px)
+            'sidebar-alt-partial sidebar-alt-visible-lg'    for a partial alternative sidebar which opens on mouse hover, visible by default (> 991px)
+
+            'sidebar-partial sidebar-alt-partial'           for both sidebars partial which open on mouse hover, hidden by default (> 991px)
+
+            'sidebar-no-animations'                         add this as extra for disabling sidebar animations on large screens (> 991px) - Better performance with heavy pages!
+
+            'style-alt'                                     for an alternative main style (without it: the default style)
+            'footer-fixed'                                  for a fixed footer (without it: a static footer)
+
+            'header-fixed-top'                              has to be added only if the class 'navbar-fixed-top' was added on header.navbar
+            'header-fixed-bottom'                           has to be added only if the class 'navbar-fixed-bottom' was added on header.navbar
+        -->
+        <div id="page-container" class="sidebar-partial sidebar-visible-lg sidebar-no-animations footer-fixed">
+            <!-- Main Sidebar -->
+            <div id="sidebar">
+                <!-- Wrapper for scrolling functionality -->
+                <div class="sidebar-scroll">
+                    <!-- Sidebar Content -->
+                    <div class="sidebar-content">
+                        <!-- Brand -->
+                        <a href="#/" class="sidebar-brand">
+                            <i class="gi gi-airplane themed-background themed-border"></i><strong>CSi</strong>Percurrentis
+                        </a>
+                        <!-- END Brand -->
+
+                        <!-- User Info -->
+                        <div class="sidebar-section sidebar-user clearfix">
+                            <div class="sidebar-user-name">@ViewBag.UserName</div>
+                        </div>
+                        <!-- END User Info -->
+
+                        <!-- Sidebar Navigation -->
+                        <ul class="sidebar-nav">
+                            <li>
+                                <a href="#/"><i class="gi gi-home sidebar-nav-icon"></i>Home</a>
+                                <a href="#/Request/New"><i class="gi gi-airplane sidebar-nav-icon"></i>New Request</a>
+                                <a href="#/Request/"><i class="gi gi-show_lines sidebar-nav-icon"></i>Requests</a>
+                                <a href="#/Insurance/"><i class="gi gi-notes_2 sidebar-nav-icon"></i>Insurances</a>
+                            </li>
+                        </ul>
+                        <!-- END Sidebar Navigation -->
+                    </div>
+                    <!-- END Sidebar Content -->
+                </div>
+                <!-- END Wrapper for scrolling functionality -->
+            </div>
+            <!-- END Main Sidebar -->
+
+            <!-- Main Container -->
+            <div id="main-container">
+                <!-- Header -->
+                <!--
+                    Available header.navbar classes:
+
+                    'navbar-default'            for the default light header
+                    'navbar-inverse'            for an alternative dark header
+
+                    'navbar-fixed-top'          for a top fixed header (fixed sidebars with scroll will be auto initialized, functionality can be found in js/app.js - handleSidebar())
+                        'header-fixed-top'      has to be added on #page-container only if the class 'navbar-fixed-top' was added
+
+                    'navbar-fixed-bottom'       for a bottom fixed header (fixed sidebars with scroll will be auto initialized, functionality can be found in js/app.js - handleSidebar()))
+                        'header-fixed-bottom'   has to be added on #page-container only if the class 'navbar-fixed-bottom' was added
+                -->
+                <header class="navbar navbar-default">
+                    <!-- Left Header Navigation -->
+                    <ul class="nav navbar-nav-custom">
+                        <!-- Main Sidebar Toggle Button -->
+                        <li>
+                            <a href="javascript:void(0)" onclick="App.sidebar('toggle-sidebar');">
+                                <i class="fa fa-bars fa-fw"></i>
+                            </a>
+                        </li>
+                        <!-- END Main Sidebar Toggle Button -->
+                    </ul>
+                    <!-- END Left Header Navigation -->
+
+                    <!-- Search Form -->
+                    <!--<form action="page_ready_search_results.html" method="post" class="navbar-form-custom" role="search">
+                        <div class="form-group">
+                            <input type="text" id="top-search" name="top-search" class="form-control" placeholder="Search..">
+                        </div>
+                    </form>-->
+                    <!-- END Search Form -->
+
+                    <!-- Right Header Navigation -->
+                    <!--<ul class="nav navbar-nav-custom pull-right">
+                    </ul>-->
+                    <!-- END Right Header Navigation -->
+                </header>
+                <!-- END Header -->
+
+                <!-- Page content -->
+                <div id="page-content">
+                    <!-- Page Header -->
+                    <div class="content-header">
+                        <div class="header-section">
+                            <h1>
+                                @RenderSection("Header", required: true)
+                            </h1>
+                        </div>
+                    </div>
+                    @RenderSection("BreadCrumbs", required: false)
+
+                    <!-- END Page Header -->
+                    @RenderBody()
+                </div>
+                <!-- END Page Content -->
+
+                <!-- Footer -->
+                    @RenderSection("Footer", required: false)
+                <!-- END Footer -->
+            </div>
+            <!-- END Main Container -->
+        </div>
+        <!-- END Page Container -->
+
+        <!-- Scroll to top link, initialized in js/app.js - scrollToTop() -->
+        <a href="#" id="to-top"><i class="fa fa-angle-double-up"></i></a>
+
+        <!-- Include Jquery library from Google's CDN but if something goes wrong get Jquery from local file (Remove 'http:' if you have SSL) -->
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+        <script>!window.jQuery && document.write(unescape('%3Cscript src="Content/vendor/ProUI/js/vendor/jquery-1.11.0.min.js"%3E%3C/script%3E'));</script>
+
+        <!-- Bootstrap.js, Jquery plugins and Custom JS code -->
+        <script src="~/Content/vendor/ProUI/js/vendor/bootstrap.min.js"></script>
+        <script src="~/Content/vendor/ProUI/js/plugins.js"></script>
+        <script src="~/Content/vendor/ProUI/js/app.js"></script>
+
+        @Scripts.Render("~/bundles/vendor/js")
+        @Scripts.Render("~/bundles/scripts/breeze")
+        @Scripts.Render("~/bundles/src/js")
+
+        @RenderSection("PostScript", required: false)
+    </body>
+</html>

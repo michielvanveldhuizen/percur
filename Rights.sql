@@ -1,0 +1,12 @@
+USE PercurrentisDB
+GO
+CREATE USER [NT AUTHORITY\NETWORK SERVICE] FOR LOGIN [NT AUTHORITY\NETWORK SERVICE]
+GO
+USE PercurrentisDB
+GO
+EXEC sp_addrolemember N'db_datawriter', N'NT AUTHORITY\NETWORK SERVICE'
+GO
+USE PercurrentisDB
+GO
+EXEC sp_addrolemember N'db_datareader', N'NT AUTHORITY\NETWORK SERVICE'
+GO

@@ -1,0 +1,83 @@
+﻿<div data-ng-form="ferries">
+    <fieldset data-ng-repeat="eurotunnel in model.EuroTunnelRequests track by $index">
+        
+        <div data-legend-title="{{eurotunnel.Title}}">
+            <a data-ng-click="deleteEurotunnel(eurotunnel)"
+               data-ng-hide="$first"
+               class="btn btn-sm btn-danger"
+               data-tooltip="Delete this eurotunnel">
+                <i class="fa fa-times"></i>
+                Delete
+            </a>
+        </div>
+
+        <div data-form-control data-label="Destination">
+            <button type="button"
+                    class="btn btn-sm btn-block"
+                    data-ng-click="eurotunnelChangeDestination(eurotunnel, 'Eurotunnel Coquelles')"
+                    data-ng-class="isEurotunnelToFolkstone(eurotunnel) ? 'btn-alt btn-default' : 'btn-primary active'">
+                Coquelles, Pas-de-Calais, France
+            </button>
+
+            <div class="text-center col-xs-12 margin-5">
+                <span class="text-primary">
+                    <i class="fa fa-2x" data-ng-class="isEurotunnelToFolkstone(eurotunnel) ? 'fa-arrow-down' : 'fa-arrow-up'"></i>
+                </span>
+            </div>
+
+            <button type="button"
+                    class="btn btn-sm btn-block"
+                    data-ng-click="eurotunnelChangeDestination(eurotunnel, 'Eurotunnel Folkstone')"
+                    data-ng-class="!isEurotunnelToFolkstone(eurotunnel) ? 'btn-alt btn-default' : 'btn-primary active'">
+                Folkestone, Kent, United Kingdom
+            </button>
+        </div>
+
+        <div data-form-control data-label="Date of Departure">
+            <div data-datepicker data-ng-model="eurotunnel.DepartureDate"></div>
+        </div>
+
+        <div data-form-control data-label="Time of Departure">
+            <div data-timepicker
+                 data-show-meridian="false"
+                 data-minute-step="5"
+                 data-ng-model="eurotunnel.DepartureDate"></div>
+        </div>
+
+        <div data-form-control data-label="Car License Plate">
+            <input type="text"
+                   class="form-control"
+                   data-ng-model="eurotunnel.LicensePlate"
+                   placeholder="License Plate" 
+                   data-z-validate />
+            <span class="help-block">
+                The license plate number of the car that will be transported along with the passengers.
+                Only fill this in when you will be transporting a car.
+            </span>
+        </div>
+
+        <div data-ng-show="!eurotunnel.IsReturnEuroTunnel" data-form-control data-label="Add Return Eurotunnel">
+            <button class="btn btn-sm btn-success"
+                    data-ng-click="addEurotunnel(eurotunnel)">
+                <i class="fa fa-plus"></i>
+                Add Return Eurotunnel
+            </button>
+        </div>
+    </fieldset>
+    
+    <fieldset>
+        <div data-legend-title="Add Eurotunnel"></div>
+
+        <div data-form-control data-label="Add Eurotunnel">
+            <button class="btn btn-sm btn-success"
+                    data-ng-click="addEurotunnel()">
+                <i class="fa fa-plus"></i>
+                Add Eurotunnel
+            </button>
+            <span class="help-block">
+                Add a Eurotunnel trip when you need to make a trip to an extra location 
+                without going back to the place of departure first.
+            </span>
+        </div>
+    </fieldset>
+</div>

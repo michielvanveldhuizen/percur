@@ -1,0 +1,81 @@
+﻿<div data-ng-form="taxi">
+    <fieldset data-ng-repeat="accommodation in model.Accommodations track by $index">
+        
+        <div data-legend-title="Accommodation">
+            <a data-ng-click="deleteAccommodation(accommodation)"
+               data-ng-hide="$first"
+               class="btn btn-sm btn-danger"
+               data-tooltip="Delete this accommodation">
+                <i class="fa fa-times"></i>
+                Delete
+            </a>
+        </div>
+
+        <div data-form-control data-label="Prefferred Accommodation">
+            <span class="help-block">
+                Do you know the name and location of a preferred accomodation? If not proceed by clicking "next".
+            </span>
+        </div>
+
+        <div data-form-control data-label="Address Description">
+            <input type="text"
+                   class="form-control"
+                   data-ng-model="accommodation.Address.AddressName"
+                   placeholder="Address Description"
+                   data-z-validate />
+        </div>
+
+        <div data-form-control data-label="Street">
+            <input type="text"
+                   class="form-control"
+                   data-ng-model="accommodation.Address.Street"
+                   placeholder="Street and House Number"
+                   data-z-validate />
+        </div>
+
+        <div data-form-control data-label="City">
+            <input type="text"
+                   class="form-control"
+                   data-ng-model="accommodation.Address.City"
+                   placeholder="City"
+                   data-z-validate />
+        </div>
+
+        <div data-form-control data-label="Postal Code">
+            <input type="text"
+                   class="form-control"
+                   data-ng-model="accommodation.Address.PostalCode"
+                   placeholder="Postal Code"
+                   data-z-validate />
+        </div>
+
+        <div data-form-control data-label="State/Province">
+            <input type="text"
+                   class="form-control"
+                   data-ng-model="accommodation.Address.StateProvince"
+                   placeholder="State/Province"
+                   data-z-validate />
+        </div>
+        <div data-form-control data-label="Country">
+            <select class="form-control"
+                    data-ng-model="accommodation.Address.CountryRegion"
+                    data-placeholder="Country"
+                    data-chosen
+                    data-ng-options="country as country.Name for country in countries"
+                    data-z-validate></select>
+        </div>
+      
+    </fieldset>
+    
+    <fieldset>
+        <div data-legend-title="Add Accommodation"></div>
+
+        <div data-form-control data-label="Add Accommodation">
+            <button class="btn btn-sm btn-success"
+                    data-ng-click="addAccommodation()">
+                <i class="fa fa-plus"></i>
+                Add Accommodation
+            </button>
+        </div>
+    </fieldset>
+</div>

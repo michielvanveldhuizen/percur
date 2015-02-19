@@ -1,0 +1,391 @@
+﻿/* 
+ * Author:    Thomas Baart
+ * Contact:   mail@thomasbaart.nl
+ * Date:      26-02-2014
+ *
+ * Tests for: ./wizard.js
+ * Passes:    Yes, 26-02-2014
+ */
+
+describe('The wizard component,', function () {
+    var wizard;
+
+    beforeEach(module('components.wizard'));
+
+    beforeEach(inject(function (_wizard_) {
+        wizard = _wizard_();
+    }));
+
+    afterEach(function () {
+        wizard = null;
+    });
+
+    describe('after initialization,', function () {
+        it('should not be null', function () {
+            expect(wizard).not.toBe(null);
+        });
+        
+        it('should start with an empty set of steps', function () {
+            expect(wizard.getSteps().length).toEqual(0);
+        });
+
+        it('should be able to construct with initial steps', function () {
+            inject(function (_wizard_) {
+                wizard = _wizard_(['step 1', 'step 2']);
+            });
+            expect(wizard.getSteps().length).toBe(2);
+            expect(wizard.getSteps()).toEqual([
+                { name: 'step 1', enabled: true },
+                { name: 'step 2', enabled: true }
+            ]);
+        });
+    });
+
+    describe('setting its steps,', function () {
+        it('should be able to have its steps set', function () {
+            wizard.setSteps(['step 1', 'step 2']);
+            expect(_.pluck(wizard.getSteps(), "name")).toEqual(['step 1', 'step 2']);
+            expect(wizard.getSteps().length).toEqual(2);
+        });
+
+        it('should throw an exception when setSteps is called without a valid argument', function () {
+            expect(wizard.setSteps).toThrow();
+        });
+
+        it('should be able to have its steps set with an array of objects', function () {
+            wizard.setSteps([
+                { name: 'step 1', enabled: true },
+                { name: 'step 2' }
+            ]);
+
+            expect(wizard.getSteps().length).toBe(2);
+            expect(wizard.getSteps()).toEqual([
+                { name: 'step 1', enabled: true },
+                { name: 'step 2', enabled: true }
+            ]);
+        });
+    });
+
+    describe('working with validation', function () {
+        var steps = [
+            { name: 'step 1' },
+            { name: 'step 2' }
+        ];
+
+        it('should not be able to advance to the next step when isValid is not satisfied', function () {
+            steps[0].isValid = function () {
+                return false;
+            }
+
+            wizard.setSteps(steps);
+
+            expect(wizard.hasNext()).toBe(false);
+        });
+
+        it('should be able to advance to the next step when isValid is satisfied', function () {
+            steps[0].isValid = function () {
+                return true;
+            }
+
+            wizard.setSteps(steps);
+
+            expect(wizard.hasNext()).toBe(true);
+        });
+
+        it('should be able to jump to the last step only if all steps are valid', function () {
+            steps[0].isValid = function () {
+                return true;
+            };
+
+            wizard.setSteps(steps);
+
+            expect(wizard.canGoToLast()).toBe(true);
+        });
+
+        it('should not be able to jump to the last step if one of the steps are invalid', function () {
+            steps[0].isValid = function () {
+                return false;
+            };
+
+            wizard.setSteps(steps);
+
+            expect(wizard.canGoToLast()).toBe(false);
+        });
+
+        it('should report the valid state as true if all steps are valid', function () {
+            steps[0].isValid = function () {
+                return true;
+            };
+
+            wizard.setSteps(steps);
+
+            expect(wizard.isValid()).toBe(true);
+        });
+
+        it('should report the valid state as true when no steps have validation enabled', function () {
+            wizard.setSteps(steps);
+
+            expect(wizard.isValid()).toBe(true);
+        });
+
+        it('should report the valid state as false when one step is not valid', function () {
+            steps[0].isValid = function () {
+                return false;
+            };
+
+            wizard.setSteps(steps);
+
+            expect(wizard.isValid()).toBe(false);
+        });
+    });
+
+    describe('reporting on its current state,', function () {
+        it('should be able to report the currently selected step', function () {
+            wizard.setSteps(['step 1']);
+            expect(wizard.current().name).toBe('step 1');
+        });
+
+        it('should return null for the current step if there aren\'t any steps', function () {
+            expect(wizard.current()).toBe(null);
+        });
+
+        it('should report the total number of enabled steps', function () {
+            wizard.setSteps(['step 1', 'step 2', 'step 3']);
+            expect(wizard.stats().total).toBe(3);
+        });
+
+        it('should report the number of the current step', function () {
+            wizard.setSteps(['step 1', 'step 2', 'step 3']);
+            expect(wizard.stats().currentStepNumber).toBe(1);
+            wizard.next();
+            expect(wizard.stats().currentStepNumber).toBe(2);
+        });
+    });
+
+    describe('reporting on what it can and can\'t do,', function () {
+        it('should be able to report when it can move to the next step', function () {
+            wizard.setSteps(['step 1', 'step 2']);
+            expect(wizard.hasNext()).toBe(true);
+        });
+
+        it('should be able to report when it can\'t move to the next step', function () {
+            console.log(wizard.getSteps());
+            expect(wizard.hasNext()).toBe(false);
+        });
+
+        it('should be able to report when it can move to the previous step', function () {
+            wizard.setSteps(['step 1', 'step 2']);
+            wizard.next();
+            expect(wizard.hasPrev()).toBe(true);
+        });
+
+        it('should be able to report when it can\'t move to the previous step', function () {
+            expect(wizard.hasPrev()).toBe(false);
+        });
+
+        it('should be able to report whether it can jump to its first step', function () {
+            expect(wizard.canGoToFirst()).toBe(false);
+        });
+
+        it('should be able to report whether it can jump to its last step', function () {
+            expect(wizard.canGoToLast()).toBe(false);
+        });
+    });
+
+    describe('moving from step to step,', function () {
+        it('should be able to move to the next step', function () {
+            wizard.setSteps(['step 1', 'step 2']);
+            expect(wizard.next()).toBe(true);
+            expect(wizard.current().name).toBe('step 2');
+        });
+
+        it('should be able to move to the previous step', function () {
+            wizard.setSteps(['step 1', 'step 2']);
+            wizard.next();
+            expect(wizard.prev()).toBe(true);
+            expect(wizard.current().name).toBe('step 1');
+        });
+
+        it('should not be able to move past its steps', function () {
+            wizard.setSteps(['step 1']);
+            expect(wizard.next()).toBe(false);
+            expect(wizard.current().name).toBe('step 1');
+        });
+
+        it('should not be able to move back before its first step', function () {
+            wizard.setSteps(['step 1', 'step 2']);
+            expect(wizard.prev()).toBe(false);
+            expect(wizard.current().name).toBe('step 1');
+        });
+
+        it('should be able to jump to its first step', function () {
+            wizard.setSteps(['step 1', 'step 2', 'step 3']);
+            wizard.next();
+            wizard.first();
+            expect(wizard.current().name).toBe('step 1');
+        });
+
+        it('should be able to jump to its last step', function () {
+            wizard.setSteps(['step 1', 'step 2', 'step 3']);
+            wizard.next();
+            wizard.last();
+            expect(wizard.current().name).toBe('step 3');
+        });
+    });
+
+    describe('disabling steps,', function () {
+        beforeEach(function () {
+            wizard.setSteps(['step 1', 'step 2', 'step 3']);
+        });
+
+        it('should be able to disable a step by index', function () {
+            wizard.setEnabled(0, false);
+            expect(wizard.getSteps()[0].enabled).not.toBe(true);
+        });
+
+        it('should be able to disable a step by string', function () {
+            wizard.setEnabled('step 1', false);
+            expect(wizard.getSteps()[0].enabled).not.toBe(true);
+        });
+
+        it('should throw an error when disabling a step that is out of range', function () {
+            expect(wizard.setEnabled.bind(null, -1, false)).toThrow();
+        });
+
+        it('should throw an error when disabling a step without a valid argument', function () {
+            expect(wizard.setEnabled.bind(null, {}, false)).toThrow();
+        });
+
+        it('should automatically advance the index when it is currently on a disabled step', function () {
+            wizard.setEnabled(0, false);
+            expect(wizard.current().name).toBe('step 2');
+        });
+
+        it('should advance over steps that are disabled', function () {
+            wizard.setEnabled(1, false);
+            wizard.next();
+            expect(wizard.current().name).toBe('step 3');
+        });
+
+        it('should go backwards over steps that are disabled', function () {
+            wizard.setEnabled(1, false);
+            wizard.next();
+            expect(wizard.current().name).toBe('step 3');
+            wizard.prev();
+            expect(wizard.current().name).toBe('step 1');
+        });
+
+        it('should report whether it has a next step based on steps being disabled', function () {
+            wizard.setEnabled(1, false);
+            wizard.setEnabled(2, false);
+            expect(wizard.hasNext()).toBe(false);
+        });
+
+        it('should report whether it has a previous step based on steps being disabled', function () {
+            wizard.next();
+            wizard.setEnabled(0, false);
+            expect(wizard.hasPrev()).toBe(false);
+        });
+
+        it('should report whether it can jump to the first step based on steps being disabled', function () {
+            wizard.next();
+            wizard.setEnabled(0, false);
+            expect(wizard.canGoToFirst()).toBe(false);
+        });
+
+        it('should report whether it can jump to the last step based on steps being disabled', function () {
+            wizard.setEnabled(1, false);
+            wizard.setEnabled(2, false);
+            expect(wizard.canGoToLast()).toBe(false);
+        });
+
+        it('should jump to the correct last step based on steps being disabled', function () {
+            wizard.setEnabled(2, false);
+            wizard.last();
+            expect(wizard.current().name).toBe('step 2');
+        });
+
+        it('should jump to the correct first step based on steps being disabled', function () {
+            wizard.last();
+            wizard.setEnabled(0, false);
+            wizard.first();
+            expect(wizard.current().name).toBe('step 2');
+        });
+        
+        it('should report the total number of enabled steps, taking disabled steps into account', function () {
+            wizard.setEnabled(0, false);
+            expect(wizard.stats().total).toBe(2);
+        });
+
+        it('should report the number of the current step, taking disabled steps into account', function () {
+            wizard.setEnabled(0, false);
+            expect(wizard.stats().currentStepNumber).toBe(2);
+        });
+
+        it('should be able to disable multiple steps at once by an array with numbers', function () {
+            wizard.setEnabled([1, 2], false);
+            expect(wizard.stats().total).toBe(1);
+        });
+
+        it('should be able to disable multiple steps at once by an array with strings', function () {
+            wizard.setEnabled(['step 1', 'step 2'], false);
+            expect(wizard.stats().total).toBe(1);
+        });
+    });
+
+    describe('enabling steps,', function () {
+        beforeEach(function () {
+            wizard.setSteps(['step 1', 'step 2', 'step 3']);
+            wizard.setEnabled([1, 2], false);
+        });
+
+        it('should be able to enable multiple steps at once by an array with numbers', function () {
+            wizard.setEnabled([1, 2], true);
+            expect(wizard.stats().total).toBe(3);
+        });
+
+        it('should be able to enable multiple steps at once by an array with strings', function () {
+            wizard.setEnabled(['step 2', 'step 3'], true);
+            expect(wizard.stats().total).toBe(3);
+        });
+    });
+
+    describe('next callback handler,', function () {
+        it('should be called if set', function () {
+            var steps = [
+            { name: 'step 1' },
+            { name: 'step 2' }
+            ];
+
+            steps[0].onNext = function () {
+                return false;
+            }
+
+            spyOn(steps[0], 'onNext');
+
+            wizard.setSteps(steps);
+            wizard.next();
+
+            expect(steps[0].onNext).toHaveBeenCalled();
+        });
+    });
+
+    describe('experiencing bugs', function () {
+        describe('should be able to navigate freely when there are no validation steps', function () {
+            beforeEach(function () {
+                wizard.setSteps(['step 1', 'step 2', 'step 3', 'step 4']);
+            });
+
+            it('should be able to move to the next step', function () {
+                wizard.next();
+                wizard.next();
+                wizard.next();
+                expect(wizard.current().name).toBe('step 4');
+                wizard.prev();
+                wizard.prev();
+                wizard.prev();
+                expect(wizard.current().name).toBe('step 1');
+            });
+        });
+    });
+});

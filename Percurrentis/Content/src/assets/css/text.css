@@ -1,0 +1,22 @@
+﻿.clear-padding {
+    padding: 0;
+}
+
+.margin-5 {
+    margin: 5px;
+}
+
+.btn-group-block {
+    width: 100%;
+}
+
+.expired {
+    background-color: #ef7272;
+}
+
+.expiring {
+    background-color: #fbe258;
+}
+
+.validation-error { display: none }
+.has-visited .validation-error { display: block }
