@@ -1,7 +1,7 @@
 ﻿(function () {
     'use strict';
 
-    var serviceId = 'services.modal';
+    var serviceId = 'modalService';
 
     // Define the factory on the module.
     // Inject the dependencies. 

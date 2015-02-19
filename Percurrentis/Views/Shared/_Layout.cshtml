@@ -33,7 +33,11 @@
 
         <!-- The themes stylesheet of this template (for using specific theme color in individual elements - must included last) -->
         <link rel="stylesheet" href="~/Content/vendor/ProUI/css/themes.css">
-        <link rel="stylesheet" href="~/Content/src/assets/css/text.css">
+
+        <link rel="stylesheet" href="~/Content/src/assets/css/text.css">        
+        
+        <!-- Angular x-editable css-->
+        <link rel="stylesheet" href="~/Content/vendor/angular-xeditable/css/xeditable.css">
         <!-- END Stylesheets -->
 
         @Scripts.Render("~/bundles/modernizr")
@@ -145,7 +149,7 @@
                 <!-- END Header -->
 
                 <!-- Page content -->
-                <div id="page-content" style="min-height: 1500px;">
+                <div id="page-content">
                     <!-- Page Header -->
                     <div class="content-header">
                         <div class="header-section">
@@ -181,9 +185,14 @@
         <script src="~/Content/vendor/ProUI/js/plugins.js"></script>
         <script src="~/Content/vendor/ProUI/js/app.js"></script>
 
+        <!-- Angular X-editable -->
+
+
         @Scripts.Render("~/bundles/vendor/js")
         @Scripts.Render("~/bundles/scripts/breeze")
         @Scripts.Render("~/bundles/src/js")
+
+        <script src="~/Content/vendor/angular-xeditable/js/xeditable.js"></script>
 
         @RenderSection("PostScript", required: false)
     </body>

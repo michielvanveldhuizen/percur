@@ -248,6 +248,8 @@
   <ItemGroup>
     <Content Include="Content\src\app\app.js" />
     <Content Include="Content\src\app\home\home.tpl.html" />
+    <Content Include="Content\src\app\insurance\insuranceCtrl.js" />
+    <Content Include="Content\src\app\insurance\list.tpl.html" />
     <Content Include="Content\src\app\modal\primaryBtnSet.tpl.html" />
     <Content Include="Content\src\app\modal\deleteBtnSet.tpl.html" />
     <Content Include="Content\src\app\modal\modal.tpl.html" />
