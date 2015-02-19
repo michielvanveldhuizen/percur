@@ -29,6 +29,7 @@
         'ui.bootstrap',
         'localytics.directives',
         'breeze.angular',
+        'xeditable',
         'breeze.directives'
     ])
     .config(['$routeProvider', 'activeProfile', 'breezeProvider', function ($routeProvider, activeProfile, breezeProvider) {
@@ -161,7 +162,14 @@
     });
 
     // Execute bootstrapping code and any dependencies.
-    app.run(['$q', '$rootScope', '$route', 'requestNotificationChannel', 'breeze',
+    app.run(function(editableOptions, editableThemes) 
+    {
+        // bootstrap3 theme. Can be also 'bs2', 'default'
+        editableOptions.theme = 'bs3';
+        editableThemes.bs3.inputClass = 'input-sm';
+        editableThemes.bs3.buttonsClass = 'btn-sm';
+    },
+    ['$q', '$rootScope', '$route', 'requestNotificationChannel', 'breeze',
         function ($q, $rootScope, $route, requestNotificationChannel) {
             $rootScope.$on('$routeChangeSuccess', function () {
                 if (!$route.current.data) return;
