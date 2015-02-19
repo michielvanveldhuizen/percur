@@ -16,11 +16,11 @@
             $("footer").show();
             /**/
             $rootScope.inApprovalMode = shouldShow;
-            
+
             if (shouldShow && !retrieved) {
                 retrieved = true;
                 travelRequestService.getTravelRequestApprovalsById(parseInt($route.current.params.requestId, 10))
-                .then(function (query) { 
+                .then(function (query) {
                     $scope.request = query.results[0];
                     if (!$scope.request.TravelRequestID || $scope.request.Hash != $route.current.params.approve) {
                         alert("Unauthorized - The request might already be approved or you don't have permission to approve this request.");
@@ -32,7 +32,7 @@
 
             return shouldShow;
         }
-        
+
         $scope.onApprove = function () {
             $scope.mode = 'approve';
         };
@@ -69,8 +69,8 @@
 
         /*remove later*/
         var n = 0;
-        var a = [101,108,109,111];
-        
+        var a = [101, 108, 109, 111];
+
         $("body").keypress(function (event) {
             if (a[n] == event.keyCode) {
                 n++;
