@@ -1,0 +1,42 @@
+<div data-ng-controller="insuranceCtrl">
+    <div class="block">
+        <div class="block-title">
+            <h2> <strong>Expired Insurances</strong></h2>
+         </div>
+
+            <div class="table-responsive">
+                <table class="table table-vcenter table-condensed table-hover">
+                    <thead>
+                        <tr>
+                            <th class="col-md-1">Insuree</th>
+                            <th class="col-md-1">Insurance Number</th>
+                            <th class="col-md-1">Start Date</th>
+                            <th class="col-md-1">Expiration Date</th>
+                            <th class="col-md-1"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr data-ng-repeat="item in items | orderBy: 'DaysLeft' | expired">
+                            <td>{{ item.UserName }}</td>
+                            <td editable-text="item.InsuranceNumber"
+                                e-required e-placeholder="Enter insurancenumber">
+                                {{ item.InsuranceNumber }}
+                            </td>
+                            <td>{{ item.StartDate | date:'d MMMM yyyy' }}</td>
+                            <td>
+                                {{ item.ExpirationDate | date:'d MMMM yyyy' }}
+                                <span data-ng-if="item.DaysLeft > 0">( {{ item.DaysLeft }} days left).</span>
+                                <span data-ng-if="item.DaysLeft == 0">(Expired)</span>
+                            </td>
+                            <td>
+                                <button type="button" data-ng-click="deleteInsurance(item)"
+                                        class="btn btn-sm btn-danger">
+                                    <i class="fa fa-times"></i>Delete
+                                </button>
+                            </td>
+                        </tr>
+                     </tbody>
+                </table>
+            </div>
+    </div>
+</div>
