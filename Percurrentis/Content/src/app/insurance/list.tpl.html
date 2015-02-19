@@ -14,34 +14,38 @@
                         <th class="col-md-1">Insuree</th>
                         <th class="col-md-1">Insurance Number</th>
                         <th class="col-md-1">Start Date</th>
-                        <th class="col-md-1">Expiration Date</th>
+                        <th class="col-md-2">Expiration Date</th>
                         <th class="col-md-1"></th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr data-ng-repeat="item in items | orderBy: 'DaysLeft' | expired">
                         <td>{{ item.UserName }}</td>
-                        <td editable-text="item.InsuranceNumber"
+                        <td><a editable-text="item.InsuranceNumber"
+                               data-tooltip="Click to edit"
                             e-required e-placeholder="Enter insurancenumber">
                             {{ item.InsuranceNumber }}
+                            </a>
                         </td>
                         <td>{{ item.StartDate | date:'d MMMM yyyy' }}</td>
                         <td>
                             {{ item.ExpirationDate | date:'d MMMM yyyy' }}
-                            <span data-ng-if="item.DaysLeft > 0">( {{ item.DaysLeft }} days left).</span>
-                            <span data-ng-if="item.DaysLeft == 0">(Expired)</span>
                         </td>
                         <td>
-                            <button type="button" data-ng-click="deleteInsurance(item)"
-                                    class="btn btn-sm btn-danger">
-                                <i class="fa fa-times"></i>Delete
-                            </button>
+                            <div class="btn-group btn-sm">
+                                <a data-ng-click="deleteInsurance(item)" data-tooltip="Delete"
+                                   class="btn btn-sm ng-scope btn-default">
+                                    <i class="fa fa-times"></i>
+                                </a>
+                            </div>
                         </td>
                     </tr>
                 </tbody>
             </table>
         </div>
     </div>
+
+    <!-- Active -->
     <div class="block">
         <div class="block-title">
             <h2> <strong>Active Insurances</strong></h2>
@@ -57,28 +61,31 @@
                         <th class="col-md-1">Insuree</th>
                         <th class="col-md-1">Insurance Number</th>
                         <th class="col-md-1">Start Date</th>
-                        <th class="col-md-1">Expiration Date</th>
+                        <th class="col-md-2">Expiration Date</th>
                         <th class="col-md-1"></th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr data-ng-repeat="item in items | orderBy: 'DaysLeft' | expired:'no'">
                         <td>{{ item.UserName }}</td>
-                        <td editable-text="item.InsuranceNumber"
-                            e-required e-placeholder="Enter insurancenumber">
-                            {{ item.InsuranceNumber }}
+                        <td>
+                            <a editable-text="item.InsuranceNumber" data-tooltip="Click to edit"
+                                onbeforesave="checkInumber($data)" e-required e-placeholder="Enter insurancenumber">
+                                {{ item.InsuranceNumber }}
+                            </a>    
                         </td>
                         <td>{{ item.StartDate | date:'d MMMM yyyy' }}</td>
                         <td>
                             {{ item.ExpirationDate | date:'d MMMM yyyy' }}
-                            <span data-ng-if="item.DaysLeft > 0">( {{ item.DaysLeft }} days left).</span>
-                            <span data-ng-if="item.DaysLeft == 0">(Expired)</span>
-                        </td>
+                            <span data-ng-if="item.DaysLeft > 0">( <span class="badge"> {{ item.DaysLeft }} </span> days from now).</span>
+                            </td>
                         <td>
-                            <button type="button" data-ng-click="deleteInsurance(item)"
-                                    class="btn btn-sm btn-danger">
-                                <i class="fa fa-times"></i>Delete
-                            </button>
+                            <div class="btn-group btn-sm">
+                                <a data-ng-click="deleteInsurance(item)" data-tooltip="Delete"
+                                   class="btn btn-sm ng-scope btn-default">
+                                    <i class="fa fa-times"></i>
+                                </a>
+                            </div>
                         </td>
                     </tr>
                 </tbody>
