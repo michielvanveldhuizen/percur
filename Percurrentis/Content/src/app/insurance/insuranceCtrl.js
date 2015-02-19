@@ -3,19 +3,28 @@
         ['$scope', 'travelRequestService', 'modalService', insuranceCtrl]);
 
     app.filter('expired', function () {
-        return function (items, uppercase) {
-            var out = [];
+        return function (items, exp) {
+            var outExp = [];
+            var outVal = [];
             try
             {
                 for (var i = 0; i < items.length; i++) {
                     if (items[i].DaysLeft > 0) {
-                        out.push(items[i]);
+                        outVal.push(items[i]);
+                    }
+                    else {
+                        outExp.push(items[i]);
                     }
                 }
             }
-            catch(Exception)
-            {}
-            return out;
+            catch (Exception) {}
+            if (exp == "no")
+            {
+                return outVal;
+            }
+            else {
+                return outExp;
+            }
         }
     });
     
