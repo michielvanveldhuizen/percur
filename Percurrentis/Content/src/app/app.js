@@ -30,6 +30,7 @@
         'localytics.directives',
         'breeze.angular',
         'xeditable',
+        'ui.bootstrap',
         'breeze.directives'
     ])
     .config(['$routeProvider', 'activeProfile', 'breezeProvider', function ($routeProvider, activeProfile, breezeProvider) {

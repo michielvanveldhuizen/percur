@@ -410,7 +410,7 @@ angular.module('xeditable').factory('editableController',
        * @memberOf editable-element
        */
       if ($attrs.onbeforesave) {
-        self.onbeforesave = function() {
+          self.onbeforesave = function () {
           return self.catchError($parse($attrs.onbeforesave)($scope));
         };
       }

@@ -36,6 +36,26 @@
             });
         };
 
+        // todo: change to actual validation
+        $scope.checkInsuranceNumber = function (input) {
+            if (input.length > 9) {
+                return "Invalid InsuranceNumber";
+            }
+        };
+
+        //
+        $scope.validateDate = function (input) {
+            if(input === undefined)
+            {
+                return "Invalid Date";
+            }
+        };
+
+        // 
+        $scope.saveEdits = function (input) {
+            console.log("Saving...");
+        };
+
         
         
         travelRequestService.getInsurances()

@@ -21,22 +21,46 @@
                 <tbody>
                     <tr data-ng-repeat="item in items | orderBy: 'DaysLeft' | expired">
                         <td>{{ item.UserName }}</td>
-                        <td><a editable-text="item.InsuranceNumber"
-                               data-tooltip="Click to edit"
-                            e-required e-placeholder="Enter insurancenumber">
-                            {{ item.InsuranceNumber }}
-                            </a>
-                        </td>
-                        <td>{{ item.StartDate | date:'d MMMM yyyy' }}</td>
                         <td>
-                            {{ item.ExpirationDate | date:'d MMMM yyyy' }}
+                            <span editable-text="item.InsuranceNumber" e-name="inumber" e-form="rowform" onbeforesave="checkInsuranceNumber($data)" e-required>
+                                {{ item.InsuranceNumber || 'empty' }}
+                            </span>
                         </td>
                         <td>
-                            <div class="btn-group btn-sm">
-                                <a data-ng-click="deleteInsurance(item)" data-tooltip="Delete"
-                                   class="btn btn-sm ng-scope btn-default">
+                            <span editable-bsdate="item.StartDate" e-name="sDate" e-form="rowform" e-datepicker-popup="dd-MM-yy" onbeforesave="validateDate($data)" e-required>
+                                {{ (item.StartDate | date:'d MMMM yyyy') || 'empty' }}
+                            </span>
+                        </td>
+                        <td>
+                            <span editable-bsdate="item.ExpirationDate" e-name="eDate" e-form="rowform" e-datepicker-popup="dd-MM-yy" onbeforesave="validateDate($data)" e-required>
+                                {{ (item.ExpirationDate | date:'d MMMM yyyy') }}
+                            </span>
+                            <span class="badge expired">Expired</span>
+                        </td>
+
+                        <td style="white-space: nowrap">
+                            <!-- form -->
+                            <form editable-form name="rowform" onbeforesave="saveEdits($data)" ng-show="rowform.$visible" class="form-buttons form-inline">
+                                <button data-tooltip="Save"
+                                        class="btn btn-sm btn-default" ng-click="rowform.$show()"
+                                        type="submit" ng-disabled="rowform.$waiting">
+                                    <i class="fa fa-save"></i>
+                                </button>
+                                <button data-tooltip="Cancel"
+                                        class="btn btn-sm btn-default" ng-click="rowform.$cancel()"
+                                        type="submit" ng-disabled="rowform.$waiting">
                                     <i class="fa fa-times"></i>
-                                </a>
+                                </button>
+                            </form>
+                            <div class="buttons btn-group btn-sm" ng-show="!rowform.$visible">
+                                <button data-tooltip="Edit"
+                                        class="btn btn-sm btn-default" ng-click="rowform.$show()">
+                                    <i class="fa fa-edit"></i>
+                                </button>
+                                <button data-ng-click="deleteInsurance(item)" data-tooltip="Delete"
+                                        class="btn btn-sm btn-default">
+                                    <i class="fa fa-times"></i>
+                                </button>
                             </div>
                         </td>
                     </tr>
@@ -69,22 +93,44 @@
                     <tr data-ng-repeat="item in items | orderBy: 'DaysLeft' | expired:'no'">
                         <td>{{ item.UserName }}</td>
                         <td>
-                            <a editable-text="item.InsuranceNumber" data-tooltip="Click to edit"
-                                onbeforesave="checkInumber($data)" e-required e-placeholder="Enter insurancenumber">
-                                {{ item.InsuranceNumber }}
-                            </a>    
+                            <span editable-text="item.InsuranceNumber" e-name="inumber" e-form="rowform" onbeforesave="checkInsuranceNumber($data)" e-required>
+                                {{ item.InsuranceNumber || 'empty' }}
+                            </span>  
                         </td>
-                        <td>{{ item.StartDate | date:'d MMMM yyyy' }}</td>
                         <td>
-                            {{ item.ExpirationDate | date:'d MMMM yyyy' }}
-                            <span data-ng-if="item.DaysLeft > 0">( <span class="badge"> {{ item.DaysLeft }} </span> days from now).</span>
-                            </td>
+                            <span editable-bsdate="item.StartDate" e-name="sDate" e-form="rowform" e-datepicker-popup="dd-MM-yy" onbeforesave="validateDate($data)" e-required>
+                                {{ (item.StartDate | date:'d MMMM yyyy') || 'empty' }}
+                            </span>
+                         </td>
                         <td>
-                            <div class="btn-group btn-sm">
-                                <a data-ng-click="deleteInsurance(item)" data-tooltip="Delete"
-                                   class="btn btn-sm ng-scope btn-default">
+                            <span editable-bsdate="item.ExpirationDate" e-name="eDate" e-form="rowform" e-datepicker-popup="dd-MM-yy" onbeforesave="validateDate($data)" e-required>
+                                {{ (item.ExpirationDate | date:'d MMMM yyyy') }}
+                            </span>
+                            <span data-ng-if="(item.DaysLeft > 0) && (item.DaysLeft <= 25)"><span class="badge expiring"> {{ item.DaysLeft }}  days from now</span></span>
+                        </td>
+                        <td style="white-space: nowrap">
+                            <!-- form -->
+                            <form editable-form name="rowform" onbeforesave="saveEdits($data)" ng-show="rowform.$visible" class="form-buttons form-inline">
+                                <button data-tooltip="Save"
+                                   class="btn btn-sm btn-default" ng-click="rowform.$show()"
+                                   type="submit" ng-disabled="rowform.$waiting">
+                                    <i class="fa fa-save"></i>
+                                </button>
+                                <button data-tooltip="Cancel"
+                                        class="btn btn-sm btn-default" ng-click="rowform.$cancel()"
+                                        type="submit" ng-disabled="rowform.$waiting">
                                     <i class="fa fa-times"></i>
-                                </a>
+                                </button>
+                            </form>
+                            <div class="buttons btn-group btn-sm" ng-show="!rowform.$visible">
+                                <button data-tooltip="Edit"
+                                   class="btn btn-sm btn-default" ng-click="rowform.$show()">
+                                    <i class="fa fa-edit"></i>
+                                </button>
+                                <button data-ng-click="deleteInsurance(item)" data-tooltip="Delete"
+                                   class="btn btn-sm btn-default">
+                                    <i class="fa fa-times"></i>
+                                </button>
                             </div>
                         </td>
                     </tr>
