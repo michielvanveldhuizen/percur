@@ -11,7 +11,7 @@
             '$location',
             'activeProfile',
             'wizard',
-            'services.modal',
+            'modalService',
             'entityManagerFactory',
             'travelRequestService',
             requestCtrl
