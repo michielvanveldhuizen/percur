@@ -46,29 +46,6 @@
     </head>
     <body>
         <!-- Page Container -->
-        <!--
-            Available #page-container classes:
-
-            '' (None)                                       for a full main and alternative sidebar hidden by default (> 991px)
-
-            'sidebar-visible-lg'                            for a full main sidebar visible by default (> 991px)
-            'sidebar-partial'                               for a partial main sidebar which opens on mouse hover, hidden by default (> 991px)
-            'sidebar-partial sidebar-visible-lg'            for a partial main sidebar which opens on mouse hover, visible by default (> 991px)
-
-            'sidebar-alt-visible-lg'                        for a full alternative sidebar visible by default (> 991px)
-            'sidebar-alt-partial'                           for a partial alternative sidebar which opens on mouse hover, hidden by default (> 991px)
-            'sidebar-alt-partial sidebar-alt-visible-lg'    for a partial alternative sidebar which opens on mouse hover, visible by default (> 991px)
-
-            'sidebar-partial sidebar-alt-partial'           for both sidebars partial which open on mouse hover, hidden by default (> 991px)
-
-            'sidebar-no-animations'                         add this as extra for disabling sidebar animations on large screens (> 991px) - Better performance with heavy pages!
-
-            'style-alt'                                     for an alternative main style (without it: the default style)
-            'footer-fixed'                                  for a fixed footer (without it: a static footer)
-
-            'header-fixed-top'                              has to be added only if the class 'navbar-fixed-top' was added on header.navbar
-            'header-fixed-bottom'                           has to be added only if the class 'navbar-fixed-bottom' was added on header.navbar
-        -->
         <div id="page-container" class="sidebar-partial sidebar-visible-lg sidebar-no-animations footer-fixed">
             <!-- Main Sidebar -->
             <div id="sidebar">
@@ -108,18 +85,6 @@
             <!-- Main Container -->
             <div id="main-container">
                 <!-- Header -->
-                <!--
-                    Available header.navbar classes:
-
-                    'navbar-default'            for the default light header
-                    'navbar-inverse'            for an alternative dark header
-
-                    'navbar-fixed-top'          for a top fixed header (fixed sidebars with scroll will be auto initialized, functionality can be found in js/app.js - handleSidebar())
-                        'header-fixed-top'      has to be added on #page-container only if the class 'navbar-fixed-top' was added
-
-                    'navbar-fixed-bottom'       for a bottom fixed header (fixed sidebars with scroll will be auto initialized, functionality can be found in js/app.js - handleSidebar()))
-                        'header-fixed-bottom'   has to be added on #page-container only if the class 'navbar-fixed-bottom' was added
-                -->
                 <header class="navbar navbar-default">
                     <!-- Left Header Navigation -->
                     <ul class="nav navbar-nav-custom">
@@ -132,19 +97,6 @@
                         <!-- END Main Sidebar Toggle Button -->
                     </ul>
                     <!-- END Left Header Navigation -->
-
-                    <!-- Search Form -->
-                    <!--<form action="page_ready_search_results.html" method="post" class="navbar-form-custom" role="search">
-                        <div class="form-group">
-                            <input type="text" id="top-search" name="top-search" class="form-control" placeholder="Search..">
-                        </div>
-                    </form>-->
-                    <!-- END Search Form -->
-
-                    <!-- Right Header Navigation -->
-                    <!--<ul class="nav navbar-nav-custom pull-right">
-                    </ul>-->
-                    <!-- END Right Header Navigation -->
                 </header>
                 <!-- END Header -->
 
@@ -193,7 +145,6 @@
         @Scripts.Render("~/bundles/src/js")
 
         <script src="~/Content/vendor/angular-xeditable/js/xeditable.js"></script>
-        <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.11.0/ui-bootstrap-tpls.min.js"></script>
 
         @RenderSection("PostScript", required: false)
     </body>
