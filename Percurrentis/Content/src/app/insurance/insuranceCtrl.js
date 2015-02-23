@@ -35,7 +35,7 @@
                 travelRequestService.deleteInsurance();
             });
         };
-
+        
         // todo: change to actual validation
         $scope.checkInsuranceNumber = function (input) {
             if (input.length > 9) {
@@ -51,9 +51,23 @@
             }
         };
 
-        // 
+        //
         $scope.saveEdits = function (input) {
-            console.log("Saving...");
+            // Do some stuff here pls
+       };
+
+        // Calculate numbers of days until insurance expires.
+        updateDaysLeft = function (eDate) {
+            if (new Date(Date.now()) > eDate) {
+                return 0;
+            }
+            else {
+                var completeDay = 24 * 60 * 60 * 1000;
+                var todaysDate = new Date(Date.now());
+                var expDate = eDate;
+                var diffDays = Math.round(Math.abs((todaysDate.getTime() - expDate.getTime()) / (completeDay)));
+                return diffDays;
+            }
         };
 
         
@@ -66,17 +80,7 @@
                 // Convert InsureeGUID to the persons name.
                 travelRequestService.getEmployeeByObjectGuid(value.InsureeGUID).then(function (res) {
                     value.UserName = res.userName;
-                    // Calculate numbers of days until insurance expires.
-                    if (new Date(Date.now()) > value.ExpirationDate) {
-                        value.DaysLeft = 0;
-                    }
-                    else {
-                        var completeDay = 24 * 60 * 60 * 1000; 
-                        var todaysDate = new Date(Date.now());
-                        var expDate = value.ExpirationDate;
-                        var diffDays = Math.round(Math.abs((todaysDate.getTime() - expDate.getTime()) / (completeDay)));
-                        value.DaysLeft = diffDays;
-                    }
+                    value.DaysLeft = (updateDaysLeft(value.ExpirationDate));
                     $scope.items.push(value);
                 });
             });

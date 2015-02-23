@@ -18,5 +18,10 @@
     background-color: #eea135;
 }
 
+.toggleCaret {
+    margin: 20px;
+    display: block;
+}
+
 .validation-error { display: none }
 .has-visited .validation-error { display: block }

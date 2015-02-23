@@ -1,13 +1,23 @@
 <div data-ng-controller="insuranceCtrl">
+    
+    <!-- Add new insurance -->
+    <a class="btn btn-success" ng-click="collapsed_0=!collapsed_0"><i class="gi gi-circle_plus"></i> Add new</a>
+    <div class="block" ng-hide="!collapsed_0">
+        <div class="block-title">
+            <h2> <strong>Add Insurance</strong></h2>
+        </div>
+    </div>
+
+    <!-- List of expired insurances -->
     <div class="block">
         <div class="block-title">
             <h2> <strong>Expired Insurances</strong></h2>
-            <a ng-model="collapsed" class="navbar-right" ng-click="collapsed=!collapsed">
-                <span class="caret"></span>
+            <a ng-model="collapsed" class="navbar-right" ng-click="collapsed_1=!collapsed_1">
+                <span class="caret toggleCaret"></span>
             </a>
          </div>
 
-        <div ng-hide="collapsed" class="table-responsive">
+        <div ng-hide="collapsed_1" class="table-responsive">
             <table class="table table-vcenter table-condensed table-hover">
                 <thead>
                     <tr>
@@ -69,12 +79,12 @@
         </div>
     </div>
 
-    <!-- Active -->
+    <!-- List of active insurances -->
     <div class="block">
         <div class="block-title">
             <h2> <strong>Active Insurances</strong></h2>
             <a ng-model="collapsed_2" class="navbar-right" ng-click="collapsed_2=!collapsed_2">
-                <span class="caret"></span>
+                <span class="caret toggleCaret"></span>
             </a>
         </div>
 
