@@ -272,5 +272,15 @@ namespace Percurrentis.AD_classes
 
             return new Guid((System.Byte[])result.Properties["objectGUID"][0]).ToString();     
         }
+
+        /// <summary>
+        /// Returns UserAC object from the current user
+        /// </summary>
+        /// <returns></returns>
+        public UserAC GetSelf()
+        {
+            string ownGuid = GetOwnGuid();
+            return GetUserByGuid(ownGuid);
+        }
     }
 }

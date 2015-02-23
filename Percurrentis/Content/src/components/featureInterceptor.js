@@ -2,7 +2,6 @@
     'use strict';
     // Module name is handy for logging
     var id = 'components.featureInterceptor';
-    console.log('hierrr');
     // Create the module and define its dependencies.
     var featureInterceptor = angular.module(id, [])
     .config(['$httpProvider', function ($httpProvider) {

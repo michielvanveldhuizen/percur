@@ -4,6 +4,7 @@
 // <author>Tim Lagerburg</author>
 // <summary>Context class for the creation of the database and Save-actions on the database.</summary>
 
+using Percurrentis.AD_classes;
 using Percurrentis.Mapping;
 using Percurrentis.Model;
 using System;
@@ -125,6 +126,13 @@ namespace Percurrentis.Context
                 if (changedEntity.Entity is TravelRequestApproval)
                 {
                     var specEntity = changedEntity.Entity as TravelRequestApproval;
+
+                    ADservices AD = ADservices.InstanceCreation();
+                    UserAC self = AD.GetSelf();
+
+                    specEntity.ApprovedBy = self.objectGuid;
+                    specEntity.ApprovalDate = System.DateTime.Now;
+
                     Trace.WriteLine(specEntity.Flag+" - specEntity flag");
                 }
             }

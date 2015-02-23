@@ -19,9 +19,8 @@ namespace Percurrentis.Controllers
         public ActionResult Index()
         {
             ADservices AD = ADservices.InstanceCreation();
-            string Guid = AD.GetOwnGuid();
+            UserAC self = AD.GetSelf();
 
-            UserAC self = AD.GetUserByGuid(Guid);
             AccessLevels accessLevels = SetAccessLevels(self);
 
             ControllerData cd = new ControllerData { Name = self.userName, Guid = self.objectGuid, AccessLevels = accessLevels};

@@ -8,7 +8,7 @@
 
     function requestApprovalCtrl($scope, $route, $rootScope, travelRequestService) {
         var retrieved = false, isAuthorized = true;
-
+        $scope.request = "";
         $scope.show = function () {
             var shouldShow = isAuthorized && $route && $route.current && $route.current.params && $route.current.params.approve;
             /*my own bad way to show fix this later :)*/
@@ -16,20 +16,12 @@
             $("footer").show();
             /**/
             $rootScope.inApprovalMode = shouldShow;
+            console.log($route.current.params.requestId);
 
-            if (shouldShow && !retrieved) {
-                retrieved = true;
-                travelRequestService.getTravelRequestApprovalsById(parseInt($route.current.params.requestId, 10))
+            travelRequestService.getTravelRequestApprovalsById(parseInt($route.current.params.requestId, 10))
                 .then(function (query) {
                     $scope.request = query.results[0];
-                    if (!$scope.request.TravelRequestID || $scope.request.Hash != $route.current.params.approve) {
-                        alert("Unauthorized - The request might already be approved or you don't have permission to approve this request.");
-                        isAuthorized = false;
-                        shouldShow = false;
-                    }
                 });
-            }
-
             return shouldShow;
         }
 
@@ -38,12 +30,11 @@
         };
 
         $scope.onApproveConfirm = function () {
-            console.log('here');
             $scope.mode = 'approveConfirmed';
             $scope.request.Flag = true;
             $scope.request.HasApproved = 2;
             $scope.request.Note = angular.copy($scope.comments);
-            console.log($scope);
+            
             travelRequestService.saveChanges($scope.request, undefined, angular.noop, angular.noop);
 
         };

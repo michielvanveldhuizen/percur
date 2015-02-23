@@ -179,7 +179,6 @@
     <Content Include="mailtemplates\Insurance%28s%29 expiring.html" />
     <Content Include="mailtemplates\Itinerarychange.html" />
     <Content Include="mailtemplates\Travelrequest waiting.html" />
-    <Content Include="mailtemplates\Travelrequest rejected.html" />
     <Content Include="Microsoft.SqlServer.Dac.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

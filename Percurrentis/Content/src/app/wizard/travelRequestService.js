@@ -587,94 +587,94 @@
             //Checks if records already exist in the database. If so connecting them to the object and detach the Entity
             //CustomerOrProspect
             var companyCheck = 0;
+            if (typeof request.CustomerOrProspect !== typeof undefined) {
 
-            _.forEach(dbCompanies, function (val) {
-                if (val.Name != null && val.Name == request.CustomerOrProspect.Name) {
-                    if (val.Address.City != null && val.Address.Street == request.CustomerOrProspect.Address.Street) {
-                        if (val.Address.City != null && val.Address.City == request.CustomerOrProspect.Address.City) {
-                            companyCheck = val.Id;
+                _.forEach(dbCompanies, function (val) {
+                    if (val.Name != null && val.Name == request.CustomerOrProspect.Name) {
+                        if (val.Address.City != null && val.Address.Street == request.CustomerOrProspect.Address.Street) {
+                            if (val.Address.City != null && val.Address.City == request.CustomerOrProspect.Address.City) {
+                                companyCheck = val.Id;
+                            }
                         }
                     }
-                }
-            });
+                });
 
-            if (companyCheck != 0) {
-                manager.detachEntity(request.CustomerOrProspect.Address);
-                manager.detachEntity(request.CustomerOrProspect);
-                request.CustomerOrProspectID = companyCheck;
+                if (companyCheck != 0) {
+                    manager.detachEntity(request.CustomerOrProspect.Address);
+                    manager.detachEntity(request.CustomerOrProspect);
+                    request.CustomerOrProspectID = companyCheck;
+                }
+
+
+                //If the filled in is already in the database-> connect ID to that ID and try to delete the old entity so it isn't made in the database
+                _.forEach(dbAddresses, function (val) {
+                    if (options.hasFerry) {
+                        var x = 0;
+                        _.forEach(request.FerryRequests, function (f) {
+                            if (val.AddressName != null && val.AddressName == f.DepartureAddress.AddressName) {
+                                try {
+                                    manager.detachEntity(f.DepartureAddress);
+                                } catch (err) { }
+                                request.FerryRequests[_.indexOf(request.FerryRequests, f)].DepartureAddressID = val.Id;
+                            }
+                            if (val.AddressName != null && val.AddressName == f.DestinationAddress.AddressName) {
+                                try {
+                                    manager.detachEntity(f.DestinationAddress);
+                                } catch (err) { }
+                                request.FerryRequests[_.indexOf(request.FerryRequests, f)].DestinationAddressID = val.Id;
+                            }
+                        });
+                    }
+                    if (options.hasTaxi) {
+                        _.forEach(request.TaxiRequests, function (t) {
+                            if (val.Street != null && val.Street == t.DepartureAddress.Street) {
+                                if (val.City != null && val.City == t.DepartureAddress.City) {
+                                    if (val.AddressName != null && val.AddressName == t.DepartureAddress.AddressName) {
+                                        try {
+                                            manager.detachEntity(t.DepartureAddress);
+                                        } catch (err) { }
+                                        request.TaxiRequests[_.indexOf(request.TaxiRequests, t)].DepartureAddressID = val.Id;
+                                    }
+                                }
+                            }
+                            if (val.Street != null && val.Street == t.DestinationAddress.Street) {
+                                if (val.City != null && val.City == t.DestinationAddress.City) {
+                                    if (val.AddressName != null && val.AddressName == t.DestinationAddress.AddressName) {
+                                        try {
+                                            manager.detachEntity(t.DestinationAddress);
+                                        } catch (err) { }
+                                        request.TaxiRequests[_.indexOf(request.TaxiRequests, t)].DestinationAddressID = val.Id;
+                                    }
+                                }
+                            }
+                        });
+                    }
+                    if (options.hasRentalCar) {
+                        _.forEach(request.RentalCarRequests, function (r) {
+                            if (val.Street != null && val.Street == r.Address.Street) {
+                                if (val.City != null && val.City == r.Address.City) {
+                                    try {
+                                        manager.detachEntity(r.Address);
+                                    } catch (err) { }
+                                    request.RentalCarRequests[_.indexOf(request.RentalCarRequests, r)].AddressID = val.Id;
+                                }
+                            }
+                        });
+                    }
+                    if (options.hasAccommodation) {
+                        _.forEach(request.Accommodations, function (a) {
+                            if (val.Street != null && val.Street == a.Address.Street) {
+                                if (val.City != null && val.City == a.Address.City) {
+                                    try {
+                                        manager.detachEntity(a.Address);
+                                    } catch (err) { }
+                                    request.Accommodations[_.indexOf(request.Accommodations, a)].AddressID = val.Id;
+                                }
+                            }
+                        });
+                    }
+                });
             }
-
-
-            //If the filled in is already in the database-> connect ID to that ID and try to delete the old entity so it isn't made in the database
-            _.forEach(dbAddresses, function (val) {
-                if (options.hasFerry) {
-                    var x=0;
-                    _.forEach(request.FerryRequests, function (f) {
-                        if (val.AddressName != null && val.AddressName == f.DepartureAddress.AddressName) {
-                            try {
-                                manager.detachEntity(f.DepartureAddress);
-                            }catch(err){}
-                            request.FerryRequests[_.indexOf(request.FerryRequests, f)].DepartureAddressID = val.Id;
-                        }
-                        if (val.AddressName != null && val.AddressName == f.DestinationAddress.AddressName) {
-                            try{
-                                manager.detachEntity(f.DestinationAddress);
-                            } catch (err) { }
-                            request.FerryRequests[_.indexOf(request.FerryRequests, f)].DestinationAddressID = val.Id;
-                        }
-                   });
-                }
-                if (options.hasTaxi) {
-                    _.forEach(request.TaxiRequests, function (t) {
-                        if (val.Street != null && val.Street == t.DepartureAddress.Street) {
-                            if (val.City != null && val.City == t.DepartureAddress.City) {
-                                if (val.AddressName != null && val.AddressName == t.DepartureAddress.AddressName) {
-                                    try {
-                                        manager.detachEntity(t.DepartureAddress);
-                                    } catch (err) { }
-                                    request.TaxiRequests[_.indexOf(request.TaxiRequests, t)].DepartureAddressID = val.Id;
-                                }
-                            }
-                        }
-                        if (val.Street != null && val.Street == t.DestinationAddress.Street) {
-                            if (val.City != null && val.City == t.DestinationAddress.City) {
-                                if (val.AddressName != null && val.AddressName == t.DestinationAddress.AddressName) {
-                                    try {
-                                        manager.detachEntity(t.DestinationAddress);
-                                    } catch (err) { }
-                                    request.TaxiRequests[_.indexOf(request.TaxiRequests, t)].DestinationAddressID = val.Id;
-                                }
-                            }
-                        }
-                    });
-                }
-                if (options.hasRentalCar) {
-                    _.forEach(request.RentalCarRequests, function (r) {
-                        if (val.Street != null && val.Street == r.Address.Street) {
-                            if (val.City != null && val.City == r.Address.City) {
-                                try {
-                                    manager.detachEntity(r.Address);
-                                } catch (err) { }
-                                request.RentalCarRequests[_.indexOf(request.RentalCarRequests, r)].AddressID = val.Id;
-                            }
-                        }
-                    });
-                }
-                if (options.hasAccommodation) {
-                    _.forEach(request.Accommodations, function (a) {
-                        if (val.Street != null && val.Street == a.Address.Street) {
-                            if (val.City != null && val.City == a.Address.City) {
-                                try {
-                                    manager.detachEntity(a.Address);
-                                } catch (err) { }
-                                request.Accommodations[_.indexOf(request.Accommodations, a)].AddressID = val.Id;
-                            }
-                        }
-                    });
-                }                
-            });
-            
-
             console.log(request);
             //TODO extra traveler same thing as above
             
