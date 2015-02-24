@@ -17,12 +17,22 @@
         $rootScope.$on('$routeChangeSuccess', function (event, current) {
 
             if ($route.current.data && $route.current.data.breadcrumbs) {
+                var needFooterCheck = false;
+                //Maybe not best place to hide footer
                 breadcrumbs = $route.current.data.breadcrumbs;
                 _.each(breadcrumbs, function (val) {
+                    if (typeof val.name !== typeof undefined) {
+                        if (val.name == "Request Detail") {
+                            needFooterCheck = true;
+                        }
+                    }
                     if (!val.path || val.path == '') {
                         val.path = 'javascript:void(0)';
                     }
                 });
+                if (!needFooterCheck) {
+                    $('footer').hide();
+                }
                 return;
             }
 
@@ -42,6 +52,7 @@
             }
 
             breadcrumbs = result;
+            
         });
 
         breadcrumbsService.all = function () {

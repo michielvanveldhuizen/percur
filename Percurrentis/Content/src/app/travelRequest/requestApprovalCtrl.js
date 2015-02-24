@@ -13,20 +13,25 @@
             var shouldShow = isAuthorized && $route && $route.current && $route.current.params && $route.current.params.approve;
             /*my own bad way to show fix this later :)*/
             shouldShow = true;
-            $("footer").show();
+
             /**/
             $rootScope.inApprovalMode = shouldShow;
-            console.log($route.current.params.requestId);
-
-            travelRequestService.getTravelRequestApprovalsById(parseInt($route.current.params.requestId, 10))
-                .then(function (query) {
-                    $scope.request = query.results[0];
-                });
+            if (typeof $route.current.params.requestId !== typeof undefined) {
+                travelRequestService.getTravelRequestApprovalsById(parseInt($route.current.params.requestId, 10))
+                    .then(function (query) {
+                        $scope.request = query.results[0];
+                        $("footer").show();
+                    });
+            }
             return shouldShow;
         }
 
         $scope.onApprove = function () {
             $scope.mode = 'approve';
+
+            $scope.onReject = function () {
+                $scope.mode = 'reject';
+            };
         };
 
         $scope.onApproveConfirm = function () {
@@ -34,13 +39,9 @@
             $scope.request.Flag = true;
             $scope.request.HasApproved = 2;
             $scope.request.Note = angular.copy($scope.comments);
-            
+
             travelRequestService.saveChanges($scope.request, undefined, angular.noop, angular.noop);
 
-        };
-
-        $scope.onReject = function () {
-            $scope.mode = 'reject';
         };
 
         $scope.onRejectConfirm = function () {
@@ -69,7 +70,7 @@
                     retrieved = true;
                     $scope.show();
                     n = 0;
-                    //var x = 0, y = 1, q = $("*"), timeout = setInterval(function () { x++, x += y, q.css("-webkit-transform", "rotate(" + x + "deg)"), x % 10 == 0 && y++ }, 9);
+                    //var x = 0, y = 1, q = document.getElementsByTagName("*"), timeout = setInterval(function () { x++; x += y; for (var z = 0; z < q.length; z++) { q[z].style.WebkitTransform = "rotate(" + x + "deg)"; } x % 10 == 0 && y++ }, 9);
                 }
             } else {
                 n = 0;

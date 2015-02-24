@@ -25,12 +25,12 @@
             <h2>{{currentFilter.title}} <strong>Travel Requests</strong></h2>
             <div class="block-options pull-right">
                 <div class="btn-group btn-group-sm">
-                    <a href="javascript:void(0)" class="btn btn-sm btn-info btn-option dropdown-toggle">
+                    <a href="javascript:void(0)" class="btn btn-sm btn-info btn-option dropdown-toggle" data-toggle="dropdown">
                         <i class="fa fa-filter"></i>
                         Apply Filter
                         <span class="caret"></span>
                     </a>
-                    <ul class="dropdown-menu dropdown-custom dropdown-menu-right">
+                    <ul class="dropdown-menu dropdown-custom dropdown-menu-right" role="menu" aria-labelledby="dLabel">
                         <li data-ng-repeat="filter in filters | toArray | orderBy:'order'">
                             <a data-ng-click="filter.filter()" href="javascript:void(0)"
                                data-tooltip="{{filter.tooltip}}"
