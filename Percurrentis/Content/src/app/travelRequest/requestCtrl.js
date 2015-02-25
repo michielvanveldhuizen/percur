@@ -135,10 +135,10 @@
 
     function requestDetailCtrl($scope, $route, travelRequestService) {
         var request;
-
         travelRequestService.getTravelRequestById(parseInt($route.current.params.requestId, 10))
         .then(function (query) {
             $scope.request = query.results[0];
+            show(query.results[0]);
             return query.results[0];
         })
         .then(function (request) {
@@ -148,6 +148,52 @@
             $scope.supervisorName = employee.userName;
         });
 
-        console.log($scope);
+        function show(request) {
+            if($scope.request.SuperiorID == ownGuid){
+                $scope.TRArequest = $scope.request.TravelRequestApproval;
+                if ($scope.request.IsApproved == 0) {
+                    $("footer").show();
+                }
+            }
+        }
+
+        $scope.onApprove = function () {
+            $scope.mode = 'approve';
+
+           
+        };
+        $scope.onReject = function () {
+            $scope.mode = 'reject';
+        };
+        $scope.onApproveConfirm = function () {
+            $scope.mode = 'approveConfirmed';
+            $scope.TRArequest.Flag = true;
+            $scope.TRArequest.HasApproved = 2;
+            $scope.TRArequest.Note = angular.copy($scope.comments);
+
+            travelRequestService.saveChanges($scope.TRArequest, undefined, angular.noop, angular.noop);
+            reloadPage();
+        };
+
+        $scope.onRejectConfirm = function () {
+            $scope.mode = 'rejectConfirmed';
+            $scope.TRArequest.Flag = true;
+            $scope.TRArequest.HasApproved = 1;
+            $scope.TRArequest.Note = angular.copy($scope.comments);
+            travelRequestService.saveChanges($scope.TRArequest, undefined, angular.noop, angular.noop);
+            reloadPage();
+        };
+
+        $scope.onCancel = function () {
+            $scope.mode = 'init';
+        };
+
+        $scope.mode = 'init';
+
+        function reloadPage() {
+            $route.reload();
+            /*$("#page-reload-notification").html("This page will reload in:  to set the state");
+            window.setTimeout(function () { document.location.reload(true); }, 10000);*/
+        }
     }
 })();

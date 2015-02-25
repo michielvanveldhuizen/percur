@@ -686,7 +686,7 @@
             function saveSucceeded(result) {
                 //console.log('Successfully saved all changes');
                 onSuccess(result);
-                initiateNotificationStep();
+                //initiateNotificationStep();
             }
 
             function saveFailed(error) {

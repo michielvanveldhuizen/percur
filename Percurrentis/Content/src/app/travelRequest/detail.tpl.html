@@ -79,7 +79,7 @@
                     <p data-ng-show="request.RequestTravellers.length == 0">There are no travellers in this request.</p>
                 </div>
             </div>
-            <div data-ng-show="request.Accommodations.length > 0" class="block" >
+            <div data-ng-show="request.Accommodations.length > 0" class="block">
                 <div class="block-title">
                     <h4>Accommodation</h4>
                 </div>
@@ -250,4 +250,97 @@
             </div>
         </div>
     </div>
+
+
+
+    <footer class="clearfix"
+            style="min-height: 168px;display:none;">
+        <div>
+            <div class="block-title"
+                 style="border-top: 1px solid #dbe1e8">
+                <h4><strong>Approve</strong> Travel Request</h4>
+            </div>
+            <div class="row"
+                 style="padding-bottom: 20px;">
+                <div data-ng-show="mode == 'init'">
+                    <div class="col-xs-9">
+                        <textarea class="form-control"
+                                  data-ng-model="comments"
+                                  rows="4"
+                                  placeholder="Comments / Reason of rejection (optional)"></textarea>
+                    </div>
+                    <div class="col-xs-3">
+                        <a class="btn btn-success btn-block"
+                           data-ng-click="onApprove()">
+                            <i class="fa fa-check"></i>
+                            Approve
+                        </a>
+                        <a class="btn btn-danger btn-block"
+                           data-ng-click="onReject()">
+                            <i class="fa fa-ban"></i>
+                            Reject
+                        </a>
+                    </div>
+                </div>
+                <div data-ng-show="mode == 'approve'">
+                    <div class="col-xs-9">
+                        <p>
+                            Are you sure you want to approve this request? By approving this request,
+                            a notification will be sent to anyone who also has to approve this request (if applicable).
+                        </p>
+                        <p>When the request is fully approved, the travel agency will take care of further tasks.</p>
+                    </div>
+                    <div class="col-xs-3">
+                        <a class="btn btn-success btn-block"
+                           data-ng-click="onApproveConfirm()">
+                            <i class="fa fa-check"></i>
+                            Approve
+                        </a>
+                        <a class="btn btn-default btn-block"
+                           data-ng-click="onCancel()">
+                            <i class="fa fa-arrow-left"></i>
+                            Cancel
+                        </a>
+                    </div>
+                </div>
+                <div data-ng-show="mode == 'approveConfirmed'">
+                    <div class="col-xs-12">
+                        <p>You have approved the request. A notification will be sent to anyone who also has to approve this request (if applicable).</p>
+                        <p>When the request is fully approved, the travel agency will take care of further tasks.</p>
+                        <p id="page-reload-notification"></p>
+                    </div>
+                </div>
+                <div data-ng-show="mode == 'reject'">
+                    <div class="col-xs-9" data-ng-click="onCancel()">
+                        <p>
+                            Are you sure you want to reject this request? By disapproving this request,
+                            the travel agency will be notified of the rejection and won't further handle this request.
+                        </p>
+                        <p data-ng-show="!comments" class="text-warning">
+                            Notice: You have not left a comment with this rejection. please go back and add one, so that
+                            the person who made the request and the travel agency will know why the request was rejected.
+                        </p>
+                    </div>
+                    <div class="col-xs-3">
+                        <a class="btn btn-danger btn-block"
+                           data-ng-click="onRejectConfirm()">
+                            <i class="fa fa-ban"></i>
+                            Reject
+                        </a>
+                        <a class="btn btn-default btn-block"
+                           data-ng-click="onCancel()">
+                            <i class="fa fa-arrow-left"></i>
+                            Cancel
+                        </a>
+                    </div>
+                </div>
+                <div data-ng-show="mode == 'rejectConfirmed'">
+                    <div class="col-xs-12">
+                        <p>You have rejected the request. The travel agency will be notified but will not handle the request in its current state.</p>
+                        <p id="page-reload-notification"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
 </div>

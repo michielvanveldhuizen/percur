@@ -149,6 +149,14 @@ namespace Percurrentis.Context
                 {
                     var specEntity = changedEntity.Entity as TravelRequestApproval;
 
+                    TravelRequest travelRequest = this.TravelRequest.Single(TravelRequest => TravelRequest.TravelRequestApprovalID == specEntity.Id);
+                    travelRequest.IsApproved = specEntity.HasApproved;
+
+                    if (specEntity.HasApproved == 2) { 
+                        //PETER GA JIJ DIT EENS AAN DE TRAVELAGENTS NOTIFIBANANEN
+                        //PETER GA JIJ DIT EENS AAN DE EMPLOYBAANAAN NOTIFIBANANEN
+                    }
+                    
                     ADservices AD = ADservices.InstanceCreation();
                     UserAC self = AD.GetSelf();
                     

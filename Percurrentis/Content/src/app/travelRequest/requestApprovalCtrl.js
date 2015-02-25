@@ -7,56 +7,7 @@
         ['$scope', '$route', '$rootScope', 'travelRequestService', requestApprovalCtrl]);
 
     function requestApprovalCtrl($scope, $route, $rootScope, travelRequestService) {
-        var retrieved = false, isAuthorized = true;
-        $scope.request = "";
-        $scope.show = function () {
-            var shouldShow = isAuthorized && $route && $route.current && $route.current.params && $route.current.params.approve;
-            /*my own bad way to show fix this later :)*/
-            shouldShow = true;
-
-            /**/
-            $rootScope.inApprovalMode = shouldShow;
-            if (typeof $route.current.params.requestId !== typeof undefined) {
-                travelRequestService.getTravelRequestApprovalsById(parseInt($route.current.params.requestId, 10))
-                    .then(function (query) {
-                        $scope.request = query.results[0];
-                        $("footer").show();
-                    });
-            }
-            return shouldShow;
-        }
-
-        $scope.onApprove = function () {
-            $scope.mode = 'approve';
-
-            $scope.onReject = function () {
-                $scope.mode = 'reject';
-            };
-        };
-
-        $scope.onApproveConfirm = function () {
-            $scope.mode = 'approveConfirmed';
-            $scope.request.Flag = true;
-            $scope.request.HasApproved = 2;
-            $scope.request.Note = angular.copy($scope.comments);
-
-            travelRequestService.saveChanges($scope.request, undefined, angular.noop, angular.noop);
-
-        };
-
-        $scope.onRejectConfirm = function () {
-            $scope.mode = 'rejectConfirmed';
-            $scope.request.TravelRequestApproval.Flag = true;
-            $scope.request.TravelRequestApproval.HasApproved = 1;
-            $scope.request.TravelRequestApproval.Note = angular.copy($scope.comments);
-            travelRequestService.saveChanges($scope.request, undefined, angular.noop, angular.noop);
-        };
-
-        $scope.onCancel = function () {
-            $scope.mode = 'init';
-        };
-
-        $scope.mode = 'init';
+        
 
 
         /*remove later*/
