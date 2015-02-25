@@ -37,6 +37,7 @@ namespace Percurrentis.Mapping
             this.HasMany<RequestTraveller>(t => t.RequestTravellers)
             .WithRequired(r => r.TravelRequest).HasForeignKey(r => r.TravelRequestID);
             this.HasRequired(t => t.CustomerOrProspect).WithMany().HasForeignKey(t => t.CustomerOrProspectID);
+
             this.HasOptional(t => t.TravelRequestApproval).WithMany().HasForeignKey(t => t.TravelRequestApprovalID);
 
             this.HasOptional(c => c.Country).WithMany().HasForeignKey(c => c.CountryID);

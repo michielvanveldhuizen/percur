@@ -253,6 +253,10 @@
     <Compile Include="Migrations\201502250710575_fullNameMendatory2.Designer.cs">
       <DependentUpon>201502250710575_fullNameMendatory2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201502250933214_TRAgotnomoreTA.cs" />
+    <Compile Include="Migrations\201502250933214_TRAgotnomoreTA.Designer.cs">
+      <DependentUpon>201502250933214_TRAgotnomoreTA.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Context\DatabaseContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -1252,6 +1256,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201502250710575_fullNameMendatory2.resx">
       <DependentUpon>201502250710575_fullNameMendatory2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201502250933214_TRAgotnomoreTA.resx">
+      <DependentUpon>201502250933214_TRAgotnomoreTA.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

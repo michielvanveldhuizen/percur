@@ -255,7 +255,6 @@
         * entityType's metadata for easier access by this directive
         */
         function getRequiredPropertiesForEntityType(type) {
-            console.log(type);
             if (type.custom && type.custom.required) {
                 return type.custom.required;
             }

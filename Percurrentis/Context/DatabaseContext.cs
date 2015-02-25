@@ -106,6 +106,28 @@ namespace Percurrentis.Context
                         specEntity.OnBeforeInsert();
                     }
                 }
+                if (changedEntity.Entity is TravelRequest)
+                {
+                    var specEntity = changedEntity.Entity as TravelRequest;
+                    
+                    TravelRequestApproval TRA = new TravelRequestApproval();
+                    TRA.ApprovalRoleID = 1;
+                    TRA.Hash = "dingen";
+                    TRA.Id = -1;
+                    TRA.Archived = false;
+                    TRA.Flag = false;
+                    TRA.HasApproved = 0;
+
+                    //PETER DO NOTIFICATION TO PROJECT MANAGER
+
+                    TRA.NotificationSent = false;
+                    
+                    this.TravelRequestApproval.Add(TRA);
+
+                    specEntity.TravelRequestApproval = TRA;
+                    
+                    
+                }
             }
             foreach (var changedEntity in changedEntities.Where(e => e.State == EntityState.Modified))
             {
@@ -129,7 +151,7 @@ namespace Percurrentis.Context
 
                     ADservices AD = ADservices.InstanceCreation();
                     UserAC self = AD.GetSelf();
-
+                    
                     specEntity.ApprovedBy = self.objectGuid;
                     specEntity.ApprovalDate = System.DateTime.Now;
 

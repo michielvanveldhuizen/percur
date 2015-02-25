@@ -163,7 +163,6 @@
             },
             onSubmit: function () {
                 // clean up entities that should be empty
-                console.log($scope.model);
                 if (!$scope.options.hasFlight) {
                     _.each($scope.model.FlightRequests, function (v) {
                         travelRequestService.removeFlight($scope.model, v);
@@ -194,7 +193,6 @@
                         travelRequestService.removeAccommodation($scope.model, v);
                     });
                 }
-                console.log($scope.model);
 
                 try {
                     travelRequestService.saveChanges($scope.model, $scope.options, function (result) {

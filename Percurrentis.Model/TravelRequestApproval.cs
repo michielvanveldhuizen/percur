@@ -20,14 +20,12 @@ namespace Percurrentis.Model
         public Nullable<System.DateTime> ApprovalDate { get; set; }
         public bool Archived { get; set; }
         public bool Flag { get; set; }
-        public int? TravelRequestID { get; set; }
         public int HasApproved { get; set; }
         public bool NotificationSent { get; set; }
         public int? ApprovalRoleID { get; set; }
         public int? NextID { get; set; }
         public string Hash { get; set; }
 
-        public virtual TravelRequest TravelRequest { get; set; }
         public virtual ApprovalRole ApprovalRole { get; set; }
         public virtual TravelRequestApproval Next { get; set; }
     
