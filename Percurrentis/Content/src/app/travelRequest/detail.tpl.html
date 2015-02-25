@@ -79,7 +79,7 @@
                     <p data-ng-show="request.RequestTravellers.length == 0">There are no travellers in this request.</p>
                 </div>
             </div>
-            <div class="block">
+            <div data-ng-show="request.Accommodations.length > 0" class="block" >
                 <div class="block-title">
                     <h4>Accommodation</h4>
                 </div>
@@ -97,7 +97,7 @@
             </div>
         </div>
         <div class="col-md-6">
-            <div class="block">
+            <div data-ng-show="request.FlightRequests.length > 0" class="block">
                 <div class="block-title">
                     <h4>Flights</h4>
                 </div>
@@ -126,10 +126,10 @@
                             {{flight.LargeLuggageCount ? flight.LargeLuggageCount + ' kg' : 'None' }}
                         </div>
                     </fieldset>
-                    <p data-ng-show="request.FlightRequests.length == 0">There are no flights in this request.</p>
+                    <p data-ng-show="request.FlightRequests.length > 0">There are no flights in this request.</p>
                 </div>
             </div>
-            <div class="block">
+            <div data-ng-show="request.FerryRequests.length > 0" class="block">
                 <div class="block-title">
                     <h4>Ferry</h4>
                 </div>
@@ -170,7 +170,7 @@
                     <p data-ng-show="request.FerryRequests.length == 0">There are no ferries in this request.</p>
                 </div>
             </div>
-            <div class="block">
+            <div data-ng-show="request.EuroTunnelRequests.length > 0" class="block">
                 <div class="block-title">
                     <h4>Eurotunnel</h4>
                 </div>
@@ -193,7 +193,7 @@
                     <p data-ng-show="request.EuroTunnelRequests.length == 0">There are no eurotunnel travels in this request.</p>
                 </div>
             </div>
-            <div class="block">
+            <div data-ng-show="request.RentalCarRequests.length > 0" class="block">
                 <div class="block-title">
                     <h4>Rental Car</h4>
                 </div>
@@ -224,7 +224,7 @@
                     <p data-ng-show="request.RentalCarRequests.length == 0">There are no rental cars in this request.</p>
                 </div>
             </div>
-            <div class="block">
+            <div data-ng-show="request.TaxiRequests.length > 0" class="block">
                 <div class="block-title">
                     <h4>Taxi</h4>
                 </div>
