@@ -47,24 +47,24 @@
                         <div data-form-control-static data-label="Customer">
                             {{request.CustomerOrProspect.Name}}
                         </div>
-                        <div data-form-control-static data-label="Customer">
+                        <div data-form-control-static data-label="Address">
                             <div>
-                                <span data-ng-show="request.CustomerOrProspect.AddressName">
-                                    <strong>{{request.CustomerOrProspect.AddressName}}<br /></strong>
+                                <span data-ng-show="request.CustomerOrProspect.Address.AddressName">
+                                    <strong>{{request.CustomerOrProspect.Address.AddressName}}<br /></strong>
                                 </span>
-                                <span data-ng-show="request.CustomerOrProspect.Street">
-                                    {{request.CustomerOrProspect.Street}}<br />
+                                <span data-ng-show="request.CustomerOrProspect.Address.Street">
+                                    {{request.CustomerOrProspect.Address.Street}}<br />
                                 </span>
-                                <span data-ng-show="request.CustomerOrProspect.City">
-                                    {{request.CustomerOrProspect.City}}
+                                <span data-ng-show="request.CustomerOrProspect.Address.City">
+                                    {{request.CustomerOrProspect.Address.City}}
                                 </span>
-                                <span data-ng-show="request.CustomerOrProspect.PostalCode">
-                                    , {{request.CustomerOrProspect.PostalCode}}
-                                </span><span data-ng-show="model.City || model.PostalCode"><br /></span>
-                                <span data-ng-show="request.CustomerOrProspect.PostalCode">
-                                    {{request.CustomerOrProspect.StateProvince}},
+                                <span data-ng-show="request.CustomerOrProspect.Address.PostalCode">
+                                    , {{request.CustomerOrProspect.Address.PostalCode}}
+                                </span><span data-ng-show="request.CustomerOrProspect.Address.City || request.CustomerOrProspect.Address.PostalCode"><br /></span>
+                                <span data-ng-show="request.CustomerOrProspect.Adress.PostalCode">
+                                    {{request.CustomerOrProspect.Address.StateProvince}},
                                 </span>
-                                {{request.CustomerOrProspect.CountryRegion}}
+                                {{request.CustomerOrProspect.Address.CountryRegion.Name}}
                             </div>
                         </div>
 </fieldset>

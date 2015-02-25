@@ -138,7 +138,9 @@
         travelRequestService.getTravelRequestById(parseInt($route.current.params.requestId, 10))
         .then(function (query) {
             $scope.request = query.results[0];
-            show(query.results[0]);
+            show($scope.request);
+            console.log("BENECHTEENBANAAN");
+            console.log($scope.request);
             return query.results[0];
         })
         .then(function (request) {

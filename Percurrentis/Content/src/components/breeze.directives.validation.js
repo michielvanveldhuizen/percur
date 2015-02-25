@@ -235,9 +235,9 @@
             //       inside 'valErrsChanged' rather than in the link function
             var entityType = info.getType();
             if (entityType) { // the bound entity is known
-                
                 var requiredProperties =
                     getRequiredPropertiesForEntityType(entityType);
+
                 return info.isRequired = !!requiredProperties[info.propertyPath];
             }
             return undefined; // don't know yet
