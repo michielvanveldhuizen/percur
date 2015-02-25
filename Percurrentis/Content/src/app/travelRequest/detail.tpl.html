@@ -47,10 +47,27 @@
                         <div data-form-control-static data-label="Customer">
                             {{request.CustomerOrProspect.Name}}
                         </div>
-                        <div data-form-control-static data-label="Address">
-                            <div data-address data-ng-model="request.CustomerOrProspect.Address"></div>
+                        <div data-form-control-static data-label="Customer">
+                            <div>
+                                <span data-ng-show="request.CustomerOrProspect.AddressName">
+                                    <strong>{{request.CustomerOrProspect.AddressName}}<br /></strong>
+                                </span>
+                                <span data-ng-show="request.CustomerOrProspect.Street">
+                                    {{request.CustomerOrProspect.Street}}<br />
+                                </span>
+                                <span data-ng-show="request.CustomerOrProspect.City">
+                                    {{request.CustomerOrProspect.City}}
+                                </span>
+                                <span data-ng-show="request.CustomerOrProspect.PostalCode">
+                                    , {{request.CustomerOrProspect.PostalCode}}
+                                </span><span data-ng-show="model.City || model.PostalCode"><br /></span>
+                                <span data-ng-show="request.CustomerOrProspect.PostalCode">
+                                    {{request.CustomerOrProspect.StateProvince}},
+                                </span>
+                                {{request.CustomerOrProspect.CountryRegion}}
+                            </div>
                         </div>
-                    </fieldset>
+</fieldset>
                 </div>
             </div>
             <div class="block">

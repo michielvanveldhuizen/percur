@@ -25,6 +25,7 @@ namespace Percurrentis.Model
         public string NoteCollectionID { get; set; }
         public int? TravelRequestApprovalID { get; set; }
         public int? CountryID { get; set; }
+        public string Hash { get; set; }
 
         public virtual CountryInformation Country { get; set; }
         public virtual TravelRequestApproval TravelRequestApproval { get; set; }

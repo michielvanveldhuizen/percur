@@ -24,7 +24,7 @@ namespace Percurrentis.Mapping
             this.Property(t => t.NotificationSent).IsRequired();
             this.Property(t => t.HasApproved).IsRequired();
             this.Property(t => t.COOApproved).IsRequired();
-            this.Property(t => t.Hash).IsRequired();    
+            
         }
     }
 }

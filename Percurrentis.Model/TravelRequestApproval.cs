@@ -23,6 +23,6 @@ namespace Percurrentis.Model
         public int HasApproved { get; set; }
         public bool NotificationSent { get; set; }
         public int COOApproved { get; set; }
-        public string Hash { get; set; }
+        
     }
 }
