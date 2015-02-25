@@ -17,6 +17,7 @@ namespace Percurrentis.Model
         [Mandatory]
         [_256]
         public string FirstName { get; set; }
+        [Mandatory]
         [_256]
         public string FullName { get; set; }
         public string PhoneNumberID { get; set; }

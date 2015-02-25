@@ -18,7 +18,7 @@ namespace Percurrentis.Mapping
             this.Property(r => r.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
             this.Property(r => r.FamilyName).IsRequired().HasMaxLength(256);
             this.Property(r => r.FirstName).IsRequired().HasMaxLength(256);
-            this.Property(r => r.FullName).IsOptional().HasMaxLength(256);
+            this.Property(r => r.FullName).IsRequired().HasMaxLength(256);
             this.Property(r => r.CompanyID).IsOptional();
             this.Property(r => r.TravelRequestID).IsRequired();
             //this.HasOptional(r => r.PhoneNumber).WithMany().HasForeignKey(r => r.PhoneNumberID);

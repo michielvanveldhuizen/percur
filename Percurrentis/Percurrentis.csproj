@@ -241,6 +241,18 @@
     <Compile Include="Migrations\201502110756228_ChangeOfApprovedType.Designer.cs">
       <DependentUpon>201502110756228_ChangeOfApprovedType.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201502250623006_fullNameMendatory.cs" />
+    <Compile Include="Migrations\201502250623006_fullNameMendatory.Designer.cs">
+      <DependentUpon>201502250623006_fullNameMendatory.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201502250655444_fullNameMendatory1.cs" />
+    <Compile Include="Migrations\201502250655444_fullNameMendatory1.Designer.cs">
+      <DependentUpon>201502250655444_fullNameMendatory1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201502250710575_fullNameMendatory2.cs" />
+    <Compile Include="Migrations\201502250710575_fullNameMendatory2.Designer.cs">
+      <DependentUpon>201502250710575_fullNameMendatory2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Context\DatabaseContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -1231,6 +1243,15 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201502110756228_ChangeOfApprovedType.resx">
       <DependentUpon>201502110756228_ChangeOfApprovedType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201502250623006_fullNameMendatory.resx">
+      <DependentUpon>201502250623006_fullNameMendatory.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201502250655444_fullNameMendatory1.resx">
+      <DependentUpon>201502250655444_fullNameMendatory1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201502250710575_fullNameMendatory2.resx">
+      <DependentUpon>201502250710575_fullNameMendatory2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

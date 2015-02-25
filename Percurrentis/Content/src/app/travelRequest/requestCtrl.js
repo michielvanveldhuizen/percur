@@ -55,32 +55,27 @@
                     return _.filter($scope.allRequests, function (req) {
                         return req.IsArchived == false && req.IsDeleted == false && req.IsApproved == 0;
                     });
-                }, 'Current', 1, 'fa-calendar-o', 'View open travel requests.'),
-                awaiting: new Filter(function () {
-                    return _.filter($scope.allRequests, function (req) {
-                        return req.IsArchived == false && req.IsDeleted == false && req.IsApproved == 0;
-                    });
-                }, 'Awaiting', 2, 'fa-inbox', 'View requests that are awaiting approval.'),
+                }, 'Awaiting', 1, 'fa-inbox', 'View requests that are awaiting approval.'),
                 approved: new Filter(function () {
                     return _.filter($scope.allRequests, function (req) {
                         return req.IsApproved == 2 && req.IsDeleted == false;
                     });
-                }, 'Approved', 3, 'fa-check', 'View approved travel requests.'),
+                }, 'Approved', 2, 'fa-check', 'View approved travel requests.'),
                 rejected: new Filter(function () {
                     return _.filter($scope.allRequests, function (req) {
                         return req.IsApproved == 1 && req.IsDeleted == false;
                     });
-                }, 'Rejected', 4, 'fa-times', 'View rejected travel requests.'),
+                }, 'Rejected', 3, 'fa-times', 'View rejected travel requests.'),
                 archived: new Filter(function () {
                     return _.filter($scope.allRequests, function (req) {
                         return req.IsArchived == true && req.IsDeleted == false;
                     });
-                }, 'Archived', 5, 'fa-archive', 'View archived travel requests.'),
+                }, 'Archived', 4, 'fa-archive', 'View archived travel requests.'),
                 deleted: new Filter(function () {
                     return _.filter($scope.allRequests, function (req) {
                         return req.IsDeleted == true;
                     });
-                }, 'Deleted', 6, 'fa-ban', 'View deleted travel requests.')
+                }, 'Deleted', 5, 'fa-ban', 'View deleted travel requests.')
             }
         }
 
