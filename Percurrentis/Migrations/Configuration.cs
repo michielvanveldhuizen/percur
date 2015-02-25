@@ -45,11 +45,6 @@ namespace Percurrentis.Migrations
                 var baseDir = AppDomain.CurrentDomain.BaseDirectory.Replace("\\bin", string.Empty) + "\\Migrations";
                 context.Database.ExecuteSqlCommand(File.ReadAllText(baseDir + "\\dbo_AddressType.sql"));
             }
-            if (!context.ApprovalRole.Any(a => a.Role == "Manager"))
-            {
-                var baseDir = AppDomain.CurrentDomain.BaseDirectory.Replace("\\bin", string.Empty) + "\\Migrations";
-                context.Database.ExecuteSqlCommand(File.ReadAllText(baseDir + "\\dbo_ApprovalRole.sql"));
-            }
             if (!context.Company.Any(c => c.Name == "CSi Industries"))
             {
                 var baseDir = AppDomain.CurrentDomain.BaseDirectory.Replace("\\bin", string.Empty) + "\\Migrations";

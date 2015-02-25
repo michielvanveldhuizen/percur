@@ -22,12 +22,7 @@ namespace Percurrentis.Model
         public bool Flag { get; set; }
         public int HasApproved { get; set; }
         public bool NotificationSent { get; set; }
-        public int? ApprovalRoleID { get; set; }
-        public int? NextID { get; set; }
+        public int COOApproved { get; set; }
         public string Hash { get; set; }
-
-        public virtual ApprovalRole ApprovalRole { get; set; }
-        public virtual TravelRequestApproval Next { get; set; }
-    
     }
 }

@@ -24,7 +24,6 @@ namespace Percurrentis.Context
         public DbSet<Address> Address { get; set; }
         public DbSet<AirportInformation> AirportInformation { get; set; }
         public DbSet<AddressType> AddressType { get; set; }
-        public DbSet<ApprovalRole> ApprovalRole { get; set; }
         public DbSet<Company> Company { get; set; }
         public DbSet<Insurance> Insurance { get; set; }
         public DbSet<CountryInformation> CountryInformation { get; set; }
@@ -59,7 +58,6 @@ namespace Percurrentis.Context
             modelBuilder.Configurations.Add(new AddressMap());
             modelBuilder.Configurations.Add(new AddressTypeMap());
             modelBuilder.Configurations.Add(new AirportInformationMap());
-            modelBuilder.Configurations.Add(new ApprovalRoleMap());
             modelBuilder.Configurations.Add(new CompanyMap());
             modelBuilder.Configurations.Add(new CountryInformationMap());
             modelBuilder.Configurations.Add(new ContactPersonMap());
@@ -111,8 +109,6 @@ namespace Percurrentis.Context
                     var specEntity = changedEntity.Entity as TravelRequest;
                     
                     TravelRequestApproval TRA = new TravelRequestApproval();
-                    TRA.ApprovalRoleID = 1;
-                    TRA.Hash = "dingen";
                     TRA.Id = -1;
                     TRA.Archived = false;
                     TRA.Flag = false;
@@ -121,12 +117,15 @@ namespace Percurrentis.Context
                     //PETER DO NOTIFICATION TO PROJECT MANAGER
 
                     TRA.NotificationSent = false;
-                    
-                    this.TravelRequestApproval.Add(TRA);
+
+                    CountryInformation country = this.CountryInformation.Single(Country => Country.Id == specEntity.CountryID);
+
+                    if (country.CountryCode.Equals("RO"))
+                    {
+                        //PETER SEND NOTIFIACTION TO COO
+                    }
 
                     specEntity.TravelRequestApproval = TRA;
-                    
-                    
                 }
             }
             foreach (var changedEntity in changedEntities.Where(e => e.State == EntityState.Modified))

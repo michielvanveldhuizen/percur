@@ -63,7 +63,6 @@
     <Compile Include="Address.cs" />
     <Compile Include="AddressType.cs" />
     <Compile Include="AirportInformation.cs" />
-    <Compile Include="ApprovalRole.cs" />
     <Compile Include="Company.cs" />
     <Compile Include="CompanyBase.cs" />
     <Compile Include="ContactPerson.cs" />

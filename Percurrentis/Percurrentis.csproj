@@ -219,7 +219,6 @@
     <Compile Include="Mapping\AddressMap.cs" />
     <Compile Include="Mapping\AddressTypeMap.cs" />
     <Compile Include="Mapping\AirportInformationMap.cs" />
-    <Compile Include="Mapping\ApprovalRoleMap.cs" />
     <Compile Include="Mapping\CompanyMap.cs" />
     <Compile Include="Mapping\CountryInformationMap.cs" />
     <Compile Include="Mapping\ServiceCompanyTypeMap.cs" />
@@ -256,6 +255,26 @@
     <Compile Include="Migrations\201502250933214_TRAgotnomoreTA.cs" />
     <Compile Include="Migrations\201502250933214_TRAgotnomoreTA.Designer.cs">
       <DependentUpon>201502250933214_TRAgotnomoreTA.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201502251212460_TRAremovedHashNextIDApprovalRoleIdADDEDcooapproved.cs" />
+    <Compile Include="Migrations\201502251212460_TRAremovedHashNextIDApprovalRoleIdADDEDcooapproved.Designer.cs">
+      <DependentUpon>201502251212460_TRAremovedHashNextIDApprovalRoleIdADDEDcooapproved.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201502251217300_TRAcooApprovedIsRequired.cs" />
+    <Compile Include="Migrations\201502251217300_TRAcooApprovedIsRequired.Designer.cs">
+      <DependentUpon>201502251217300_TRAcooApprovedIsRequired.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201502251240239_DeleteOfApprovalRole.cs" />
+    <Compile Include="Migrations\201502251240239_DeleteOfApprovalRole.Designer.cs">
+      <DependentUpon>201502251240239_DeleteOfApprovalRole.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201502251243234_DeleteOfApprovalRole1.cs" />
+    <Compile Include="Migrations\201502251243234_DeleteOfApprovalRole1.Designer.cs">
+      <DependentUpon>201502251243234_DeleteOfApprovalRole1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201502251257359_returnOfTheHash.cs" />
+    <Compile Include="Migrations\201502251257359_returnOfTheHash.Designer.cs">
+      <DependentUpon>201502251257359_returnOfTheHash.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Context\DatabaseContext.cs" />
@@ -1259,6 +1278,21 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201502250933214_TRAgotnomoreTA.resx">
       <DependentUpon>201502250933214_TRAgotnomoreTA.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201502251212460_TRAremovedHashNextIDApprovalRoleIdADDEDcooapproved.resx">
+      <DependentUpon>201502251212460_TRAremovedHashNextIDApprovalRoleIdADDEDcooapproved.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201502251217300_TRAcooApprovedIsRequired.resx">
+      <DependentUpon>201502251217300_TRAcooApprovedIsRequired.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201502251240239_DeleteOfApprovalRole.resx">
+      <DependentUpon>201502251240239_DeleteOfApprovalRole.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201502251243234_DeleteOfApprovalRole1.resx">
+      <DependentUpon>201502251243234_DeleteOfApprovalRole1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201502251257359_returnOfTheHash.resx">
+      <DependentUpon>201502251257359_returnOfTheHash.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

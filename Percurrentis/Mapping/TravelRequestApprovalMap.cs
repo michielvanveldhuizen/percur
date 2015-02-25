@@ -23,10 +23,8 @@ namespace Percurrentis.Mapping
             this.Property(t => t.Flag).IsRequired();
             this.Property(t => t.NotificationSent).IsRequired();
             this.Property(t => t.HasApproved).IsRequired();
-            this.Property(t => t.Hash).IsRequired();
-
-            this.HasOptional(t => t.ApprovalRole).WithMany().HasForeignKey(t => t.ApprovalRoleID);
-            this.HasOptional(t => t.Next).WithMany().HasForeignKey(t => t.NextID);
+            this.Property(t => t.COOApproved).IsRequired();
+            this.Property(t => t.Hash).IsRequired();    
         }
     }
 }
