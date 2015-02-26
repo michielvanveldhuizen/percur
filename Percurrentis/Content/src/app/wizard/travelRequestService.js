@@ -19,6 +19,7 @@
             createTravelRequest: createTravelRequest,
             getTravelRequests: getTravelRequests,
             getTravelRequestById: getTravelRequestById,
+            getTravelRequestByHash: getTravelRequestByHash,
             getTravelRequestApprovalsById: getTravelRequestApprovalsById,
             toggleDelete: toggleDelete,
             toggleArchive: toggleArchive,
@@ -137,6 +138,21 @@
             //terugvindcomment
             var query = new breeze.EntityQuery('Insurances')
                 .orderBy('ExpirationDate asc');
+            var promise = manager.executeQuery(query).catch(queryFailed);
+            return promise;
+
+            function queryFailed(error) {
+                console.log(error.message, 'query failed');
+                throw error;
+            }
+        }
+
+        function getTravelRequestByHash(hash) {
+            manager = new breeze.EntityManager(serviceName);
+
+            var query = new breeze.EntityQuery('TravelRequests')
+                .where('Hash', 'eq', hash);
+
             var promise = manager.executeQuery(query).catch(queryFailed);
             return promise;
 

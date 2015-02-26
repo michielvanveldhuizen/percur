@@ -7,6 +7,7 @@
 using Percurrentis.AD_classes;
 using Percurrentis.Mapping;
 using Percurrentis.Model;
+using Percurrentis.NotificationCenter;
 using System;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
@@ -83,6 +84,8 @@ namespace Percurrentis.Context
 
         public override int SaveChanges()
         {
+            ADservices AD = ADservices.InstanceCreation();
+
             ChangeTracker.DetectChanges();
             var changedEntities = ChangeTracker.Entries();
             //space for server-side edits on entites which are about to be saved into the database
@@ -114,15 +117,30 @@ namespace Percurrentis.Context
                     TRA.Flag = false;
                     TRA.HasApproved = 0;
 
-                    //PETER DO NOTIFICATION TO PROJECT MANAGER
+                    // Notify superior
+                    specEntity.Hash = String.Format("{0:X}", DateTime.Now.GetHashCode());
+                    Notification.requestManagerApproval(specEntity);
+                    
+                    TRA.NotificationSent = true;
+                    CountryInformation country;
 
-                    TRA.NotificationSent = false;
-
-                    CountryInformation country = this.CountryInformation.Single(Country => Country.Id == specEntity.CountryID);
-
-                    if (country.CountryCode.Equals("RO"))
+                    // NEEDS FIX: If no country is specified in the request, this will throw an exception
+                    try
                     {
-                        //PETER SEND NOTIFIACTION TO COO
+                        country = this.CountryInformation.Single(Country => Country.Id == specEntity.CountryID);
+                    }
+                    catch(Exception)
+                    {
+                        country = new CountryInformation();
+                        country.CountryCode = "BLA";
+                    }
+
+                    if (country.CountryCode.Equals("RO "))
+                    {
+                        // Notify COO of travel request to Romania
+                        UserAC kees = AD.GetUserByName("Kees Oosting");
+                        specEntity.SuperiorID = kees.objectGuid;
+                        Notification.requestManagerApproval(specEntity);
                     }
 
                     specEntity.TravelRequestApproval = TRA;
@@ -151,12 +169,23 @@ namespace Percurrentis.Context
                     TravelRequest travelRequest = this.TravelRequest.Single(TravelRequest => TravelRequest.TravelRequestApprovalID == specEntity.Id);
                     travelRequest.IsApproved = specEntity.HasApproved;
 
+                    UserAC requester = AD.GetUserByName(travelRequest.ApplicantID);
+
                     if (specEntity.HasApproved == 2) { 
-                        //PETER GA JIJ DIT EENS AAN DE TRAVELAGENTS NOTIFIBANANEN
-                        //PETER GA JIJ DIT EENS AAN DE EMPLOYBAANAAN NOTIFIBANANEN
+                        // Notify everyone in the Travel Agency group
+                        foreach(UserAC travelagent in AD.GetTravelAgents())
+                        {
+                            Notification.notifyOfApproval(travelagent, travelRequest);
+                        }
+                        // Notify the person who requested the travel that it was approved
+                        
+                        Notification.notifyOfApproval(requester, travelRequest);
+                    }
+                    if(specEntity.HasApproved == 1)
+                    {
+                        Notification.notifyOfDenial(requester, travelRequest);
                     }
                     
-                    ADservices AD = ADservices.InstanceCreation();
                     UserAC self = AD.GetSelf();
                     
                     specEntity.ApprovedBy = self.objectGuid;

@@ -62,8 +62,8 @@
                     <tr data-ng-repeat="request in requests" 
                         data-ng-class="{'active text-muted': currentFilter != 'Archived' && request.IsArchived}"
                         style="cursor:pointer">
-                        <td data-ng-click="go('/Request/' + request.Id)">{{request.ApplicantID}}</td>
-                        <td data-ng-click="go('/Request/' + request.Id)">
+                        <td data-ng-click="go('/Request/' + request.Hash)">{{request.ApplicantID}}</td>
+                        <td data-ng-click="go('/Request/' + request.Hash)">
                             <ul class="fa-ul">
                                 <li data-ng-repeat="traveller in request.RequestTravellers">
                                     <i class="fa fa-user text-muted"></i>
@@ -71,7 +71,7 @@
                                 </li>
                             </ul>
                         </td>
-                        <td data-ng-click="go('/Request/' + request.Id)">
+                        <td data-ng-click="go('/Request/' + request.Hash)">
                             <i data-ng-show="request.FlightRequests.length > 0"     data-tooltip="Flight"        class="fa-fw gi gi-airplane"></i>
                             <i data-ng-show="request.FerryRequests.length > 0"      data-tooltip="Ferry"         class="fa-fw gi gi-boat"></i>
                             <i data-ng-show="request.EuroTunnelRequests.length > 0" data-tooltip="Eurotunnel"    class="fa-fw gi gi-train"></i>
@@ -79,17 +79,17 @@
                             <i data-ng-show="request.TaxiRequests.length > 0"       data-tooltip="Taxi"          class="fa-fw gi gi-car"></i>
                             <i data-ng-show="request.Accommodations.length > 0"     data-tooltip="Accommodation" class="fa-fw gi gi-home"></i>
                         </td>
-                        <td data-ng-click="go('/Request/' + request.Id)">
+                        <td>
                             <span class="info-hover" data-tooltip="{{request.CreatedDate|date:'EEEE H:mm, d MMMM yyyy'}}">{{request.CreatedDate|date:'d MMM'}}</span>
                         </td>
-                        <td data-ng-click="go('/Request/' + request.Id)">
+                        <td data-ng-click="go('/Request/' + request.Hash)">
                             <span class="label label-warning" data-ng-show="request.IsApproved == 0">Awaiting</span>
                             <span class="label label-danger" data-ng-show="request.IsApproved == 1">Rejected</span>
                             <span class="label label-success" data-ng-show="request.IsApproved == 2">Approved</span>
                         </td>
                         <td>
                             <div class="btn-group btn-group-sm">
-                                <a href="#/Request/{{request.Id}}" 
+                                <a href="#/Request/{{request.Hash}}" 
                                    class="btn btn-sm btn-default">
                                     <i class="fa fa-eye"></i> 
                                     View

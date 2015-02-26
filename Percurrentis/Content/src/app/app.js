@@ -129,7 +129,7 @@
                     }]
                 }
             })
-            .when('/Request/:requestId', {
+            .when('/Request/:Hash', {
                 templateUrl: base + '/travelRequest/detail.tpl.html',
                 data: {
                     title: 'Travel Request',

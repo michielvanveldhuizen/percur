@@ -129,13 +129,42 @@
             return isDeleted ? 'Recover' : 'Delete';
         };
     }
+    
+    angular.module('app').controller('requestStatsCtrl',
+        ['$scope', '$location', 'travelRequestService', requestStatsCtrl]);
+
+    function requestStatsCtrl($scope, $location, travelRequestService) {
+
+        $scope.awaiting = [];
+        $scope.approved = [];
+        $scope.denied = [];
+        $scope.total = 0;
+        travelRequestService.getTravelRequests()
+        .then(function (query) {
+            var items = query.results;
+            angular.forEach(items, function (value, key) {
+                if(value.IsApproved == '0')
+                {
+                    $scope.awaiting.push(value);
+                }
+                else if (value.IsApproved == '1') {
+                    $scope.approved.push(value);
+                }
+                else if (value.IsApproved == '2') {
+                    $scope.denied.push(value);
+                }
+                $scope.total++;
+            });
+            console.log($scope);
+        });
+    }
 
     angular.module('app').controller('requestDetailCtrl',
         ['$scope', '$route', 'travelRequestService', requestDetailCtrl]);
 
     function requestDetailCtrl($scope, $route, travelRequestService) {
         var request;
-        travelRequestService.getTravelRequestById(parseInt($route.current.params.requestId, 10))
+        travelRequestService.getTravelRequestByHash($route.current.params.Hash)
         .then(function (query) {
             $scope.request = query.results[0];
             show($scope.request);
