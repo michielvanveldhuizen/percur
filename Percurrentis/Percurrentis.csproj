@@ -1219,9 +1219,8 @@
     <Content Include="Migrations\dbo_ApprovalRole.sql" />
     <Content Include="Migrations\dbo_Company.sql" />
     <Content Include="Migrations\dbo_ServiceCompanyType.sql" />
-    <Content Include="Notification\mailtemplates\Insurance%28s%29 expiring.html" />
-    <Content Include="Notification\mailtemplates\Itinerarychange.html" />
     <Content Include="Notification\mailtemplates\Travelrequest approved.html" />
+    <Content Include="Notification\mailtemplates\Travelrequest rejected.html" />
     <Content Include="Notification\mailtemplates\Travelrequest waiting.html" />
     <Content Include="Scripts\breeze.angular.js" />
     <Content Include="Scripts\breeze.debug.js" />
