@@ -110,9 +110,8 @@ namespace Percurrentis.Context
                 if (changedEntity.Entity is TravelRequest)
                 {
                     var specEntity = changedEntity.Entity as TravelRequest;
-                    
-                    
 
+                    //Create TravelRequestApproval to connect it to the TravelRequest
                     TravelRequestApproval TRA = new TravelRequestApproval();
                     TRA.Id = -1;
                     TRA.Archived = false;
@@ -124,7 +123,6 @@ namespace Percurrentis.Context
                     Notification.requestManagerApproval(specEntity);
                     
                     TRA.NotificationSent = true;
-
 
                     if (specEntity.CountryID != null)
                     {
@@ -138,7 +136,7 @@ namespace Percurrentis.Context
                             specEntity.SuperiorID = kees.objectGuid;
                             Notification.requestManagerApproval(specEntity);
                         }
-
+                        
                     }
                     specEntity.TravelRequestApproval = TRA;
                 }
@@ -168,17 +166,17 @@ namespace Percurrentis.Context
                     
                     //Kees simulation
                     //self.objectGuid = "a73d1a5e-b640-467e-8583-e4b52cfae437";
-
                     if (specEntity.ApprovedBy.Equals(self.objectGuid))
                     {
+
                         TravelRequest travelRequest = this.TravelRequest.Single(TravelRequest => TravelRequest.TravelRequestApprovalID == specEntity.Id);
                         CountryInformation country = this.CountryInformation.Single(Country => Country.Id == travelRequest.CountryID);
-
                         UserAC requester = AD.GetUserByName(travelRequest.ApplicantID);
                         
-
+                        //If user is Kees and country is Romania
                         if (GlobalVar.COOGuid.Equals(self.objectGuid) && country.Name.Equals("Romania"))
                         {
+                            //If Kees is also the supervisor
                             if (self.objectGuid.Equals(travelRequest.SuperiorID))
                             {
                                 specEntity.ApprovedBy = self.objectGuid;
@@ -194,14 +192,18 @@ namespace Percurrentis.Context
                         bool isFullyApproved = false;
                         bool isRejected = false;
 
+                        //If Country is Romania and Supervisor is not kees
+                        //Need 2 approves in this case
                         if (country.Name.Equals("Romania") && !travelRequest.SuperiorID.Equals(GlobalVar.COOGuid))
                         {
+                            //Check if fully approved now
                             if (specEntity.HasApproved == 2 && specEntity.COOApproved == 2)
                             {
                                 travelRequest.IsApproved = 2;
                                 isFullyApproved = true;
                             }
 
+                            //Check if one has rejected
                             if (specEntity.HasApproved == 1 || specEntity.COOApproved == 1)
                             {
                                 isRejected = true;
@@ -210,6 +212,8 @@ namespace Percurrentis.Context
                         }
                         else
                         {
+                            //(Country != Romania && Supervisor = Kees) Or (Country != Romania) 
+                            //Only need 1 approve in that case
                             travelRequest.IsApproved = specEntity.HasApproved;
                             if (specEntity.HasApproved == 2)
                             {
@@ -238,8 +242,6 @@ namespace Percurrentis.Context
                     }
                     else
                     {
-                        //someone is trying to hack the system, reset Entity
-                        TravelRequestApproval TRA = this.TravelRequestApproval.Single(tra => tra.Id == specEntity.Id);
                         specEntity.COOApproved = 0;
                     }
                 }

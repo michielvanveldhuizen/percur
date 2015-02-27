@@ -162,6 +162,7 @@
                 return true;
             },
             onSubmit: function () {
+                
                 // clean up entities that should be empty
                 if (!$scope.options.hasFlight) {
                     _.each($scope.model.FlightRequests, function (v) {
@@ -233,12 +234,34 @@
             $scope.employees = query.results;
         });
 
+        //$scope.model isn't active right away sometimes
+        function setModelDates() {
+            setTimeout(function () {
+                if (typeof $scope.model != typeof undefined) {
+                    var today = new Date();
+                    today.setDate(today.getDate() + 0);
+                    today.setHours(12, 0, 0);
+                    $scope.model.DepartureDate = today;
+
+                    var tomorrow = new Date();
+                    tomorrow.setDate(tomorrow.getDate() + 1);
+                    tomorrow.setHours(12, 0, 0);
+                    $scope.model.ReturnDate = tomorrow;
+                } else {
+                    setModelDates();
+                }
+            }, 300);
+        }
+        setModelDates();
+
         travelRequestService.getCountries().then(function (query) {
             $scope.countries = query.results;
+
         });
 
         travelRequestService.getAirports().then(function (query) {
             $scope.airports = query.results;
+
         });
 
         //////////////////////////////////////////////////////////

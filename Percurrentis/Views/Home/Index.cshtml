@@ -11,8 +11,12 @@
         var activeProfile = {
             'obj'      : 'window.activeProfile',
             'username' : '@Model.Name',
-            'roles'    : {},
-            'features' : { approveRequest: true, /* TODO: Implement whether user can approve requests */
+            'roles'    : {  TravelAgency:@Model.AccessLevels.TravelAgency,
+                            COO:@Model.AccessLevels.COO,
+                            Employee:true,
+                            ProjectManager:@Model.AccessLevels.ProjectManager,
+                        },
+            'features' : { approveRequest: true, 
                            readRequest:    true,
                            createRequest:  false  }
         };

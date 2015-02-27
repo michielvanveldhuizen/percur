@@ -5,6 +5,7 @@
 // <summary>Model classes for the database</summary>
 
 using Percurrentis.Model.Validation.Attributes;
+using System;
 using System.Collections.Generic;
 
 namespace Percurrentis.Model
@@ -26,6 +27,11 @@ namespace Percurrentis.Model
         public int? TravelRequestApprovalID { get; set; }
         public int? CountryID { get; set; }
         public string Hash { get; set; }
+        [DateTime]
+        public DateTime DepartureDate { get; set; }
+        [DateTime]
+        public DateTime ReturnDate { get; set; }
+        public bool IsItinerary { get; set; }
 
         public virtual CountryInformation Country { get; set; }
         public virtual TravelRequestApproval TravelRequestApproval { get; set; }

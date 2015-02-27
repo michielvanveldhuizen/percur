@@ -393,7 +393,6 @@
                 entity.DestinationAddress = departureFlight.DepartureAddress;   // ^
                 entity.ServiceCompany = departureFlight.ServiceCompany;
                 entity.IsReturnFlight = true;
-                console.log(entity);
                 entity.Title = "Return Flight";
             } else {
                 if (request.FlightRequests[0]) {
@@ -619,7 +618,7 @@
             }
             //Checks if records already exist in the database. If so connecting them to the object and detach the Entity
             //CustomerOrProspect
-            var companyCheck = 0;
+            /*var companyCheck = 0;
             if (typeof request.CustomerOrProspect !== typeof undefined) {
 
                 _.forEach(dbCompanies, function (val) {
@@ -707,10 +706,9 @@
                         });
                     }
                 });
-            }
-            console.log(request);
-            //TODO extra traveler same thing as above
+            }*/
             
+            console.log(request);
                        
             return manager.saveChanges()
                 .then(saveSucceeded)

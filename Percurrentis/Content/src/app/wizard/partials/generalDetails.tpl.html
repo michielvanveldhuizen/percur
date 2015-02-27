@@ -46,6 +46,16 @@
                     data-ng-options="country as country.Name for country in countries"
                     data-z-validate ></select>
         </div>
+
+        <div data-form-control data-label="Date of Departure">
+            <div data-datepicker data-starting-day="1" data-ng-model="model.DepartureDate"></div>
+        </div>
+        
+        <div data-form-control data-label="Date of Return">
+            <div data-datepicker data-ng-model="model.ReturnDate"></div>
+        </div>
+
+
     </fieldset>
     <fieldset>
         <div data-legend-title="Customer or Prospect"></div>
