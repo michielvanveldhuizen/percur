@@ -11,10 +11,19 @@
                         {{request.CreatedDate|date:'EEEE H:mm, d MMMM yyyy'}}
                     </div>
 
-                    <div data-form-control-static data-label="State of Approval">
+                    <div data-form-control-static data-label="State of Approval" data-ng-show="request.Country.Name != 'Romania' || c == request.SuperiorID">
                         <span class="label label-warning" data-ng-show="request.IsApproved == 0">Awaiting</span>
                         <span class="label label-danger" data-ng-show="request.IsApproved == 1">Rejected</span>
                         <span class="label label-success" data-ng-show="request.IsApproved == 2">Approved</span>
+                    </div>
+                    <div data-form-control-static data-label="State of Approval" data-ng-show="request.Country.Name == 'Romania' && c != request.SuperiorID">
+                        <span class="label label-warning" data-tooltip="By manager" data-ng-show="request.TravelRequestApproval.HasApproved == 0">Awaiting</span>
+                        <span class="label label-danger" data-tooltip="By manager" data-ng-show="request.TravelRequestApproval.HasApproved == 1">Rejected</span>
+                        <span class="label label-success" data-tooltip="By manager" data-ng-show="request.TravelRequestApproval.HasApproved == 2">Approved</span>
+
+                        <span class="label label-warning" data-tooltip="By COO" data-ng-show="request.TravelRequestApproval.COOApproved == 0">Awaiting</span>
+                        <span class="label label-danger" data-tooltip="By COO" data-ng-show="request.TravelRequestApproval.COOApproved == 1">Rejected</span>
+                        <span class="label label-success" data-tooltip="By COO" data-ng-show="request.TravelRequestApproval.COOApproved == 2">Approved</span>
                     </div>
 
                     <div data-form-control-static data-label="Unique ID">
@@ -40,6 +49,9 @@
                         </div>
                         <div data-form-control-static data-label="Trip Purpose">
                             {{request.Purpose}}
+                        </div>
+                        <div data-form-control-static data-label="Trip Purpose">
+                            {{request.Country.Name}}
                         </div>
                     </fieldset>
                     <fieldset>

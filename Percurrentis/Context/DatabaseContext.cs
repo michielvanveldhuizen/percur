@@ -111,6 +111,8 @@ namespace Percurrentis.Context
                 {
                     var specEntity = changedEntity.Entity as TravelRequest;
                     
+                    
+
                     TravelRequestApproval TRA = new TravelRequestApproval();
                     TRA.Id = -1;
                     TRA.Archived = false;
@@ -122,30 +124,26 @@ namespace Percurrentis.Context
                     Notification.requestManagerApproval(specEntity);
                     
                     TRA.NotificationSent = true;
-                    CountryInformation country;
 
-                    // NEEDS FIX: If no country is specified in the request, this will throw an exception
-                    try
-                    {
-                        country = this.CountryInformation.Single(Country => Country.Id == specEntity.CountryID);
-                    }
-                    catch(Exception)
-                    {
-                        country = new CountryInformation();
-                        country.CountryCode = "BLA";
-                    }
 
-                    if (country.CountryCode.Equals("RO "))
+                    if (specEntity.CountryID != null)
                     {
-                        // Notify COO of travel request to Romania
-                        UserAC kees = AD.GetUserByName("Kees Oosting");
-                        specEntity.SuperiorID = kees.objectGuid;
-                        Notification.requestManagerApproval(specEntity);
-                    }
+                        CountryInformation country = this.CountryInformation.Single(Country => Country.Id == specEntity.CountryID);
+                        specEntity.Country = country;
 
+                        if (country.CountryCode.Equals("RO "))
+                        {
+                            // Notify COO of travel request to Romania
+                            UserAC kees = AD.GetUserByName("Kees Oosting");
+                            specEntity.SuperiorID = kees.objectGuid;
+                            Notification.requestManagerApproval(specEntity);
+                        }
+
+                    }
                     specEntity.TravelRequestApproval = TRA;
                 }
             }
+
             foreach (var changedEntity in changedEntities.Where(e => e.State == EntityState.Modified))
             {
                 if (changedEntity.Entity is MetaEntity)
@@ -166,32 +164,84 @@ namespace Percurrentis.Context
                 {
                     var specEntity = changedEntity.Entity as TravelRequestApproval;
 
-                    TravelRequest travelRequest = this.TravelRequest.Single(TravelRequest => TravelRequest.TravelRequestApprovalID == specEntity.Id);
-                    travelRequest.IsApproved = specEntity.HasApproved;
-
-                    UserAC requester = AD.GetUserByName(travelRequest.ApplicantID);
-
-                    if (specEntity.HasApproved == 2) { 
-                        // Notify everyone in the Travel Agency group
-                        foreach(UserAC travelagent in AD.GetTravelAgents())
-                        {
-                            Notification.notifyOfApproval(travelagent, travelRequest);
-                        }
-                        // Notify the person who requested the travel that it was approved
-                        
-                        Notification.notifyOfApproval(requester, travelRequest);
-                    }
-                    if(specEntity.HasApproved == 1)
-                    {
-                        Notification.notifyOfDenial(requester, travelRequest);
-                    }
-                    
                     UserAC self = AD.GetSelf();
                     
-                    specEntity.ApprovedBy = self.objectGuid;
-                    specEntity.ApprovalDate = System.DateTime.Now;
+                    //Kees simulation
+                    //self.objectGuid = "a73d1a5e-b640-467e-8583-e4b52cfae437";
 
-                    Trace.WriteLine(specEntity.Flag+" - specEntity flag");
+                    if (specEntity.ApprovedBy.Equals(self.objectGuid))
+                    {
+                        TravelRequest travelRequest = this.TravelRequest.Single(TravelRequest => TravelRequest.TravelRequestApprovalID == specEntity.Id);
+                        CountryInformation country = this.CountryInformation.Single(Country => Country.Id == travelRequest.CountryID);
+
+                        UserAC requester = AD.GetUserByName(travelRequest.ApplicantID);
+                        
+
+                        if (GlobalVar.COOGuid.Equals(self.objectGuid) && country.Name.Equals("Romania"))
+                        {
+                            if (self.objectGuid.Equals(travelRequest.SuperiorID))
+                            {
+                                specEntity.ApprovedBy = self.objectGuid;
+                                specEntity.ApprovalDate = System.DateTime.Now;
+                            }
+                        }
+                        else
+                        {
+                            specEntity.ApprovedBy = self.objectGuid;
+                            specEntity.ApprovalDate = System.DateTime.Now;
+                        }
+
+                        bool isFullyApproved = false;
+                        bool isRejected = false;
+
+                        if (country.Name.Equals("Romania") && !travelRequest.SuperiorID.Equals(GlobalVar.COOGuid))
+                        {
+                            if (specEntity.HasApproved == 2 && specEntity.COOApproved == 2)
+                            {
+                                travelRequest.IsApproved = 2;
+                                isFullyApproved = true;
+                            }
+
+                            if (specEntity.HasApproved == 1 || specEntity.COOApproved == 1)
+                            {
+                                isRejected = true;
+                                travelRequest.IsApproved = 1;
+                            }
+                        }
+                        else
+                        {
+                            travelRequest.IsApproved = specEntity.HasApproved;
+                            if (specEntity.HasApproved == 2)
+                            {
+                                isFullyApproved = true;
+                            }
+                            if (specEntity.HasApproved == 1)
+                            {
+                                isRejected = true;
+                            }
+                        }
+
+                        if (isFullyApproved)
+                        {
+
+                            // Notify everyone in the Travel Agency group
+                            foreach(UserAC travelagent in AD.GetTravelAgents())
+                            {
+                                Notification.notifyOfApproval(travelagent, travelRequest);
+                            }
+                            // Notify the person who requested the travel that it was approved
+                        }
+                        if (isRejected)
+                        {
+                            Notification.notifyOfDenial(requester, travelRequest);
+                        }
+                    }
+                    else
+                    {
+                        //someone is trying to hack the system, reset Entity
+                        TravelRequestApproval TRA = this.TravelRequestApproval.Single(tra => tra.Id == specEntity.Id);
+                        specEntity.COOApproved = 0;
+                    }
                 }
             }
             try

@@ -27,6 +27,7 @@
             getRequestTravellers:getRequestTravellers,
             getAddressTypes: getAddressTypes,
             getCountries: getCountries,
+            getCountryById:getCountryById,
             getInsurances: getInsurances,
             getEmployees: getEmployees,
             getEmployeeByObjectGuid: getEmployeeByObjectGuid,
@@ -177,6 +178,8 @@
             }
         }
 
+        
+
         function getTravelRequestApprovalsById(id) {
             manager = new breeze.EntityManager(serviceName);
 
@@ -264,6 +267,20 @@
         function getCountries() {
             var query = breeze.EntityQuery
                 .from('CountryInformation');
+
+            var promise = manager.executeQuery(query).catch(queryFailed);
+            return promise;
+
+            function queryFailed(error) {
+                console.log(error.message, 'query failed');
+                throw error;
+            }
+        }
+
+        function getCountryById(id) {
+            var query = breeze.EntityQuery
+                .from('CountryInformation')
+                .where("Id","==",id);
 
             var promise = manager.executeQuery(query).catch(queryFailed);
             return promise;

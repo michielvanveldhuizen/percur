@@ -19,10 +19,14 @@
 
         var dbCompanies = [];
         var dbAddresses = [];
+        var dbCountries = [];
 
         @{ var developer = @User.IsInRole("Travel_Agency_Project").ToString().ToLower(); }
         activeProfile.roles.developer = @developer
         var ownGuid = "@Model.Guid";
+        //Kees simulation
+        //var ownGuid = "a73d1a5e-b640-467e-8583-e4b52cfae437";
+        
     </script>
 }
 

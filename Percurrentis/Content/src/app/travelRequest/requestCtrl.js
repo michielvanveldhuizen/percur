@@ -163,13 +163,16 @@
         ['$scope', '$route', 'travelRequestService', requestDetailCtrl]);
 
     function requestDetailCtrl($scope, $route, travelRequestService) {
-        var request;
         travelRequestService.getTravelRequestByHash($route.current.params.Hash)
         .then(function (query) {
             $scope.request = query.results[0];
-            show($scope.request);
-            console.log("BENECHTEENBANAAN");
-            console.log($scope.request);
+            
+            $scope.c = "a73d1a5e-b640-467e-8583-e4b52cfae437";
+            travelRequestService.getCountryById($scope.request.CountryID)
+            .then(function (result) {
+                $scope.request.Country = result.results[0];
+                show($scope.request);
+            });
             return query.results[0];
         })
         .then(function (request) {
@@ -180,12 +183,29 @@
         });
 
         function show(request) {
+            var showFooter = false;
+            
             if($scope.request.SuperiorID == ownGuid){
+                showFooter = true;
+            }
+            
+            if ($scope.request.Country.Name == "Romania" && ownGuid == $scope.c) {
+                showFooter = true;
+                if ($scope.request.TravelRequestApproval.COOApproved != 0) {
+                    showFooter = false;
+                }
+            } else {
+                if ($scope.request.TravelRequestApproval.HasApproved != 0) {
+                    showFooter = false;
+                }
+            }
+            if (showFooter) {
                 $scope.TRArequest = $scope.request.TravelRequestApproval;
                 if ($scope.request.IsApproved == 0) {
                     $("footer").show();
                 }
             }
+            
         }
 
         $scope.onApprove = function () {
@@ -197,11 +217,15 @@
             $scope.mode = 'reject';
         };
         $scope.onApproveConfirm = function () {
-            $scope.mode = 'approveConfirmed';
+            $scope.mode = 'approveConfirmed';                
             $scope.TRArequest.Flag = true;
-            $scope.TRArequest.HasApproved = 2;
+            if (ownGuid == $scope.c && $scope.request.Country.Name == "Romania" && $scope.c != $scope.request.SuperiorID) {
+                $scope.TRArequest.COOApproved = 2;
+            } else {
+                $scope.TRArequest.HasApproved = 2;
+            }
             $scope.TRArequest.Note = angular.copy($scope.comments);
-
+            $scope.TRArequest.ApprovedBy = ownGuid;
             travelRequestService.saveChanges($scope.TRArequest, undefined, angular.noop, angular.noop);
             reloadPage();
         };
@@ -209,7 +233,12 @@
         $scope.onRejectConfirm = function () {
             $scope.mode = 'rejectConfirmed';
             $scope.TRArequest.Flag = true;
-            $scope.TRArequest.HasApproved = 1;
+            if (ownGuid == $scope.c && $scope.request.Country.Name == "Romania" && $scope.c != $scope.request.SuperiorID) {
+                $scope.TRArequest.COOApproved = 1;
+            } else {
+                $scope.TRArequest.HasApproved = 1;
+            }
+            $scope.TRArequest.ApprovedBy = ownGuid;
             $scope.TRArequest.Note = angular.copy($scope.comments);
             travelRequestService.saveChanges($scope.TRArequest, undefined, angular.noop, angular.noop);
             reloadPage();
@@ -223,6 +252,8 @@
 
         function reloadPage() {
             $route.reload();
+            //Maybe set a time out, test if that has to be done.
+
             /*$("#page-reload-notification").html("This page will reload in:  to set the state");
             window.setTimeout(function () { document.location.reload(true); }, 10000);*/
         }
