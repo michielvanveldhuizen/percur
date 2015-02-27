@@ -27,11 +27,12 @@ namespace Percurrentis.Model
         public int? TravelRequestApprovalID { get; set; }
         public int? CountryID { get; set; }
         public string Hash { get; set; }
+        [TrueOrFalse]
+        public bool IsItinerary { get; set; }
         [DateTime]
         public DateTime DepartureDate { get; set; }
         [DateTime]
         public DateTime ReturnDate { get; set; }
-        public bool IsItinerary { get; set; }
 
         public virtual CountryInformation Country { get; set; }
         public virtual TravelRequestApproval TravelRequestApproval { get; set; }

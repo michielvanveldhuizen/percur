@@ -1,0 +1,133 @@
+<div data-ng-controller="itineraryCtrl">
+    <div class="alert alert-info alert-dismissable"
+         data-ng-show="showArchiveAlert">
+        <button type="button"
+                class="close"
+                aria-hidden="true"
+                data-ng-click="closeArchiveAlert()">
+            ×
+        </button>
+        <i class="fa fa-info-circle"></i>
+        You have archived a itinerary. You can find it under the
+        <a href="javascript:void(0)" data-ng-click="filters.archived.filter()" class="alert-link">Archived</a> filter.
+    </div>
+    <div class="alert alert-info alert-dismissable"
+         data-ng-show="showDeleteAlert">
+        <button type="button"
+                class="close"
+                aria-hidden="true"
+                data-ng-click="closeDeleteAlert()">
+            ×
+        </button>
+        <i class="fa fa-info-circle"></i>
+        You have deleted an itinerary. You can find it under the
+        <a href="javascript:void(0)" data-ng-click="filters.deleted.filter()" class="alert-link">Deleted</a> filter.
+    </div>
+
+    <div class="block">
+        <div class="block-title">
+            <h2>{{currentFilter.title}} <strong>Itineraries</strong></h2>
+            <div class="block-options pull-right">
+                <div class="btn-group btn-group-sm">
+                    <a href="javascript:void(0)" class="btn btn-sm btn-info btn-option dropdown-toggle" data-toggle="dropdown">
+                        <i class="fa fa-filter"></i>
+                        Apply Filter
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-custom dropdown-menu-right" role="menu" aria-labelledby="dLabel">
+                        <li data-ng-repeat="filter in filters | toArray | orderBy:'order'">
+                            <a data-ng-click="filter.filter()" href="javascript:void(0)"
+                               data-tooltip="{{filter.tooltip}}"
+                               data-tooltip-placement="left">
+                                <i class="fa fa-fw" data-ng-class="filter.icon"></i>
+                                {{filter.title}}
+                                <span class="badge pull-right">{{filter.count()}}</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="table-responsive">
+            Select one of the options in the "Actions" column in order to view, archive or delete the itinerary. <br />
+            <table class="table table-vcenter table-condensed table-hover">
+                <thead>
+                    <tr>
+                        <th class="col-md-3">From</th>
+                        <th class="col-md-3">Travellers</th>
+                        <th class="col-md-2">Options</th>
+                        <th class="col-md-1">Sent</th>
+                        <th class="col-md-1">Approval</th>
+                        <th class="col-md-2">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr data-ng-repeat="request in requests"
+                        data-ng-class="{'active text-muted': currentFilter != 'Archived' && request.IsArchived}"
+                        style="cursor:pointer">
+                        <td data-ng-click="go('/Itinerary/' + request.Hash)">{{request.ApplicantID}}</td>
+                        <td data-ng-click="go('/Itinerary/' + request.Hash)">
+                            <ul class="fa-ul">
+                                <li data-ng-repeat="traveller in request.RequestTravellers">
+                                    <i class="fa fa-user text-muted"></i>
+                                    {{traveller.FirstName}} {{traveller.FamilyName}}
+                                </li>
+                            </ul>
+                        </td>
+                        <td data-ng-click="go('/Itinerary/' + request.Hash)">
+                            <i data-ng-show="request.FlightRequests.length > 0" data-tooltip="Flight" class="fa-fw gi gi-airplane"></i>
+                            <i data-ng-show="request.FerryRequests.length > 0" data-tooltip="Ferry" class="fa-fw gi gi-boat"></i>
+                            <i data-ng-show="request.EuroTunnelRequests.length > 0" data-tooltip="Eurotunnel" class="fa-fw gi gi-train"></i>
+                            <i data-ng-show="request.RentalCarRequests.length > 0" data-tooltip="Rental Car" class="fa-fw gi gi-cars"></i>
+                            <i data-ng-show="request.TaxiRequests.length > 0" data-tooltip="Taxi" class="fa-fw gi gi-car"></i>
+                            <i data-ng-show="request.Accommodations.length > 0" data-tooltip="Accommodation" class="fa-fw gi gi-home"></i>
+                        </td>
+                        <td>
+                            <span class="info-hover" data-tooltip="{{request.CreatedDate|date:'EEEE H:mm, d MMMM yyyy'}}">{{request.CreatedDate|date:'d MMM'}}</span>
+                        </td>
+                        <td data-ng-click="go('/Itinerary/' + request.Hash)">
+                            <span class="label label-warning" data-ng-show="request.IsApproved == 0">Awaiting</span>
+                            <span class="label label-danger" data-ng-show="request.IsApproved == 1">Rejected</span>
+                            <span class="label label-success" data-ng-show="request.IsApproved == 2">Approved</span>
+                        </td>
+                        <td>
+                            <div class="btn-group btn-group-sm">
+                                <a href="#/Itinerary/{{request.Hash}}"
+                                   class="btn btn-sm btn-default">
+                                    <i class="fa fa-eye"></i>
+                                    View
+                                </a>
+                                <a data-ng-click="toggleArchive(request)"
+                                   class="btn btn-sm btn-default"
+                                   data-tooltip="{{request.IsArchived ? 'Unarchive' : 'Archive'}}"
+                                   href="javascript:void(0)">
+                                    <i class="fa fa-archive"></i>
+                                </a>
+                                <a data-ng-click="toggleDelete(request)"
+                                   class="btn btn-sm"
+                                   data-ng-class="request.IsDeleted ? 'btn-default' : 'btn-default'"
+                                   data-tooltip="{{request.IsDeleted ? 'Recover' : 'Delete'}}"
+                                   href="javascript:void(0)">
+                                    <i data-ng-show="!request.IsDeleted" class="fa fa-times"></i>
+                                    <i data-ng-show="request.IsDeleted" class="fa fa-undo"></i>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr data-ng-show="requests.length == 0">
+                        <td colspan="6" class="text-center" style="padding: 12px">
+                            There are no itineraries with this filter ({{currentFilter.title}}). Please apply another filter.<br />
+                            <button type="button"
+                                    style="margin: 6px"
+                                    class="btn btn-default"
+                                    data-ng-click="filters.all.filter()">
+                                <i class="fa fa-bars"></i> View All Itineraries
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -118,10 +118,11 @@
         }
 
         /* == Read ========================================================= */
-        function getTravelRequests() {
+        function getTravelRequests(isItin) {
             manager = new breeze.EntityManager(serviceName);
 
             var query = new breeze.EntityQuery('TravelRequests')
+                .where('IsItinerary', 'eq', isItin)
                 .orderBy('CreatedDate desc');
 
             var promise = manager.executeQuery(query).catch(queryFailed);
@@ -148,7 +149,7 @@
             }
         }
 
-        function getTravelRequestByHash(hash) {
+        function getTravelRequestByHash(hash, isItinerary) {
             manager = new breeze.EntityManager(serviceName);
 
             var query = new breeze.EntityQuery('TravelRequests')

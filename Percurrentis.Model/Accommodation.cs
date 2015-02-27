@@ -12,6 +12,7 @@ namespace Percurrentis.Model
     {
         public int Id { get; set; }
         public int? AddressID { get; set; }
+        public double Cost { get; set; }
 
         [Address]
         public virtual Address Address { get; set; }

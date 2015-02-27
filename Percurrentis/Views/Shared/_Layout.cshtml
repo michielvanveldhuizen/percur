@@ -64,7 +64,6 @@
                             <div class="sidebar-user-name">@ViewBag.UserName</div>
                         </div>
                         <!-- END User Info -->
-
                         <!-- Sidebar Navigation -->
                         <ul class="sidebar-nav">
                             <li>
@@ -80,6 +79,19 @@
                                         <a href="#/Request/"><i class="gi gi-show_lines sidebar-nav-icon"></i>Requests</a>
                                     </li>
                                 </ul>
+                                <!-- '!' is for testing -->
+                                <div id="itineraries" data-ng-show="!@ViewBag.AccessLevels.TravelAgency">
+                                    <a href="#" class="sidebar-nav-menu">
+                                        <i class="fa fa-angle-left sidebar-nav-indicator sidebar-nav-mini-hide"></i>
+                                        <i class="gi gi-log_book sidebar-nav-icon"></i>
+                                        <span class="sidebar-nav-mini-hide">Itineraries</span>
+                                    </a>
+                                    <ul>
+                                        <li>
+                                            <a href="#/Itinerary/"><i class="gi gi-show_lines sidebar-nav-icon"></i>List</a>
+                                        </li>
+                                    </ul>
+                                </div>
                             </li>
                         </ul>
                         <!-- END Sidebar Navigation -->

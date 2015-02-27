@@ -76,6 +76,38 @@
                     }]
                 }
             })
+            .when('/Itinerary/',
+            {
+                templateUrl: base + '/itinerary/list.tpl.html',
+                data: {
+                    title: "Itinerary List",
+                    icon: "gi-log_book",
+                    breadcrumbs: [{
+                        name: "Home",
+                        path: "/TravelAgency/#/"
+                    },
+                    {
+                        name: "Itinerary",
+                        path: "/TravelAgency/#/Insurance/"
+                    }]
+                }
+            })
+            .when('/Itinerary/:Hash',
+            {
+                templateUrl: base + '/itinerary/itinerary.tpl.html',
+                data: {
+                    title: "Itinerary",
+                    icon: "gi-log_book",
+                    breadcrumbs: [{
+                        name: "Home",
+                        path: "/Itinerary/#/"
+                    },
+                    {
+                        name: "Itinerary",
+                        path: "/TravelAgency/#/Itinerary/"
+                    }]
+                }
+            })
             .when('/Request/New', {
                 templateUrl: base + '/wizard/request.tpl.html',
                 data: {

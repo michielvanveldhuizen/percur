@@ -26,8 +26,13 @@
                         <span class="label label-success" data-tooltip="By COO" data-ng-show="request.TravelRequestApproval.COOApproved == 2">Approved</span>
                     </div>
 
-                    <div data-form-control-static data-label="Unique ID">
-                        {{request.Id}}
+                    <div data-form-control-static>
+                        <!-- TODO: ALSO CHECK IF USER = TRAVEL AGENT! -->
+                        <button class="btn btn-sm btn-default"
+                                data-ng-show="(request.IsApproved == 2)"
+                                data-ng-click="createItinerary(request)">
+                            Create Itinerary
+                        </button>
                     </div>
                 </div>
             </div>
