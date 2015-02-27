@@ -11,16 +11,17 @@
         var activeProfile = {
             'obj'      : 'window.activeProfile',
             'username' : '@Model.Name',
-            'roles'    : {  TravelAgency:@Model.AccessLevels.TravelAgency,
-                            COO:@Model.AccessLevels.COO,
-                            Employee:true,
-                            ProjectManager:@Model.AccessLevels.ProjectManager,
+            'roles'    : {  
                         },
             'features' : { approveRequest: true, 
                            readRequest:    true,
                            createRequest:  false  }
         };
 
+        var roles = {"TravelAgency":@Model.AccessLevels.TravelAgency.ToString().ToLower(),
+            "COO":@Model.AccessLevels.COO.ToString().ToLower(),
+            "Employee":true,
+            "ProjectManager":@Model.AccessLevels.ProjectManager.ToString().ToLower()};
         var dbCompanies = [];
         var dbAddresses = [];
         var dbCountries = [];
