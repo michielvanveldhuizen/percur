@@ -15,7 +15,11 @@
         //we want to update breadcrumbs only when a route is actually changed
         //as $location.path() will get updated immediately (even if route change fails!)
         $rootScope.$on('$routeChangeSuccess', function (event, current) {
-            $rootScope.title = $route.current.data.title;
+            if (typeof $route.current.data.title == undefined) {
+                $rootScope.title = "Home";
+            } else {
+                $rootScope.title = $route.current.data.title;
+            }
             if ($route.current.data && $route.current.data.breadcrumbs) {
                 breadcrumbs = $route.current.data.breadcrumbs;
                 _.each(breadcrumbs, function (val) {
