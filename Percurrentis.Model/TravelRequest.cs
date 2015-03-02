@@ -25,7 +25,7 @@ namespace Percurrentis.Model
         public string ApplicantID { get; set; }
         public string NoteCollectionID { get; set; }
         public int? TravelRequestApprovalID { get; set; }
-        public int? CountryID { get; set; }
+        public int CountryID { get; set; }
         public string Hash { get; set; }
         [TrueOrFalse]
         public bool IsItinerary { get; set; }

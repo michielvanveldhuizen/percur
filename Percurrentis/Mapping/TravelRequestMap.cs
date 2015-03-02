@@ -40,8 +40,11 @@ namespace Percurrentis.Mapping
 
             this.HasOptional(t => t.TravelRequestApproval).WithMany().HasForeignKey(t => t.TravelRequestApprovalID);
 
-            this.HasOptional(c => c.Country).WithMany().HasForeignKey(c => c.CountryID);
+            this.Property(t => t.CountryID).IsRequired();
+            this.HasRequired(t => t.Country).WithMany().HasForeignKey(t => t.CountryID);
 
+            this.Property(t => t.SuperiorID).IsRequired();
+            
             this.Property(t => t.Hash).IsOptional();
             this.Property(t => t.DepartureDate).IsRequired();
             this.Property(t => t.ReturnDate).IsRequired();

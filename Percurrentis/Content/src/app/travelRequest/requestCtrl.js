@@ -159,30 +159,34 @@
         });
     }
 
+    //For the detail page
     angular.module('app').controller('requestDetailCtrl',
         ['$scope', '$route', 'travelRequestService', requestDetailCtrl]);
 
     function requestDetailCtrl($scope, $route, travelRequestService) {
+        //Getting all the page details
         travelRequestService.getTravelRequestByHash($route.current.params.Hash)
         .then(function (query) {
             $scope.request = query.results[0];
-            
-            $scope.c = "a73d1a5e-b640-467e-8583-e4b52cfae437";
-            travelRequestService.getCountryById($scope.request.CountryID)
-            .then(function (result) {
-                $scope.request.Country = result.results[0];
-                show($scope.request);
-            });
-            return query.results[0];
-        })
-        .then(function (request) {
-            return travelRequestService.getEmployeeByObjectGuid(request.SuperiorID);
-        })
-        .then(function (employee) {
-            $scope.supervisorName = employee.userName;
+            if (query.results[0] == null) {
+                failedToLoadDetailPage();
+            } else {
+                $scope.c = "a73d1a5e-b640-467e-8583-e4b52cfae437";
+                travelRequestService.getCountryById($scope.request.CountryID)
+                .then(function (result) {
+                    $scope.request.Country = result.results[0];
+                    showApproveBox($scope.request);
+                });
+
+                travelRequestService.getEmployeeByObjectGuid(query.results[0].SuperiorID)
+                .then(function (employee) {
+                    $scope.supervisorName = employee.userName;
+                });
+            }
         });
 
-        function show(request) {
+        //To show approve/reject box
+        function showApproveBox(request) {
             var showFooter = false;
             
             if($scope.request.SuperiorID == ownGuid){
@@ -258,11 +262,15 @@
         $scope.mode = 'init';
 
         function reloadPage() {
-            $route.reload();
-            //Maybe set a time out, test if that has to be done.
+            //Check how this works out. Not sure yet if a notify of "page reloading in..." is needed
+            //Somtimes it can work with just $route.reload(); but like 50% of the time it is too fast and it loads before the new data is saved
+            setTimeout(function () { $route.reload(); }, 500);
+        }
 
-            /*$("#page-reload-notification").html("This page will reload in:  to set the state");
-            window.setTimeout(function () { document.location.reload(true); }, 10000);*/
+        function failedToLoadDetailPage() {
+            var html = '<div class="block"><div class="block-title"><h4>Travel Request detail</h4></div><span>The Travel Request you are looking for was not found.<br /></span><br /></div>';
+                
+            $("#travelrequest-details").html(html);
         }
     }
 })();

@@ -45,7 +45,7 @@
 
         //////////////////////////////////////////////////////////
         // Steps
-
+        
         var steps = [
             {
                 step: 'General Details',
@@ -237,7 +237,7 @@
         //$scope.model isn't active right away sometimes
         function setModelDates() {
             setTimeout(function () {
-                if (typeof $scope.model != typeof undefined) {
+                if (typeof $scope.model != typeof undefined && typeof $scope.countries != typeof undefined) {
                     var today = new Date();
                     today.setDate(today.getDate() + 0);
                     today.setHours(12, 0, 0);
@@ -247,6 +247,14 @@
                     tomorrow.setDate(tomorrow.getDate() + 1);
                     tomorrow.setHours(12, 0, 0);
                     $scope.model.ReturnDate = tomorrow;
+
+
+                    _.each($scope.countries, function (c) {
+                        if (c.Name == "Romania") {
+                            $scope.model.Country = c;
+                            $scope.model.CountryID = c.Id;
+                        }
+                    });
                 } else {
                     setModelDates();
                 }
@@ -256,7 +264,6 @@
 
         travelRequestService.getCountries().then(function (query) {
             $scope.countries = query.results;
-
         });
 
         travelRequestService.getAirports().then(function (query) {

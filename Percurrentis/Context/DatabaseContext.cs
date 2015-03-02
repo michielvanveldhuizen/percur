@@ -129,6 +129,8 @@ namespace Percurrentis.Context
                         CountryInformation country = this.CountryInformation.Single(Country => Country.Id == specEntity.CountryID);
                         specEntity.Country = country;
 
+                        string objectGuidTempSave = specEntity.SuperiorID;
+
                         if (country.CountryCode.Equals("RO "))
                         {
                             // Notify COO of travel request to Romania
@@ -136,6 +138,9 @@ namespace Percurrentis.Context
                             specEntity.SuperiorID = kees.objectGuid;
                             Notification.requestManagerApproval(specEntity);
                         }
+
+                        specEntity.SuperiorID = objectGuidTempSave;
+                        Notification.requestManagerApproval(specEntity);
                         
                     }
                     specEntity.TravelRequestApproval = TRA;

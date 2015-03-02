@@ -288,13 +288,9 @@
     <Compile Include="Migrations\201502251409209_test.Designer.cs">
       <DependentUpon>201502251409209_test.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201502271104513_InitialItineraryMigration.cs" />
-    <Compile Include="Migrations\201502271104513_InitialItineraryMigration.Designer.cs">
-      <DependentUpon>201502271104513_InitialItineraryMigration.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201502271311411_doemaariets.cs" />
-    <Compile Include="Migrations\201502271311411_doemaariets.Designer.cs">
-      <DependentUpon>201502271311411_doemaariets.cs</DependentUpon>
+    <Compile Include="Migrations\201503020701216_CountryAndSuperiorIDrequired.cs" />
+    <Compile Include="Migrations\201503020701216_CountryAndSuperiorIDrequired.Designer.cs">
+      <DependentUpon>201503020701216_CountryAndSuperiorIDrequired.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\201503020825153_FlightRequestRefactor.cs" />
     <Compile Include="Migrations\201503020825153_FlightRequestRefactor.Designer.cs">
@@ -1334,11 +1330,8 @@
     <EmbeddedResource Include="Migrations\201502251409209_test.resx">
       <DependentUpon>201502251409209_test.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201502271104513_InitialItineraryMigration.resx">
-      <DependentUpon>201502271104513_InitialItineraryMigration.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201502271311411_doemaariets.resx">
-      <DependentUpon>201502271311411_doemaariets.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201503020701216_CountryAndSuperiorIDrequired.resx">
+      <DependentUpon>201503020701216_CountryAndSuperiorIDrequired.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201503020825153_FlightRequestRefactor.resx">
       <DependentUpon>201503020825153_FlightRequestRefactor.cs</DependentUpon>
