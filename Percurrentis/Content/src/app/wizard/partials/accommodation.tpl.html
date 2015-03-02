@@ -11,7 +11,7 @@
             </a>
         </div>
 
-        <div data-form-control data-label="Prefferred Accommodation">
+        <div data-form-control data-label="Preferred Accommodation">
             <span class="help-block">
                 Do you know the name and location of a preferred accomodation? If not proceed by clicking "next".
             </span>
@@ -63,6 +63,34 @@
                     data-chosen
                     data-ng-options="country as country.Name for country in countries"
                     data-z-validate></select>
+        </div>
+
+        <div data-form-control data-label="Prices">
+            <span class="help-block">
+                Do you know the daily rates and possible added fees for this accommodation?
+            </span>
+        </div>
+
+        <div data-form-control data-label="DailyRate">
+            <input type="number"
+                   class="form-control"
+                   data-ng-model="accommodation.DailyRate"
+                   placeholder="0.0"
+                   data-z-validate />
+        </div>
+        <div data-form-control data-label="Additional Fees">
+            <input type="number"
+                   class="form-control"
+                   data-ng-model="accommodation.AdditionalFees"
+                   placeholder="0.0"
+                   data-z-validate />
+        </div>
+
+        <div data-form-control data-label="Additional Fees">
+            <textarea class="form-control"
+                      data-ng-model="accommodation.FeeSpecification.Text"
+                      placeholder="Specify additional fees if possible."
+                      data-z-validate></textarea>
         </div>
       
     </fieldset>

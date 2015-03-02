@@ -28,7 +28,7 @@
             </div>
         </div>
     </div>
-    <div class="block" data-ng-show="request.FlightRequests != null">
+    <div class="block" data-ng-show="request.FlightRequests.length > 0">
         <div class="block-title">
             <h4>Flight Request Details</h4>
             <span class="pull-right" style="padding-top: 7.5px; padding-right: 15px"><a onclick="">Edit</a></span>
@@ -73,4 +73,65 @@
             </table>
         </div>
     </div>
+    <div class="block" data-ng-show="request.FerryRequests.length > 0">
+        <div class="block-title">
+            <h4>Ferry Request Details</h4>
+            <span class="pull-right" style="padding-top: 7.5px; padding-right: 15px"><a onclick="">Edit</a></span>
+        </div>
+        <div class="table">
+            <table class="table table-vcenter table-condensed table-hover">
+                <thead>
+                    <tr>
+                        <td>From</td>
+                        <td>To</td>
+                        <td>Date</td>
+                        <td>Time</td>
+                        <td>Car</td>
+                        <td>Carsize (h / w)</td>
+                        <td>Cost</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr data-ng-repeat="ferryreq in request.FerryRequests">
+                        <td>{{ ferryreq.DepartureAddress.AddressName }}</td>
+                        <td>{{ ferryreq.DestinationAddress.AddressName }}</td>
+                        <td>{{ ferryreq.DepartureDate|date:'d MMMM yyyy' }}</td>
+                        <td>{{ ferryreq.DepartureDate|date:'H:mm' }}</td>
+                        <td>{{ ferryreq.LicensePlate != null ? ferryreq.LicensePlate : "No" }}</td>
+                        <td>{{ ferryreq.LicensePlate != null ? ferryreq.CarHeight + " / " + ferryreq.CarHeight : "Not applicable" }}</td>
+                        <td>{{ ferryreq.Cost == 0 ? "tbd" : ferryreq.Cost }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="block" data-ng-show="request.Accommodations.length > 0">
+        <div class="block-title">
+            <h4>Accommodation Details</h4>
+            <span class="pull-right" style="padding-top: 7.5px; padding-right: 15px"></span>
+        </div>
+        <div class="table">
+            <table class="table table-vcenter table-condensed table-hover">
+                <thead>
+                    <tr>
+                        <td>Check-in Date</td>
+                        <td>Check-out Date</td>
+                        <td>Total stay</td>
+                        <td>Daily Rate</td>
+                        <td>Additional Fees</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr data-ng-repeat="accomreq in request.Accommodations">
+                        <td>{{ accomreq.CheckInDate | date:'d MMMM yyyy' }}</td>
+                        <td>{{ accomreq.CheckOutDate | date:'d MMMM yyyy' }}</td>
+                        <td>3 days</td>
+                        <td>{{ accomreq.DailyRate }}</td>
+                        <td>{{ accomreq.AdditionalFees}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
 </div>

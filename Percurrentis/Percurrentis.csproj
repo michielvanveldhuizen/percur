@@ -296,6 +296,18 @@
     <Compile Include="Migrations\201503020825153_FlightRequestRefactor.Designer.cs">
       <DependentUpon>201503020825153_FlightRequestRefactor.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201503021115035_FerryRequestRefactor.cs" />
+    <Compile Include="Migrations\201503021115035_FerryRequestRefactor.Designer.cs">
+      <DependentUpon>201503021115035_FerryRequestRefactor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201503021157109_RebuiltAccommodationRequest.cs" />
+    <Compile Include="Migrations\201503021157109_RebuiltAccommodationRequest.Designer.cs">
+      <DependentUpon>201503021157109_RebuiltAccommodationRequest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201503021245338_RepairAccommodation.cs" />
+    <Compile Include="Migrations\201503021245338_RepairAccommodation.Designer.cs">
+      <DependentUpon>201503021245338_RepairAccommodation.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Context\DatabaseContext.cs" />
     <Compile Include="Notification\Notification.cs" />
@@ -1335,6 +1347,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201503020825153_FlightRequestRefactor.resx">
       <DependentUpon>201503020825153_FlightRequestRefactor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503021115035_FerryRequestRefactor.resx">
+      <DependentUpon>201503021115035_FerryRequestRefactor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503021157109_RebuiltAccommodationRequest.resx">
+      <DependentUpon>201503021157109_RebuiltAccommodationRequest.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503021245338_RepairAccommodation.resx">
+      <DependentUpon>201503021245338_RepairAccommodation.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
