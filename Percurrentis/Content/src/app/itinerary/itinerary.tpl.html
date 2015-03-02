@@ -1,0 +1,76 @@
+<div data-ng-controller="itineraryDetailCtrl">
+    <div class="block">
+        <div class="block-title">
+            <h4>Travel Details</h4>
+        </div>
+        <div>Request made by {{ request.ApplicantID }}, approved by {{ supervisorName }}.</div><br />
+        <div><strong>Purpose:</strong></div><br />
+        <div class="well well-small"> {{ request.Purpose }} </div>
+        <div><strong>Traveler(s): </strong> {{ }}</div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="table">
+                    <table class="table table-vcenter table-condensed table-hover">
+                        <tbody>
+                            <tr data-ng-repeat="traveller in request.RequestTravellers">
+                                <td>{{index !== 0 ? $index+1 : ''}} {{ index }}</td>
+                                <td>{{traveller.FullName || 'No full name given.'}}</td>
+                                <td>{{traveller.PhoneNumberID || 'No number given.'}}</td>
+                                <td>{{traveller.Company.Name || 'No company specified.' }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <span><strong>Departure: </strong>{{ request.DepartureDate|date:'EEEE d MMMM yyyy - H:mm'}}</span><br />
+                <span><strong>Return: </strong>{{ request.ReturnDate|date:'EEEE d MMMM yyyy - H:mm'}}</span>
+            </div>
+        </div>
+    </div>
+    <div class="block" data-ng-show="request.FlightRequests != null">
+        <div class="block-title">
+            <h4>Flight Request Details</h4>
+            <span class="pull-right" style="padding-top: 7.5px; padding-right: 15px"><a onclick="">Edit</a></span>
+        </div>
+        <div class="table">
+            <table class="table table-vcenter table-condensed table-hover">
+                <thead>
+                    <tr>
+                        <td>From</td>
+                        <td>To</td>
+                        <td>Date</td>
+                        <td>Time</td>
+                        <td>Large Cabin Luggage</td>
+                        <td>Equipment</td>
+                        <td>Check-in</td>
+                        <td>Airline</td>
+                        <td>Card</td>
+                        <td>Price</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr data-ng-repeat="flightreq in request.FlightRequests">
+                        <td> {{ flightreq.DepartureAddress.City }}</td>
+                        <td> {{ flightreq.DestinationAddress.City }}</td>
+                        <td>
+                            <span editable-bsdate="flightreq.DepartureDate" e-name="sDate" e-form="rowform" e-datepicker-popup="dd-MM-yy" e-required>
+                                {{ flightreq.DepartureDate | date:'d MMMM yyyy' }}
+                            </span>
+                        </td>
+                        <td> {{ flightreq.DepartureDate | date:'H:mm' }}</td>
+                        <td>
+                            {{ flightreq.HasLargeCabinLuggage == true ? "Yes" : "No" }}
+                            <span data-ng-show="flightreq.HasLargeCabinLuggage == true"> ({{ flightreq.LargeLuggageCount }})</span>
+                        </td>
+                        <td>{{ flightreq.HasSpecialEquipment == true ? "Yes" : "No" }}</td>
+                        <td>{{ flightreq.IsOnlineCheckIn == true ? "Online" : "Regular" }}</td>
+                        <td>{{ flightreq.Airline }}</td>
+                        <td>{{ flightreq.FlyerMemberCardID }}</td>
+                        <td data-ng-init="$parent.total = ( flightreq.Cost*$parent.numTravellers)">{{ flightreq.Cost }} RON</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

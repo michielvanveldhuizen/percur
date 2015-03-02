@@ -296,6 +296,10 @@
     <Compile Include="Migrations\201502271311411_doemaariets.Designer.cs">
       <DependentUpon>201502271311411_doemaariets.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201503020825153_FlightRequestRefactor.cs" />
+    <Compile Include="Migrations\201503020825153_FlightRequestRefactor.Designer.cs">
+      <DependentUpon>201503020825153_FlightRequestRefactor.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Context\DatabaseContext.cs" />
     <Compile Include="Notification\Notification.cs" />
@@ -1335,6 +1339,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201502271311411_doemaariets.resx">
       <DependentUpon>201502271311411_doemaariets.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503020825153_FlightRequestRefactor.resx">
+      <DependentUpon>201503020825153_FlightRequestRefactor.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -50,32 +50,32 @@
                     return _.filter($scope.allRequests, function (req) {
                         return req.IsDeleted == false;
                     });
-                }, 'All', 0, 'fa-bars', 'View both open and archived travel requests.'),
+                }, 'All', 0, 'fa-bars', 'View both open and archived itineraries.'),
                 current: new Filter(function () {
                     return _.filter($scope.allRequests, function (req) {
                         return req.IsArchived == false && req.IsDeleted == false && req.IsApproved == 0;
                     });
-                }, 'Awaiting', 1, 'fa-inbox', 'View requests that are awaiting approval.'),
+                }, 'Awaiting', 1, 'fa-inbox', 'View itineraries that are awaiting approval.'),
                 approved: new Filter(function () {
                     return _.filter($scope.allRequests, function (req) {
                         return req.IsApproved == 2 && req.IsDeleted == false;
                     });
-                }, 'Approved', 2, 'fa-check', 'View approved travel requests.'),
+                }, 'Approved', 2, 'fa-check', 'View approved itineraries.'),
                 rejected: new Filter(function () {
                     return _.filter($scope.allRequests, function (req) {
                         return req.IsApproved == 1 && req.IsDeleted == false;
                     });
-                }, 'Rejected', 3, 'fa-times', 'View rejected travel requests.'),
+                }, 'Rejected', 3, 'fa-times', 'View rejected itineraries.'),
                 archived: new Filter(function () {
                     return _.filter($scope.allRequests, function (req) {
                         return req.IsArchived == true && req.IsDeleted == false;
                     });
-                }, 'Archived', 4, 'fa-archive', 'View archived travel requests.'),
+                }, 'Archived', 4, 'fa-archive', 'View archived itineraries.'),
                 deleted: new Filter(function () {
                     return _.filter($scope.allRequests, function (req) {
                         return req.IsDeleted == true;
                     });
-                }, 'Deleted', 5, 'fa-ban', 'View deleted travel requests.')
+                }, 'Deleted', 5, 'fa-ban', 'View deleted itineraries.')
             }
         }
 
@@ -138,6 +138,8 @@
         travelRequestService.getTravelRequestByHash($route.current.params.Hash)
         .then(function (query) {
             $scope.request = query.results[0];
+            $scope.total = 0;
+            $scope.numTravellers = 
             show($scope.request);
             console.log("BENECHTEENBANAAN");
             console.log($scope.request);

@@ -25,7 +25,6 @@ namespace Percurrentis.Mapping
             this.HasOptional(f => f.FlyerMemberCard).WithMany().HasForeignKey(f => f.FlyerMemberCardID);
             this.HasRequired(f => f.DepartureAddress).WithMany().HasForeignKey(f => f.DepartureAddressID);
             this.HasRequired(f => f.DestinationAddress).WithMany().HasForeignKey(f => f.DestinationAddressID);
-            //this.HasOptional(f => f.ServiceCompany).WithMany().HasForeignKey(f => f.AirlineID);
         }
     }
 }

@@ -27,8 +27,9 @@ namespace Percurrentis.Model
         public int DepartureAddressID { get; set; }
         public int DestinationAddressID { get; set; }
         //not required due to lack of implementation
-        public int? AirlineID { get; set; }
+        public string Airline { get; set; }
         public int TravelRequestID { get; set; }
+        public double Cost { get; set; }
 
         public virtual FlyerMemberCard FlyerMemberCard { get; set; }
 
