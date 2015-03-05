@@ -135,7 +135,7 @@
 
     function itineraryDetailCtrl($scope, $route, travelRequestService) {
         var request;
-        $scope.prices = [];
+        $scope.totalPrice = 0;
         $scope.flightTotal = 0;
 
         travelRequestService.getTravelRequestByHash($route.current.params.Hash)
@@ -149,6 +149,12 @@
         })
         .then(function (employee) {
             $scope.supervisorName = employee.userName;
+        })
+        .then(function () {
+            $(".cost").each(function (index) {
+                //console.log($(this).text());
+                $scope.totalPrice += parseFloat($(this).text());
+            });
         });
 
         function show(request) {
@@ -165,27 +171,6 @@
             var diffDays = Math.round(Math.abs((start.getTime() - end.getTime()) / (completeDay)));
             return diffDays;
         };
-
-        $scope.CalculateTotalAccommodationPrice = function (stay, rate, fees) {
-            var p = (parseFloat(stay) * parseFloat(rate)) + parseFloat(fees);
-            $scope.prices[0] = p;
-            return (p);
-        };
-
-        $scope.CalculateTotalFlightPrice = function (price, persons) {
-            var p = (parseFloat(price) * parseFloat(persons));
-            $scope.prices[1] = p;
-            return (p);
-        };
-
-        $scope.CalculateTotal = function()
-        {
-            var t = 0;
-            angular.forEach($scope.prices, function (key, value) {
-                t += key;
-            });
-            return t;
-        }
 
         $scope.onApprove = function () {
             $scope.mode = 'approve';

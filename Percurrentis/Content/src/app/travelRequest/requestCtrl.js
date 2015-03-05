@@ -161,9 +161,9 @@
 
     //For the detail page
     angular.module('app').controller('requestDetailCtrl',
-        ['$scope', '$route', '$location', 'travelRequestService', requestDetailCtrl]);
+        ['$scope', '$route', '$location', 'travelRequestService', 'modalService', requestDetailCtrl]);
 
-    function requestDetailCtrl($scope, $route, $location, travelRequestService) {
+    function requestDetailCtrl($scope, $route, $location, travelRequestService, modalService) {
         //Getting all the page details
         travelRequestService.getTravelRequestByHash($route.current.params.Hash)
         .then(function (query) {
@@ -256,25 +256,31 @@
 
         /* == Create Itinerary ========================================= */
         $scope.createItinerary = function (request) {
-            request.IsItinerary = true;
-            request.IsApproved = 0;
-            try 
+            modalService.open("Convert to Itinerary", "This action will change the status of the travelrequest to itinerary. Continue?", function succes()
             {
-                travelRequestService.saveChanges(request, undefined, function result() 
+                request.IsItinerary = true;
+                request.IsApproved = 0;
+                try 
                 {
-                    console.log("Success!");
-                    $location.path('/Itinerary');
-                },
-                function (error, reason) {
-                    alert("Something went wrong. Please check the information in the form and try again.");
-                    console.log(error, reason);
-                });
-            } 
-            catch (ex) 
-            {
-                console.log(ex);
-            }
-        }
+                    travelRequestService.saveChanges(request, undefined, function result() 
+                    {
+                        //console.log("Success!");
+                        $location.path('/Itinerary');
+                    },
+                    function (error, reason) {
+                        alert("Something went wrong. Please check the information in the form and try again.");
+                        console.log(error, reason);
+                    });
+                } 
+                catch (ex) 
+                {
+                    console.log(ex);
+                }
+                
+            }, function() {
+                //console.log("User cancelled");
+            });
+        };
 
         $scope.mode = 'init';
 

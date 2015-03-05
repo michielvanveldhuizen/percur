@@ -98,7 +98,7 @@
                     <td>Time</td>
                     <td>Car</td>
                     <td>Carsize (h / w)</td>
-                    <td>Total price</td>
+                    <td>Price</td>
                 </tr>
             </thead>
             <tbody>
@@ -127,18 +127,14 @@
                     <td>Check-in Date</td>
                     <td>Check-out Date</td>
                     <td>Total stay</td>
-                    <td>Daily Rate</td>
-                    <td>Additional Fees</td>
-                    <td>Total Price</td>
+                    <td>Price</td>
                 </tr>
             </thead>
             <tbody>
                 <tr data-ng-repeat="accomreq in request.Accommodations">
                     <td>{{ accomreq.CheckInDate | date:'d MMMM yyyy' }}</td>
                     <td>{{ accomreq.CheckOutDate | date:'d MMMM yyyy' }}</td>
-                    <td>{{ days = CalculateStayDuration(accomreq.CheckInDate, accomreq.CheckOutDate) }} days</td>
-                    <td>{{ accomreq.DailyRate | number : 2 }}</td>
-                    <td>{{ accomreq.AdditionalFees | number : 2 }}</td>
+                    <td>{{ CalculateStayDuration(accomreq.CheckInDate, accomreq.CheckOutDate) }} days</td>
                     <td class="cost">{{ accomreq.Cost | number : 2 }}</td>
                 </tr>
             </tbody>
@@ -158,7 +154,7 @@
                     <td>To</td>
                     <td>Date</td>
                     <td>Time</td>
-                    <td>Total price</td>
+                    <td>Price</td>
                 </tr>
             </thead>
             <tbody>
@@ -194,7 +190,7 @@
                         <td>EndDate</td>
                         <td>Driver</td>
                         <td>Phonenumber</td>
-                        <td>Total price</td>
+                        <td>Price</td>
                     </tr>
                 </thead>
                 <tbody>
@@ -223,7 +219,7 @@
                         <td>To</td>
                         <td>Departure Date</td>
                         <td>License Plate</td>
-                        <td>Total price</td>
+                        <td>Price</td>
                     </tr>
                 </thead>
                 <tbody>
@@ -239,6 +235,6 @@
         </div>
     </div>
 <div class="block" style="text-align: right; padding-bottom: 15px;">
-    <strong>Total price:</strong> {{ CalculateTotal()  | number : 2 }} (Estimate)
+    <strong>Total price:</strong> {{ totalPrice  | number : 2 }}
 </div>
 </div>
