@@ -181,7 +181,20 @@
                 travelRequestService.getEmployeeByObjectGuid(query.results[0].SuperiorID)
                 .then(function (employee) {
                     $scope.supervisorName = employee.userName;
+                })
+                .then(function ()  {
+                    if($scope.request.IsItinerary == true)
+                    {
+                        modalService.open("Redirecting...",
+                                          "The item you requested is not a travel request. You will be redirected to the homepage.",
+                                          function () {
+                            $location.path('/#/');
+                                          },
+                                          function () {},
+                        '/TravelAgency/Content/src/app/modal/singleBtnSet.tpl.html');
+                    }
                 });
+                
             }
         });
 
@@ -251,6 +264,8 @@
         $scope.onCancel = function () {
             $scope.mode = 'init';
         };
+
+        
 
 
 

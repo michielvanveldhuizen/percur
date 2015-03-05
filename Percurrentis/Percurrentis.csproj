@@ -316,6 +316,10 @@
     <Compile Include="Migrations\201503050736418_nullableCosts.Designer.cs">
       <DependentUpon>201503050736418_nullableCosts.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201503051054263_TravelRequestIsFinal.cs" />
+    <Compile Include="Migrations\201503051054263_TravelRequestIsFinal.Designer.cs">
+      <DependentUpon>201503051054263_TravelRequestIsFinal.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Context\DatabaseContext.cs" />
     <Compile Include="Notification\Notification.cs" />
@@ -1370,6 +1374,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201503050736418_nullableCosts.resx">
       <DependentUpon>201503050736418_nullableCosts.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503051054263_TravelRequestIsFinal.resx">
+      <DependentUpon>201503051054263_TravelRequestIsFinal.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

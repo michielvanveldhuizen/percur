@@ -88,7 +88,7 @@
                     },
                     {
                         name: "Itinerary",
-                        path: "/TravelAgency/#/Insurance/"
+                        path: "/TravelAgency/#/Itinerary/"
                     }]
                 }
             })
@@ -100,7 +100,7 @@
                     icon: "gi-log_book",
                     breadcrumbs: [{
                         name: "Home",
-                        path: "/Itinerary/#/"
+                        path: "/TravelAgency/#/"
                     },
                     {
                         name: "Itinerary",

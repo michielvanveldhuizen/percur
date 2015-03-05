@@ -29,6 +29,8 @@ namespace Percurrentis.Model
         public string Hash { get; set; }
         [TrueOrFalse]
         public bool IsItinerary { get; set; }
+        [TrueOrFalse]
+        public bool IsFinal { get; set; }
         [DateTime]
         public DateTime DepartureDate { get; set; }
         [DateTime]

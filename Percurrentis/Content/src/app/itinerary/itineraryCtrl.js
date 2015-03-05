@@ -53,29 +53,34 @@
                 }, 'All', 0, 'fa-bars', 'View both open and archived itineraries.'),
                 current: new Filter(function () {
                     return _.filter($scope.allRequests, function (req) {
-                        return req.IsArchived == false && req.IsDeleted == false && req.IsApproved == 0;
+                        return req.IsArchived == false && req.IsDeleted == false && req.IsApproved == 0 && req.IsFinal == false;
                     });
                 }, 'Awaiting', 1, 'fa-inbox', 'View itineraries that are awaiting approval.'),
                 approved: new Filter(function () {
                     return _.filter($scope.allRequests, function (req) {
-                        return req.IsApproved == 2 && req.IsDeleted == false;
+                        return req.IsApproved == 2 && req.IsDeleted == false && req.IsFinal == false;
                     });
                 }, 'Approved', 2, 'fa-check', 'View approved itineraries.'),
                 rejected: new Filter(function () {
                     return _.filter($scope.allRequests, function (req) {
-                        return req.IsApproved == 1 && req.IsDeleted == false;
+                        return req.IsApproved == 1 && req.IsDeleted == false && req.IsFinal == false;
                     });
                 }, 'Rejected', 3, 'fa-times', 'View rejected itineraries.'),
                 archived: new Filter(function () {
                     return _.filter($scope.allRequests, function (req) {
-                        return req.IsArchived == true && req.IsDeleted == false;
+                        return req.IsArchived == true && req.IsDeleted == false && req.IsFinal == false;
                     });
                 }, 'Archived', 4, 'fa-archive', 'View archived itineraries.'),
                 deleted: new Filter(function () {
                     return _.filter($scope.allRequests, function (req) {
-                        return req.IsDeleted == true;
+                        return req.IsDeleted == true && req.IsFinal == false;
                     });
-                }, 'Deleted', 5, 'fa-ban', 'View deleted itineraries.')
+                }, 'Deleted', 5, 'fa-ban', 'View deleted itineraries.'),
+                final: new Filter(function () {
+                    return _.filter($scope.allRequests, function (req) {
+                        return req.IsFinal == true;
+                    });
+                }, 'Final', 5, 'fa-ban', 'View committed itineraries.')
             }
         }
 
@@ -131,9 +136,9 @@
     }
 
     angular.module('app').controller('itineraryDetailCtrl',
-        ['$scope', '$route', 'travelRequestService', itineraryDetailCtrl]);
+        ['$scope', '$route', 'travelRequestService', "modalService", itineraryDetailCtrl]);
 
-    function itineraryDetailCtrl($scope, $route, travelRequestService) {
+    function itineraryDetailCtrl($scope, $route, travelRequestService, modalService) {
         var request;
         $scope.totalPrice = 0;
         $scope.flightTotal = 0;
@@ -165,6 +170,17 @@
                 }
             }
         }
+
+        $scope.CommitItinerary = function () {
+            modalService.open("Commit this Itinerary?", "Commiting this itinerary means that it will be marked 'final' which means it can no longer be edited. Continue?", 
+            function succes() {
+                // Make the Itinerary final, which means it cant be edited anymore.
+
+            },
+            function cancel() {
+                // Thats fine, just go back. 
+            });
+        };
 
         $scope.CalculateStayDuration = function (start, end) {
             var completeDay = 24 * 60 * 60 * 1000;

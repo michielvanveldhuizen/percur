@@ -87,9 +87,10 @@
                             <span class="info-hover" data-tooltip="{{request.CreatedDate|date:'EEEE H:mm, d MMMM yyyy'}}">{{request.CreatedDate|date:'d MMM'}}</span>
                         </td>
                         <td data-ng-click="go('/Itinerary/' + request.Hash)">
-                            <span class="label label-warning" data-ng-show="request.IsApproved == 0">Awaiting</span>
-                            <span class="label label-danger" data-ng-show="request.IsApproved == 1">Rejected</span>
-                            <span class="label label-success" data-ng-show="request.IsApproved == 2">Approved</span>
+                            <span class="label label-warning" data-ng-show="request.IsApproved == 0 && request.IsFinal == false">Awaiting</span>
+                            <span class="label label-danger" data-ng-show="request.IsApproved == 1 && request.IsFinal == false">Rejected</span>
+                            <span class="label label-success" data-ng-show="request.IsApproved == 2 && request.IsFinal == false">Approved</span>
+                            <span class="label label-default" data-ng-show="request.IsFinal == true">Committed</span>
                         </td>
                         <td>
                             <div class="btn-group btn-group-sm">
@@ -105,6 +106,7 @@
                                     <i class="fa fa-archive"></i>
                                 </a>
                                 <a data-ng-click="toggleDelete(request)"
+                                   data-ng-show="request.IsFinal == false"
                                    class="btn btn-sm"
                                    data-ng-class="request.IsDeleted ? 'btn-default' : 'btn-default'"
                                    data-tooltip="{{request.IsDeleted ? 'Recover' : 'Delete'}}"
