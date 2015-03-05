@@ -16,10 +16,9 @@ namespace Percurrentis.Mapping
         { 
             this.HasKey(a => a.Id);
             this.Property(a => a.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
-            this.Property(a => a.AdditionalFees).IsOptional();
-            this.Property(a => a.DailyRate).IsOptional();
             this.Property(a => a.CheckInDate).IsRequired();
             this.Property(a => a.CheckOutDate).IsRequired();
+            this.Property(a => a.Cost).IsOptional();
             this.HasOptional(a => a.Address).WithMany().HasForeignKey(a => a.AddressID);
         }
     }

@@ -161,9 +161,9 @@
 
     //For the detail page
     angular.module('app').controller('requestDetailCtrl',
-        ['$scope', '$route', 'travelRequestService', requestDetailCtrl]);
+        ['$scope', '$route', '$location', 'travelRequestService', requestDetailCtrl]);
 
-    function requestDetailCtrl($scope, $route, travelRequestService) {
+    function requestDetailCtrl($scope, $route, $location, travelRequestService) {
         //Getting all the page details
         travelRequestService.getTravelRequestByHash($route.current.params.Hash)
         .then(function (query) {
@@ -256,7 +256,24 @@
 
         /* == Create Itinerary ========================================= */
         $scope.createItinerary = function (request) {
-            console.log(request);
+            request.IsItinerary = true;
+            request.IsApproved = 0;
+            try 
+            {
+                travelRequestService.saveChanges(request, undefined, function result() 
+                {
+                    console.log("Success!");
+                    $location.path('/Itinerary');
+                },
+                function (error, reason) {
+                    alert("Something went wrong. Please check the information in the form and try again.");
+                    console.log(error, reason);
+                });
+            } 
+            catch (ex) 
+            {
+                console.log(ex);
+            }
         }
 
         $scope.mode = 'init';

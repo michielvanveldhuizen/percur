@@ -15,8 +15,7 @@ namespace Percurrentis.Model
         public int? AddressID { get; set; }
         public DateTime CheckInDate { get; set; }
         public DateTime CheckOutDate { get; set; }
-        public double? DailyRate { get; set; }
-        public double? AdditionalFees { get; set; }
+        public double Cost { get; set; }
 
         [Address]
         public virtual Address Address { get; set; }

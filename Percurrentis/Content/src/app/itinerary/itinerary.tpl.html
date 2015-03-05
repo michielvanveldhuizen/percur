@@ -3,12 +3,15 @@
         <div class="block-title">
             <h4>Travel Details</h4>
         </div>
-        <div>Request made by {{ request.ApplicantID }}, approved by {{ supervisorName }}.</div><br />
-        <div><strong>Purpose:</strong></div><br />
-        <div class="well well-small"> {{ request.Purpose }} </div>
-        <div><strong>Traveler(s): </strong> {{ }}</div>
         <div class="row">
             <div class="col-md-6">
+                <span><strong>Departure: </strong>{{ request.DepartureDate|date:'EEEE d MMMM yyyy - H:mm'}}</span><br />
+                <span><strong>Return: </strong>{{ request.ReturnDate|date:'EEEE d MMMM yyyy - H:mm'}}</span>
+
+                <div><strong>Purpose:</strong></div><br />
+                <div class="well well-small"> {{ request.Purpose }} </div>
+                <div><strong>Traveler<span ng-show="request.RequestTravellers.length > 1">s</span>:</strong></div>
+
                 <div class="table">
                     <table class="table table-vcenter table-condensed table-hover">
                         <tbody>
@@ -22,116 +25,222 @@
                     </table>
                 </div>
             </div>
-            <div class="col-md-4">
-                <span><strong>Departure: </strong>{{ request.DepartureDate|date:'EEEE d MMMM yyyy - H:mm'}}</span><br />
-                <span><strong>Return: </strong>{{ request.ReturnDate|date:'EEEE d MMMM yyyy - H:mm'}}</span>
+            <div class="col-md-6">
+                <strong>Requester:</strong><br />
+                <br />
+                {{ request.ApplicantID }} <br />
+                <br />
+                <strong>Supervisor: </strong><br />
+                <br />
+                {{ supervisorName }} <br />
             </div>
         </div>
     </div>
-    <div class="block" data-ng-show="request.FlightRequests.length > 0">
-        <div class="block-title">
-            <h4>Flight Request Details</h4>
-            <span class="pull-right" style="padding-top: 7.5px; padding-right: 15px"><a onclick="">Edit</a></span>
-        </div>
-        <div class="table">
-            <table class="table table-vcenter table-condensed table-hover">
-                <thead>
-                    <tr>
-                        <td>From</td>
-                        <td>To</td>
-                        <td>Date</td>
-                        <td>Time</td>
-                        <td>Large Cabin Luggage</td>
-                        <td>Equipment</td>
-                        <td>Check-in</td>
-                        <td>Airline</td>
-                        <td>Card</td>
-                        <td>Price</td>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr data-ng-repeat="flightreq in request.FlightRequests">
-                        <td> {{ flightreq.DepartureAddress.City }}</td>
-                        <td> {{ flightreq.DestinationAddress.City }}</td>
-                        <td>
-                            <span editable-bsdate="flightreq.DepartureDate" e-name="sDate" e-form="rowform" e-datepicker-popup="dd-MM-yy" e-required>
-                                {{ flightreq.DepartureDate | date:'d MMMM yyyy' }}
-                            </span>
-                        </td>
-                        <td> {{ flightreq.DepartureDate | date:'H:mm' }}</td>
-                        <td>
-                            {{ flightreq.HasLargeCabinLuggage == true ? "Yes" : "No" }}
-                            <span data-ng-show="flightreq.HasLargeCabinLuggage == true"> ({{ flightreq.LargeLuggageCount }})</span>
-                        </td>
-                        <td>{{ flightreq.HasSpecialEquipment == true ? "Yes" : "No" }}</td>
-                        <td>{{ flightreq.IsOnlineCheckIn == true ? "Online" : "Regular" }}</td>
-                        <td>{{ flightreq.Airline }}</td>
-                        <td>{{ flightreq.FlyerMemberCardID }}</td>
-                        <td data-ng-init="$parent.total = ( flightreq.Cost*$parent.numTravellers)">{{ flightreq.Cost }} RON</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+
+<div class="block" data-ng-show="request.FlightRequests.length > 0">
+    <div class="block-title">
+       
+        <h4><i class="fa fa-plane"></i> Flight Request Details</h4>
+        <span class="pull-right" style="padding-top: 7.5px; padding-right: 15px"><a onclick="">Edit</a></span>
     </div>
-    <div class="block" data-ng-show="request.FerryRequests.length > 0">
-        <div class="block-title">
-            <h4>Ferry Request Details</h4>
-            <span class="pull-right" style="padding-top: 7.5px; padding-right: 15px"><a onclick="">Edit</a></span>
-        </div>
-        <div class="table">
-            <table class="table table-vcenter table-condensed table-hover">
-                <thead>
-                    <tr>
-                        <td>From</td>
-                        <td>To</td>
-                        <td>Date</td>
-                        <td>Time</td>
-                        <td>Car</td>
-                        <td>Carsize (h / w)</td>
-                        <td>Cost</td>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr data-ng-repeat="ferryreq in request.FerryRequests">
-                        <td>{{ ferryreq.DepartureAddress.AddressName }}</td>
-                        <td>{{ ferryreq.DestinationAddress.AddressName }}</td>
-                        <td>{{ ferryreq.DepartureDate|date:'d MMMM yyyy' }}</td>
-                        <td>{{ ferryreq.DepartureDate|date:'H:mm' }}</td>
-                        <td>{{ ferryreq.LicensePlate != null ? ferryreq.LicensePlate : "No" }}</td>
-                        <td>{{ ferryreq.LicensePlate != null ? ferryreq.CarHeight + " / " + ferryreq.CarHeight : "Not applicable" }}</td>
-                        <td>{{ ferryreq.Cost == 0 ? "tbd" : ferryreq.Cost }}</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+    <div class="table">
+        <table class="table table-vcenter table-condensed table-hover">
+            <thead>
+                <tr>
+                    <td>From</td>
+                    <td>To</td>
+                    <td>Date</td>
+                    <td>Time</td>
+                    <td>Large Cabin Luggage</td>
+                    <td>Equipment</td>
+                    <td>Check-in</td>
+                    <td>Airline</td>
+                    <td>Card</td>
+                    <td>Price</td>
+                    <td>Total price</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr data-ng-repeat="flightreq in request.FlightRequests">
+                    <td> {{ flightreq.DepartureAddress.City }}</td>
+                    <td> {{ flightreq.DestinationAddress.City }}</td>
+                    <td>
+                        <span editable-bsdate="flightreq.DepartureDate" e-name="sDate" e-form="rowform" e-datepicker-popup="dd-MM-yy" e-required>
+                            {{ flightreq.DepartureDate | date:'d MMMM yyyy' }}
+                        </span>
+                    </td>
+                    <td> {{ flightreq.DepartureDate | date:'H:mm' }}</td>
+                    <td>
+                        {{ flightreq.HasLargeCabinLuggage == true ? "Yes" : "No" }}
+                        <span data-ng-show="flightreq.HasLargeCabinLuggage == true"> ({{ flightreq.LargeLuggageCount }})</span>
+                    </td>
+                    <td>{{ flightreq.HasSpecialEquipment == true ? "Yes" : "No" }}</td>
+                    <td>{{ flightreq.IsOnlineCheckIn == true ? "Online" : "Regular" }}</td>
+                    <td>{{ flightreq.Airline }}</td>
+                    <td>{{ flightreq.FlyerMemberCard.FMCNumber }}</td>
+                    <td>{{ flightreq.Cost | number : 2 }}</td>
+                    <td>{{ CalculateTotalFlightPrice(flightreq.Cost, request.RequestTravellers.length) | number : 2}}</td>
+                </tr>
+            </tbody>
+        </table>
     </div>
-    <div class="block" data-ng-show="request.Accommodations.length > 0">
+</div>
+<div class="block" data-ng-show="request.FerryRequests.length > 0">
+    <div class="block-title">
+        <h4>Ferry Request Details</h4>
+        <span class="pull-right" style="padding-top: 7.5px; padding-right: 15px"><a onclick="">Edit</a></span>
+    </div>
+    <div class="table">
+        <table class="table table-vcenter table-condensed table-hover">
+            <thead>
+                <tr>
+                    <td>From</td>
+                    <td>To</td>
+                    <td>Date</td>
+                    <td>Time</td>
+                    <td>Car</td>
+                    <td>Carsize (h / w)</td>
+                    <td>Total price</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr data-ng-repeat="ferryreq in request.FerryRequests">
+                    <td>{{ ferryreq.DepartureAddress.AddressName }}</td>
+                    <td>{{ ferryreq.DestinationAddress.AddressName }}</td>
+                    <td>{{ ferryreq.DepartureDate|date:'d MMMM yyyy' }}</td>
+                    <td>{{ ferryreq.DepartureDate|date:'H:mm' }}</td>
+                    <td>{{ ferryreq.LicensePlate != null ? ferryreq.LicensePlate : "No" }}</td>
+                    <td>{{ ferryreq.LicensePlate != null ? ferryreq.CarHeight + " / " + ferryreq.CarHeight : "Not applicable" }}</td>
+                    <td>{{ ferryreq.Cost == 0 ? "tbd" : ferryreq.Cost }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="block" data-ng-show="request.Accommodations.length > 0">
+    <div class="block-title">
+        <h4>Accommodation Details</h4>
+        <span class="pull-right" style="padding-top: 7.5px; padding-right: 15px"></span>
+    </div>
+    <div class="table">
+        <table class="table table-vcenter table-condensed table-hover">
+            <thead>
+                <tr>
+                    <td>Check-in Date</td>
+                    <td>Check-out Date</td>
+                    <td>Total stay</td>
+                    <td>Daily Rate</td>
+                    <td>Additional Fees</td>
+                    <td>Total Price</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr data-ng-repeat="accomreq in request.Accommodations">
+                    <td>{{ accomreq.CheckInDate | date:'d MMMM yyyy' }}</td>
+                    <td>{{ accomreq.CheckOutDate | date:'d MMMM yyyy' }}</td>
+                    <td>{{ days = CalculateStayDuration(accomreq.CheckInDate, accomreq.CheckOutDate) }} days</td>
+                    <td>{{ accomreq.DailyRate | number : 2 }}</td>
+                    <td>{{ accomreq.AdditionalFees | number : 2 }}</td>
+                    <td>{{ CalculateTotalAccommodationPrice(days, accomreq.DailyRate, accomreq.AdditionalFees) | number : 2}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="block" data-ng-show="request.TaxiRequests.length > 0">
+    <div class="block-title">
+        <h4>Taxi Request Details</h4>
+        <span class="pull-right" style="padding-top: 7.5px; padding-right: 15px"></span>
+    </div>
+    <div class="table">
+        <table class="table table-vcenter table-condensed table-hover">
+            <thead>
+                <tr>
+                    <td>From</td>
+                    <td>To</td>
+                    <td>Date</td>
+                    <td>Time</td>
+                    <td>Total price</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr data-ng-repeat="taxireq in request.TaxiRequests">
+                    <td>
+                        <strong>{{ taxireq.DepartureAddress.AddressName }}</strong><br>
+                        {{ taxireq.DepartureAddress.Street }}<br>
+                        {{ taxireq.DepartureAddress.City }}, {{ taxireq.DepartureAddress.PostalCode }}<br>
+                    </td>
+                    <td>
+                        <strong>{{ taxireq.DestinationAddress.AddressName }}</strong><br>
+                        {{ taxireq.DestinationAddress.Street }}<br>
+                        {{ taxireq.DestinationAddress.City }}, {{ taxireq.DestinationAddress.PostalCode }}<br>
+                    </td>
+                    <td>{{ taxireq.DepartureDate|date:'d MMMM yyyy' }}</td>
+                    <td>{{ taxireq.DepartureDate|date:'H:mm' }}</td>
+                    <td>{{ taxireq.Cost }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+    <div class="block" data-ng-show="request.TaxiRequests.length > 0">
         <div class="block-title">
-            <h4>Accommodation Details</h4>
+            <h4>Rentalcar Request Details</h4>
             <span class="pull-right" style="padding-top: 7.5px; padding-right: 15px"></span>
         </div>
         <div class="table">
             <table class="table table-vcenter table-condensed table-hover">
                 <thead>
                     <tr>
-                        <td>Check-in Date</td>
-                        <td>Check-out Date</td>
-                        <td>Total stay</td>
-                        <td>Daily Rate</td>
-                        <td>Additional Fees</td>
+                        <td>StartDate</td>
+                        <td>EndDate</td>
+                        <td>Driver</td>
+                        <td>Phonenumber</td>
+                        <td>Total price</td>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr data-ng-repeat="accomreq in request.Accommodations">
-                        <td>{{ accomreq.CheckInDate | date:'d MMMM yyyy' }}</td>
-                        <td>{{ accomreq.CheckOutDate | date:'d MMMM yyyy' }}</td>
-                        <td>3 days</td>
-                        <td>{{ accomreq.DailyRate }}</td>
-                        <td>{{ accomreq.AdditionalFees}}</td>
+                    <tr data-ng-repeat="rcarreq in request.RentalCarRequests">
+                        <td>{{ rcarreq.StartDate|date:'d MMMM yyyy' }}</td>
+                        <td>{{ rcarreq.EndDate|date:'d MMMM yyyy' }}</td>
+                        <td>{{ rcarreq.Driver.FullName }}</td>
+                        <td>{{ rcarreq.Driver.PhoneNumberID }}</td>
+                        <td>{{ rcarreq.Cost }}</td>
                     </tr>
                 </tbody>
             </table>
         </div>
     </div>
 
+    <div class="block" data-ng-show="request.EuroTunnelRequests.length > 0">
+        <div class="block-title">
+            <h4>EuroTunnel Request Details</h4>
+            <span class="pull-right" style="padding-top: 7.5px; padding-right: 15px"></span>
+        </div>
+        <div class="table">
+            <table class="table table-vcenter table-condensed table-hover">
+                <thead>
+                    <tr>
+                        <td>From</td>
+                        <td>To</td>
+                        <td>Departure Date</td>
+                        <td>License Plate</td>
+                        <td>Total price</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr data-ng-repeat="euroreq in request.EuroTunnelRequests">
+                        <td>{{ euroreq.DepartureAddress.AddressName }}</td>
+                        <td>{{ euroreq.DestinationAddress.AddressName }}</td>
+                        <td>{{ euroreq.DepartureDate|date:'d MMMM yyyy' }}</td>
+                        <td>{{ euroreq.LicensePlate != null ? euroreq.LicensePlate : "No car"  }}</td>
+                        <td>{{ euroreq.Cost }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+<div class="block" style="text-align: right; padding-bottom: 15px;">
+    <strong>Total price:</strong> {{ CalculateTotal()  | number : 2 }} (Estimate)
+</div>
 </div>

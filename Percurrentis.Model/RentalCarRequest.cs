@@ -28,5 +28,6 @@ namespace Percurrentis.Model
         [Address]
         public Address Address { get; set; }
         public virtual TravelRequest TravelRequest { get; set; }
+        public double Cost { get; set; }
     }
 }

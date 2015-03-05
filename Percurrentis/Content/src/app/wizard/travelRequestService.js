@@ -708,8 +708,6 @@
                     }
                 });
             }*/
-            
-            console.log(request);
                        
             return manager.saveChanges()
                 .then(saveSucceeded)

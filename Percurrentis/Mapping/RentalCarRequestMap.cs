@@ -24,6 +24,7 @@ namespace Percurrentis.Mapping
             this.HasRequired(r => r.Driver).WithMany().HasForeignKey(r => r.DriverID);
             this.HasOptional(r => r.SecondaryDriver).WithMany().HasForeignKey(r => r.SecondaryDriverID);
             this.HasRequired(r => r.Address).WithMany().HasForeignKey(r => r.AddressID);
+            this.Property(a => a.Cost).IsOptional();
         }
     }
 }

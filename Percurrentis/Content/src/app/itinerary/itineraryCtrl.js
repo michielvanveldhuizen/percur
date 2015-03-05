@@ -135,14 +135,13 @@
 
     function itineraryDetailCtrl($scope, $route, travelRequestService) {
         var request;
+        $scope.prices = [];
+        $scope.flightTotal = 0;
+
         travelRequestService.getTravelRequestByHash($route.current.params.Hash)
         .then(function (query) {
             $scope.request = query.results[0];
             $scope.total = 0;
-            $scope.numTravellers = 
-            show($scope.request);
-            console.log("BENECHTEENBANAAN");
-            console.log($scope.request);
             return query.results[0];
         })
         .then(function (request) {
@@ -159,6 +158,33 @@
                     $("footer").show();
                 }
             }
+        }
+
+        $scope.CalculateStayDuration = function (start, end) {
+            var completeDay = 24 * 60 * 60 * 1000;
+            var diffDays = Math.round(Math.abs((start.getTime() - end.getTime()) / (completeDay)));
+            return diffDays;
+        };
+
+        $scope.CalculateTotalAccommodationPrice = function (stay, rate, fees) {
+            var p = (parseFloat(stay) * parseFloat(rate)) + parseFloat(fees);
+            $scope.prices[0] = p;
+            return (p);
+        };
+
+        $scope.CalculateTotalFlightPrice = function (price, persons) {
+            var p = (parseFloat(price) * parseFloat(persons));
+            $scope.prices[1] = p;
+            return (p);
+        };
+
+        $scope.CalculateTotal = function()
+        {
+            var t = 0;
+            angular.forEach($scope.prices, function (key, value) {
+                t += key;
+            });
+            return t;
         }
 
         $scope.onApprove = function () {
@@ -196,7 +222,6 @@
 
         /* == Create Itinerary ========================================= */
         $scope.createItinerary = function (request) {
-            console.log(request);
         }
 
         $scope.mode = 'init';
