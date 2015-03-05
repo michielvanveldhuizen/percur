@@ -12,5 +12,7 @@ namespace Percurrentis.Model
         [_256]
         public string LicensePlate { get; set; }
         public virtual TravelRequest TravelRequest { get; set; }
+        public double? Cost { get; set; }
+
     }
 }

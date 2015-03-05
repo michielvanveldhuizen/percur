@@ -57,7 +57,6 @@
                     <td>Airline</td>
                     <td>Card</td>
                     <td>Price</td>
-                    <td>Total price</td>
                 </tr>
             </thead>
             <tbody>
@@ -78,8 +77,7 @@
                     <td>{{ flightreq.IsOnlineCheckIn == true ? "Online" : "Regular" }}</td>
                     <td>{{ flightreq.Airline }}</td>
                     <td>{{ flightreq.FlyerMemberCard.FMCNumber }}</td>
-                    <td>{{ flightreq.Cost | number : 2 }}</td>
-                    <td>{{ CalculateTotalFlightPrice(flightreq.Cost, request.RequestTravellers.length) | number : 2}}</td>
+                    <td class="cost">{{ flightreq.Cost | number : 2 }}</td>
                 </tr>
             </tbody>
         </table>
@@ -111,7 +109,7 @@
                     <td>{{ ferryreq.DepartureDate|date:'H:mm' }}</td>
                     <td>{{ ferryreq.LicensePlate != null ? ferryreq.LicensePlate : "No" }}</td>
                     <td>{{ ferryreq.LicensePlate != null ? ferryreq.CarHeight + " / " + ferryreq.CarHeight : "Not applicable" }}</td>
-                    <td>{{ ferryreq.Cost == 0 ? "tbd" : ferryreq.Cost }}</td>
+                    <td class="cost">{{ ferryreq.Cost | number : 2 }}</td>
                 </tr>
             </tbody>
         </table>
@@ -141,7 +139,7 @@
                     <td>{{ days = CalculateStayDuration(accomreq.CheckInDate, accomreq.CheckOutDate) }} days</td>
                     <td>{{ accomreq.DailyRate | number : 2 }}</td>
                     <td>{{ accomreq.AdditionalFees | number : 2 }}</td>
-                    <td>{{ CalculateTotalAccommodationPrice(days, accomreq.DailyRate, accomreq.AdditionalFees) | number : 2}}</td>
+                    <td class="cost">{{ accomreq.Cost | number : 2 }}</td>
                 </tr>
             </tbody>
         </table>
@@ -177,7 +175,7 @@
                     </td>
                     <td>{{ taxireq.DepartureDate|date:'d MMMM yyyy' }}</td>
                     <td>{{ taxireq.DepartureDate|date:'H:mm' }}</td>
-                    <td>{{ taxireq.Cost }}</td>
+                    <td class="cost">{{ taxireq.Cost }}</td>
                 </tr>
             </tbody>
         </table>
@@ -205,7 +203,7 @@
                         <td>{{ rcarreq.EndDate|date:'d MMMM yyyy' }}</td>
                         <td>{{ rcarreq.Driver.FullName }}</td>
                         <td>{{ rcarreq.Driver.PhoneNumberID }}</td>
-                        <td>{{ rcarreq.Cost }}</td>
+                        <td class="cost">{{ rcarreq.Cost }}</td>
                     </tr>
                 </tbody>
             </table>
@@ -234,7 +232,7 @@
                         <td>{{ euroreq.DestinationAddress.AddressName }}</td>
                         <td>{{ euroreq.DepartureDate|date:'d MMMM yyyy' }}</td>
                         <td>{{ euroreq.LicensePlate != null ? euroreq.LicensePlate : "No car"  }}</td>
-                        <td>{{ euroreq.Cost }}</td>
+                        <td class="cost">{{ euroreq.Cost }}</td>
                     </tr>
                 </tbody>
             </table>

@@ -29,7 +29,7 @@ namespace Percurrentis.Model
         //not required due to lack of implementation
         public string Airline { get; set; }
         public int TravelRequestID { get; set; }
-        public double Cost { get; set; }
+        public double? Cost { get; set; }
 
         public virtual FlyerMemberCard FlyerMemberCard { get; set; }
 

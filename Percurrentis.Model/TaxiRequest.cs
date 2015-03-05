@@ -9,5 +9,6 @@ namespace Percurrentis.Model
     public class TaxiRequest : TransitRequest
     {
         public virtual TravelRequest TravelRequest { get; set; }
+        public double? Cost { get; set; }
     }
 }

@@ -28,7 +28,6 @@ namespace Percurrentis.Mapping
             this.Property(e => e.LicensePlate).IsOptional().HasMaxLength(256);
             this.HasRequired(e => e.DepartureAddress).WithMany().HasForeignKey(t => t.DepartureAddressID);
             this.HasRequired(e => e.DestinationAddress).WithMany().HasForeignKey(t => t.DestinationAddressID);
-            this.Property(a => a.Cost).IsOptional();
 
         }
     }

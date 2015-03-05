@@ -312,6 +312,10 @@
     <Compile Include="Migrations\201503050659072_addCostToAllRequestTypes.Designer.cs">
       <DependentUpon>201503050659072_addCostToAllRequestTypes.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201503050736418_nullableCosts.cs" />
+    <Compile Include="Migrations\201503050736418_nullableCosts.Designer.cs">
+      <DependentUpon>201503050736418_nullableCosts.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Context\DatabaseContext.cs" />
     <Compile Include="Notification\Notification.cs" />
@@ -1363,6 +1367,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201503050659072_addCostToAllRequestTypes.resx">
       <DependentUpon>201503050659072_addCostToAllRequestTypes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503050736418_nullableCosts.resx">
+      <DependentUpon>201503050736418_nullableCosts.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
