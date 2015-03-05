@@ -248,6 +248,8 @@
                     tomorrow.setHours(12, 0, 0);
                     $scope.model.ReturnDate = tomorrow;
 
+                    $scope.CheckInDate = today;
+                    $scope.CheckOutDate = tomorrow;
 
                     _.each($scope.countries, function (c) {
                         if (c.Name == "Romania") {
@@ -419,6 +421,7 @@
         // Accommodation
 
         $scope.addAccommodation = function () {
+            console.log("add");
             travelRequestService.addAccommodation($scope.model);
         };
 

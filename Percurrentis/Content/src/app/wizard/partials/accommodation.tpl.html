@@ -68,13 +68,13 @@
         <span class="help-block">
             How long will you be staying at the accommodation?
         </span>
-        {{ accommodation.CheckInDate }}
+
         <div data-form-control data-label="Check-in Date">
-            <div data-datepicker data-starting-day="1" data-ng-model="accommodation.CheckInDate"></div>
+            <div data-ng-init="accommodation.CheckInDate = CheckInDate" data-datepicker data-starting-day="1" data-ng-model="accommodation.CheckInDate"></div>
         </div>
 
         <div data-form-control data-label="Check-out Date">
-            <div data-datepicker data-ng-model="accommodation.CheckOutDate"></div>
+            <div data-ng-init="accommodation.CheckOutDate = CheckOutDate" data-datepicker data-ng-model="accommodation.CheckOutDate"></div>
         </div>
       
     </fieldset>
