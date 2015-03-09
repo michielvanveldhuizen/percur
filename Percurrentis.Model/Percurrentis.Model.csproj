@@ -68,6 +68,7 @@
     <Compile Include="ContactPerson.cs" />
     <Compile Include="CountryInformation.cs" />
     <Compile Include="EuroTunnelRequest.cs" />
+    <Compile Include="ExchangeRate.cs" />
     <Compile Include="FerryRequest.cs" />
     <Compile Include="FlightRequest.cs" />
     <Compile Include="FlyerMemberCard.cs" />

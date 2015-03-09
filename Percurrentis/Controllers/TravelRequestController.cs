@@ -120,6 +120,12 @@ namespace Percurrentis.Controllers
         }
 
         [HttpGet]
+        public ExchangeRate ExchangeRate()
+        {
+            return _contextProvider.Context.ExchangeRate.AsNoTracking().First();
+        }
+
+        [HttpGet]
         public IQueryable<Company> Company()
         {
             return _contextProvider.Context.Company

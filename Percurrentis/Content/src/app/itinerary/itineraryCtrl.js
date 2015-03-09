@@ -141,7 +141,7 @@
     function itineraryDetailCtrl($scope, $route, travelRequestService, modalService) {
         var request;
         $scope.totalPrice = 0;
-        $scope.flightTotal = 0;
+        $scope.editInProgress = false;
 
         travelRequestService.getTravelRequestByHash($route.current.params.Hash)
         .then(function (query) {
@@ -162,6 +162,32 @@
             });
         });
 
+        /*travelRequestService.getAirports().then(function (query) {
+            $scope.airports = query.results;
+
+        });*/
+
+
+        /* == Euro/RON conversion ========================================== */
+        travelRequestService.getExchangeRates().then(function (query) {
+            $scope.rate = query.results[0];
+        });
+
+        $scope.toRON = function(eurVal)
+        {
+            if ($scope.rate != undefined) {
+                var ronVal = parseFloat(eurVal) * parseFloat($scope.rate.RON);
+                return ronVal.toFixed(2);
+            }
+        }
+
+        $scope.toEUR = function (ronVal) {
+            if ($scope.rate != undefined) {
+                var eurVal = parseFloat(ronVal) / parseFloat($scope.rate.RON);
+                return eurVal.toFixed(2);
+            }
+        }
+
         function show(request) {
             if($scope.request.SuperiorID == ownGuid){
                 $scope.TRArequest = $scope.request.TravelRequestApproval;
@@ -171,8 +197,33 @@
             }
         }
 
+        $scope.AddRequest = function () {
+            if ($scope.editInProgress == false) {
+                $scope.editInProgress = true;
+                travelRequestService.addFlight($scope.request);
+                console.log($scope.request);
+                
+            }
+            else
+            {
+                console.log("Edit in progress!");
+            }
+        }
+
+        
+        /* rarely works
+        $scope.print = function () {
+            var pdf = new jsPDF('p', 'pt', 'a4');
+
+            var source = $("#itinerary")[0];
+            pdf.addHTML(source, function () {
+                pdf.save('Itinerary_' + $scope.request.Hash + '.pdf');
+            });
+        }
+        */
+
         $scope.CommitItinerary = function () {
-            modalService.open("Commit this Itinerary?", "Commiting this itinerary means that it will be marked 'final' which means it can no longer be edited. Continue?", 
+            modalService.open("Commit this Itinerary?", "Committing this itinerary means that it will be marked 'final' which means it can no longer be edited. Continue?", 
             function succes() {
                 // Make the Itinerary final, which means it cant be edited anymore.
 

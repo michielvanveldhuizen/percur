@@ -32,7 +32,7 @@
                     <tr data-ng-repeat="item in items | orderBy: 'DaysLeft' | expired">
                         <td>{{ item.UserName }}</td>
                         <td>
-                            <span editable-text="item.InsuranceNumber" e-name="inumber" e-form="rowform" onbeforesave="checkInsuranceNumber($data)" e-required>
+                            <span editable-text="item.InsuranceNumber" ng-model="item" e-name="inumber" e-form="rowform" onbeforesave="checkInsuranceNumber($data)" e-required>
                                 {{ item.InsuranceNumber || 'empty' }}
                             </span>
                         </td>

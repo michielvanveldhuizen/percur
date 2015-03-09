@@ -80,7 +80,8 @@
                                     </li>
                                 </ul>
                                 <a href="#/Itinerary/" data-ng-show="!@ViewBag.AccessLevels.TravelAgency"><i class="gi gi-show_lines sidebar-nav-icon"></i>Itineraries</a>
-                                <!--<a href="#/Personal-Details/" ><i class="gi gi-inbox_in sidebar-nav-icon"></i>Personal Details</a>-->
+                                <a href="#/Personal-Details/" ><i class="gi gi-inbox_in sidebar-nav-icon"></i>Personal Details</a>
+                                <!--<a href="#/Insurance/" data-ng-show="!@ViewBag.AccessLevels.TravelAgency"><i class="gi gi-log_book sidebar-nav-icon"></i>Insurance</a>-->
                                         
                             </li>
                         </ul>
@@ -154,7 +155,18 @@
         @Scripts.Render("~/bundles/scripts/breeze")
         @Scripts.Render("~/bundles/src/js")
 
+        <!-- Angular X-editable -->
         <script src="~/Content/vendor/angular-xeditable/js/xeditable.js"></script>
+
+        <!-- jsPDF stuff -->
+        <script src="~/Content/vendor/jspdf/jspdf.js"></script>
+        <script src="~/Content/vendor/jspdf/jspdf.plugin.from_html.js"></script>
+        <script src="~/Content/vendor/jspdf/jspdf.plugin.split_text_to_size.js"></script>
+        <script src="~/Content/vendor/jspdf/jspdf.plugin.standard_fonts_metrics.js"></script>
+        <script src="http://mrrio.github.io/jsPDF/dist/jspdf.debug.js"></script>
+        <script src="~/Content/vendor/jspdf/html2canvas.js"></script>
+        
+
 
         @RenderSection("PostScript", required: false)
     </body>

@@ -221,6 +221,7 @@
     <Compile Include="Mapping\AirportInformationMap.cs" />
     <Compile Include="Mapping\CompanyMap.cs" />
     <Compile Include="Mapping\CountryInformationMap.cs" />
+    <Compile Include="Mapping\ExchangeRateMap.cs" />
     <Compile Include="Mapping\ServiceCompanyTypeMap.cs" />
     <Compile Include="Mapping\ContactPersonMap.cs" />
     <Compile Include="Mapping\EuroTunnelRequestMap.cs" />
@@ -320,6 +321,10 @@
     <Compile Include="Migrations\201503051054263_TravelRequestIsFinal.Designer.cs">
       <DependentUpon>201503051054263_TravelRequestIsFinal.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201503090919014_ExchangeRateMigration.cs" />
+    <Compile Include="Migrations\201503090919014_ExchangeRateMigration.Designer.cs">
+      <DependentUpon>201503090919014_ExchangeRateMigration.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Context\DatabaseContext.cs" />
     <Compile Include="Notification\Notification.cs" />
@@ -331,6 +336,7 @@
     <Content Include="Content\src\app\home\home.tpl.html" />
     <Content Include="Content\src\app\insurance\insuranceCtrl.js" />
     <Content Include="Content\src\app\insurance\list.tpl.html" />
+    <Content Include="Content\src\app\itinerary\dingen.html" />
     <Content Include="Content\src\app\itinerary\itinerary.tpl.html" />
     <Content Include="Content\src\app\itinerary\itineraryCtrl.js" />
     <Content Include="Content\src\app\itinerary\list.tpl.html" />
@@ -720,6 +726,11 @@
     <Content Include="Content\vendor\jasmine\jasmine.css" />
     <Content Include="Content\vendor\jasmine\jasmine.js" />
     <Content Include="Content\vendor\jasmine\jasmine_favicon.png" />
+    <Content Include="Content\vendor\jspdf\html2canvas.js" />
+    <Content Include="Content\vendor\jspdf\jspdf.js" />
+    <Content Include="Content\vendor\jspdf\jspdf.plugin.from_html.js" />
+    <Content Include="Content\vendor\jspdf\jspdf.plugin.split_text_to_size.js" />
+    <Content Include="Content\vendor\jspdf\jspdf.plugin.standard_fonts_metrics.js" />
     <Content Include="Content\vendor\q\q.js" />
     <Content Include="Content\vendor\underscore\underscore-min.js" />
     <Content Include="Content\src\app\breadcrumbs\breadcrumbs.js" />
@@ -1380,6 +1391,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201503051054263_TravelRequestIsFinal.resx">
       <DependentUpon>201503051054263_TravelRequestIsFinal.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503090919014_ExchangeRateMigration.resx">
+      <DependentUpon>201503090919014_ExchangeRateMigration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

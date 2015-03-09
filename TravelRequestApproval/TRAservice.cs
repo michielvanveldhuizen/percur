@@ -23,6 +23,8 @@ using Percurrentis.Context;
 using System.IO;
 using System.Threading;
 using Percurrentis.AD_classes;
+using System.Xml;
+using System.Xml.Linq;
 
 namespace TravelRequestApproval
 {
@@ -73,8 +75,26 @@ namespace TravelRequestApproval
 
         public void SetMethod()
         {
+            double todaysRate = Checks.checkAndUpdateConversionRate();
 
-            Checks.checkInsuranceExpiration();           
+            using(DatabaseContext db = new DatabaseContext())
+            {
+                ExchangeRate current;
+                if ((db.ExchangeRate.Count()).Equals(0))
+                {
+                    current = new ExchangeRate();
+                }
+                else
+                {
+                    current = db.ExchangeRate.Single();
+                }
+
+                current.EUR = 1;
+                current.RON = todaysRate;
+                current.LastUpdate = DateTime.Now;
+                db.SaveChanges();
+            }
+            //Checks.checkInsuranceExpiration();           
                                               
             /* How to send a notification
              * Mailer mail = new Mailer();
@@ -130,6 +150,51 @@ namespace TravelRequestApproval
                         //m.Send(expireNotification);
                     }
                 }
+            }
+
+            public static double checkAndUpdateConversionRate()
+            {
+                string ecb_url = "http://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml";
+                string yahoo_url = "https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yahoo.finance.xchange%20where%20pair%20in%20(%22EURRON%22)&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys";
+                float exchangeRate = 0;
+
+                try
+                {
+                    XDocument doc = XDocument.Load(ecb_url);
+
+                    XNamespace gesmes = "http://www.gesmes.org/xml/2002-08-01";
+                    XNamespace ns = "http://www.ecb.int/vocabulary/2002-08-01/eurofxref";
+
+                    var cubes = doc.Descendants(ns + "Cube")
+                                   .Where(x => x.Attribute("currency") != null)
+                                   .Select(x => new
+                                   {
+                                       Currency = (string)x.Attribute("currency"),
+                                       Rate = (decimal)x.Attribute("rate")
+                                   });
+
+                    var RON = cubes.Single(x => x.Currency == "RON");
+                    exchangeRate = (float)RON.Rate;
+                }
+                catch(WebException)
+                {
+                    try
+                    {
+                        XDocument doc = XDocument.Load(yahoo_url);
+
+                        var cubes = doc.Descendants("rate");
+                        var node = cubes.First();
+                        var RON = node.Descendants("Rate");
+
+                        exchangeRate = float.Parse(RON.First().Value);
+                    }
+                    catch (WebException)
+                    {
+                        Console.WriteLine("Connection could not be established");
+                        exchangeRate = -1;
+                    }
+                }
+                return exchangeRate;
             }
         }
 

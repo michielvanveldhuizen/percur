@@ -1,7 +1,8 @@
-<div data-ng-controller="itineraryDetailCtrl">
+<div id="itinerary" data-ng-controller="itineraryDetailCtrl">
     <div class="block">
         <div class="block-title">
             <h4>Travel Details</h4>
+
         </div>
         <div class="row">
             <div class="col-md-6">
@@ -47,9 +48,12 @@
         <div class="block-title">
 
             <h4><i class="fa fa-plane"></i> Flight Request Details</h4>
-            <span class="pull-right" style="padding-top: 7.5px; padding-right: 15px"><a onclick="">Edit</a></span>
+            <span class="pull-right" style="padding-top: 7.5px; padding-right: 15px">
+                <button class="btn btn-sm btn-success" data-ng-show="editInProgress == false" data-ng-click="AddRequest()">Add</button>
+                <button class="btn btn-sm btn-success" data-ng-show="editInProgress == true" data-ng-click="SaveRequest()">Save</button>
+            </span>
         </div>
-        <div class="table">
+        <div class="table" name="hoi">
             <table class="table table-vcenter table-condensed table-striped">
                 <thead>
                     <tr>
@@ -62,7 +66,8 @@
                         <td>Check-in</td>
                         <td>Airline</td>
                         <td>Card</td>
-                        <td>Price</td>
+                        <td>Price Euro</td>
+                        <td>Price RON</td>
                     </tr>
                 </thead>
                 <tbody>
@@ -84,15 +89,16 @@
                         <td>{{ flightreq.Airline }}</td>
                         <td>{{ flightreq.FlyerMemberCard.FMCNumber }}</td>
                         <td class="cost">{{ flightreq.Cost | number : 2 }}</td>
+                        <td class="roncost">{{ toRON(flightreq.Cost) }}</td>
                     </tr>
                 </tbody>
             </table>
+            <div ng-show="editInProgress == true" data-ng-include src="'Content/src/app/itinerary/dingen.html'"></div>
         </div>
     </div>
     <div class="block" data-ng-show="request.FerryRequests.length > 0">
         <div class="block-title">
             <h4>Ferry Request Details</h4>
-            <span class="pull-right" style="padding-top: 7.5px; padding-right: 15px"><a onclick="">Edit</a></span>
         </div>
         <div class="table">
             <table class="table table-vcenter table-condensed table-striped">
@@ -186,7 +192,6 @@
     <div class="block" data-ng-show="request.TaxiRequests.length > 0">
         <div class="block-title">
             <h4>Rentalcar Request Details</h4>
-            <span class="pull-right" style="padding-top: 7.5px; padding-right: 15px"></span>
         </div>
         <div class="table">
             <table class="table table-vcenter table-condensed table-striped">
@@ -211,11 +216,9 @@
             </table>
         </div>
     </div>
-
     <div class="block" data-ng-show="request.EuroTunnelRequests.length > 0">
         <div class="block-title">
             <h4>EuroTunnel Request Details</h4>
-            <span class="pull-right" style="padding-top: 7.5px; padding-right: 15px"></span>
         </div>
         <div class="table">
             <table class="table table-vcenter table-condensed table-striped">
@@ -242,6 +245,7 @@
     </div>
     <div class="block" style="text-align: right; padding-bottom: 15px;">
         <button data-ng-show="request.IsFinal == false && request.IsApproved == 2" class="btn btn-sm btn-default pull-left" data-ng-click="CommitItinerary()">Commit Itinerary</button>
-        <strong>Total price:</strong> {{ totalPrice  | number : 2 }}
+        <strong>Total price:</strong>{{ totalPrice  | number : 2 }}
     </div>
+    <!--<button id="ignorePDF" ng-click="print()">Print</button>-->
 </div>

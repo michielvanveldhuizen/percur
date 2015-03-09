@@ -61,6 +61,7 @@
             removeTaxi: removeTaxi,
             addAccommodation: addAccommodation,
             removeAccommodation: removeAccommodation,
+            getExchangeRates: getExchangeRates,
             hasChanges: hasChanges,
             saveChanges: saveChanges,
             manager: manager
@@ -230,6 +231,19 @@
             });
 
             return deferred.promise;
+        }
+
+        function getExchangeRates() {
+            var query = breeze.EntityQuery
+                .from('ExchangeRate');
+
+            var promise = manager.executeQuery(query).catch(queryFailed);
+            return promise;
+
+            function queryFailed(error) {
+                console.log(error.message, 'query failed');
+                throw error;
+            }
         }
 
         function getAddresses() {

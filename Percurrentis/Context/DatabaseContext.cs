@@ -43,6 +43,7 @@ namespace Percurrentis.Context
         public DbSet<EuroTunnelRequest> EuroTunnelRequest { get; set; }
         public DbSet<TravelRequestApproval> TravelRequestApproval { get; set; }
         public DbSet<TravelRequest> TravelRequest { get; set; }
+        public DbSet<ExchangeRate> ExchangeRate { get; set; }
         #endregion
         public DatabaseContext()
             : base("PercurrentisContext")
