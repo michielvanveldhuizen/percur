@@ -162,10 +162,10 @@
             });
         });
 
-        /*travelRequestService.getAirports().then(function (query) {
+        travelRequestService.getAirports().then(function (query) {
             $scope.airports = query.results;
 
-        });*/
+        });
 
 
         /* == Euro/RON conversion ========================================== */
@@ -206,6 +206,10 @@
             }
             else
             {
+                console.log("------------------");
+                console.log($scope.request);
+                //$scope.FlightRequests[$scope.FlightRequests.length - 1].Id = -9;
+                travelRequestService.saveChanges($scope.request, undefined, angular.noop, angular.noop);
                 console.log("Edit in progress!");
             }
         }
