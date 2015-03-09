@@ -177,7 +177,7 @@
                     $scope.request.Country = result.results[0];
                     showApproveBox($scope.request);
                 });
-
+                console.log($scope.request);
                 travelRequestService.getEmployeeByObjectGuid(query.results[0].SuperiorID)
                 .then(function (employee) {
                     $scope.supervisorName = employee.userName;
