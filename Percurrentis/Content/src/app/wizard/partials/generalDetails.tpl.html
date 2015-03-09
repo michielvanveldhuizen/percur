@@ -1,6 +1,4 @@
 ﻿<div data-ng-form="general">
-                    <h4>Due to technical reasons, please fill in <b><u>all</u></b> the fields available in the travel request. If information is unknown, please write down 'not applicable'. </h4>
-        <br />
     <fieldset>
         <div data-legend-title="Request Details"></div>
 
@@ -60,11 +58,24 @@
     <fieldset>
         <div data-legend-title="Customer or Prospect"></div>
 
+        <div data-form-control data-label="Select a previously used Customer/Prospect">
+            <select class="form-control"
+                    data-placeholder="Customer selection"
+                    data-ng-model="model.TempCompany"
+                    data-ng-options="company as company.Name for company in uniqueCompanies"
+                    data-z-validate
+                    data-ng-change="setPreUsedCompany()"></select>
+        </div>
+        <hr />
+        <div style="width: 25%;text-align: right;margin-bottom: 5px;padding-right: 22px;font-weight:600;"> 
+            Or create a new one:
+        </div>
         <div data-form-control data-label="Customer/Prospect Name">
             <input type="text"
                    data-ng-model="model.CustomerOrProspect.Name"
                    class="form-control"
                    placeholder="Customer Name"
+                   data-typeahead="company.Name as company.Name for company in uniqueCompanies | filter:{Name:$viewValue} | limitTo:8"
                    data-z-validate />
         </div>
 

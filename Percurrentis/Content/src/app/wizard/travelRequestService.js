@@ -32,6 +32,16 @@
             getEmployees: getEmployees,
             getEmployeeByObjectGuid: getEmployeeByObjectGuid,
             getAirports: getAirports,
+            getCompanies: getCompanies,
+            getFerries: getFerries,
+            getTaxiRequests: getTaxiRequests,
+            getAccommodationRequests: getAccommodationRequests,
+            getRentalCarRequests:getRentalCarRequests,
+            setPreUsedCompany: setPreUsedCompany,
+            setPreUsedTaxiDeparture: setPreUsedTaxiDeparture,
+            setPreUsedTaxiDestination: setPreUsedTaxiDestination,
+            setPreUsedAccommodation: setPreUsedAccommodation,
+            setPreUsedRentalCar:setPreUsedRentalCar,
             toggleCustomerAddress: toggleCustomerAddress,
             addTraveller: addTraveller,
             deleteTraveller: deleteTraveller,
@@ -179,8 +189,6 @@
             }
         }
 
-        
-
         function getTravelRequestApprovalsById(id) {
             manager = new breeze.EntityManager(serviceName);
 
@@ -195,6 +203,7 @@
                 throw error;
             }
         }
+
 
         /* == Delete ======================================================= */
         function toggleDelete(request) {
@@ -343,6 +352,73 @@
             function queryFailed(error) {
                 console.log(error.message, 'query failed');
                 alert(error.message);
+                throw error;
+            }
+        }
+
+        function getFerries() {
+            var query = breeze.EntityQuery
+            .from('FerryRequest');
+
+            var promise = manager.executeQuery(query).catch(queryFailed);
+            return promise;
+
+            function queryFailed(error) {
+                console.log(error.message, 'query failed');
+                throw error;
+            }
+        }
+
+        function getTaxiRequests() {
+            var query = breeze.EntityQuery
+            .from('TaxiRequest');
+
+            var promise = manager.executeQuery(query).catch(queryFailed);
+            return promise;
+
+            function queryFailed(error) {
+                console.log(error.message, 'query failed');
+                throw error;
+            }
+        }
+
+        function getAccommodationRequests() {
+            var query = breeze.EntityQuery
+            .from('AccommodationRequest');
+
+            var promise = manager.executeQuery(query).catch(queryFailed);
+            return promise;
+
+            function queryFailed(error) {
+                console.log(error.message, 'query failed');
+                throw error;
+            }
+        }
+
+        function getRentalCarRequests() {
+            var query = breeze.EntityQuery
+           .from('RentalCarRequest');
+
+            var promise = manager.executeQuery(query).catch(queryFailed);
+            return promise;
+
+            function queryFailed(error) {
+                console.log(error.message, 'query failed');
+                throw error;
+            }
+        }
+
+
+        function getCompanies() {
+            var query = breeze.EntityQuery
+            .from('Company')
+            .expand("Address");
+
+            var promise = manager.executeQuery(query).catch(queryFailed);
+            return promise;
+
+            function queryFailed(error) {
+                console.log(error.message, 'query failed');
                 throw error;
             }
         }
@@ -535,6 +611,21 @@
             manager.detachEntity(rentalcar);
         }
 
+        function setPreUsedRentalCar(request, index) {
+            console.log(request, request.TempRentalCarAddress);
+            var TempRentalCarAddress = {};
+            jQuery.extend(TempRentalCarAddress, request.TempRentalCarAddress[index]);
+
+            request.RentalCarRequests[index].Address.AddressName   = TempRentalCarAddress.AddressName;
+            request.RentalCarRequests[index].Address.Street        = TempRentalCarAddress.Street;
+            request.RentalCarRequests[index].Address.City          = TempRentalCarAddress.City;
+            request.RentalCarRequests[index].Address.PostalCode    = TempRentalCarAddress.PostalCode;
+            request.RentalCarRequests[index].Address.StateProvince = TempRentalCarAddress.StateProvince;
+            try {
+                request.RentalCarRequests[index].Address.CountryRegion = TempRentalCarAddress.CountryRegion;
+            } catch (err) { };
+        }
+
         // -- taxi ---------------------------------------------------------//
         function addTaxi(request) {
             var entity = manager.createEntity('TaxiRequest');
@@ -552,6 +643,36 @@
             manager.detachEntity(taxi);
         }
 
+        function setPreUsedTaxiDeparture(request,index) {
+            var TempTaxiDeparture = {};
+            jQuery.extend(TempTaxiDeparture, request.TempTaxiDeparture[index]);
+
+            request.TaxiRequests[index].DepartureAddress.AddressName        = TempTaxiDeparture.AddressName;
+            request.TaxiRequests[index].DepartureAddress.Street             = TempTaxiDeparture.Street;
+            request.TaxiRequests[index].DepartureAddress.City               = TempTaxiDeparture.City;
+            request.TaxiRequests[index].DepartureAddress.PostalCode         = TempTaxiDeparture.PostalCode;
+            request.TaxiRequests[index].DepartureAddress.StateProvince      = TempTaxiDeparture.StateProvince;
+            try {
+                request.TaxiRequests[index].DepartureAddress.CountryRegion = TempTaxiDeparture.CountryRegion;
+            } catch (err) { };
+        }
+
+        function setPreUsedTaxiDestination(request, index) {
+            var TempTaxiDestination = {};
+            jQuery.extend(TempTaxiDestination, request.TempTaxiDestination[index]);
+
+            request.TaxiRequests[index].DestinationAddress.AddressName      = TempTaxiDestination.AddressName;
+            request.TaxiRequests[index].DestinationAddress.Street           = TempTaxiDestination.Street;
+            request.TaxiRequests[index].DestinationAddress.City             = TempTaxiDestination.City;
+            request.TaxiRequests[index].DestinationAddress.PostalCode       = TempTaxiDestination.PostalCode;
+            request.TaxiRequests[index].DestinationAddress.StateProvince    = TempTaxiDestination.StateProvince;
+            try {
+                request.TaxiRequests[index].DestinationAddress.CountryRegion = TempTaxiDestination.CountryRegion;
+            } catch (err) { };
+        }
+
+        
+
         // -- accommodation ------------------------------------------------//
         function addAccommodation(request) {
             var entity = manager.createEntity('Accommodation');
@@ -563,6 +684,38 @@
             request.Accommodations.splice(_.indexOf(request.Accommodations, accommodation), 1);
             manager.detachEntity(accommodation.Address);
             manager.detachEntity(accommodation);
+        }
+
+        function setPreUsedAccommodation(request, index) {
+            var TempAccommodation = {};
+
+            jQuery.extend(TempAccommodation, request.TempAccommodation[index]);
+
+            
+            request.Accommodations[index].Address.AddressName = TempAccommodation.AddressName;
+            request.Accommodations[index].Address.Street = TempAccommodation.Street;
+            request.Accommodations[index].Address.City = TempAccommodation.City;
+            request.Accommodations[index].Address.PostalCode = TempAccommodation.PostalCode;
+            request.Accommodations[index].Address.StateProvince = TempAccommodation.StateProvince;
+            try {
+                request.Accommodations[index].Address.CountryRegion = TempAccommodation.CountryRegion;
+            } catch (err) { };
+           
+        }
+
+        // -- Company ------------------------------------------------------//
+        function setPreUsedCompany(request) {            
+            var TempCompany = {};
+            jQuery.extend(TempCompany, request.TempCompany);
+
+            request.CustomerOrProspect.Name = TempCompany.Name;
+
+            request.CustomerOrProspect.Address.AddressName      = TempCompany.Address.AddressName;
+            request.CustomerOrProspect.Address.Street           = TempCompany.Address.Street;
+            request.CustomerOrProspect.Address.City             = TempCompany.Address.City;
+            request.CustomerOrProspect.Address.PostalCode       = TempCompany.Address.PostalCode;
+            request.CustomerOrProspect.Address.StateProvince    = TempCompany.Address.StateProvince;
+            request.CustomerOrProspect.Address.CountryRegion    = TempCompany.Address.CountryRegion;
         }
 
         /* == Update ======================================================= */

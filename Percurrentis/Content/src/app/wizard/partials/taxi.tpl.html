@@ -24,6 +24,19 @@
                  data-ng-model="taxi.DepartureDate"></div>
         </div>
 
+        <div data-form-control data-label="Select a previously used Taxi">
+            <select class="form-control"
+                    data-placeholder="Taxi selection"
+                    data-ng-model="model.TempTaxiDeparture[$index]"
+                    data-ng-options="taxiRequest as taxiRequest.ShowName for taxiRequest in uniqueTaxiRequests"
+                    data-z-validate
+                    data-ng-change="setPreUsedTaxiDeparture($index)"></select>
+        </div>
+
+        <div style="width: 25%;text-align: right;margin-bottom: 5px;padding-right: 22px;font-weight:600;">
+            Or create a new one:
+        </div>
+
         <div data-form-control data-label="Address Description">
             <input type="text"
                    class="form-control"
@@ -73,6 +86,19 @@
         </div>
 
             <p class="sub-header">Destination</p>
+
+        <div data-form-control data-label="Select a previously used Taxi">
+            <select class="form-control"
+                    data-placeholder="Customer selection"
+                    data-ng-model="model.TempTaxiDestination[$index]"
+                    data-ng-options="taxiRequest as taxiRequest.ShowName for taxiRequest in uniqueTaxiRequests"
+                    data-z-validate
+                    data-ng-change="setPreUsedTaxiDestination($index)"></select>
+        </div>
+
+        <div style="width: 25%;text-align: right;margin-bottom: 5px;padding-right: 22px;font-weight:600;">
+            Or create a new one:
+        </div>
 
         <div data-form-control data-label="Address Description">
             <input type="text"

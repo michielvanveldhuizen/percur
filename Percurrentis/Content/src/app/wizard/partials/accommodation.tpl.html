@@ -17,6 +17,15 @@
             </span>
         </div>
 
+        <div data-form-control data-label="Select a previously used accomodation">
+            <select class="form-control"
+                    data-placeholder="Accommodation selection"
+                    data-ng-model="model.TempAccommodation[$index]"
+                    data-ng-options="accommodationRequest as accommodationRequest.ShowName for accommodationRequest in uniqueAccommodations"
+                    data-z-validate
+                    data-ng-change="setPreUsedAccommodations($index)"></select>
+        </div>
+
         <div data-form-control data-label="Address Description">
             <input type="text"
                    class="form-control"

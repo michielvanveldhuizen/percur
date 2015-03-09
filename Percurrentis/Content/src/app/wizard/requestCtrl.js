@@ -162,7 +162,7 @@
                 return true;
             },
             onSubmit: function () {
-                
+                console.log($scope.model);
                 // clean up entities that should be empty
                 if (!$scope.options.hasFlight) {
                     _.each($scope.model.FlightRequests, function (v) {
@@ -234,6 +234,10 @@
             $scope.employees = query.results;
         });
 
+        $scope.setPreUsedCompany = function () {
+            travelRequestService.setPreUsedCompany($scope.model);
+        }
+
         //$scope.model isn't active right away sometimes
         function setModelDates() {
             setTimeout(function () {
@@ -270,9 +274,34 @@
 
         travelRequestService.getAirports().then(function (query) {
             $scope.airports = query.results;
-
         });
 
+        travelRequestService.getCompanies().then(function (query) {
+            $scope.companies = query.results;
+        });
+
+        
+        travelRequestService.getCompanies().then(function (query) {
+            var uniqueResults = [];
+            var alreadyHad = [];
+            
+            $.each(query.results, function (i, el) {
+                if (uniqueResults.length < 1) {
+                    var copiedObject = {};
+                    jQuery.extend(copiedObject, el);
+                    copiedObject.Address = null;
+                    copiedObject.Id = -1;
+                    copiedObject.Name = "";
+                    uniqueResults.push(copiedObject);
+                }
+                if (typeof alreadyHad[el.Name] == typeof undefined) {
+                    uniqueResults.push(el);
+                    alreadyHad[el.Name] = true;
+                }
+            });
+            $scope.uniqueCompanies = uniqueResults;
+        });
+             
         //////////////////////////////////////////////////////////
         // Personal
 
@@ -353,6 +382,46 @@
             });
         };
 
+        travelRequestService.getFerries().then(function (query) {
+            var uniqueResults = [];
+            var alreadyHad = [];
+            var uniqueResultsPlate = [];
+            var alreadyHadPlate = [];
+
+            //Without the time out javascript always have enough time to get the addresses
+            //The timeout doesn't matter for the load time because it's used on the second page of the travel request and loaded during the first
+            setTimeout(function () {
+                $.each(query.results, function (i, el) {
+                    try {
+                        if (el.LicensePlate != null) {
+                            if (typeof alreadyHadPlate[el.LicensePlate] == typeof undefined) {
+                                var x = { LicensePlate: el.LicensePlate };
+                                uniqueResultsPlate.push(x);
+                                alreadyHadPlate[el.LicensePlate] = true;
+                            }
+                        }
+                        if (el.DepartureAddress.AddressName != null) {
+                            if (typeof alreadyHad[el.DepartureAddress.AddressName] == typeof undefined) {
+                                var x = { Name: el.DepartureAddress.AddressName };
+                                uniqueResults.push(x);
+                                alreadyHad[el.DepartureAddress.AddressName] = true;
+                            }
+                        }
+                        if (el.DestinationAddress.AddressName != null) {
+                            if (typeof alreadyHad[el.DestinationAddress.AddressName] == typeof undefined) {
+                                var x = { Name: el.DestinationAddress.AddressName };
+                                uniqueResults.push(x);
+                                alreadyHad[el.DestinationAddress.AddressName] = true;
+                            }
+                        }
+                    } catch (err) { };
+                });
+
+                $scope.ferryAddresses = uniqueResults;
+                $scope.ferryLicensePlates = uniqueResultsPlate;
+            }, 1000);
+
+        });
 
         //////////////////////////////////////////////////////////
         // Eurotunnel
@@ -403,6 +472,24 @@
         };
 
 
+        travelRequestService.getRentalCarRequests().then(function (query) {
+            var uniqueResults = [];
+            console.log(query);
+            //Without the time out javascript always have enough time to get the addresses
+            //The timeout doesn't matter for the load time because it's used on the second page of the travel request and loaded during the first
+            setTimeout(function () {
+                $.each(query.results, function (i, el) {
+                    uniqueResults.concat(getUniqueAddresses(el.Address, uniqueResults));
+                });
+                $scope.model.TempRentalCarAddress = [];
+                $scope.uniqueRentalCar = uniqueResults;
+            }, 1000);
+        });
+
+        $scope.setPreUsedRentalCar = function (index) {
+            travelRequestService.setPreUsedRentalCar($scope.model, index);
+        }
+
         //////////////////////////////////////////////////////////
         // Taxi
 
@@ -415,6 +502,30 @@
                 travelRequestService.removeTaxi($scope.model, taxi);
             });
         };
+
+        travelRequestService.getTaxiRequests().then(function (query) {
+            var uniqueResults = [];
+            
+            //Without the time out javascript always have enough time to get the addresses
+            //The timeout doesn't matter for the load time because it's used on the second page of the travel request and loaded during the first
+            setTimeout(function () {
+                $.each(query.results, function (i, el) {
+                    uniqueResults.concat(getUniqueAddresses(el.DepartureAddress, uniqueResults));
+                    uniqueResults.concat(getUniqueAddresses(el.DestinationAddress, uniqueResults));
+                });
+                $scope.model.TempTaxiDeparture = [];
+                $scope.model.TempTaxiDestination = [];
+                $scope.uniqueTaxiRequests = uniqueResults;
+            }, 1000);
+        });
+
+        $scope.setPreUsedTaxiDeparture = function (index) {
+            travelRequestService.setPreUsedTaxiDeparture($scope.model,index);
+        }
+
+        $scope.setPreUsedTaxiDestination = function (index) {
+            travelRequestService.setPreUsedTaxiDestination($scope.model, index);
+        }
 
 
         //////////////////////////////////////////////////////////
@@ -430,5 +541,65 @@
                 travelRequestService.removeAccommodation($scope.model, accommodation);
             });
         };
+
+        travelRequestService.getAccommodationRequests().then(function (query) {
+            var uniqueResults = [];
+            //Without the time out javascript always have enough time to get the addresses
+            //The timeout doesn't matter for the load time because it's used on the second page of the travel request and loaded during the first
+            setTimeout(function () {
+                $.each(query.results, function (i, el) {
+                    uniqueResults.concat(getUniqueAddresses(el.Address, uniqueResults));
+                });
+                $scope.model.TempAccommodation = [];
+                $scope.uniqueAccommodations = uniqueResults;
+            }, 1000);
+        });
+
+        $scope.setPreUsedAccommodations = function (index) {
+            travelRequestService.setPreUsedAccommodation($scope.model, index);
+        }
+
+        //To get the unique Addresses for the preFilledIn Select boxes
+        function getUniqueAddresses(result, uniqueResults) {
+            if (uniqueResults.length < 1) {
+                var copiedObject = {};
+                jQuery.extend(copiedObject, result);
+                copiedObject.AddressName = "";
+                copiedObject.Id = -1;
+                copiedObject.City = "";
+                copiedObject.CountryRegion = "";
+                copiedObject.PostalCode = "";
+                copiedObject.StateProvince = "";
+                copiedObject.Street = "";
+                uniqueResults.push(copiedObject);
+            }
+
+            var addDestinationAddress = true;
+            for (var x = 0; x < uniqueResults.length; x++) {
+                if (uniqueResults[x].AddressName == result.AddressName) {
+                    if (uniqueResults[x].City == result.City) {
+                        addDestinationAddress = false;
+                    }
+                }
+            }
+            if (addDestinationAddress == true) {
+                var copiedObject = {};
+                jQuery.extend(copiedObject, result);
+                var showName = "";
+                if (copiedObject.AddressName != null) {
+                    showName += copiedObject.AddressName + ", ";
+                }
+                if (copiedObject.City != null) {
+                    showName += copiedObject.City + ", ";
+                }
+                if (copiedObject.CountryRegion != null) {
+                    showName += copiedObject.CountryRegion.Name;
+                }
+                copiedObject.ShowName = showName;
+                if (showName != "") {
+                    uniqueResults.push(copiedObject);
+                }
+            }
+        }
     }
 })();

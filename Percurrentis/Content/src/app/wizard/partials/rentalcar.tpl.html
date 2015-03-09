@@ -35,7 +35,18 @@
 
         <p class="sub-header">Delivery Address</p>
 
-        
+        <div data-form-control data-label="Select a previously used delivery address">
+            <select class="form-control"
+                    data-placeholder="Delivery address selection"
+                    data-ng-model="model.TempRentalCarAddress[$index]"
+                    data-ng-options="rentalCarRequest as rentalCarRequest.ShowName for rentalCarRequest in uniqueRentalCar"
+                    data-z-validate
+                    data-ng-change="setPreUsedRentalCar($index)"></select>
+        </div>
+        <hr />
+        <div style="width: 25%;text-align: right;margin-bottom: 5px;padding-right: 22px;font-weight:600;">
+            Or create a new one:
+        </div>
         <div data-form-control data-label="Address Description">
             <input type="text"
                    class="form-control"

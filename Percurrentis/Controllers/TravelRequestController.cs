@@ -128,9 +128,33 @@ namespace Percurrentis.Controllers
         }
 
         [HttpGet]
+        public IQueryable<FerryRequest> FerryRequest()
+        {
+            return _contextProvider.Context.FerryRequest;
+        }
+
+        [HttpGet]
+        public IQueryable<TaxiRequest> TaxiRequest()
+        {
+            return _contextProvider.Context.TaxiRequest;
+        }
+
+        [HttpGet]
+        public IQueryable<Accommodation> AccommodationRequest()
+        {
+            return _contextProvider.Context.Accommodation;
+        }
+
+        [HttpGet]
         public IQueryable<RequestTraveller> RequestTraveller()
         {
             return _contextProvider.Context.RequestTraveller.AsNoTracking();
+        }
+
+        [HttpGet]
+        public IQueryable<RentalCarRequest> RentalCarRequest()
+        {
+            return _contextProvider.Context.RentalCarRequest;
         }
 
         [HttpGet]

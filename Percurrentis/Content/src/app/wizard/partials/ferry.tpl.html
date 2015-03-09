@@ -12,17 +12,19 @@
         </div>
 
         <div data-form-control data-label="Departure">
-            <input type="text" 
-               class="form-control"
-               data-ng-model="ferry.DepartureAddress.AddressName"
-               placeholder="Departure Harbor"/>
+            <input type="text"
+                   class="form-control"
+                   data-typeahead="addresses.Name as addresses.Name for addresses in ferryAddresses | filter:{Name:$viewValue} | limitTo:8"
+                   data-ng-model="ferry.DepartureAddress.AddressName"
+                   placeholder="Departure Harbor" />
         </div>
 
         <div data-form-control data-label="Destination">
-            <input type="text" 
-               class="form-control"
-               data-ng-model="ferry.DestinationAddress.AddressName"
-               placeholder="Destination Harbor"/>
+            <input type="text"
+                   class="form-control"
+                   data-ng-model="ferry.DestinationAddress.AddressName"
+                   data-typeahead="addresses.Name as addresses.Name for addresses in ferryAddresses | filter:{Name:$viewValue} | limitTo:8"
+                   placeholder="Destination Harbor" />
         </div>
 
         <div data-form-control data-label="Date of Departure">
@@ -40,7 +42,8 @@
             <input type="text"
                    class="form-control"
                    data-ng-model="ferry.LicensePlate"
-                   placeholder="License Plate" 
+                   placeholder="License Plate"
+                   data-typeahead="car.LicensePlate as car.LicensePlate for car in ferryLicensePlates | filter:{LicensePlate:$viewValue} | limitTo:8"
                    data-z-validate />
             <span class="help-block">
                 The license plate number of the car that will be transported along with the passengers.

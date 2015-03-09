@@ -108,6 +108,22 @@
                     }]
                 }
             })
+            .when('/Personal-Details/',
+            {
+                templateUrl: base + '/personal-details/personal-details.tpl.html',
+                data: {
+                    title: "Personal Details",
+                    icon: "gi-inbox_in",
+                    breadcrumbs: [{
+                        name: "Home",
+                        path: "/TravelAgency/#/"
+                    },
+                    {
+                        name: "Personal Details",
+                        path: "/TravelAgency/#/Personal-Details/"
+                    }]
+                }
+            })
             .when('/Request/New', {
                 templateUrl: base + '/wizard/request.tpl.html',
                 data: {
