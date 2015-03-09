@@ -18,11 +18,13 @@ namespace Percurrentis.Controllers
     {
         public ActionResult Index()
         {
+            //Using the ADservice as singleTon
             ADservices AD = ADservices.InstanceCreation();
             UserAC self = AD.GetSelf();
 
             AccessLevels accessLevels = SetAccessLevels(self);
 
+            //Setting the ControllerData for the view
             ControllerData cd = new ControllerData { Name = self.userName, Guid = self.objectGuid, AccessLevels = accessLevels};
 
             using (HostingEnvironment.Impersonate())
@@ -41,6 +43,11 @@ namespace Percurrentis.Controllers
                 AL.TravelAgency = true;
             }
 
+            //For testing-------------//
+            //AL.TravelAgency = true;
+            //-----------------------//
+
+            //Probably this will be removed
             if (user.isManager)
             {
                 AL.ProjectManager = true;
@@ -52,10 +59,10 @@ namespace Percurrentis.Controllers
                 AL.Accountant = true;
             }
 
-            //TODO AL OF THESE BUT NOT SURE WHERE TO FIND INFORMATION IN AD YET
-            //AL.supervisor = true;
-            //AL.Accountant = true;
-            //AL.COO = true;
+            if (user.objectGuid.Equals("a73d1a5e-b640-467e-8583-e4b52cfae437"))
+            {
+                AL.COO = true;
+            }
 
             return AL;
         }

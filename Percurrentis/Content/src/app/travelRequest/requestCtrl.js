@@ -225,17 +225,20 @@
             
         }
 
+        
         $scope.onApprove = function () {
             $scope.mode = 'approve';
-
-           
         };
         $scope.onReject = function () {
             $scope.mode = 'reject';
         };
+
+        //When approved is pressed in the approving dialog
         $scope.onApproveConfirm = function () {
             $scope.mode = 'approveConfirmed';                
             $scope.TRArequest.Flag = true;
+            
+            //Check if self is COO
             if (ownGuid == $scope.c && $scope.request.Country.Name == "Romania" && $scope.c != $scope.request.SuperiorID) {
                 $scope.TRArequest.COOApproved = 2;
             } else {
@@ -247,9 +250,12 @@
             reloadPage();
         };
 
+        //When reject is pressed in the approving dialog
         $scope.onRejectConfirm = function () {
             $scope.mode = 'rejectConfirmed';
             $scope.TRArequest.Flag = true;
+
+            //Check if self is COO
             if (ownGuid == $scope.c && $scope.request.Country.Name == "Romania" && $scope.c != $scope.request.SuperiorID) {
                 $scope.TRArequest.COOApproved = 1;
             } else {

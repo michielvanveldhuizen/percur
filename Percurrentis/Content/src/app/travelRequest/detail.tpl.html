@@ -26,8 +26,8 @@
                         <span class="label label-success" data-tooltip="By COO" data-ng-show="request.TravelRequestApproval.COOApproved == 2">Approved</span>
                     </div>
 
-                    <div data-form-control-static>
-                        <!-- TODO: ALSO CHECK IF USER = TRAVEL AGENT! -->
+                    <div data-ng-show="role.TravelAgent==true" data-form-control-static>
+                        <!-- TODO: ALSO CHECK IF USER = TRAVEL AGENT! is gedaan man:) zo lek als een banaan dus je moet bij c# kant ook nog ff checke, yeweet wel door het doen van dingen enzo. maarja je zou denken dat dit verhaal een keer afloopt. Maar dat doet het lekker niet. Hier komt een mooi verhaal over bambie die werd aangegereden en toen was die dood. Graag zou ik je hierover meer willen vertellen maar de ruitenwissers liggen al te lang in de koelkast. Dit is een zeer groot probleem op het gebied van mandarijnen die opgegeten worden door afrikanen. die mandarijen hebben ze helemaal niets misdaan en ondertussen worden ze hardstikkedoodgemaakt. beter wordt een daardoor een bond opgericht voor help de rolschaats aan de wandel stok zodat ook zij een normaal leven kunnen lijden en uiteinlijkde een natuurlijke dood kunnen sterven -->
                         <button class="btn btn-sm btn-default"
                                 data-ng-show="(request.IsApproved == 2)"
                                 data-ng-click="createItinerary(request)">

@@ -15,6 +15,7 @@
 
         console.log(manager);
 
+        //To use a function first declaratie it here 
         var service = {
             createTravelRequest: createTravelRequest,
             getTravelRequests: getTravelRequests,
@@ -71,6 +72,8 @@
         return service;
 
         /* == Create ======================================================= */
+
+        //creating the an TravelRequest
         function createTravelRequest() {
             manager = new breeze.EntityManager(serviceName);
             var deferred = $q.defer();
@@ -626,7 +629,6 @@
         }
 
         function setPreUsedRentalCar(request, index) {
-            console.log(request, request.TempRentalCarAddress);
             var TempRentalCarAddress = {};
             jQuery.extend(TempRentalCarAddress, request.TempRentalCarAddress[index]);
 
@@ -705,7 +707,6 @@
 
             jQuery.extend(TempAccommodation, request.TempAccommodation[index]);
 
-            
             request.Accommodations[index].Address.AddressName = TempAccommodation.AddressName;
             request.Accommodations[index].Address.Street = TempAccommodation.Street;
             request.Accommodations[index].Address.City = TempAccommodation.City;

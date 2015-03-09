@@ -85,13 +85,17 @@ namespace Percurrentis.Context
 
         public override int SaveChanges()
         {
+            //ADservice as SingelTon
             ADservices AD = ADservices.InstanceCreation();
 
             ChangeTracker.DetectChanges();
             var changedEntities = ChangeTracker.Entries();
             //space for server-side edits on entites which are about to be saved into the database
+
+            //Oncreate
             foreach (var changedEntity in changedEntities.Where(e => e.State == EntityState.Added))
             {
+                //COmpany
                 if (changedEntity.Entity is Company)
                 {
                     var specEntity = changedEntity.Entity as Company;
@@ -108,6 +112,7 @@ namespace Percurrentis.Context
                         specEntity.OnBeforeInsert();
                     }
                 }
+                //TravelRequest
                 if (changedEntity.Entity is TravelRequest)
                 {
                     var specEntity = changedEntity.Entity as TravelRequest;
@@ -123,31 +128,30 @@ namespace Percurrentis.Context
                     specEntity.Hash = String.Format("{0:X}", DateTime.Now.GetHashCode());
                     Notification.requestManagerApproval(specEntity);
                     
-                    TRA.NotificationSent = true;
+                    
 
-                    if (specEntity.CountryID != null)
+                    //get the country based on the CountryID
+                    CountryInformation country = this.CountryInformation.Single(Country => Country.Id == specEntity.CountryID);
+                    specEntity.Country = country;
+
+                    string objectGuidTempSave = specEntity.SuperiorID;
+
+                    if (country.CountryCode.Equals("RO "))
                     {
-                        CountryInformation country = this.CountryInformation.Single(Country => Country.Id == specEntity.CountryID);
-                        specEntity.Country = country;
-
-                        string objectGuidTempSave = specEntity.SuperiorID;
-
-                        if (country.CountryCode.Equals("RO "))
-                        {
-                            // Notify COO of travel request to Romania
-                            UserAC kees = AD.GetUserByName("Kees Oosting");
-                            specEntity.SuperiorID = kees.objectGuid;
-                            Notification.requestManagerApproval(specEntity);
-                        }
-
-                        specEntity.SuperiorID = objectGuidTempSave;
+                        // Notify COO of travel request to Romania
+                        UserAC kees = AD.GetUserByName("Kees Oosting");
+                        specEntity.SuperiorID = kees.objectGuid;
                         Notification.requestManagerApproval(specEntity);
-                        
                     }
+
+                    //reset the superior
+                    specEntity.SuperiorID = objectGuidTempSave;
+                        
+                    
                     specEntity.TravelRequestApproval = TRA;
                 }
             }
-
+            //OnChange
             foreach (var changedEntity in changedEntities.Where(e => e.State == EntityState.Modified))
             {
                 if (changedEntity.Entity is MetaEntity)
@@ -155,6 +159,7 @@ namespace Percurrentis.Context
                     var specEntity = changedEntity.Entity as MetaEntity;
                     specEntity.OnBeforeUpdate();
                 }
+                //TravelRequest
                 if (changedEntity.Entity is TravelRequest)
                 {
                     var specEntity = changedEntity.Entity as TravelRequest;
@@ -164,6 +169,7 @@ namespace Percurrentis.Context
                         specEntity.DeletedBy = 1;
                     }
                 }
+                //TravelRequestApproval
                 if (changedEntity.Entity is TravelRequestApproval)
                 {
                     var specEntity = changedEntity.Entity as TravelRequestApproval;

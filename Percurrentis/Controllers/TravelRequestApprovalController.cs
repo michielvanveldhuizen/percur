@@ -10,6 +10,7 @@ namespace Percurrentis.Controllers
 {
     public class TravelRequestApprovalController : ApiController
     {
+        //NOT USED ATM
         [HttpGet]
         public void InitiateNotificationStep() 
         {

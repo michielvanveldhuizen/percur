@@ -100,6 +100,7 @@ namespace Percurrentis.Controllers
                 .Include("TravelRequestApproval");
         }
 
+        //retrieve travelRequestApprovals including the TravelRequest
         [HttpGet]
         public IQueryable<TravelRequestApproval> TravelRequestApprovals()
         {
@@ -107,18 +108,21 @@ namespace Percurrentis.Controllers
                 .Include("TravelRequest");
         }
 
+        //retrieve AddressTypes
         [HttpGet]
         public IQueryable<AddressType> AddressTypes()
         {
             return _contextProvider.Context.AddressType.AsNoTracking();
         }
 
+        //retrieve Addresses
         [HttpGet]
         public IQueryable<Address> Address()
         {
             return _contextProvider.Context.Address.AsNoTracking();
         }
 
+        //retrieve Companies including the address
         [HttpGet]
         public ExchangeRate ExchangeRate()
         {
@@ -133,52 +137,60 @@ namespace Percurrentis.Controllers
                 .Include("Company.Address");
         }
 
+        //retrieve FerryRequests
         [HttpGet]
         public IQueryable<FerryRequest> FerryRequest()
         {
             return _contextProvider.Context.FerryRequest;
         }
 
+        //retrieve TaxiRequests
         [HttpGet]
         public IQueryable<TaxiRequest> TaxiRequest()
         {
             return _contextProvider.Context.TaxiRequest;
         }
 
+        //retrieve AccommodationRequests
         [HttpGet]
         public IQueryable<Accommodation> AccommodationRequest()
         {
             return _contextProvider.Context.Accommodation;
         }
 
+        //retrieve RequestTraveller
         [HttpGet]
         public IQueryable<RequestTraveller> RequestTraveller()
         {
             return _contextProvider.Context.RequestTraveller.AsNoTracking();
         }
 
+        //retrieve RentalCarRequest
         [HttpGet]
         public IQueryable<RentalCarRequest> RentalCarRequest()
         {
             return _contextProvider.Context.RentalCarRequest;
         }
 
+        //retrieve AirportInformation
         [HttpGet]
         public IQueryable<AirportInformation> AirportInformation()
         {
             return _contextProvider.Context.AirportInformation.AsNoTracking();
         }
 
+        //retrieve CountryInformation
         [HttpGet]
         public IQueryable<CountryInformation> CountryInformation()
         {
             return _contextProvider.Context.CountryInformation.AsNoTracking();
         }
 
-
+        //retrieve ActiveDirectory Users
         [HttpGet]
         public List<UserAC> ADusers()
         {            
+            //Using Adservice as SingleTon
             ADservices ADservices = ADservices.InstanceCreation();
             List<UserAC> List = ADservices.GetUsers();
             return List;

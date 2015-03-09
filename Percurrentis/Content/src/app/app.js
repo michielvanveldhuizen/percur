@@ -108,9 +108,9 @@
                     }]
                 }
             })
-            .when('/Personal-Details/',
+            .when('/PersonalDetails/',
             {
-                templateUrl: base + '/personal-details/personal-details.tpl.html',
+                templateUrl: base + '/personal-details/personalDetails.tpl.html',
                 data: {
                     title: "Personal Details",
                     icon: "gi-inbox_in",
@@ -120,7 +120,7 @@
                     },
                     {
                         name: "Personal Details",
-                        path: "/TravelAgency/#/Personal-Details/"
+                        path: "/TravelAgency/#/PersonalDetails/"
                     }]
                 }
             })
