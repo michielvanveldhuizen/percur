@@ -331,9 +331,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\HtmlPage1.html" />
-    <Content Include="Content\HtmlPage2.html" />
-    <Content Include="Content\HtmlPage3.html" />
     <Content Include="Content\src\app\app.js" />
     <Content Include="Content\src\app\home\home.tpl.html" />
     <Content Include="Content\src\app\insurance\insuranceCtrl.js" />
