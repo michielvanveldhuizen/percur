@@ -45,6 +45,7 @@
                 }
             };
 
+            
             $scope.filters = {
                 all: new Filter(function () {
                     return _.filter($scope.allRequests, function (req) {
