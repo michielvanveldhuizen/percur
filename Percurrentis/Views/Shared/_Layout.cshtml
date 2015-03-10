@@ -43,6 +43,7 @@
         @Scripts.Render("~/bundles/modernizr")
 
         @RenderSection("PreScript", required: false)
+        
     </head>
     <body>
         <!-- Page Container -->
@@ -80,8 +81,9 @@
                                     </li>
                                 </ul>
                                 <a href="#/Itinerary/" data-ng-show="!@ViewBag.AccessLevels.TravelAgency"><i class="gi gi-show_lines sidebar-nav-icon"></i>Itineraries</a>
+                                <a href="#/Current/"><i class="gi gi-globe sidebar-nav-icon"></i>Current travels</a>
                                 <!--<a href="#/Personal-Details/" ><i class="gi gi-inbox_in sidebar-nav-icon"></i>Personal Details</a>-->
-								<!--<a href="#/Insurance/" data-ng-show="!@ViewBag.AccessLevels.TravelAgency"><i class="gi gi-log_book sidebar-nav-icon"></i>Insurance</a>-->
+                                <!--<a href="#/Insurance/" data-ng-show="!@ViewBag.AccessLevels.TravelAgency"><i class="gi gi-log_book sidebar-nav-icon"></i>Insurance</a>-->
                                         
                             </li>
                         </ul>
@@ -166,8 +168,6 @@
         <script src="http://mrrio.github.io/jsPDF/dist/jspdf.debug.js"></script>
         <script src="~/Content/vendor/jspdf/html2canvas.js"></script>
         
-
-
         @RenderSection("PostScript", required: false)
     </body>
 </html>

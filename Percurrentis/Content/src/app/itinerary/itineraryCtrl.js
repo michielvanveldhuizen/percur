@@ -168,6 +168,7 @@
         });
 
 
+
         /* == Euro/RON conversion ========================================== */
         travelRequestService.getExchangeRates().then(function (query) {
             $scope.rate = query.results[0];
@@ -209,15 +210,15 @@
                 $scope.editInProgress = true;
                 travelRequestService.addFlight($scope.request);
                 console.log($scope.request);
-                
             }
             else
             {
-                console.log("------------------");
                 console.log($scope.request);
                 //$scope.FlightRequests[$scope.FlightRequests.length - 1].Id = -9;
-                travelRequestService.saveChanges($scope.request, undefined, angular.noop, angular.noop);
-                console.log("Edit in progress!");
+                travelRequestService.saveChanges($scope.request, function () {
+                    $scope.editInProgress = true;
+                    console.log("Save succesful");
+                }, angular.noop, angular.noop);
             }
         }
 

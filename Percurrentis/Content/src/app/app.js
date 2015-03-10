@@ -108,19 +108,19 @@
                     }]
                 }
             })
-            .when('/PersonalDetails/',
+            .when('/Current/',
             {
-                templateUrl: base + '/personal-details/personalDetails.tpl.html',
+                templateUrl: base + '/current/travels.tpl.html',
                 data: {
-                    title: "Personal Details",
-                    icon: "gi-inbox_in",
+                    title: "Current Travels",
+                    icon: "gi-globe",
                     breadcrumbs: [{
                         name: "Home",
                         path: "/TravelAgency/#/"
                     },
                     {
-                        name: "Personal Details",
-                        path: "/TravelAgency/#/PersonalDetails/"
+                        name: "Current Travels",
+                        path: "/TravelAgency/#/Current/"
                     }]
                 }
             })

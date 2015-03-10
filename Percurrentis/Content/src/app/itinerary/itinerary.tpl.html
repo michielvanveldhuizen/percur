@@ -8,9 +8,6 @@
             <div class="col-md-6">
                 <span><strong>Departure: </strong>{{ request.DepartureDate|date:'EEEE d MMMM yyyy - H:mm'}}</span><br />
                 <span><strong>Return: </strong>{{ request.ReturnDate|date:'EEEE d MMMM yyyy - H:mm'}}</span>
-
-                <div><strong>Purpose:</strong></div><br />
-                <div class="well well-small"> {{ request.Purpose }} </div>
                 <div><strong>Traveler<span ng-show="request.RequestTravellers.length > 1">s</span>:</strong></div>
 
                 <div class="table">
@@ -27,19 +24,18 @@
                 </div>
             </div>
             <div class="col-md-6">
-                <strong>Requester:</strong><br />
-                <br />
-                {{ request.ApplicantID }} <br />
-                <br />
-                <strong>Supervisor: </strong><br />
-                <br />
-                {{ supervisorName }} <br />
-                <br />
-                <strong>Status: </strong>
-                <span class="label label-warning" data-ng-show="request.IsApproved == 0 && request.IsFinal == false">Awaiting</span>
-                <span class="label label-danger" data-ng-show="request.IsApproved == 1 && request.IsFinal == false">Rejected</span>
-                <span class="label label-success" data-ng-show="request.IsApproved == 2 && request.IsFinal == false">Approved</span>
-                <span class="label label-default" data-ng-show="request.IsFinal == true">Committed</span>
+                <ul class="list-group">
+                    <li class="list-group-item"><strong>Requester: </strong> {{ request.ApplicantID }}</li>
+                    <li class="list-group-item"><strong>Supervisor: </strong> {{ supervisorName }}<br />
+                    <li class="list-group-item">
+                        <strong>Status: </strong>
+                        <span class="label label-warning" data-ng-show="request.IsApproved == 0 && request.IsFinal == false">Awaiting</span>
+                        <span class="label label-danger" data-ng-show="request.IsApproved == 1 && request.IsFinal == false">Rejected</span>
+                        <span class="label label-success" data-ng-show="request.IsApproved == 2 && request.IsFinal == false">Approved</span>
+                        <span class="label label-default" data-ng-show="request.IsFinal == true">Committed</span>
+                    </li>
+                    <li class="list-group-item"><strong>Purpose: </strong>{{ request.Purpose }}</li>
+                </ul>
             </div>
         </div>
     </div>

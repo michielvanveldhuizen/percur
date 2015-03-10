@@ -9,18 +9,19 @@
     function travelRequestService($q, breeze) {
         var serviceName = 'breeze/TravelRequest';
 
-        console.log(breeze);
+        //console.log(breeze);
         
         var manager = new breeze.EntityManager(serviceName);
 
-        console.log(manager);
+        //console.log(manager);
 
-        //To use a function first declaratie it here 
+        //To use a function first declare it here 
         var service = {
             createTravelRequest: createTravelRequest,
             getTravelRequests: getTravelRequests,
             getTravelRequestById: getTravelRequestById,
             getTravelRequestByHash: getTravelRequestByHash,
+            getCurrentTravels: getCurrentTravels,
             getTravelRequestApprovalsById: getTravelRequestApprovalsById,
             toggleDelete: toggleDelete,
             toggleArchive: toggleArchive,
@@ -138,6 +139,24 @@
             var query = new breeze.EntityQuery('TravelRequests')
                 .where('IsItinerary', 'eq', isItin)
                 .orderBy('CreatedDate desc');
+
+            var promise = manager.executeQuery(query).catch(queryFailed);
+            return promise;
+
+            function queryFailed(error) {
+                console.log(error.message, 'query failed');
+                throw error;
+            }
+        }
+
+        function getCurrentTravels() {
+            manager = new breeze.EntityManager(serviceName);
+            var today = new Date();
+
+            var query = new breeze.EntityQuery('TravelRequests')
+                .where('IsFinal', 'eq', true)
+                .where('DepartureDate', '<=', today)
+                .where('ReturnDate' ,'>=' , today);
 
             var promise = manager.executeQuery(query).catch(queryFailed);
             return promise;
