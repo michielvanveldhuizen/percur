@@ -177,6 +177,10 @@
         {
             if ($scope.rate != undefined) {
                 var ronVal = parseFloat(eurVal) * parseFloat($scope.rate.RON);
+                if (isNaN(ronVal))
+                {
+                    ronVal = 0;
+                }
                 return ronVal.toFixed(2);
             }
         }
@@ -184,6 +188,9 @@
         $scope.toEUR = function (ronVal) {
             if ($scope.rate != undefined) {
                 var eurVal = parseFloat(ronVal) / parseFloat($scope.rate.RON);
+                if (isNaN(eurVal)) {
+                    eurVal = 0;
+                }
                 return eurVal.toFixed(2);
             }
         }

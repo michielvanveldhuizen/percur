@@ -339,6 +339,8 @@
     <Content Include="Content\src\app\itinerary\itinerary.tpl.html" />
     <Content Include="Content\src\app\itinerary\itineraryCtrl.js" />
     <Content Include="Content\src\app\itinerary\list.tpl.html" />
+    <Content Include="Content\src\app\itinerary\w.js" />
+    <Content Include="Content\src\app\itinerary\wollah.html" />
     <Content Include="Content\src\app\modal\primaryBtnSet.tpl.html" />
     <Content Include="Content\src\app\modal\deleteBtnSet.tpl.html" />
     <Content Include="Content\src\app\modal\modal.tpl.html" />

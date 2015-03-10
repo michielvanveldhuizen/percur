@@ -239,12 +239,8 @@ namespace Percurrentis.Context
 
                         if (isFullyApproved)
                         {
-
-                            // Notify everyone in the Travel Agency group
-                            foreach(UserAC travelagent in AD.GetTravelAgents())
-                            {
-                                Notification.notifyOfApproval(travelagent, travelRequest);
-                            }
+                            UserAC travelAgency = AD.GetUserByName("Travel Agency");
+                            Notification.notifyOfApproval(travelAgency, travelRequest);
                             // Notify the person who requested the travel that it was approved
                         }
                         if (isRejected)
