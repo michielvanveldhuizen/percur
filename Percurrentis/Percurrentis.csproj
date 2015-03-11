@@ -337,7 +337,6 @@
     <Content Include="Content\src\app\home\home.tpl.html" />
     <Content Include="Content\src\app\insurance\insuranceCtrl.js" />
     <Content Include="Content\src\app\insurance\list.tpl.html" />
-    <Content Include="Content\src\app\itinerary\dingen.html" />
     <Content Include="Content\src\app\itinerary\itinerary.tpl.html" />
     <Content Include="Content\src\app\itinerary\itineraryCtrl.js" />
     <Content Include="Content\src\app\itinerary\list.tpl.html" />

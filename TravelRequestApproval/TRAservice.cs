@@ -121,14 +121,13 @@ namespace TravelRequestApproval
 
                 using (var db = new DatabaseContext())
                 {
-                    Insurance anois = new Insurance();
+                    /*Insurance anois = new Insurance();
                     anois.InsuranceNumber = "12XBD485";
                     anois.InsureeGUID = "e579f611-3def-4a85-89c4-b7a010ac08db";
                     anois.StartDate = DateTime.Today.AddDays(-1000);
                     anois.ExpirationDate = DateTime.Today.AddDays(830);
                     db.Insurance.Add(anois);
-                    db.SaveChanges();
-
+                    db.SaveChanges();*/
 
                     foreach (Insurance i in db.Insurance)
                     {

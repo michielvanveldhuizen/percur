@@ -22,5 +22,10 @@
     margin: 20px;
     display: block;
 }
+
+.fable {
+    table-layout: fixed;
+}
+
 .validation-error { display: none }
 .has-visited .validation-error { display: block }

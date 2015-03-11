@@ -278,10 +278,11 @@
 
         /* == Create Itinerary ========================================= */
         $scope.createItinerary = function (request) {
-            modalService.open("Convert to Itinerary", "This action will change the status of the travelrequest to itinerary. Continue?", function succes()
+            modalService.open("Convert to Itinerary",
+                              "This action will change the status of the travelrequest to itinerary. Continue?",
+                              function succes()
             {
                 request.IsItinerary = true;
-                request.IsApproved = 0;
                 try 
                 {
                     travelRequestService.saveChanges(request, undefined, function result() 

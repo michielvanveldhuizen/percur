@@ -54,6 +54,15 @@
         //
         $scope.saveEdits = function (input) {
             // Do some stuff here pls
+            console.log(input);
+            travelRequestService.saveChanges(input, function () {
+                //succes
+                console.log('saved? :S');
+            },
+            function() {
+                console.log('fail :( ');
+            },
+            angular.noop);
        };
 
         // Calculate numbers of days until insurance expires.

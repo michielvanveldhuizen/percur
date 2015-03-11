@@ -154,19 +154,20 @@
         })
         .then(function (employee) {
             $scope.supervisorName = employee.userName;
-        })
-        .then(function () {
-            $(".cost").each(function (index) {
-                //console.log($(this).text());
-                $scope.totalPrice += parseFloat($(this).text());
-            });
         });
-
+        var start = new Date();
         travelRequestService.getAirports().then(function (query) {
             $scope.airports = query.results;
 
         });
 
+        
+        travelRequestService.getAddresses().then(function (query) {
+            $scope.addresses = query.results;
+
+        });
+        var end = new Date() - start;
+        console.log("Execution time: %dms", end);
 
 
         /* == Euro/RON conversion ========================================== */
@@ -205,7 +206,7 @@
             }
         }
 
-        $scope.AddRequest = function () {
+        /*$scope.AddRequest = function () {
             if ($scope.editInProgress == false) {
                 $scope.editInProgress = true;
                 travelRequestService.addFlight($scope.request);
@@ -220,7 +221,7 @@
                     console.log("Save succesful");
                 }, angular.noop, angular.noop);
             }
-        }
+        }*/
 
         
         /* rarely works
@@ -281,12 +282,6 @@
         $scope.onCancel = function () {
             $scope.mode = 'init';
         };
-
-
-
-        /* == Create Itinerary ========================================= */
-        $scope.createItinerary = function (request) {
-        }
 
         $scope.mode = 'init';
 
