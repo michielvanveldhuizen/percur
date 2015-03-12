@@ -25,6 +25,9 @@ using System.Threading;
 using Percurrentis.AD_classes;
 using System.Xml;
 using System.Xml.Linq;
+using DDay.iCal;
+using DDay.iCal.Serialization;
+using System.Text;
 
 namespace TravelRequestApproval
 {
@@ -73,11 +76,28 @@ namespace TravelRequestApproval
             SetMethod();
         }
 
+
+        /// <summary>
+        /// Create an .ics file for all current travels.
+        /// </summary>
         public void SetMethod()
         {
-            double todaysRate = Checks.checkAndUpdateConversionRate();
+            ExportCalendar ec = new ExportCalendar();
+            using (DatabaseContext db = new DatabaseContext())
+            {
+                foreach(TravelRequest tr in db.TravelRequest.Where(x => x.IsFinal == true))
+                {
+                    iCalDateTime start = new iCalDateTime(tr.DepartureDate);
+                    iCalDateTime end = new iCalDateTime(tr.ReturnDate);
+                    ec.addEvent(start, end, tr.ApplicantID + " travelling to " + tr.Country.Name, "", tr.Purpose);
+                }
+            }
+            ec.Save();
 
-            using(DatabaseContext db = new DatabaseContext())
+            #region
+            //double todaysRate = Checks.checkAndUpdateConversionRate();
+
+            /*using(DatabaseContext db = new DatabaseContext())
             {
                 ExchangeRate current;
                 if ((db.ExchangeRate.Count()).Equals(0))
@@ -93,15 +113,16 @@ namespace TravelRequestApproval
                 current.RON = todaysRate;
                 current.LastUpdate = DateTime.Now;
                 db.SaveChanges();
-            }
+            }*/
             //Checks.checkInsuranceExpiration();           
-                                              
+
             /* How to send a notification
              * Mailer mail = new Mailer();
             UserAC Peter = new UserAC();
             Peter.userName = "Peter Feddema";
             Peter.mail = "peterfeddema@csiweb.ro";
             mail.Send(mail.createNotification(Peter, "Travelrequest waiting", 1));*/
+            #endregion
         }
 
         /// <summary>
@@ -195,6 +216,54 @@ namespace TravelRequestApproval
                 }
                 return exchangeRate;
             }
+        }
+
+        public class ExportCalendar
+        {
+            DDay.iCal.iCalendar iCal;
+
+            public ExportCalendar()
+            {
+                iCal = new DDay.iCal.iCalendar();
+            }
+
+            /// <summary>
+            /// Add single event to calendar.
+            /// </summary>
+            /// <param name="start">DateTime start</param>
+            /// <param name="end">DateTime end</param>
+            /// <param name="desc">Description string</param>
+            /// <param name="loc">Location string</param>
+            /// <param name="summary">Summary String</param>
+            public void addEvent(iCalDateTime start, iCalDateTime end, string desc, string loc, string summary)
+            {
+                // Create the event, and add it to the iCalendar
+                Event evt = iCal.Create<Event>();
+
+                evt.DTStart = start;
+                evt.DTEnd = end;
+
+                evt.Description = desc;
+                evt.Location = loc;
+                evt.Summary = summary;
+            }
+
+            // Finalize and save the calendar file
+            public void Save()
+            {
+                // Create a serialization context and serializer factory.
+                // These will be used to build the serializer for our object.
+                ISerializationContext ctx = new SerializationContext();
+                ISerializerFactory factory = new DDay.iCal.Serialization.iCalendar.SerializerFactory();
+                // Get a serializer for our object
+                IStringSerializer serializer = factory.Build(iCal.GetType(), ctx) as IStringSerializer;
+
+                string output = serializer.SerializeToString(iCal);
+                var bytes = Encoding.UTF8.GetBytes(output);
+
+                File.WriteAllBytes("C:\\Users\\peterf\\Desktop\\dinges.ics", bytes);
+            }
+
         }
 
         public class Mailer
