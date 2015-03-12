@@ -29,24 +29,25 @@ namespace Percurrentis.Controllers
             HttpCookie devTools = Request.Cookies["devTools"];
             if (GlobalVar.developMode)
             {
-                JavaScriptSerializer serializer = new JavaScriptSerializer();
-                JsonObject jsonObject = serializer.Deserialize<JsonObject>(devTools.Value.ToString());
-
-                accessLevels.Accountant      = jsonObject.Accountant;
-                accessLevels.TravelAgency    = jsonObject.TravelAgency;
-                accessLevels.COO             = jsonObject.COO;
-                if (accessLevels.COO == true)
+                if (devTools != null)
                 {
-                    self.objectGuid = GlobalVar.COOGuid;
+                    JavaScriptSerializer serializer = new JavaScriptSerializer();
+                    JsonObject jsonObject = serializer.Deserialize<JsonObject>(devTools.Value.ToString());
+
+                    accessLevels.Accountant = jsonObject.Accountant;
+                    accessLevels.TravelAgency = jsonObject.TravelAgency;
+                    accessLevels.COO = jsonObject.COO;
+                    if (accessLevels.COO == true)
+                    {
+                        self.objectGuid = GlobalVar.COOGuid;
+                    }
+                    accessLevels.ProjectManager = jsonObject.AlwaysManager;
                 }
-                accessLevels.ProjectManager  = jsonObject.AlwaysManager;
             }
 
 
             //Setting the ControllerData for the view
             ControllerData cd = new ControllerData { Name = self.userName, Guid = self.objectGuid, AccessLevels = accessLevels,DevelopMode=GlobalVar.developMode};
-
-            
 
             using (HostingEnvironment.Impersonate())
             {
@@ -63,10 +64,6 @@ namespace Percurrentis.Controllers
             {
                 AL.TravelAgency = true;
             }
-
-            //For testing-------------//
-            //AL.TravelAgency = true;
-            //-----------------------//
 
             //Probably this will be removed
             /*if (user.isManager)
@@ -89,6 +86,7 @@ namespace Percurrentis.Controllers
         }
     }
 
+    //TO send to the view
     public class ControllerData
     {
         public string Name { get; set; }
@@ -97,6 +95,7 @@ namespace Percurrentis.Controllers
         public bool DevelopMode { get; set; }
     }
 
+    //To load the cookie as JSONobject
     public class JsonObject
     {
         public bool TravelAgency { get; set; }
