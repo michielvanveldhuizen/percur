@@ -198,56 +198,79 @@
     </div>
     <div class="block" data-ng-show="request.RentalCarRequests.length > 0">
         <div class="block-title">
-            <h4><i class="gi gi-cars"></i> Rentalcar Request Details</h4>
+            <h4><i class="gi gi-cars"></i>   Rentalcar Request Details</h4>
         </div>
-        <div class="table">
-            <table class="table table-vcenter table-condensed table-striped">
-                <thead>
-                    <tr>
-                        <td>StartDate</td>
-                        <td>EndDate</td>
-                        <td>Driver</td>
-                        <td>Phonenumber</td>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr data-ng-repeat="rcarreq in request.RentalCarRequests">
-                        <td>{{ rcarreq.StartDate|date:'d MMMM yyyy' }}</td>
-                        <td>{{ rcarreq.EndDate|date:'d MMMM yyyy' }}</td>
-                        <td>{{ rcarreq.Driver.FullName }}</td>
-                        <td>{{ rcarreq.Driver.PhoneNumberID }}</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-    <div class="block" data-ng-show="request.EuroTunnelRequests.length > 0">
-        <div class="block-title">
-            <h4><i class="gi gi-train"></i> EuroTunnel Request Details</h4>
-        </div>
-        <div class="table">
-            <table class="table table-vcenter table-condensed table-striped">
-                <thead>
-                    <tr>
-                        <td>From</td>
-                        <td>To</td>
-                        <td>Departure Date</td>
-                        <td>License Plate</td>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr data-ng-repeat="euroreq in request.EuroTunnelRequests">
-                        <td>{{ euroreq.DepartureAddress.AddressName }}</td>
-                        <td>{{ euroreq.DestinationAddress.AddressName }}</td>
-                        <td>{{ euroreq.DepartureDate|date:'d MMMM yyyy' }}</td>
-                        <td>{{ euroreq.LicensePlate != null ? euroreq.LicensePlate : "No car"  }}</td>
-                    </tr>
-                </tbody>
-            </table>
+        <div class="row" data-ng-repeat="rcarreq in request.RentalCarRequests">
+            <div class="col-md-4">
+                <div class="table">
+                    <table class="table table-vcenter table-condensed table-striped">
+                        <tbody>
+                            <tr><td>Company</td><td> [insert] </td></tr>
+                            <tr><td>Phonenumber</td><td> [insert] </td></tr>
+                            <tr><td>StartDate</td><td>{{ rcarreq.StartDate|date:'d MMMM yyyy' }}</td></tr>
+                            <tr><td>EndDate</td><td>{{ rcarreq.EndDate|date:'d MMMM yyyy' }}</td></tr>
+                            <tr><td>Pickup Address: </td>
+                                <td>
+                                    <strong>{{ rcarreq.Address.AddressName }}</strong><br>
+                                    {{ rcarreq.Address.Street }}<br>
+                                    {{ rcarreq.Address.City }}, {{ rcarreq.Address.PostalCode }}<br>
+                                    <span ng-if="(rcarreq.Address.Longitude != null) && ( rcarreq.Address.Latitude != null)">
+                                        <a class="btn btn-sm btn-primary"
+                                           target="_blank"
+                                           href="http://maps.google.com/?q={{rcarreq.Address.Longitude}}, {{rcarreq.Address.Latitude}}">
+                                            <i class="gi gi-google_maps"></i>
+                                            Google Maps
+                                        </a><br />
+                                    </span><br />
+                                </td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <ul class="list-group">
+                    <li class="list-group-item disabled"><strong>Primary Driver</strong></li>
+                    <li class=" list-group-item">{{ rcarreq.Driver.FullName }}</li>
+                    <li class="list-group-item">{{ rcarreq.Driver.PhoneNumberID }}</li>
+                </ul>
+            </div>
+            <div class="col-md-4" ng-if="rcarreq.SecondaryDriverID != null">
+                <ul class="list-group">
+                    <li class="list-group-item disabled"><strong>Secondary Driver</strong></li>
+                    <li class=" list-group-item">{{ rcarreq.SecondaryDriver.FullName }}</li>
+                    <li class="list-group-item">{{ rcarreq.SecondaryDriver.PhoneNumberID }}</li>
+                </ul>
+            </div>
         </div>
     </div>
-    <div class="block" style="padding-bottom: 15px;">
-        <!--<button data-ng-show="request.IsFinal == false && request.IsApproved == 2" class="btn btn-sm btn-default " data-ng-click="CommitItinerary()">Commit Itinerary</button>-->
-        <button data-ng-show="request.IsFinal == false && request.IsApproved == 2" class="btn btn-sm btn-default " data-ng-click="CommitItinerary()">Create Plan</button>
+</div>
+<div class="block" data-ng-show="request.EuroTunnelRequests.length > 0">
+    <div class="block-title">
+        <h4><i class="gi gi-train"></i> EuroTunnel Request Details</h4>
     </div>
+    <div class="table">
+        <table class="table table-vcenter table-condensed table-striped">
+            <thead>
+                <tr>
+                    <td>From</td>
+                    <td>To</td>
+                    <td>Departure Date</td>
+                    <td>License Plate</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr data-ng-repeat="euroreq in request.EuroTunnelRequests">
+                    <td>{{ euroreq.DepartureAddress.AddressName }}</td>
+                    <td>{{ euroreq.DestinationAddress.AddressName }}</td>
+                    <td>{{ euroreq.DepartureDate|date:'d MMMM yyyy' }}</td>
+                    <td>{{ euroreq.LicensePlate != null ? euroreq.LicensePlate : "No car"  }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="block" style="padding-bottom: 15px;">
+    <!--<button data-ng-show="request.IsFinal == false && request.IsApproved == 2" class="btn btn-sm btn-default " data-ng-click="CommitItinerary()">Commit Itinerary</button>-->
+    <button data-ng-show="request.IsFinal == false && request.IsApproved == 2" class="btn btn-sm btn-default " data-ng-click="CommitItinerary()">Create Plan</button>
+</div>
 </div>
