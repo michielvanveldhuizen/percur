@@ -28,7 +28,7 @@ namespace Percurrentis.Context
         public DbSet<Company> Company { get; set; }
         public DbSet<Insurance> Insurance { get; set; }
         public DbSet<CountryInformation> CountryInformation { get; set; }
-        public DbSet<ServiceCompany> Servicecompany { get; set; }
+        public DbSet<ServiceCompany> ServiceCompany { get; set; }
         public DbSet<ServiceCompanyType> ServiceCompanyType { get; set; }
         public DbSet<ContactPerson> ContactPerson { get; set; }
         public DbSet<FlightRequest> FlightRequest { get; set; }

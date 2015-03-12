@@ -325,6 +325,14 @@
     <Compile Include="Migrations\201503090919014_ExchangeRateMigration.Designer.cs">
       <DependentUpon>201503090919014_ExchangeRateMigration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201503120935120_RentalCarLinkServiceCompany.cs" />
+    <Compile Include="Migrations\201503120935120_RentalCarLinkServiceCompany.Designer.cs">
+      <DependentUpon>201503120935120_RentalCarLinkServiceCompany.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201503121137452_ServiceCompanyAddPhonenr.cs" />
+    <Compile Include="Migrations\201503121137452_ServiceCompanyAddPhonenr.Designer.cs">
+      <DependentUpon>201503121137452_ServiceCompanyAddPhonenr.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Context\DatabaseContext.cs" />
     <Compile Include="Notification\Notification.cs" />
@@ -1396,6 +1404,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201503090919014_ExchangeRateMigration.resx">
       <DependentUpon>201503090919014_ExchangeRateMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503120935120_RentalCarLinkServiceCompany.resx">
+      <DependentUpon>201503120935120_RentalCarLinkServiceCompany.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503121137452_ServiceCompanyAddPhonenr.resx">
+      <DependentUpon>201503121137452_ServiceCompanyAddPhonenr.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -22,6 +22,7 @@ namespace Percurrentis.Mapping
             this.HasKey(s => s.Id);
             this.Property(s => s.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
             this.Property(s => s.Name).IsRequired().HasMaxLength(256);
+            this.Property(s => s.PhoneNumber).IsOptional().HasMaxLength(256);
             this.HasOptional(s => s.Address).WithMany().HasForeignKey(s => s.AddressID);
             this.HasRequired(s => s.ServiceCompanyType).WithMany().HasForeignKey(s => s.ServiceCompanyTypeID);
         }

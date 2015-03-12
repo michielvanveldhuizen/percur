@@ -92,6 +92,7 @@ namespace Percurrentis.Controllers
                 .Include("RentalCarRequests")
                 .Include("RentalCarRequests.Driver")
                 .Include("RentalCarRequests.SecondaryDriver")
+                .Include("RentalCarRequests.ServiceCompany")
                 .Include("RentalCarRequests")
                 .Include("TaxiRequests")
                 .Include("TaxiRequests.DepartureAddress")
@@ -177,6 +178,13 @@ namespace Percurrentis.Controllers
         public IQueryable<AirportInformation> AirportInformation()
         {
             return _contextProvider.Context.AirportInformation.AsNoTracking();
+        }
+
+        //retrieve ServiceCompanies
+        [HttpGet]
+        public IQueryable<ServiceCompany> ServiceCompanies()
+        {
+            return _contextProvider.Context.ServiceCompany;
         }
 
         //retrieve CountryInformation

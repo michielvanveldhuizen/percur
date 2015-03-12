@@ -166,6 +166,11 @@
             $scope.addresses = query.results;
 
         });
+
+        travelRequestService.getServiceCompanies().then(function (query) {
+            $scope.serviceCompanies = query.results;
+        });
+
         var end = new Date() - start;
         console.log("Execution time: %dms", end);
 
@@ -195,6 +200,10 @@
                 }
                 return eurVal.toFixed(2);
             }
+        }
+
+        $scope.hey = function () {
+            console.log($scope);
         }
 
         function show(request) {

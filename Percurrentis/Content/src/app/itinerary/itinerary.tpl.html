@@ -205,8 +205,8 @@
                 <div class="table">
                     <table class="table table-vcenter table-condensed table-striped">
                         <tbody>
-                            <tr><td>Company</td><td> [insert] </td></tr>
-                            <tr><td>Phonenumber</td><td> [insert] </td></tr>
+                            <tr><td>Company</td><td>{{ rcarreq.ServiceCompany.Name }}</td></tr>
+                            <tr><td>Phonenumber</td><td>{{ rcarreq.ServiceCompany.PhoneNumber }}</td></tr>
                             <tr><td>StartDate</td><td>{{ rcarreq.StartDate|date:'d MMMM yyyy' }}</td></tr>
                             <tr><td>EndDate</td><td>{{ rcarreq.EndDate|date:'d MMMM yyyy' }}</td></tr>
                             <tr><td>Pickup Address: </td>

@@ -58,6 +58,7 @@
             addEurotunnel: addEurotunnel,
             removeEurotunnel: removeEurotunnel,
             addRentalcar: addRentalcar,
+            getServiceCompanies: getServiceCompanies,
             removeRentalcar: removeRentalcar,
             addTaxi: addTaxi,
             removeTaxi: removeTaxi,
@@ -158,6 +159,19 @@
                 .where('DepartureDate', '<=', today)
                 .where('ReturnDate' ,'>=' , today);
 
+            var promise = manager.executeQuery(query).catch(queryFailed);
+            return promise;
+
+            function queryFailed(error) {
+                console.log(error.message, 'query failed');
+                throw error;
+            }
+        }
+
+        function getServiceCompanies() {
+            manager = new breeze.EntityManager(serviceName);
+
+            var query = new breeze.EntityQuery('ServiceCompanies');
             var promise = manager.executeQuery(query).catch(queryFailed);
             return promise;
 

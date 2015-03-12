@@ -13,6 +13,7 @@ namespace Percurrentis.Model
         //future foreign key
         public int? ContractCollection { get; set; }
         public int ServiceCompanyTypeID { get; set; }
+        public string PhoneNumber { get; set; }
         [ValidateObject]
         public virtual ServiceCompanyType ServiceCompanyType { get; set; }
     }
