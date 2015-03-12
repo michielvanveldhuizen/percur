@@ -29,3 +29,11 @@
 
 .validation-error { display: none }
 .has-visited .validation-error { display: block }
+
+
+.dev-tools-option{
+    cursor:pointer;
+}
+.dev-tools-option:hover{
+    background-color:#606060;
+}

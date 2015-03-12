@@ -1,9 +1,10 @@
 ﻿@model Percurrentis.Controllers.ControllerData
 
 @{
-    ViewBag.UserName = Model.Name;
-    ViewBag.guid = Model.Guid;
-    ViewBag.accessLevels = Model.AccessLevels;
+    ViewBag.UserName        = Model.Name;
+    ViewBag.guid            = Model.Guid;
+    ViewBag.accessLevels    = Model.AccessLevels;
+    ViewBag.developMode     = Model.DevelopMode;
 }
 
 @section PreScript {

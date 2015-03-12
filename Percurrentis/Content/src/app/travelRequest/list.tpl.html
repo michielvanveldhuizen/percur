@@ -93,15 +93,16 @@
                                    class="btn btn-sm btn-default">
                                     <i class="fa fa-eye"></i> 
                                     View
-                                </a>
-                                <a data-ng-show="roles.TravelAgency == true"
-                                   data-ng-click="toggleArchive(request)" 
+                                </a>                                
+                                <a data-ng-show="isTravelAgency()"
+                                   data-ng-click="toggleArchive(request)"
                                    class="btn btn-sm btn-default"
                                    data-tooltip="{{request.IsArchived ? 'Unarchive' : 'Archive'}}"
                                    href="javascript:void(0)">
                                     <i class="fa fa-archive"></i>
                                 </a>
-                                <a data-ng-show="roles.TravelAgency == true"
+                                
+                                <a ng-show="isTravelAgency()"
                                    data-ng-click="toggleDelete(request)"
                                    class="btn btn-sm"
                                    data-ng-class="request.IsDeleted ? 'btn-default' : 'btn-default'"
@@ -113,6 +114,7 @@
                             </div>
                         </td>
                     </tr>
+                    
                     <tr data-ng-show="requests.length == 0">
                         <td colspan="6" class="text-center" style="padding: 12px">
                             There are no travel requests with this filter ({{currentFilter.title}}). Please apply another filter.<br />

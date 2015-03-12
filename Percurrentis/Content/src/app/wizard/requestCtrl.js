@@ -240,31 +240,31 @@
 
         //$scope.model isn't active right away sometimes
         function setModelDates() {
-            setTimeout(function () {
-                if (typeof $scope.model != typeof undefined && typeof $scope.countries != typeof undefined) {
-                    var today = new Date();
-                    today.setDate(today.getDate() + 0);
-                    today.setHours(12, 0, 0);
-                    $scope.model.DepartureDate = today;
+            if (typeof $scope.model != typeof undefined && typeof $scope.countries != typeof undefined) {
+                var today = new Date();
+                today.setDate(today.getDate() + 0);
+                today.setHours(12, 0, 0);
+                $scope.model.DepartureDate = today;
 
-                    var tomorrow = new Date();
-                    tomorrow.setDate(tomorrow.getDate() + 1);
-                    tomorrow.setHours(12, 0, 0);
-                    $scope.model.ReturnDate = tomorrow;
+                var tomorrow = new Date();
+                tomorrow.setDate(tomorrow.getDate() + 1);
+                tomorrow.setHours(12, 0, 0);
+                $scope.model.ReturnDate = tomorrow;
 
-                    $scope.CheckInDate = today;
-                    $scope.CheckOutDate = tomorrow;
+                $scope.CheckInDate = today;
+                $scope.CheckOutDate = tomorrow;
 
-                    _.each($scope.countries, function (c) {
-                        if (c.Name == "Romania") {
-                            $scope.model.Country = c;
-                            $scope.model.CountryID = c.Id;
-                        }
-                    });
-                } else {
+                _.each($scope.countries, function (c) {
+                    if (c.Name == "Romania") {
+                        $scope.model.Country = c;
+                        $scope.model.CountryID = c.Id;
+                    }
+                });
+            } else {
+                setTimeout(function () {
                     setModelDates();
-                }
-            }, 300);
+                },300);
+            }
         }
         setModelDates();
 

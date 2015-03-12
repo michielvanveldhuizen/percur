@@ -1,5 +1,6 @@
 ﻿using Percurrentis.Model;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.DirectoryServices;
@@ -86,6 +87,21 @@ namespace Percurrentis.AD_classes
                     userAC.objectGuid = new Guid((System.Byte[])qw.Properties["objectGUID"][0]).ToString();
                     userAC.userName = qw.Properties["cn"][0].ToString();
                     
+                    /*Trace.WriteLine("----------");
+                    Trace.WriteLine(qw.Properties["cn"][0].ToString());
+                    var q = 0;
+                    foreach (DictionaryEntry obj in qw.Properties)
+                    {
+                        try
+                        {
+
+                            Trace.WriteLine(q+"-"+obj.Key.ToString()+"-"+qw.Properties[obj.Key.ToString()][0].ToString());
+                        }
+                        catch (Exception er) { }
+
+                        q++;
+                    }*/
+
                     if (qw.Properties.Contains("title"))
                     {
                         userAC.title = qw.Properties["title"][0].ToString();

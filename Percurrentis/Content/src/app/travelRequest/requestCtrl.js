@@ -76,7 +76,12 @@
                     return _.filter($scope.allRequests, function (req) {
                         return req.IsDeleted == true;
                     });
-                }, 'Deleted', 5, 'fa-ban', 'View deleted travel requests.')
+                }, 'Deleted', 5, 'fa-ban', 'View deleted travel requests.'),
+                test: new Filter(function () {
+                    return _.filter($scope.allRequests, function (req) {
+                        return ownGuid == req.SuperiorID;
+                    });
+                }, 'Am Manager of', 6, 'fa-ban', 'dingen')
             }
         }
 
@@ -97,6 +102,10 @@
             travelRequestService.saveChanges();
             $scope.currentFilter.filter();
         };
+
+        $scope.isTravelAgency = function () {
+            return roles.TravelAgency;
+        }
 
         /* == Alerts =================================================== */
         //-- Archive ------------------------------------------------------
@@ -173,12 +182,18 @@
                 failedToLoadDetailPage();
             } else {
                 $scope.c = "a73d1a5e-b640-467e-8583-e4b52cfae437";
+                //Get 
                 travelRequestService.getCountryById($scope.request.CountryID)
                 .then(function (result) {
                     $scope.request.Country = result.results[0];
-                    showApproveBox($scope.request);
+                    showApproveBoxIfNeeded($scope.request);
                 });
-                console.log($scope.request);
+
+                travelRequestService.getCountryById($scope.request.CustomerOrProspect.Address.CountryRegionID)
+               .then(function (result) {
+                   $scope.request.CustomerOrProspect.Address.CountryRegion = result.results[0];
+               });
+
                 travelRequestService.getEmployeeByObjectGuid(query.results[0].SuperiorID)
                 .then(function (employee) {
                     $scope.supervisorName = employee.userName;
@@ -200,13 +215,18 @@
         });
 
         //To show approve/reject box
-        function showApproveBox(request) {
+        function showApproveBoxIfNeeded(request) {
             var showFooter = false;
             
             if($scope.request.SuperiorID == ownGuid){
                 showFooter = true;
             }
-            
+
+            if (roles.ProjectManager) {
+                showFooter = true;
+            }
+
+            //Check if already approved/rejected
             if ($scope.request.Country.Name == "Romania" && ownGuid == $scope.c) {
                 showFooter = true;
                 if ($scope.request.TravelRequestApproval.COOApproved != 0) {

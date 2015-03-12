@@ -175,12 +175,20 @@ namespace Percurrentis.Context
                     var specEntity = changedEntity.Entity as TravelRequestApproval;
 
                     UserAC self = AD.GetSelf();
-                    
-                    //Kees simulation
-                    //self.objectGuid = "a73d1a5e-b640-467e-8583-e4b52cfae437";
+
+
+                    bool isSaveRequest = false;
+
                     if (specEntity.ApprovedBy.Equals(self.objectGuid))
                     {
+                        isSaveRequest = true;
+                    }
+                    
+                    if(GlobalVar.developMode){
+                        isSaveRequest = true;
+                    }
 
+                    if(isSaveRequest){
                         TravelRequest travelRequest = this.TravelRequest.Single(TravelRequest => TravelRequest.TravelRequestApprovalID == specEntity.Id);
                         CountryInformation country = this.CountryInformation.Single(Country => Country.Id == travelRequest.CountryID);
                         UserAC requester = AD.GetUserByName(travelRequest.ApplicantID);

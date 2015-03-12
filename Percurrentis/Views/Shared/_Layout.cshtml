@@ -42,9 +42,78 @@
 
         @Scripts.Render("~/bundles/modernizr")
 
-        @RenderSection("PreScript", required: false)
-        
+
+
+        @RenderSection("PreScript", required: false) 
+
+        @if (@ViewBag.developMode)
+        {
+            <script type="text/javascript">
+
+            var cookieDate = "expires=Thu, 18 Dec 2099 12:00:00 UTC";
+            
+            function getCookie(cname) {
+                var name = cname + "=";
+                var ca = document.cookie.split(';');
+                for (var i = 0; i < ca.length; i++) {
+                    var c = ca[i];
+                    while (c.charAt(0) == ' ') c = c.substring(1);
+                    if (c.indexOf(name) == 0) return c.substring(name.length, c.length);
+                }
+                return "";
+            }
+
+            function getDevToolsCookie() {
+                var devToolsCookie = getCookie("devTools");
+                if(devToolsCookie == ""){
+                    setBasicDevToolsCookie();
+                }
+                return getCookie("devTools");
+            }
+
+            function switchBool(key){
+                var devToolsCookie = JSON.parse(getDevToolsCookie());
+                if(key =="TravelAgency"){
+                    devToolsCookie.TravelAgency = !devToolsCookie.TravelAgency;
+                }
+                if(key =="COO"){
+                    devToolsCookie.COO = !devToolsCookie.COO;
+                }
+                if(key =="Accountant"){
+                    devToolsCookie.Accountant = !devToolsCookie.Accountant;
+                }
+                if(key =="AlwaysManager"){
+                    devToolsCookie.AlwaysManager = !devToolsCookie.AlwaysManager;
+                }
+                var jsonString = JSON.stringify(devToolsCookie);
+                document.cookie ="devTools="+jsonString+"; "+cookieDate;
+
+                document.location.reload();
+            }
+
+            function resetDevTools(){
+                console.log("hierrrrr");
+                document.cookie = "devTools=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
+                document.location.reload();
+            }
+
+            function setBasicDevToolsCookie(){
+                var devTools = {TravelAgency:@ViewBag.AccessLevels.TravelAgency.ToString().ToLower() ,
+                    COO: @ViewBag.AccessLevels.COO.ToString().ToLower() ,
+                    Accountant:@ViewBag.AccessLevels.Accountant.ToString().ToLower() ,
+                    AlwaysManager: false
+                }
+                    
+                document.cookie="devTools="+JSON.stringify(devTools)+"; "+cookieDate;
+            }
+
+                var devToolsCookie = getDevToolsCookie();
+                //TODO PUT THIS IN OTHER FILE
+            </script>
+        }
     </head>
+    
+    
     <body>
         <!-- Page Container -->
         <div id="page-container" class="sidebar-partial sidebar-visible-lg sidebar-no-animations footer-fixed">
@@ -68,6 +137,21 @@
                         <!-- Sidebar Navigation -->
                         <ul class="sidebar-nav">
                             <li>
+                                @if (@ViewBag.developMode)
+                                {
+                                    <a href="#" class="sidebar-nav-menu open">
+                                        <i class="fa fa-angle-left sidebar-nav-indicator sidebar-nav-mini-hide"></i>
+                                        <i class="gi gi-hand_saw sidebar-nav-icon"></i>
+                                        <span class="sidebar-nav-mini-hide">Dev tools</span>
+                                    </a>
+                                    <ul style="display:block;padding:0px 5px 0px 5px;">
+                                        <li onclick='switchBool("TravelAgency")' class="dev-tools-option">TravelAgency  <span class="pull-right" style="color:@if (@ViewBag.AccessLevels.TravelAgency){@Html.Raw("green")}else{@Html.Raw("red")};"> @ViewBag.AccessLevels.TravelAgency</span></li>
+                                        <li onclick='switchBool("COO")'  class="dev-tools-option">COO <span class="pull-right" style="color:@if (@ViewBag.AccessLevels.COO){@Html.Raw("green")}else{@Html.Raw("red")};"> @ViewBag.AccessLevels.COO</span></li>
+                                        <li onclick='switchBool("Accountant")' class="dev-tools-option">Accountant <span class="pull-right" style="color:@if (@ViewBag.AccessLevels.Accountant){@Html.Raw("green")}else{@Html.Raw("red")};"> @ViewBag.AccessLevels.Accountant</span></li>
+                                        <li onclick='switchBool("AlwaysManager")' class="dev-tools-option">AlwaysManager <span class="pull-right" style="color:@if(@ViewBag.AccessLevels.ProjectManager){@Html.Raw("green")}else{@Html.Raw("red")};">@ViewBag.AccessLevels.ProjectManager</span></li>
+                                        <li onclick='resetDevTools()' class="dev-tools-option">Reset all options</li>
+                                    </ul>
+                                }
                                 <a href="#/"><i class="gi gi-home sidebar-nav-icon"></i>Home</a>
                                 <a href="#" class="sidebar-nav-menu">
                                     <i class="fa fa-angle-left sidebar-nav-indicator sidebar-nav-mini-hide"></i>
@@ -84,8 +168,8 @@
                                 <a href="#/Current/"><i class="gi gi-globe sidebar-nav-icon"></i>Current travels</a>
                                 <!--<a href="#/Personal-Details/" ><i class="gi gi-inbox_in sidebar-nav-icon"></i>Personal Details</a>-->
                                 <a href="#/Insurance/" data-ng-show="!@ViewBag.AccessLevels.TravelAgency"><i class="gi gi-log_book sidebar-nav-icon"></i>Insurance</a>
-                                        
-                            </li>
+
+</li>
                         </ul>
                         <!-- END Sidebar Navigation -->
 </div>
