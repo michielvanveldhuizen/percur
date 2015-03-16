@@ -19,7 +19,7 @@ namespace Percurrentis.Controllers
     {
         public ActionResult Index()
         {
-            //Using the ADservice as singleTon
+            //Using the ADservice as singleton
             ADservices AD = ADservices.InstanceCreation();
             UserAC self = AD.GetSelf();
 

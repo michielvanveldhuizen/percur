@@ -51,8 +51,9 @@
                 <thead>
                     <tr>
                         <th class="col-md-3">From</th>
-                        <th class="col-md-3">Travellers</th>
-                        <th class="col-md-2">Options</th>
+                        <th class="col-md-2">Travellers</th>
+                        <th class="col-md-2">Supervisor</th>
+                        <th class="col-md-1">Options</th>
                         <th class="col-md-1">Sent</th>
                         <th class="col-md-1">Approval</th>
                         <th class="col-md-2">Actions</th>
@@ -70,6 +71,9 @@
                                     {{traveller.FirstName}} {{traveller.FamilyName}}
                                 </li>
                             </ul>
+                        </td>
+                        <td data-ng-click="go('/Request/' + request.Hash)">
+                            {{request.superiorName}}
                         </td>
                         <td data-ng-click="go('/Request/' + request.Hash)">
                             <i data-ng-show="request.FlightRequests.length > 0"     data-tooltip="Flight"        class="fa-fw gi gi-airplane"></i>

@@ -16,29 +16,29 @@ namespace Percurrentis.AD_classes
     {
 
         private static object lockingObject = new object();
-        private volatile static ADservices singleTonObject;
+        private volatile static ADservices singletonObject;
 
         private Dictionary<string, UserAC> userDictonary = new Dictionary<string, UserAC>();
 
         /// <summary>
-        /// SingleTon use examble: 
+        /// Singleton use examble: 
         /// ADservices ADservices = ADservices.InstanceCreation();
         /// List<UserAC> List = ADservices.GetUsers();
         /// </summary>
         /// <returns></returns>
         public static ADservices InstanceCreation()
         {
-            if (singleTonObject == null)
+            if (singletonObject == null)
             {
                 lock (lockingObject)
                 {
-                    if (singleTonObject == null)
+                    if (singletonObject == null)
                     {
-                        singleTonObject = new ADservices();
+                        singletonObject = new ADservices();
                     }
                 }
             }
-            return singleTonObject;
+            return singletonObject;
         }
 
         /// <summary>

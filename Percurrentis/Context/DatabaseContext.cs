@@ -85,7 +85,7 @@ namespace Percurrentis.Context
 
         public override int SaveChanges()
         {
-            //ADservice as SingelTon
+            //ADservice as Singelton
             ADservices AD = ADservices.InstanceCreation();
 
             ChangeTracker.DetectChanges();

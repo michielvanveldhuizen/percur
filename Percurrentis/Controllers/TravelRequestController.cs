@@ -198,7 +198,7 @@ namespace Percurrentis.Controllers
         [HttpGet]
         public List<UserAC> ADusers()
         {            
-            //Using Adservice as SingleTon
+            //Using Adservice as Singleton
             ADservices ADservices = ADservices.InstanceCreation();
             List<UserAC> List = ADservices.GetUsers();
             return List;

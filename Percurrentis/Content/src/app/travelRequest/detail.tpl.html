@@ -25,8 +25,14 @@
                         <span class="label label-danger" data-tooltip="By COO" data-ng-show="request.TravelRequestApproval.COOApproved == 1">Rejected</span>
                         <span class="label label-success" data-tooltip="By COO" data-ng-show="request.TravelRequestApproval.COOApproved == 2">Approved</span>
                     </div>
-
-                    <div data-ng-show="!role.TravelAgent==true" data-form-control-static>
+                    
+                    <div data-form-control-static data-label="Reason of Approval" data-ng-show="request.TravelRequestApproval.HasApproved == 2">
+                        {{request.TravelRequestApproval.Note}}
+                    </div>
+                    <div data-form-control-static data-label="Reason of Rejected" data-ng-show="request.TravelRequestApproval.HasApproved == 1">
+                        {{request.TravelRequestApproval.Note}}
+                    </div>
+                    <div data-ng-show="isTravelAgency()" data-form-control-static>
                         <button class="btn btn-sm btn-default"
                                 data-ng-show="(request.IsApproved == 2)"
                                 data-ng-click="createItinerary(request)">
