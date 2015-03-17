@@ -1,6 +1,6 @@
 ﻿<div data-ng-form="personal">
-    <fieldset data-ng-repeat="traveller in model.RequestTravellers track by $index">
-        
+    <fieldset data-ng-repeat="traveller in model.TravelRequest_RequestTravellers track by $index">
+
         <div data-legend-title="{{ $first ? 'Primary Traveller' : 'Traveller' }}">
             <a data-ng-click="deleteTraveller(traveller)"
                data-ng-hide="$first"
@@ -12,59 +12,13 @@
         </div>
 
         <div data-ng-form="'travellerform'">
-            <div data-form-control data-label="First Name">
-                <input type="text"
-                       class="form-control"
-                       data-ng-model="traveller.FirstName"
-                       placeholder="First Name"
-                       data-z-validate />
-            </div>
-
-            <div data-form-control data-label="Last Name">
-                <input type="text" 
-                       class="form-control"
-                       data-ng-model="traveller.FamilyName"
-                       placeholder="Last Name"
-                       data-z-validate />
-            </div>
-
-            <div data-form-control data-label="Full Name">
-                <input type="text" 
-                       class="form-control"
-                       data-ng-model="traveller.FullName"
-                       placeholder="Full Name"
-                       data-z-validate />
-                <span class="help-block">
-                    The traveler's full name according to his/her passport or other identification document.
-                </span>
-            </div>
-
-            <div data-form-control data-label="Phone Number">
-                <input type="text" 
-                       class="form-control"
-                       data-ng-model="traveller.PhoneNumberID"
-                       placeholder="Phone Number" 
-                       data-z-validate />
-            </div>
-
-            <div data-form-control data-label="Company">
-                <select data-chosen
-                        data-width="'100%'"
-                        data-ng-model="traveller.tempCompany"
-                        data-ng-options="c.Name for c in travellerCompanies"
-                        data-ng-change="selectTravellerCompany(traveller, traveller.tempCompany)"
-                        data-z-validate >
-                    <option value="" disabled>Please select a company</option>
-                </select>
-            </div>
-
-            <div data-form-control data-label="" data-ng-show="traveller.hasOtherCompany">
-                <input type="text"
-                    class="form-control"
-                    data-ng-model="traveller.Company.Name"
-                    data-ng-change="selectTravellerCompany" 
-                    placeholder="Company" 
-                    data-z-validate />
+            <div data-form-control data-label="Select Traveller">
+                <select class="form-control"
+                        data-ng-model="traveller.RequestTravellerID"
+                        data-placeholder="Traveller"
+                        data-chosen
+                        data-ng-options="travellerSelect.Id as (travellerSelect.FirstName+' '+travellerSelect.FamilyName+' ('+travellerSelect.FullName+')') for travellerSelect in travellers"
+                        data-z-validate></select>
             </div>
         </div>
     </fieldset>

@@ -44,6 +44,7 @@ namespace Percurrentis.Context
         public DbSet<TravelRequestApproval> TravelRequestApproval { get; set; }
         public DbSet<TravelRequest> TravelRequest { get; set; }
         public DbSet<ExchangeRate> ExchangeRate { get; set; }
+        public DbSet<TravelRequest_RequestTraveller> TravelRequest_RequestTraveller { get; set; }
         #endregion
         public DatabaseContext()
             : base("PercurrentisContext")

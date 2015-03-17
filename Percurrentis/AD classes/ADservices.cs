@@ -77,7 +77,7 @@ namespace Percurrentis.AD_classes
             deSearch.Sort.Direction = SortDirection.Ascending;
             deSearch.Sort.PropertyName = "cn";
             SearchResultCollection results = deSearch.FindAll();
-            Trace.WriteLine("-------------");
+            //Trace.WriteLine("-------------");
             if (!(results == null))
             {
                 foreach (SearchResult qw in results)

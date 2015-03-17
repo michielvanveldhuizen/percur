@@ -340,6 +340,14 @@
     <Compile Include="Migrations\201503170801119_ManyToManytest.Designer.cs">
       <DependentUpon>201503170801119_ManyToManytest.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201503170826286_ManyToManytest1.cs" />
+    <Compile Include="Migrations\201503170826286_ManyToManytest1.Designer.cs">
+      <DependentUpon>201503170826286_ManyToManytest1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201503170918335_oneToMany_ManyToOneTest.cs" />
+    <Compile Include="Migrations\201503170918335_oneToMany_ManyToOneTest.Designer.cs">
+      <DependentUpon>201503170918335_oneToMany_ManyToOneTest.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Context\DatabaseContext.cs" />
     <Compile Include="Notification\Notification.cs" />
@@ -1422,6 +1430,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201503170801119_ManyToManytest.resx">
       <DependentUpon>201503170801119_ManyToManytest.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503170826286_ManyToManytest1.resx">
+      <DependentUpon>201503170826286_ManyToManytest1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503170918335_oneToMany_ManyToOneTest.resx">
+      <DependentUpon>201503170918335_oneToMany_ManyToOneTest.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

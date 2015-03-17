@@ -24,13 +24,12 @@ namespace Percurrentis.Model
         public string PhoneNumberID { get; set; }
         public int? CompanyID { get; set; }
         //public string FlyerMemberCardID { get; set; }
-        public int TravelRequestID { get; set; }
         //[ValidateObject]
         //public PhoneNumber PhoneNumber { get; set; }
         public virtual Company Company { get; set; }
         //[ValidateObject]
         //public FlyerMemberCard FlyerMemberCard { get; set; }
-        
-        public virtual ICollection<TravelRequest> TravelRequests { get; set; }
+
+        public virtual ICollection<TravelRequest_RequestTraveller> TravelRequest_RequestTravellers { get; set; }
     }
 }

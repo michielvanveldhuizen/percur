@@ -20,16 +20,10 @@ namespace Percurrentis.Mapping
             this.Property(r => r.FirstName).IsRequired().HasMaxLength(256);
             this.Property(r => r.FullName).IsRequired().HasMaxLength(256);
             this.Property(r => r.CompanyID).IsOptional();
-            this.Property(r => r.TravelRequestID).IsRequired();
 
-            this.HasMany<TravelRequest>(r => r.TravelRequests).
-                WithMany(t => t.RequestTravellers).
-                Map(m =>
-                {
-                    m.MapLeftKey("RequestTraveller.Id");
-                    m.MapRightKey("TravelRequest.Id");
-                    m.ToTable("TravelRequest_Traveller");
-                });
+
+            this.HasMany<TravelRequest_RequestTraveller>(r => r.TravelRequest_RequestTravellers)
+            .WithRequired(tr => tr.RequestTraveller).HasForeignKey(tr => tr.RequestTravellerID);
 
             //this.HasOptional(r => r.PhoneNumber).WithMany().HasForeignKey(r => r.PhoneNumberID);
             //this.HasRequired(r => r.Company).WithMany().HasForeignKey(r => r.CompanyID);

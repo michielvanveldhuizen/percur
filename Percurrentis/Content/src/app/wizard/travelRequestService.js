@@ -501,11 +501,14 @@
 
         // -- traveller ----------------------------------------------------//
         function addTraveller(request) {
-            request.RequestTravellers.push(manager.createEntity('RequestTraveller'));
+            //create the connectionTable
+            var connectTable = manager.createEntity('TravelRequest_RequestTraveller')
+
+            request.TravelRequest_RequestTravellers.push(connectTable);
         }
 
         function deleteTraveller(request, traveller) {
-            request.RequestTravellers.splice(_.indexOf(request.RequestTravellers, traveller), 1);
+            request.TravelRequest_RequestTravellers.splice(_.indexOf(request.TravelRequest_RequestTravellers, traveller), 1);
             manager.detachEntity(traveller);
         }
 
@@ -665,7 +668,7 @@
             entity.StartDate.setHours(0, 0, 0);
             entity.EndDate = new Date();
             entity.EndDate.setHours(0, 0, 0);
-            entity.Driver = request.RequestTravellers[0];
+            //entity.Driver = request.RequestTravellers[0];
 
             request.RentalCarRequests.push(entity);
         }

@@ -86,6 +86,7 @@
     <Compile Include="TransitRequest.cs" />
     <Compile Include="TravelRequest.cs" />
     <Compile Include="TravelRequestApproval.cs" />
+    <Compile Include="TravelRequest_RequestTraveller.cs" />
     <Compile Include="UserAC.cs" />
     <Compile Include="Validation\AddressAttribute.cs" />
     <Compile Include="Validation\Attributes\1024Attribute.cs" />

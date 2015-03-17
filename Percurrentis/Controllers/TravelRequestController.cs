@@ -75,8 +75,7 @@ namespace Percurrentis.Controllers
         public IQueryable<TravelRequest> TravelRequests()
         {
             return _contextProvider.Context.TravelRequest
-                .Include("RequestTravellers")
-                .Include("RequestTravellers.Company")
+                .Include("TravelRequest_RequestTravellers")
                 .Include("CustomerOrProspect")
                 .Include("CustomerOrProspect.Address")
                 .Include("FlightRequests")
@@ -107,6 +106,13 @@ namespace Percurrentis.Controllers
         {
             return _contextProvider.Context.TravelRequestApproval
                 .Include("TravelRequest");
+        }
+
+        
+        [HttpGet]
+        public IQueryable<TravelRequest_RequestTraveller> TravelRequest_RequestTravellers()
+        {
+            return _contextProvider.Context.TravelRequest_RequestTraveller.AsNoTracking();
         }
 
         //retrieve AddressTypes
@@ -163,7 +169,9 @@ namespace Percurrentis.Controllers
         [HttpGet]
         public IQueryable<RequestTraveller> RequestTraveller()
         {
-            return _contextProvider.Context.RequestTraveller.AsNoTracking();
+            return _contextProvider.Context.RequestTraveller
+                .Include("Company")
+                .Include("Company.Address");
         }
 
         //retrieve RentalCarRequest

@@ -2,9 +2,18 @@
     <div class="block">
         <div class="block-title">
             <h2> <strong>Travellers</strong></h2>
+            
+           
+            
+            
             <a ng-model="collapsed" class="navbar-right" ng-click="collapsed_1=!collapsed_1">
                 <span class="caret toggleCaret"></span>
             </a>
+            <button class="btn btn-sm btn-success navbar-right margin-5" 
+                    data-ng-click="addTraveller()">
+                <i class="fa fa-plus"></i>
+                Add Traveller
+            </button>
         </div>
 
         <div ng-hide="collapsed_1" class="table-responsive">
@@ -14,6 +23,7 @@
                         <th class="col-md-1">First Name</th>
                         <th class="col-md-1">Family Name</th>
                         <th class="col-md-1">Full Name</th>
+                        <th class="col-md-1">Company</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -21,6 +31,7 @@
                         <td>{{traveller.FirstName}}</td>
                         <td>{{traveller.FamilyName}}</td>
                         <td>{{traveller.FullName}}</td>
+                        <td>{{traveller.Company.Name}}</td>
                     </tr>
                 </tbody>
             </table>

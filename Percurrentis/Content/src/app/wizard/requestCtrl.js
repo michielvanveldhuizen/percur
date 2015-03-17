@@ -234,6 +234,10 @@
             $scope.employees = query.results;
         });
 
+        travelRequestService.getTravellers().then(function (query) {
+            $scope.travellers = query.results;
+        });
+
         $scope.setPreUsedCompany = function () {
             travelRequestService.setPreUsedCompany($scope.model);
         }
@@ -474,7 +478,6 @@
 
         travelRequestService.getRentalCarRequests().then(function (query) {
             var uniqueResults = [];
-            console.log(query);
             //Without the time out javascript always have enough time to get the addresses
             //The timeout doesn't matter for the load time because it's used on the second page of the travel request and loaded during the first
             setTimeout(function () {

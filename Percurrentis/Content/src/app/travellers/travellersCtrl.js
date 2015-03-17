@@ -7,4 +7,8 @@ function travellersCtrl($scope, travelRequestService, modalService) {
         .then(function (query) {
             $scope.travellers = query.results;
         });
+
+    $scope.addTraveller = function () {
+        console.log("IMABANANAAAAA");
+    }
 }
