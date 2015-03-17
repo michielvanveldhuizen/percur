@@ -359,6 +359,8 @@
     <Content Include="Content\src\app\modal\modal.js" />
     <Content Include="Content\src\app\personalDetails\personalDetails.tpl.html" />
     <Content Include="Content\src\app\personalDetails\personalDetailsCtrl.js" />
+    <Content Include="Content\src\app\travellers\list.tpl.html" />
+    <Content Include="Content\src\app\travellers\travellersCtrl.js" />
     <Content Include="Content\src\app\travelRequest\detail.tpl.html" />
     <Content Include="Content\src\app\travelRequest\list.tpl.html" />
     <Content Include="Content\src\app\travelRequest\requestApprovalCtrl.js" />

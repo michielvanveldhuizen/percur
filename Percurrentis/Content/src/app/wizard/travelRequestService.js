@@ -48,6 +48,7 @@
             addTraveller: addTraveller,
             deleteTraveller: deleteTraveller,
             getTravellerCompanies: getTravellerCompanies,
+            getTravellers:getTravellers,
             addCompanyToTraveller: addCompanyToTraveller,
             removeCompanyFromTraveller: removeCompanyFromTraveller,
             addFlight: addFlight,
@@ -314,6 +315,20 @@
                 .where('DefaultCompany', '==', true)
                 .expand("Address");
                 
+
+            var promise = manager.executeQuery(query).catch(queryFailed);
+            return promise;
+
+            function queryFailed(error) {
+                console.log(error.message, 'query failed');
+                throw error;
+            }
+        }
+
+        function getTravellers() {
+            var query = breeze.EntityQuery
+                .from('RequestTraveller');
+
 
             var promise = manager.executeQuery(query).catch(queryFailed);
             return promise;

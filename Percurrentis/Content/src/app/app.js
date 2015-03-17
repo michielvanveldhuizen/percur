@@ -195,6 +195,22 @@
                     }]
                 }
             })
+            .when('/Travellers/', {
+                templateUrl: base + '/travellers/list.tpl.html',
+                data: {
+                    title: 'Travellers List',
+                    icon: 'gi-airplane',
+                    breadcrumbs: [{
+                        name: "Home",
+                        path: "/TravelAgency/#/"
+                    },
+                    {
+                        name: "Travellers List",
+                        path: "/TravelAgency/#/Travellers"
+                    },
+                    ]
+                }
+            })
             .otherwise({
                 redirectTo: '/'
             })

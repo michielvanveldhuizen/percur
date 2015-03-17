@@ -1,0 +1,29 @@
+﻿<div data-ng-controller="travellersCtrl">
+    <div class="block">
+        <div class="block-title">
+            <h2> <strong>Travellers</strong></h2>
+            <a ng-model="collapsed" class="navbar-right" ng-click="collapsed_1=!collapsed_1">
+                <span class="caret toggleCaret"></span>
+            </a>
+        </div>
+
+        <div ng-hide="collapsed_1" class="table-responsive">
+            <table class="table table-vcenter table-condensed table-hover">
+                <thead>
+                    <tr>
+                        <th class="col-md-1">First Name</th>
+                        <th class="col-md-1">Family Name</th>
+                        <th class="col-md-1">Full Name</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr data-ng-repeat="traveller in travellers ">
+                        <td>{{traveller.FirstName}}</td>
+                        <td>{{traveller.FamilyName}}</td>
+                        <td>{{traveller.FullName}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
