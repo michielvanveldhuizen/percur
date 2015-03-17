@@ -336,6 +336,10 @@
     <Compile Include="Migrations\201503121137452_ServiceCompanyAddPhonenr.Designer.cs">
       <DependentUpon>201503121137452_ServiceCompanyAddPhonenr.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201503170801119_ManyToManytest.cs" />
+    <Compile Include="Migrations\201503170801119_ManyToManytest.Designer.cs">
+      <DependentUpon>201503170801119_ManyToManytest.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Context\DatabaseContext.cs" />
     <Compile Include="Notification\Notification.cs" />
@@ -1415,6 +1419,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201503121137452_ServiceCompanyAddPhonenr.resx">
       <DependentUpon>201503121137452_ServiceCompanyAddPhonenr.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503170801119_ManyToManytest.resx">
+      <DependentUpon>201503170801119_ManyToManytest.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

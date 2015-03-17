@@ -5,6 +5,7 @@
 // <summary>Model classes for the database</summary>
 
 using Percurrentis.Model.Validation.Attributes;
+using System.Collections.Generic;
 
 namespace Percurrentis.Model
 {
@@ -29,6 +30,7 @@ namespace Percurrentis.Model
         public virtual Company Company { get; set; }
         //[ValidateObject]
         //public FlyerMemberCard FlyerMemberCard { get; set; }
-        public virtual TravelRequest TravelRequest { get; set; }
+        
+        public virtual ICollection<TravelRequest> TravelRequests { get; set; }
     }
 }
