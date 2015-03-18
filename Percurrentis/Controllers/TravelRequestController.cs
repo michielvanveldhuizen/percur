@@ -62,12 +62,19 @@ namespace Percurrentis.Controllers
             }
         }
 
-
         //retrieve Insurances
         [HttpGet]
         public IQueryable<Insurance> Insurances()
         {
             return _contextProvider.Context.Insurance;
+        }
+
+
+        //retrieve ArchivedTravelRequests
+        [HttpGet]
+        public IQueryable<ArchivedTravelRequest> ArchivedTravelRequests()
+        {
+            return _contextProvider.Context.ArchivedTravelRequest;
         }
 
         //retrieve TravelRequests with all its relevant related entities

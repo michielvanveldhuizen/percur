@@ -44,6 +44,7 @@ namespace Percurrentis
                 "~/Content/src/app/wizard/travelRequestService.js",
                 "~/Content/src/app/wizard/partials/wizardStepSwitch.js",
                 "~/Content/src/app/itinerary/itineraryCtrl.js",
+                "~/Content/src/app/proposalWizard/proposalCtrl.js",
                 "~/Content/src/app/current/currentCtrl.js",
                 "~/Content/src/app/wizard/partials/formtypes/requestTraveller.js",
                 "~/Content/src/assets/partials/legendTitle.js",

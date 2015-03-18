@@ -136,9 +136,9 @@
     }
 
     angular.module('app').controller('itineraryDetailCtrl',
-        ['$scope', '$route', 'travelRequestService', "modalService", itineraryDetailCtrl]);
+        ['$scope', '$route', '$location', 'travelRequestService', "modalService", itineraryDetailCtrl]);
 
-    function itineraryDetailCtrl($scope, $route, travelRequestService, modalService) {
+    function itineraryDetailCtrl($scope, $route, $location, travelRequestService, modalService) {
         var request;
         $scope.totalPrice = 0;
         $scope.editInProgress = false;
@@ -155,7 +155,12 @@
         .then(function (employee) {
             $scope.supervisorName = employee.userName;
         });
-        var start = new Date();
+
+        $scope.go = function (path, hash) {
+            $location.path(path);
+            $location.hash(hash);
+        };
+
         travelRequestService.getAirports().then(function (query) {
             $scope.airports = query.results;
 
@@ -170,9 +175,6 @@
         travelRequestService.getServiceCompanies().then(function (query) {
             $scope.serviceCompanies = query.results;
         });
-
-        var end = new Date() - start;
-        console.log("Execution time: %dms", end);
 
 
         /* == Euro/RON conversion ========================================== */
@@ -202,10 +204,6 @@
             }
         }
 
-        $scope.hey = function () {
-            console.log($scope);
-        }
-
         function show(request) {
             if($scope.request.SuperiorID == ownGuid){
                 $scope.TRArequest = $scope.request.TravelRequestApproval;
@@ -215,34 +213,10 @@
             }
         }
 
-        /*$scope.AddRequest = function () {
-            if ($scope.editInProgress == false) {
-                $scope.editInProgress = true;
-                travelRequestService.addFlight($scope.request);
-                console.log($scope.request);
-            }
-            else
-            {
-                console.log($scope.request);
-                //$scope.FlightRequests[$scope.FlightRequests.length - 1].Id = -9;
-                travelRequestService.saveChanges($scope.request, function () {
-                    $scope.editInProgress = true;
-                    console.log("Save succesful");
-                }, angular.noop, angular.noop);
-            }
-        }*/
-
-        
-        /* rarely works
-        $scope.print = function () {
-            var pdf = new jsPDF('p', 'pt', 'a4');
-
-            var source = $("#itinerary")[0];
-            pdf.addHTML(source, function () {
-                pdf.save('Itinerary_' + $scope.request.Hash + '.pdf');
-            });
+        $scope.startProposalWizard = function(request)
+        {
+            $location.path('/ProposalWizard/' + request.Hash);
         }
-        */
 
         $scope.CommitItinerary = function () {
             modalService.open("Commit this Itinerary?", "Committing this itinerary means that it will be marked 'final' which means it can no longer be edited. Continue?", 

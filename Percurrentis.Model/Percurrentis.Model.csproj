@@ -63,6 +63,7 @@
     <Compile Include="Address.cs" />
     <Compile Include="AddressType.cs" />
     <Compile Include="AirportInformation.cs" />
+    <Compile Include="ArchivedTravelRequest.cs" />
     <Compile Include="Company.cs" />
     <Compile Include="CompanyBase.cs" />
     <Compile Include="ContactPerson.cs" />
@@ -84,6 +85,7 @@
     <Compile Include="ServiceCompanyType.cs" />
     <Compile Include="TaxiRequest.cs" />
     <Compile Include="TransitRequest.cs" />
+    <Compile Include="TravelProposal.cs" />
     <Compile Include="TravelRequest.cs" />
     <Compile Include="TravelRequestApproval.cs" />
     <Compile Include="TravelRequest_RequestTraveller.cs" />

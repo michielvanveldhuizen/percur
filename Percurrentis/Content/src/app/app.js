@@ -108,6 +108,38 @@
                     }]
                 }
             })
+            .when('/ProposalWizard/',
+            {
+                templateUrl: base + '/proposalWizard/index.tpl.html',
+                data: {
+                    title: "ProposalWizard",
+                    icon: "gi-log_book",
+                    breadcrumbs: [{
+                        name: "Home",
+                        path: "/TravelAgency/#/"
+                    },
+                    {
+                        name: "ProposalWizard",
+                        path: "/TravelAgency/#/ProposalWizard/"
+                    }]
+                }
+            })
+            .when('/ProposalWizard/:Hash',
+            {
+                templateUrl: base + '/proposalWizard/index.tpl.html',
+                data: {
+                    title: "ProposalWizard",
+                    icon: "gi-log_book",
+                    breadcrumbs: [{
+                        name: "Home",
+                        path: "/TravelAgency/#/"
+                    },
+                    {
+                        name: "ProposalWizard",
+                        path: "/TravelAgency/#/ProposalWizard/"
+                    }]
+                }
+            })
             .when('/Current/',
             {
                 templateUrl: base + '/current/travels.tpl.html',

@@ -1,0 +1,139 @@
+﻿<div data-ng-form="flights">
+    <fieldset>
+
+        <div data-form-control data-label="Flyer Member Card" data-ng-show="$first">
+            <input type="text"
+                   class="form-control input-sm"
+                   data-ng-model="flight.FlyerMemberCard.FMCNumber"
+                   placeholder="Flyer Member Card Number"
+                   data-z-validate />
+        </div>
+
+        <div data-form-control data-label="Flyer Member Card" data-ng-show="!$first">
+            <div class="clear-padding">
+                <button type="button"
+                    class="btn btn-sm btn-block"
+                    data-ng-model="flight.DifferentFlyerMemberCard"
+                    data-ng-class="{'btn-primary': flight.DifferentFlyerMemberCard, 'btn-alt btn-default': !flight.DifferentFlyerMemberCard}"
+                    data-ng-click="differentFlyerMemberCardOnChange(flight)"
+                    data-btn-checkbox="true">Use Different Card</button>
+            </div>
+            <div class="">
+                <div class="clear-padding" data-ng-show="flight.DifferentFlyerMemberCard">
+                    <input type="text"
+                           class="form-control input-sm"
+                           data-ng-model="flight.FlyerMemberCard.FMCNumber"
+                           placeholder="Flyer Member Card Number"
+                           data-z-validate />
+                </div>
+                <div class="clear-padding" data-ng-show="!flight.DifferentFlyerMemberCard">
+                    <p class="form-control-static">{{flight.FlyerMemberCard.FMCNumber}}</p>
+                </div>
+            </div>
+        </div>
+
+        <div data-form-control data-label="Departure">
+            <select data-ng-model="flight.DepartureAddress"
+                    data-chosen
+                    class="form-control"
+                    data-placeholder="Departure Airport"
+                    data-ng-options="airport.City + ' (' + airport.IATA_FAA + '), ' + airport.Country for airport in airports"
+                    data-z-validate></select>
+        </div>
+
+        <div data-form-control data-label="Destination">
+            <select data-ng-model="flight.DestinationAddress"
+                    data-chosen
+                    class="form-control"
+                    data-placeholder="Destination Airport"
+                    data-ng-options="airport.City + ' (' + airport.IATA_FAA + '), ' + airport.Country for airport in airports"
+                    data-z-validate></select>
+        </div>
+
+        <div data-form-control data-label="Date of Departure">
+            <div data-datepicker data-ng-model="flight.DepartureDate"></div>
+        </div>
+
+        <div data-form-control data-label="Time of Departure">
+            <div data-timepicker
+                 data-show-meridian="false"
+                 data-minute-step="5"
+                 data-ng-model="flight.DepartureDate"></div>
+        </div>
+
+        <div data-form-control data-label="Way of Check-In">
+            <div class="btn-group">
+                <button type="button"
+                        class="btn btn-sm"
+                        data-ng-model="flight.IsOnlineCheckIn"
+                        data-ng-class="{'btn-alt btn-default': !flight.IsOnlineCheckIn, 'btn-primary': flight.IsOnlineCheckIn}"
+                        data-btn-radio="true">Check-In Online</button>
+                <button type="button"
+                        class="btn btn-sm"
+                        data-ng-model="flight.IsOnlineCheckIn"
+                        data-ng-class="{'btn-alt btn-default': flight.IsOnlineCheckIn, 'btn-primary': !flight.IsOnlineCheckIn}"
+                        data-btn-radio="false">Check-In at Airport</button>
+            </div>
+        </div>
+
+        <div data-form-control data-label="Large Equipment">
+            <div class="btn-group">
+                <button type="button"
+                        class="btn btn-sm"
+                        data-ng-model="flight.HasSpecialEquipment"
+                        data-ng-class="{'btn-alt btn-default': flight.HasSpecialEquipment, 'btn-primary active': !flight.HasSpecialEquipment}"
+                        data-btn-radio="false">No</button>
+                <button type="button"
+                        class="btn btn-sm"
+                        data-ng-model="flight.HasSpecialEquipment"
+                        data-ng-class="{'btn-alt btn-default': !flight.HasSpecialEquipment, 'btn-primary': flight.HasSpecialEquipment}"
+                        data-btn-radio="true">Yes</button>
+            </div>
+        </div>
+
+        <div data-form-control data-label="Extra Luggage">
+            <div class="col-xs-4 clear-padding">
+                <button type="button"
+                    class="btn btn-sm btn-block"
+                    data-ng-model="flight.HasLargeCabinLuggage"
+                    data-ng-class="{'btn-primary': flight.HasLargeCabinLuggage, 'btn-alt btn-default': !flight.HasLargeCabinLuggage}"
+                    data-btn-checkbox="true">Extra Luggage</button>
+            </div>
+            <div class="col-xs-8" data-ng-show="flight.HasLargeCabinLuggage">
+                <div class="col-xs-8 clear-padding">
+                    <input type="number"
+                           class="form-control input-sm"
+                           min="0"
+                           data-ng-model="flight.LargeLuggageCount"
+                           data-z-validate />
+                </div>
+                <div class="col-xs-4">
+                    <label class="control-label">kg</label>
+                </div>
+            </div>
+        </div>
+        <div data-ng-show="!flight.IsReturnFlight" data-form-control data-label="Add Return Flight">
+            <button class="btn btn-sm btn-success"
+                    data-ng-click="addFlight(flight)">
+                <i class="fa fa-plus"></i>
+                Add Return Flight
+            </button>
+        </div>
+    </fieldset>
+    
+    <fieldset>
+        <div data-legend-title="Add Flight"></div>   
+
+        <div data-form-control data-label="Add Flight">
+            <button class="btn btn-sm btn-success"
+                    data-ng-click="addFlight()">
+                <i class="fa fa-plus"></i>
+                Add Flight
+            </button>
+            <span class="help-block">
+                Add a flight when you need to make a trip to an extra location 
+                without going back to the place of departure first.
+            </span>
+        </div>
+    </fieldset>
+</div>

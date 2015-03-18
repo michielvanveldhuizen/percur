@@ -222,6 +222,7 @@
     <Compile Include="Mapping\AddressMap.cs" />
     <Compile Include="Mapping\AddressTypeMap.cs" />
     <Compile Include="Mapping\AirportInformationMap.cs" />
+    <Compile Include="Mapping\ArchivedTravelRequestMap.cs" />
     <Compile Include="Mapping\CompanyMap.cs" />
     <Compile Include="Mapping\CountryInformationMap.cs" />
     <Compile Include="Mapping\ExchangeRateMap.cs" />
@@ -238,6 +239,7 @@
     <Compile Include="Mapping\RequestTravellerMap.cs" />
     <Compile Include="Mapping\ServiceCompanyMap.cs" />
     <Compile Include="Mapping\TaxiRequestMap.cs" />
+    <Compile Include="Mapping\TravelProposalMap.cs" />
     <Compile Include="Mapping\TravelRequestApprovalMap.cs" />
     <Compile Include="Mapping\TravelRequestMap.cs" />
     <Compile Include="Migrations\201502110756228_ChangeOfApprovedType.cs" />
@@ -348,6 +350,10 @@
     <Compile Include="Migrations\201503170918335_oneToMany_ManyToOneTest.Designer.cs">
       <DependentUpon>201503170918335_oneToMany_ManyToOneTest.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201503161200123_ArchiveTravelRequests.cs" />
+    <Compile Include="Migrations\201503161200123_ArchiveTravelRequests.Designer.cs">
+      <DependentUpon>201503161200123_ArchiveTravelRequests.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Context\DatabaseContext.cs" />
     <Compile Include="Notification\Notification.cs" />
@@ -373,6 +379,11 @@
     <Content Include="Content\src\app\personalDetails\personalDetailsCtrl.js" />
     <Content Include="Content\src\app\travellers\list.tpl.html" />
     <Content Include="Content\src\app\travellers\travellersCtrl.js" />
+    <Content Include="Content\src\app\proposalWizard\index.tpl.html" />
+    <Content Include="Content\src\app\proposalWizard\partials\ferry.tpl.html" />
+    <Content Include="Content\src\app\proposalWizard\partials\flight.tpl.html" />
+    <Content Include="Content\src\app\proposalWizard\partials\index.tpl.html" />
+    <Content Include="Content\src\app\proposalWizard\proposalCtrl.js" />
     <Content Include="Content\src\app\travelRequest\detail.tpl.html" />
     <Content Include="Content\src\app\travelRequest\list.tpl.html" />
     <Content Include="Content\src\app\travelRequest\requestApprovalCtrl.js" />
@@ -1436,6 +1447,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201503170918335_oneToMany_ManyToOneTest.resx">
       <DependentUpon>201503170918335_oneToMany_ManyToOneTest.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503161200123_ArchiveTravelRequests.resx">
+      <DependentUpon>201503161200123_ArchiveTravelRequests.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

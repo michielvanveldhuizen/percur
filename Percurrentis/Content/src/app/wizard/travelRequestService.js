@@ -17,6 +17,7 @@
 
         //To use a function first declare it here 
         var service = {
+            archiveTravelRequest: archiveTravelRequest,
             createTravelRequest: createTravelRequest,
             getTravelRequests: getTravelRequests,
             getTravelRequestById: getTravelRequestById,
@@ -537,6 +538,7 @@
                 entity.DepartureAddress = departureFlight.DestinationAddress; // v
                 entity.DestinationAddress = departureFlight.DepartureAddress;   // ^
                 entity.ServiceCompany = departureFlight.ServiceCompany;
+
                 entity.IsReturnFlight = true;
                 entity.Title = "Return Flight";
             } else {
@@ -798,7 +800,24 @@
             return message;
         }
 
+
+
+        function archiveTravelRequest(original) {
+            var archive = manager.createEntity('ArchivedTravelRequest');
+            archive.Content = "Doe maar iets";
+            saveChanges(archive,
+                        undefined,
+                        function succes() {
+                            //console.log("Saved");
+                        },
+                        function failed() {
+                            //console.log("Failed");
+                        });
+        }
+
         function saveChanges(request, options, onSuccess, onFailure) {
+            console.log(request);
+            console.log("====================");
             if (options) {
                 if (!options.hasFlight) {
                     _.forEach(request.FlightRequests, function (val) {
@@ -836,6 +855,7 @@
                     });
                 }
             }
+            
             //Checks if records already exist in the database. If so connecting them to the object and detach the Entity
             //CustomerOrProspect
             /*var companyCheck = 0;

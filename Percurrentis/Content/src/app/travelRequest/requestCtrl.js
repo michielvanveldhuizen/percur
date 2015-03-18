@@ -360,37 +360,32 @@
         /* == Create Itinerary ========================================= */
         $scope.createItinerary = function (request) {
             modalService.open("Convert to Itinerary",
-                              "This action will change the status of the travelrequest to itinerary. Continue?",
+                              "This action will archive the travelrequest (cannot be undone!) and create an itinerary. Continue?",
                               function succes()
-            {
-                request.IsItinerary = true;
-                try 
-                {
-                    travelRequestService.saveChanges(request, undefined, function result() 
-                    {
-                        //console.log("Success!");
-                        $location.path('/Itinerary');
-                    },
-                    function (error, reason) {
-                        alert("Something went wrong. Please check the information in the form and try again.");
-                        console.log(error, reason);
-                    });
-                } 
-                catch (ex) 
-                {
-                    console.log(ex);
-                }
-                
-            }, function() {
-                //console.log("User cancelled");
-            });
+                              {
+                                  request.IsItinerary = true;
+                                  travelRequestService.saveChanges(request,
+                                              undefined,
+                                              function succes() {
+                                                  travelRequestService.archiveTravelRequest(request);
+                                                  console.log("Saved");
+                                              },
+                                              function failed() {
+                                                  console.log("Failed");
+                                              });
+                                  $location.path('/Itinerary');
+                                },
+                                function (error, reason) {
+                                    alert("Something went wrong. Please check the information in the form and try again.");
+                                    console.log(error, reason);
+                                });
         };
 
         $scope.mode = 'init';
 
         function reloadPage() {
             //Check how this works out. Not sure yet if a notify of "page reloading in..." is needed
-            //Somtimes it can work with just $route.reload(); but like 50% of the time it is too fast and it loads before the new data is saved
+            //Sometimes it can work with just $route.reload(); but like 50% of the time it is too fast and it loads before the new data is saved
             setTimeout(function () { $route.reload(); }, 1000);
         }
 

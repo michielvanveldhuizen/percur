@@ -95,6 +95,7 @@
                 </div>
             </div>
         </div>
+        
     </div>
     <div class="block" data-ng-show="request.Accommodations.length > 0">
         <div class="block-title">
@@ -145,29 +146,31 @@
         <div class="block-title">
             <h4><i class="gi gi-boat"></i> Ferry Request Details</h4>
         </div>
-        <div class="table">
-            <table class="table table-vcenter table-condensed table-striped">
-                <thead>
-                    <tr>
-                        <td>From</td>
-                        <td>To</td>
-                        <td>Date</td>
-                        <td>Time</td>
-                        <td>Car</td>
-                        <td>Carsize (h / w)</td>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr data-ng-repeat="ferryreq in request.FerryRequests">
-                        <td>{{ ferryreq.DepartureAddress.AddressName }}</td>
-                        <td>{{ ferryreq.DestinationAddress.AddressName }}</td>
-                        <td>{{ ferryreq.DepartureDate|date:'d MMMM yyyy' }}</td>
-                        <td>{{ ferryreq.DepartureDate|date:'H:mm' }}</td>
-                        <td>{{ ferryreq.LicensePlate != null ? ferryreq.LicensePlate : "No" }}</td>
-                        <td>{{ ferryreq.LicensePlate != null ? ferryreq.CarHeight + " / " + ferryreq.CarHeight : "Not applicable" }}</td>
-                    </tr>
-                </tbody>
-            </table>
+        <div class="row">
+            <div class="table col-md-6">
+                <table class=" table table-vcenter table-condensed table-striped">
+                    <thead>
+                        <tr>
+                            <td>From</td>
+                            <td>To</td>
+                            <td>Date</td>
+                            <td>Time</td>
+                            <td>Car</td>
+                            <td>Carsize (h / w)</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr data-ng-repeat="ferryreq in request.FerryRequests">
+                            <td>{{ ferryreq.DepartureAddress.AddressName }}</td>
+                            <td>{{ ferryreq.DestinationAddress.AddressName }}</td>
+                            <td>{{ ferryreq.DepartureDate|date:'d MMMM yyyy' }}</td>
+                            <td>{{ ferryreq.DepartureDate|date:'H:mm' }}</td>
+                            <td>{{ ferryreq.LicensePlate != null ? ferryreq.LicensePlate : "No" }}</td>
+                            <td>{{ ferryreq.LicensePlate != null ? ferryreq.CarHeight + " / " + ferryreq.CarHeight : "Not applicable" }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
     <div class="block" data-ng-show="request.TaxiRequests.length > 0">
@@ -209,7 +212,8 @@
                             <tr><td>Phonenumber</td><td>{{ rcarreq.ServiceCompany.PhoneNumber }}</td></tr>
                             <tr><td>StartDate</td><td>{{ rcarreq.StartDate|date:'d MMMM yyyy' }}</td></tr>
                             <tr><td>EndDate</td><td>{{ rcarreq.EndDate|date:'d MMMM yyyy' }}</td></tr>
-                            <tr><td>Pickup Address: </td>
+                            <tr>
+                                <td>Pickup Address: </td>
                                 <td>
                                     <strong>{{ rcarreq.Address.AddressName }}</strong><br>
                                     {{ rcarreq.Address.Street }}<br>
@@ -222,7 +226,8 @@
                                             Google Maps
                                         </a><br />
                                     </span><br />
-                                </td></tr>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -243,34 +248,33 @@
             </div>
         </div>
     </div>
-</div>
-<div class="block" data-ng-show="request.EuroTunnelRequests.length > 0">
-    <div class="block-title">
-        <h4><i class="gi gi-train"></i> EuroTunnel Request Details</h4>
+    <div class="block" data-ng-show="request.EuroTunnelRequests.length > 0">
+        <div class="block-title">
+            <h4><i class="gi gi-train"></i> EuroTunnel Request Details</h4>
+        </div>
+        <div class="table">
+            <table class="table table-vcenter table-condensed table-striped">
+                <thead>
+                    <tr>
+                        <td>From</td>
+                        <td>To</td>
+                        <td>Departure Date</td>
+                        <td>License Plate</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr data-ng-repeat="euroreq in request.EuroTunnelRequests">
+                        <td>{{ euroreq.DepartureAddress.AddressName }}</td>
+                        <td>{{ euroreq.DestinationAddress.AddressName }}</td>
+                        <td>{{ euroreq.DepartureDate|date:'d MMMM yyyy' }}</td>
+                        <td>{{ euroreq.LicensePlate != null ? euroreq.LicensePlate : "No car"  }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
-    <div class="table">
-        <table class="table table-vcenter table-condensed table-striped">
-            <thead>
-                <tr>
-                    <td>From</td>
-                    <td>To</td>
-                    <td>Departure Date</td>
-                    <td>License Plate</td>
-                </tr>
-            </thead>
-            <tbody>
-                <tr data-ng-repeat="euroreq in request.EuroTunnelRequests">
-                    <td>{{ euroreq.DepartureAddress.AddressName }}</td>
-                    <td>{{ euroreq.DestinationAddress.AddressName }}</td>
-                    <td>{{ euroreq.DepartureDate|date:'d MMMM yyyy' }}</td>
-                    <td>{{ euroreq.LicensePlate != null ? euroreq.LicensePlate : "No car"  }}</td>
-                </tr>
-            </tbody>
-        </table>
+    <div class="block" style="padding-bottom: 15px;">
+        <!--<button data-ng-show="request.IsFinal == false && request.IsApproved == 2" class="btn btn-sm btn-default " data-ng-click="CommitItinerary()">Commit Itinerary</button>-->
+        <button data-ng-show="request.IsFinal == false && request.IsApproved == 2" class="btn btn-sm btn-default " data-ng-click="startProposalWizard(request)">Create Proposal</button>
     </div>
-</div>
-<div class="block" style="padding-bottom: 15px;">
-    <!--<button data-ng-show="request.IsFinal == false && request.IsApproved == 2" class="btn btn-sm btn-default " data-ng-click="CommitItinerary()">Commit Itinerary</button>-->
-    <button data-ng-show="request.IsFinal == false && request.IsApproved == 2" class="btn btn-sm btn-default " data-ng-click="CommitItinerary()">Create Plan</button>
-</div>
 </div>

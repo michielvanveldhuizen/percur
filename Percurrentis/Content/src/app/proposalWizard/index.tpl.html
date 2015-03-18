@@ -1,0 +1,81 @@
+﻿<div id="proposal" data-ng-controller="proposalCtrl">
+    <div class="row">
+        <!--Wizard-->
+        <div class="col-sm-12">
+            <div class="block">                
+                <div ng-repeat="r in itinerary">
+                    <div class="table">
+                        <table class="table table-vcenter table-condensed table-striped">
+                            <thead>
+                                <tr>
+                                    <td><strong>Type</strong></td>
+                                    <td><strong>From</strong></td>
+                                    <td><strong>To</strong></td>
+                                    <td><strong>Date</strong></td>
+                                    <td></td>
+                                </tr>
+                            </thead>
+                            <tr ng-repeat="flight in r.FlightRequests">
+                                <td>Flight</td>
+                                <td>{{ flight.DepartureAddress.Name }}</td>
+                                <td>{{ flight.DestinationAddress.Name }}</td>
+                                <td>{{ flight.DepartureDate | date:'d MMMM yyyy' }}</td>
+                                <td>
+                                    <div class="btn-group btn-group-sm">
+                                        <a ng-click="updateTemplateUrl('Flight', flight)"
+                                           class="btn btn-sm btn-default">
+                                            <i class="fa fa-plus"></i>
+                                            Add Option
+                                        </a>
+                                        <a ng-click=""
+                                           class="btn btn-sm btn-default">
+                                            <i class="fa fa-info-circle"></i>
+                                            More Info
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr ng-repeat="ferry in r.FerryRequests">
+                                <td>Ferry</td>
+                                <td>{{ ferry.DepartureAddress.AddressName }}</td>
+                                <td>{{ ferry.DestinationAddress.AddressName }}</td>
+                                <td>{{ ferry.DepartureDate | date:'d MMMM yyyy' }}</td>
+                                <td>
+                                    <div class="btn-group btn-group-sm">
+                                        <a ng-click="updateTemplateUrl('Ferry', ferry)"
+                                           class="btn btn-sm btn-default">
+                                            <i class="fa fa-plus"></i>
+                                            Add Option
+                                        </a>
+                                        <a ng-click=""
+                                           class="btn btn-sm btn-default">
+                                            <i class="fa fa-info-circle"></i>
+                                            More Info
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-7">
+            <div class="block">
+                <!--Title-->
+                <div class="block-title">
+                    <h1>Add {{ type }}</h1>
+                </div>
+                <div ng-include="templateUrl"></div>
+            </div>
+        </div>
+        <div class="col-sm-5">
+            <div class="block">
+                <div class="block-title">
+                    <h2>Preview</h2>
+                </div>
+                <p><button type="button" class="btn btn-success">Save Proposal</button></p>
+            </div>
+        </div>
+    </div>
+</div>
