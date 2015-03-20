@@ -319,6 +319,14 @@
             dbAddresses = query.results;
         });
 
+        $scope.createTraveller = function () {
+            modal.openAddTraveller(function () {
+                travelRequestService.getTravellers().then(function (query) {
+                    $scope.travellers = query.results;
+                });
+            });
+        };
+
         $scope.addTraveller = function () {
             travelRequestService.addTraveller($scope.model);
         };

@@ -27,7 +27,7 @@
         var dbAddresses = [];
         var dbCountries = [];
         var dbGuidToName = [];
-
+        
         @{ var developer = @User.IsInRole("Travel_Agency_Project").ToString().ToLower(); }
         activeProfile.roles.developer = @developer
         var ownGuid = "@Model.Guid";        

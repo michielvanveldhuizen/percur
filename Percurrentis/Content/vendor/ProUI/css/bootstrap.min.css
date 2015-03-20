@@ -863,7 +863,7 @@ textarea.input-lg,
 select[multiple].input-lg { height: auto }
 .has-feedback { position: relative }
 .has-feedback .form-control { padding-right: 42.5px }
-.has-feedback .form-control-feedback { position: absolute;top:25px;right:0;display:block;width:34px;height:34px;line-height:34px;text-align:center }
+.has-feedback .form-control-feedback { position: absolute;top:0px;right:0;display:block;width:55px;height:34px;line-height:34px;text-align:center }
 .has-success .help-block,
 .has-success .control-label,
 .has-success .radio,

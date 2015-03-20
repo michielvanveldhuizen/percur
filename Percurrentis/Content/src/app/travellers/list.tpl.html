@@ -2,18 +2,18 @@
     <div class="block">
         <div class="block-title">
             <h2> <strong>Travellers</strong></h2>
-            
-           
-            
-            
             <a ng-model="collapsed" class="navbar-right" ng-click="collapsed_1=!collapsed_1">
                 <span class="caret toggleCaret"></span>
             </a>
-            <button class="btn btn-sm btn-success navbar-right margin-5" 
-                    data-ng-click="addTraveller()">
+            <button class="btn btn-sm btn-success navbar-right margin-5"
+                    data-ng-click="showTravellerAdding()">
                 <i class="fa fa-plus"></i>
                 Add Traveller
             </button>
+        </div>
+
+        <div id="add-traveller" style="display:none;">
+            
         </div>
 
         <div ng-hide="collapsed_1" class="table-responsive">
@@ -27,11 +27,12 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr data-ng-repeat="traveller in travellers ">
-                        <td>{{traveller.FirstName}}</td>
-                        <td>{{traveller.FamilyName}}</td>
-                        <td>{{traveller.FullName}}</td>
-                        <td>{{traveller.Company.Name}}</td>
+                    <tr data-ng-repeat="traveller in travellers "
+                        style="cursor:pointer;">
+                        <td data-ng-click="go('/Travellers/' + traveller.Id)">{{traveller.FirstName}}</td>
+                        <td data-ng-click="go('/Travellers/' + traveller.Id)">{{traveller.FamilyName}}</td>
+                        <td data-ng-click="go('/Travellers/' + traveller.Id)">{{traveller.FullName}}</td>
+                        <td data-ng-click="go('/Travellers/' + traveller.Id)">{{traveller.Company.Name}}</td>
                     </tr>
                 </tbody>
             </table>

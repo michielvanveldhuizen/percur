@@ -42,14 +42,15 @@
 
             Filter.prototype = {
                 filter: function () {
-                    $scope.requests = this.filterFn();
-                    
+                    $scope.requests = this.filterFn();                 
                     
                     angular.forEach($scope.requests, function (value, key) {
                         if (typeof dbGuidToName[value.SuperiorID] != typeof undefined) {
                             value.superiorName = dbGuidToName[value.SuperiorID];
                         }
                     });
+
+
 
                     $scope.currentFilter = this;
                     $location.hash(this.title);
@@ -326,8 +327,10 @@
             }
             $scope.TRArequest.Note = angular.copy($scope.comments);
             $scope.TRArequest.ApprovedBy = ownGuid;
-            travelRequestService.saveChanges($scope.TRArequest, undefined, angular.noop, angular.noop);
-            reloadPage();
+            travelRequestService.saveChanges($scope.TRArequest, undefined, function (result) {
+                reloadPage();
+            }, angular.noop);
+            
         };
 
         //When reject is pressed in the approving dialog
@@ -386,7 +389,8 @@
         function reloadPage() {
             //Check how this works out. Not sure yet if a notify of "page reloading in..." is needed
             //Sometimes it can work with just $route.reload(); but like 50% of the time it is too fast and it loads before the new data is saved
-            setTimeout(function () { $route.reload(); }, 1000);
+            //setTimeout(function () { $route.reload(); }, 1000);
+            $route.reload();
         }
 
         function failedToLoadDetailPage() {

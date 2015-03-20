@@ -231,7 +231,7 @@
                 templateUrl: base + '/travellers/list.tpl.html',
                 data: {
                     title: 'Travellers List',
-                    icon: 'gi-airplane',
+                    icon: 'gi-parents',
                     breadcrumbs: [{
                         name: "Home",
                         path: "/TravelAgency/#/"
@@ -239,6 +239,25 @@
                     {
                         name: "Travellers List",
                         path: "/TravelAgency/#/Travellers"
+                    },
+                    ]
+                }
+            })
+            .when('/Travellers/:Id', {
+                templateUrl: base + '/travellers/detail.tpl.html',
+                data: {
+                    title: 'Traveller Detail',
+                    icon: 'gi-parents',
+                    breadcrumbs: [{
+                        name: "Home",
+                        path: "/TravelAgency/#/"
+                    },
+                    {
+                        name: "Travellers List",
+                        path: "/TravelAgency/#/Travellers"
+                    },
+                    {
+                        name: "Traveller Detail",
                     },
                     ]
                 }

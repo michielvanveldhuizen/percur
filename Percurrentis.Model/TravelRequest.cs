@@ -52,6 +52,6 @@ namespace Percurrentis.Model
         public virtual ICollection<EuroTunnelRequest> EuroTunnelRequests { get; set; }
         public virtual ICollection<TaxiRequest> TaxiRequests { get; set; }
         public virtual ICollection<FlightRequest> FlightRequests { get; set; }
-        public virtual ICollection<TravelRequest_RequestTraveller> TravelRequest_RequestTravellers { get; set; }
+        public virtual ICollection<TravelRequest_RequestTraveller> TravelRequest_RequestTravellers { get; set; }  
     }
 }

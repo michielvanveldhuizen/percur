@@ -350,9 +350,9 @@
     <Compile Include="Migrations\201503170918335_oneToMany_ManyToOneTest.Designer.cs">
       <DependentUpon>201503170918335_oneToMany_ManyToOneTest.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201503161200123_ArchiveTravelRequests.cs" />
-    <Compile Include="Migrations\201503161200123_ArchiveTravelRequests.Designer.cs">
-      <DependentUpon>201503161200123_ArchiveTravelRequests.cs</DependentUpon>
+    <Compile Include="Migrations\201503201048215_toFix.cs" />
+    <Compile Include="Migrations\201503201048215_toFix.Designer.cs">
+      <DependentUpon>201503201048215_toFix.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Context\DatabaseContext.cs" />
@@ -371,12 +371,14 @@
     <Content Include="Content\src\app\itinerary\list.tpl.html" />
     <Content Include="Content\src\app\itinerary\w.js" />
     <Content Include="Content\src\app\itinerary\wollah.html" />
+    <Content Include="Content\src\app\modal\modalAddTraveller.tpl.html" />
     <Content Include="Content\src\app\modal\primaryBtnSet.tpl.html" />
     <Content Include="Content\src\app\modal\deleteBtnSet.tpl.html" />
     <Content Include="Content\src\app\modal\modal.tpl.html" />
     <Content Include="Content\src\app\modal\modal.js" />
     <Content Include="Content\src\app\personalDetails\personalDetails.tpl.html" />
     <Content Include="Content\src\app\personalDetails\personalDetailsCtrl.js" />
+    <Content Include="Content\src\app\travellers\detail.tpl.html" />
     <Content Include="Content\src\app\travellers\list.tpl.html" />
     <Content Include="Content\src\app\travellers\travellersCtrl.js" />
     <Content Include="Content\src\app\proposalWizard\index.tpl.html" />
@@ -384,6 +386,7 @@
     <Content Include="Content\src\app\proposalWizard\partials\flight.tpl.html" />
     <Content Include="Content\src\app\proposalWizard\partials\index.tpl.html" />
     <Content Include="Content\src\app\proposalWizard\proposalCtrl.js" />
+    <Content Include="Content\src\app\travellers\travellerService.js" />
     <Content Include="Content\src\app\travelRequest\detail.tpl.html" />
     <Content Include="Content\src\app\travelRequest\list.tpl.html" />
     <Content Include="Content\src\app\travelRequest\requestApprovalCtrl.js" />
@@ -1448,8 +1451,8 @@
     <EmbeddedResource Include="Migrations\201503170918335_oneToMany_ManyToOneTest.resx">
       <DependentUpon>201503170918335_oneToMany_ManyToOneTest.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201503161200123_ArchiveTravelRequests.resx">
-      <DependentUpon>201503161200123_ArchiveTravelRequests.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201503201048215_toFix.resx">
+      <DependentUpon>201503201048215_toFix.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

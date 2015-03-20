@@ -1,0 +1,47 @@
+﻿<div data-ng-controller="travellersDetailCtrl">
+    <div class="row" id="traveller-details">
+        <div class="col-md-6">
+            <div class="block">
+                <div class="block-title">
+                    <h4>Traveller Details</h4>
+                    <button class="btn btn-sm btn-success navbar-right margin-5"
+                            data-ng-click="showTravellerEditing()">
+                        <i class="fa fa-plus"></i>
+                        Edit Traveller
+                    </button>
+                </div>
+
+                <div class="block">
+                    <div class="form-horizontal">    
+                        <div data-form-control-static data-label="First Name">
+                            {{request.FirstName}}
+                        </div>
+                        <div data-form-control-static data-label="Last Name">
+                            {{request.FamilyName}}
+                        </div>
+                        <div data-form-control-static data-label="Full Name">
+                            {{request.FullName}}
+                        </div>
+                        <div data-form-control-static data-label="Phone Number">
+                            {{request.PhoneNumberID }}
+                        </div>
+                        <div data-form-control-static data-label="Company">
+                            {{request.Company.Name}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="block">
+                <div class="block-title">
+                    <h4>Travel Requests for this traveller</h4>
+                </div>
+                <div class="block">
+                    ...something for later?
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

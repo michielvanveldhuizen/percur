@@ -40,6 +40,7 @@ namespace Percurrentis
                 "~/Content/src/app/travelRequest/requestApprovalCtrl.js",
                 "~/Content/src/app/insurance/insuranceCtrl.js",
                 "~/Content/src/app/travellers/travellersCtrl.js",
+                "~/Content/src/app/travellers/travellerService.js",
                 "~/Content/src/app/wizard/requestCtrl.js",
                 "~/Content/src/app/wizard/travelRequestService.js",
                 "~/Content/src/app/wizard/partials/wizardStepSwitch.js",

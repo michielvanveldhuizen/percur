@@ -83,6 +83,7 @@ namespace Percurrentis.Controllers
         {
             return _contextProvider.Context.TravelRequest
                 .Include("TravelRequest_RequestTravellers")
+                .Include("TravelRequest_RequestTravellers.RequestTraveller")
                 .Include("CustomerOrProspect")
                 .Include("CustomerOrProspect.Address")
                 .Include("FlightRequests")
@@ -143,6 +144,7 @@ namespace Percurrentis.Controllers
             return _contextProvider.Context.ExchangeRate.AsNoTracking().First();
         }
 
+        //
         [HttpGet]
         public IQueryable<Company> Company()
         {
@@ -178,7 +180,9 @@ namespace Percurrentis.Controllers
         {
             return _contextProvider.Context.RequestTraveller
                 .Include("Company")
-                .Include("Company.Address");
+                .Include("Company.Address")
+                .Include("TravelRequest_RequestTravellers")
+                .Include("TravelRequest_RequestTravellers.TravelRequest");
         }
 
         //retrieve RentalCarRequest

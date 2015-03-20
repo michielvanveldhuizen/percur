@@ -19,6 +19,7 @@
         var service = {
             archiveTravelRequest: archiveTravelRequest,
             createTravelRequest: createTravelRequest,
+            createTraveller: createTraveller,
             getTravelRequests: getTravelRequests,
             getTravelRequestById: getTravelRequestById,
             getTravelRequestByHash: getTravelRequestByHash,
@@ -34,6 +35,7 @@
             getInsurances: getInsurances,
             getEmployees: getEmployees,
             getEmployeeByObjectGuid: getEmployeeByObjectGuid,
+            getTravellerById:getTravellerById,
             getAirports: getAirports,
             getCompanies: getCompanies,
             getFerries: getFerries,
@@ -474,6 +476,20 @@
             }
         }
 
+        function getTravellerById(id) {
+            var query = breeze.EntityQuery
+                .from('RequestTraveller')
+                .where("Id", "==", id);
+
+            var promise = manager.executeQuery(query).catch(queryFailed);
+            return promise;
+
+            function queryFailed(error) {
+                console.log(error.message, 'query failed');
+                throw error;
+            }
+        }
+
 
         function getCompanies() {
             var query = breeze.EntityQuery
@@ -517,11 +533,17 @@
             traveller.Company = manager.createEntity('Company');
         }
 
+        function createTraveller() {
+            return manager.createEntity('RequestTraveller')
+        }
+        //Did you know that it doesn't matter what gender you are to get it cold on antarctica #theMoreYouBanana
         function removeCompanyFromTraveller(traveller) {
             if (traveller.Company && !traveller.Company.DefaultCompany) {
                 manager.detachEntity(traveller.Company);
             }
         }
+
+
 
         // -- flight -------------------------------------------------------//
         function addFlight(request, departureFlight) {
@@ -855,6 +877,7 @@
                     });
                 }
             }
+
             
             //Checks if records already exist in the database. If so connecting them to the object and detach the Entity
             //CustomerOrProspect

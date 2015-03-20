@@ -98,22 +98,22 @@
                     <h4>Personal Details</h4>
                 </div>
                 <div class="form-horizontal">
-                    <fieldset data-ng-repeat="traveller in request.RequestTravellers">
+                    <fieldset data-ng-repeat="traveller in request.TravelRequest_RequestTravellers">
                         <div data-legend-title="Traveller {{$index !== 0 ? $index+1 : ''}}"></div>
                         <div data-form-control-static data-label="First Name">
-                            {{traveller.FirstName}}
+                            {{traveller.RequestTraveller.FirstName}}
                         </div>
                         <div data-form-control-static data-label="Last Name">
-                            {{traveller.FamilyName}}
+                            {{traveller.RequestTraveller.FamilyName}}
                         </div>
                         <div data-form-control-static data-label="Full Name">
-                            {{traveller.FullName || 'No full name given.'}}
+                            {{traveller.RequestTraveller.FullName || 'No full name given.'}}
                         </div>
                         <div data-form-control-static data-label="Phone Number">
-                            {{traveller.PhoneNumberID || 'No number given.'}}
+                            {{traveller.RequestTraveller.PhoneNumberID || 'No number given.'}}
                         </div>
                         <div data-form-control-static data-label="Company">
-                            {{traveller.Company.Name}}
+                            {{traveller.RequestTraveller.Company.Name}}
                         </div>
                     </fieldset>
                 </div>

@@ -6,16 +6,106 @@
     // Define the factory on the module.
     // Inject the dependencies. 
     // Point to the factory definition function.
-    angular.module('app').factory(serviceId, ['$modal', '$sanitize', modal]);
+    angular.module('app').factory(serviceId, ['$modal', '$sanitize', 'travellerService', 'travelRequestService', modal]);
 
-    function modal($modal, $sanitize) {
+    function modal($modal, $sanitize, travellerService, travelRequestService) {
         // Define the functions and properties to reveal.
         var service = {
             openDelete: openDelete,
-            open: open
+            open: open,
+            openAddTraveller: openAddTraveller
         };
 
         return service;
+
+        function openAddTraveller(fnPrimary, preTravellerData, fnCancel) {
+            
+            var modalInstance = $modal.open({
+                templateUrl: '/TravelAgency/Content/src/app/modal/modalAddTraveller.tpl.html',
+                controller: modalAddTravellerCtrl,
+                contentClass: '',
+                preTravellerData: preTravellerData,
+            });
+
+
+            if (typeof preTravellerData !== typeof undefined) {
+                $modal.preTravellerData = preTravellerData;
+            }
+
+            function modalAddTravellerCtrl($scope, $modalInstance) {
+                if (typeof preTravellerData == typeof undefined) {
+
+                    travellerService.createTraveller()
+                    .then(function (traveller) {
+                        $scope.traveller = traveller;
+                    });
+                    
+                } else {
+                    $scope.traveller = $modal.preTravellerData;
+                    $scope.traveller.tempCompany = $modal.preTravellerData.Company;
+                }
+                //DEZE komt uit andere manager... misschien hier manager verhaal iets netter opgaan lossen zodra ik meer dingen hier in verschillende functies naartoe haal
+                //of ik doe gewoon net als of ik een banaan ben terwijl ik dit aan het typen ben.
+                // zoizo dat ik een banaan ben tho.
+                travellerService.getTravellerCompanies().then(function (query) {
+                    $scope.travellerCompanies = query.results;
+                    $scope.travellerCompanies.push({ Name: 'Other...' });
+                });
+
+                
+
+                $scope.selectTravellerCompany = function (traveller, newValue) {
+                    if (newValue.Name == "Other...") {
+                        traveller.hasOtherCompany = true;
+                        travellerService.addCompanyToTraveller(traveller);
+                    } else {
+                        traveller.hasOtherCompany = false;
+                        travellerService.removeCompanyFromTraveller(traveller);
+                        traveller.Company = newValue;
+                    }
+                };
+
+
+                $scope.primary = {
+                    disabled: false,
+                    action: primaryAction
+                };
+
+                function primaryAction() {
+                    try {
+                        travellerService.saveChanges(function (result) {
+                            $scope.primary.disabled = true;
+                            $modalInstance.close('delete');
+                        },
+                        function (error, reason) {
+                            alert("Something went wrong. Please check the information in the form and try again.");
+                            console.log(error, reason);
+                        });
+
+                        /*travelRequestService.saveChanges($scope.traveller, false, function (result) {
+                            $scope.primary.disabled = true;
+                            $modalInstance.close('delete');
+                        },*/
+
+                    } catch (ex) {
+                        console.log(ex);
+                    }
+
+                };
+
+                $scope.cancel = function () {
+                    $modalInstance.dismiss('cancel');
+                };
+            }
+
+            modalInstance.result.then(function (selected) {
+                fnPrimary();
+            }, function () {
+                if (_.isFunction(fnCancel)) {
+                    fnCancel();
+                }
+            });
+        }
 
         function open(title, body, fnPrimary, fnCancel, btnSetUrl) {
             console.log(btnSetUrl);

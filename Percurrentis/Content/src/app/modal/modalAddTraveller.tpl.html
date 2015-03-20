@@ -1,0 +1,71 @@
+﻿<div class="modal-header">
+    <h3 class="model-title text-center">Add new traveller</h3>
+</div>
+<div class="modal-body">
+    <div data-ng-form="'travellerform'">
+        <div data-form-control data-label="First Name">
+            <input type="text"
+                   class="form-control"
+                   data-ng-model="traveller.FirstName"
+                   placeholder="First Name"
+                   data-z-validate />
+        </div>
+
+        <div data-form-control data-label="Last Name">
+            <input type="text"
+                   class="form-control"
+                   data-ng-model="traveller.FamilyName"
+                   placeholder="Last Name"
+                   data-z-validate />
+        </div>
+        <div data-form-control data-label="Full Name">
+            <input type="text"
+                   class="form-control"
+                   data-ng-model="traveller.FullName"
+                   placeholder="Full Name"
+                   data-z-validate />
+            <span class="help-block">
+                The traveler's full name according to his/her passport or other identification document.
+            </span>
+        </div>
+
+        <div data-form-control data-label="Phone Number">
+            <input type="text"
+                   class="form-control"
+                   data-ng-model="traveller.PhoneNumberID"
+                   placeholder="Phone Number"
+                   data-z-validate />
+        </div>
+
+        <div data-form-control data-label="Company">
+            <select data-chosen
+                    id="selectTravellerCompany"
+                    data-width="'100%'"
+                    data-ng-model="traveller.tempCompany"
+                    data-ng-options="c.Name for c in travellerCompanies"
+                    data-ng-change="selectTravellerCompany(traveller, traveller.tempCompany)"
+                    data-z-validate>
+                <option value="" disabled>Please select a company</option>
+            </select>
+        </div>
+
+        <div data-form-control data-label="" data-ng-show="traveller.hasOtherCompany">
+            <input type="text"
+                   class="form-control"
+                   data-ng-model="traveller.Company.Name"
+                   data-ng-change="selectTravellerCompany"
+                   placeholder="Company"
+                   data-z-validate />
+        </div>
+    </div>
+</div>
+<div class="modal-footer" style="margin-top:265px;">
+    <button class="btn btn-primary" data-ng-click="primary.action()" data-ng-disabled="primary.disabled">
+        <i class="fa fa-check"></i>
+        Save and close
+    </button>
+    <button class="btn btn-default" data-ng-click="cancel()">
+        <i class="fa fa-times"></i>
+        Cancel
+    </button>
+</div>
