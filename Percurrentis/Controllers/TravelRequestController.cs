@@ -137,7 +137,7 @@ namespace Percurrentis.Controllers
             return _contextProvider.Context.Address.AsNoTracking();
         }
 
-        //retrieve Companies including the address
+        //retrieve
         [HttpGet]
         public ExchangeRate ExchangeRate()
         {

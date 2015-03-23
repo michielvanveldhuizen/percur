@@ -370,7 +370,7 @@
                                   travelRequestService.saveChanges(request,
                                               undefined,
                                               function succes() {
-                                                  travelRequestService.archiveTravelRequest(request);
+                                                  //travelRequestService.archiveTravelRequest(request);
                                                   console.log("Saved");
                                               },
                                               function failed() {

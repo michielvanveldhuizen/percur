@@ -1,0 +1,107 @@
+﻿<div data-ng-form="Accommodation">
+
+
+        <div class="address">
+            <div data-form-control data-label="Address Description">
+                <input type="text"
+                       class="form-control"
+                       data-ng-model="currentEntity.Address.AddressName"
+                       placeholder="Address Description"
+                       data-z-validate />
+            </div>
+
+            <div data-form-control data-label="Street">
+                <input type="text"
+                       class="form-control"
+                       data-ng-model="currentEntity.Address.Street"
+                       placeholder="Street and House Number"
+                       data-z-validate />
+            </div>
+
+            <div data-form-control data-label="City">
+                <input type="text"
+                       class="form-control"
+                       data-ng-model="currentEntity.Address.City"
+                       placeholder="City"
+                       data-z-validate />
+            </div>
+
+            <div data-form-control data-label="Postal Code">
+                <input type="text"
+                       class="form-control"
+                       data-ng-model="currentEntity.Address.PostalCode"
+                       placeholder="Postal Code"
+                       data-z-validate />
+            </div>
+
+            <div data-form-control data-label="State/Province">
+                <input type="text"
+                       class="form-control"
+                       data-ng-model="currentEntity.Address.StateProvince"
+                       placeholder="State/Province"
+                       data-z-validate />
+            </div>
+            <div data-form-control data-label="Country">
+                <select class="form-control"
+                        data-ng-model="currentEntity.Address.CountryRegion"
+                        data-placeholder="Country"
+                        data-chosen
+                        data-ng-options="country as country.Name for country in countries"
+                        data-z-validate></select>
+            </div>
+        </div>
+
+        <span class="help-block">
+            On which dates will the travelers be checking in/out of the accommodation?
+        </span>
+        <br />
+
+
+        <div data-form-control data-label="Check-in Date">
+            <div data-datepicker data-ng-model="currentEntity.CheckInDate"></div>
+        </div>
+
+        <div data-form-control data-label="Check-out Date">
+            <div data-datepicker data-ng-model="currentEntity.CheckOutDate"></div>
+        </div>
+
+        <span class="help-block">
+            Additional data
+        </span>
+        <br />
+
+        <di class="form-group form-inline">
+            <div data-form-control data-label="Cost in Euro">
+                <input type="number"
+                       class="form-control"
+                       data-ng-model="currentEntity.Cost"
+                       style="width: 80pt"
+                       placeholder=""
+                       data-z-validate />
+            </div>
+
+            <div data-form-control data-label="Cost in secondary currency">
+                <input type="number"
+                       class="form-control"
+                       data-ng-model="currentEntity.CostSecondary"
+                       style="width: 80pt"
+                       placeholder=""
+                       data-z-validate />
+                <select class="form-control" data-z-validate>
+                    <option selected="selected">{{ currentEntity.SecondaryCurrency }}</option>
+                </select>
+
+            </div>
+
+        <div class="form-group form-horizontal">
+            <div data-form-control data-label="Note">
+                <textarea type="text"
+                          class="form-control"
+                          rows="10"
+                          data-ng-model="currentEntity.Note"
+                          placeholder="Any notes"
+                          data-z-validate></textarea>
+
+            </div>
+        </div>
+</div>

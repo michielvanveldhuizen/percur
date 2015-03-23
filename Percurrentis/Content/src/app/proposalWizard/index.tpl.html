@@ -2,7 +2,7 @@
     <div class="row">
         <!--Wizard-->
         <div class="col-sm-12">
-            <div class="block">                
+            <div class="block">
                 <div ng-repeat="r in itinerary">
                     <div class="table">
                         <table class="table table-vcenter table-condensed table-striped">
@@ -23,6 +23,26 @@
                                 <td>
                                     <div class="btn-group btn-group-sm">
                                         <a ng-click="updateTemplateUrl('Flight', flight)"
+                                           class="btn btn-sm btn-default">
+                                            <i class="fa fa-plus"></i>
+                                            Add Option
+                                        </a>
+                                        <a ng-click=""
+                                           class="btn btn-sm btn-default">
+                                            <i class="fa fa-info-circle"></i>
+                                            More Info
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr ng-repeat="acco in r.Accommodations">
+                                <td>Accommodations</td>
+                                <td>{{ acco.Address.AddressName }}</td>
+                                <td>{{ acco.Address.Country.Name }}</td>
+                                <td>{{ acco.CheckInDate | date:'d MMMM yyyy' }}</td>
+                                <td>
+                                    <div class="btn-group btn-group-sm">
+                                        <a ng-click="updateTemplateUrl('Accommodation', acco)"
                                            class="btn btn-sm btn-default">
                                             <i class="fa fa-plus"></i>
                                             Add Option
@@ -60,22 +80,37 @@
                 </div>
             </div>
         </div>
-        <div class="col-sm-7">
+        <div class="col-md-8">
             <div class="block">
                 <!--Title-->
                 <div class="block-title">
                     <h1>Add {{ type }}</h1>
                 </div>
-                <div ng-include="templateUrl"></div>
+                <form name="form"
+                      id="wizard"
+                      class="form-horizontal">
+                    <div ng-include="templateUrl"></div>
+                    <p ng-if="type != ''"><button ng-click="commitItem()" class="btn btn-sm btn-success">Submit</button></p>
+                </form>
             </div>
         </div>
-        <div class="col-sm-5">
+        <div class="col-md-4">
             <div class="block">
                 <div class="block-title">
                     <h2>Preview</h2>
                 </div>
-                <p><button type="button" class="btn btn-success">Save Proposal</button></p>
+                <p>ID: {{ proposal.Id }}</p>
+                <p>Accommodations: {{ proposal.Accommodations.length }}</p>
+                <p>Flights: {{ proposal.FlightRequests.length }}</p>
+                <p>TravelRequestID: <span class="badge">{{ proposal.TravelRequestID }}</span></p>
+                <p>
+                    <button type="button" class="btn btn-success" ng-click="saveProposal()">
+                        Save Proposal
+                    </button>
+                </p>
+
             </div>
         </div>
     </div>
+    <button ng-click="hoi()">HOI</button>
 </div>

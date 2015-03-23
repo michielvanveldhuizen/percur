@@ -1,8 +1,79 @@
-﻿{{ currentRequest.Id }}
-{{ currentRequest.DepartureDate }}
+﻿<div data-ng-form="ferries">
+    <fieldset>
 
-<p>
-    FERRY VERY
-    MUCH BOAT
-    SUCH FLOAT
-</p>
+        <div data-form-control data-label="Departure">
+            <input type="text"
+                   class="form-control"
+                   data-typeahead="addresses.Name as addresses.Name for addresses in ferryAddresses | filter:{Name:$viewValue} | limitTo:8"
+                   data-ng-model="currentEntity.DepartureAddress.AddressName"
+                   placeholder="Departure Harbor" />
+        </div>
+
+        <div data-form-control data-label="Destination">
+            <input type="text"
+                   class="form-control"
+                   data-ng-model="currentEntity.DestinationAddress.AddressName"
+                   data-typeahead="addresses.Name as addresses.Name for addresses in ferryAddresses | filter:{Name:$viewValue} | limitTo:8"
+                   placeholder="Destination Harbor" />
+        </div>
+
+        <div data-form-control data-label="Date of Departure">
+            <div data-datepicker data-ng-model="currentEntity.DepartureDate"></div>
+        </div>
+
+        <div data-form-control data-label="Time of Departure">
+            <div data-timepicker
+                 data-show-meridian="false"
+                 data-minute-step="5"
+                 data-ng-model="currentEntity.DepartureDate"></div>
+        </div>
+
+        <div data-form-control data-label="Car License Plate">
+            <input type="text"
+                   class="form-control"
+                   data-ng-model="ferry.LicensePlate"
+                   placeholder="License Plate"
+                   data-typeahead="car.LicensePlate as car.LicensePlate for car in ferryLicensePlates | filter:{LicensePlate:$viewValue} | limitTo:8"
+                   data-z-validate />
+            <span class="help-block">
+                The license plate number of the car that will be transported along with the passengers.
+                Only fill this in when you will be transporting a car.
+            </span>
+        </div>
+
+        <div data-form-control data-label="Car Dimensions">
+            <div class="col-xs-6 clear-padding">
+                <div class="col-xs-3 clear-padding">
+                    <label class="control-label">Length</label>
+                </div>
+                <div class="col-xs-6 clear-padding">
+                    <input type="text"
+                           class="form-control"
+                           data-ng-model="currentEntity.CarLength"
+                           placeholder="Car Length"
+                           data-z-validate />
+                </div>
+                <div class="col-xs-3">
+                    <label class="control-label">cm</label>
+                </div>
+            </div>
+            <div class="col-xs-6 clear-padding">
+                <div class="col-xs-3 clear-padding">
+                    <label class="control-label">Height</label>
+                </div>
+                <div class="col-xs-6 clear-padding">
+                    <input type="text"
+                           class="form-control"
+                           data-ng-model="currentEntity.CarHeight"
+                           placeholder="Car Height"
+                           data-z-validate />
+                </div>
+                <div class="col-xs-3">
+                    <label class="control-label">cm</label>
+                </div>
+            </div>
+        </div>
+
+    </fieldset>
+
+</div>

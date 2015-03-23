@@ -31,5 +31,8 @@ namespace Percurrentis.Model
         public virtual TravelRequest TravelRequest { get; set; }
         public virtual ServiceCompany ServiceCompany { get; set; }
         public double? Cost { get; set; }
+        public double? CostSecondary { get; set; }
+        public string SecondaryCurrency { get; set; }
+        public string Note { get; set; }
     }
 }

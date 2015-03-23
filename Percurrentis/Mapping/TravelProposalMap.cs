@@ -17,10 +17,11 @@ namespace Percurrentis.Mapping
             /*this.HasKey(t => t.Id);
             this.Property(t => t.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
 
-            this.Property(t => t.IsApproved).IsRequired();
+            this.Property(t => t.IsApproved).IsRequired();*/
 
             this.HasMany<Accommodation>(t => t.Accommodations)
             .WithRequired(a => a.TravelProposal).HasForeignKey(r => r.TravelProposalID);
+            /*
             this.HasMany<RentalCarRequest>(t => t.RentalCarRequests)
             .WithRequired(r => r.TravelProposal).HasForeignKey(r => r.TravelProposalID);
             this.HasMany<FerryRequest>(t => t.FerryRequests)

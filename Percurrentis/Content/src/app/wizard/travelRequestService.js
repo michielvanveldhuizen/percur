@@ -19,12 +19,15 @@
         var service = {
             archiveTravelRequest: archiveTravelRequest,
             createTravelRequest: createTravelRequest,
+            createTravelProposal: createTravelProposal,
             createTraveller: createTraveller,
             getTravelRequests: getTravelRequests,
             getTravelRequestById: getTravelRequestById,
             getTravelRequestByHash: getTravelRequestByHash,
             getCurrentTravels: getCurrentTravels,
             getTravelRequestApprovalsById: getTravelRequestApprovalsById,
+            hashToID: hashToID,
+            createCopy: createCopy,
             toggleDelete: toggleDelete,
             toggleArchive: toggleArchive,
             getAddresses: getAddresses,
@@ -79,7 +82,48 @@
 
         /* == Create ======================================================= */
 
-        //creating the an TravelRequest
+        // creating a TravelProposal
+        function createTravelProposal() {
+            manager = new breeze.EntityManager(serviceName);
+            var deferred = $q.defer();
+
+            if (!manager.metadataStore.hasMetadataFor(serviceName)) {
+                manager.fetchMetadata()
+                .then(function () {
+
+                    deferred.resolve(buildTravelRequest());
+                }, function (error) {
+                    console.log('Error while fetching metadata', error);
+                    deferred.reject(error);
+                });
+            } else {
+                deferred.resolve(buildTravelRequest());
+            }
+
+            return deferred.promise;
+
+            function buildTravelRequest() {
+                var deferred = $q.defer();
+
+                var request = manager.createEntity('TravelProposal');
+
+                var query = breeze.EntityQuery
+                    .from('AddressTypes')
+                    .take(1);
+
+                manager.executeQuery(query).then(function (q) {
+                    deferred.resolve(request);
+                }, function (error) {
+                    console.log('Error while creating travel ' +
+                        'request (fetching address types)', error);
+                    deferred.reject(error);
+                });
+
+                return deferred.promise;
+            }
+        }
+
+        //creating a TravelRequest
         function createTravelRequest() {
             manager = new breeze.EntityManager(serviceName);
             var deferred = $q.defer();
@@ -185,6 +229,14 @@
             }
         }
 
+        function hashToID(hash)
+        {
+            getTravelRequestByHash(hash, false)
+            .then(function (bla) {
+                return bla.results[0].Id;
+            });
+        }
+
         function getInsurances() {
             manager = new breeze.EntityManager(serviceName);
 
@@ -284,6 +336,14 @@
                 console.log(error.message, 'query failed');
                 throw error;
             }
+        }
+
+
+        function createCopy(source)
+        {
+            var entity = manager.createEntity(source.entityType.shortName);
+            jQuery.extend(true, entity, source);
+            return entity;
         }
 
         function getAddresses() {
@@ -838,8 +898,6 @@
         }
 
         function saveChanges(request, options, onSuccess, onFailure) {
-            console.log(request);
-            console.log("====================");
             if (options) {
                 if (!options.hasFlight) {
                     _.forEach(request.FlightRequests, function (val) {
@@ -877,7 +935,7 @@
                     });
                 }
             }
-
+            
             
             //Checks if records already exist in the database. If so connecting them to the object and detach the Entity
             //CustomerOrProspect

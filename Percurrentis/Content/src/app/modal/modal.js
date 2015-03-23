@@ -108,7 +108,6 @@
         }
 
         function open(title, body, fnPrimary, fnCancel, btnSetUrl) {
-            console.log(btnSetUrl);
             if (_.isUndefined(btnSetUrl)) {
                 btnSetUrl = '/TravelAgency/Content/src/app/modal/primaryBtnSet.tpl.html';
             }
