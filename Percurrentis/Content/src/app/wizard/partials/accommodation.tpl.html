@@ -74,9 +74,8 @@
                     data-z-validate></select>
         </div>
 
-        <span class="help-block">
-            How long will you be staying at the accommodation?
-        </span>
+        
+        <div data-legend-title="Check-in/out Dates"></div>
 
         <div data-form-control data-label="Check-in Date">
             <div data-ng-init="accommodation.CheckInDate = CheckInDate" data-datepicker data-starting-day="1" data-ng-model="accommodation.CheckInDate"></div>
@@ -84,6 +83,15 @@
 
         <div data-form-control data-label="Check-out Date">
             <div data-ng-init="accommodation.CheckOutDate = CheckOutDate" data-datepicker data-ng-model="accommodation.CheckOutDate"></div>
+        </div>
+
+        <hr />
+        <div data-form-control data-label="Note">
+            <textarea class="form-control"
+                      data-ng-model="accommodation.Note"
+                      rows="5"
+                      placeholder="Notes..."
+                      data-z-validate />
         </div>
       
     </fieldset>

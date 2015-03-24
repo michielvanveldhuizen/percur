@@ -350,22 +350,6 @@
     <Compile Include="Migrations\201503170918335_oneToMany_ManyToOneTest.Designer.cs">
       <DependentUpon>201503170918335_oneToMany_ManyToOneTest.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201503180723403_TravelProposal_1.cs" />
-    <Compile Include="Migrations\201503180723403_TravelProposal_1.Designer.cs">
-      <DependentUpon>201503180723403_TravelProposal_1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201503190710301_accommodationsProposalLink.cs" />
-    <Compile Include="Migrations\201503190710301_accommodationsProposalLink.Designer.cs">
-      <DependentUpon>201503190710301_accommodationsProposalLink.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201503190753280_flightsProposalLink.cs" />
-    <Compile Include="Migrations\201503190753280_flightsProposalLink.Designer.cs">
-      <DependentUpon>201503190753280_flightsProposalLink.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201503191243316_CostsPlusNotes.cs" />
-    <Compile Include="Migrations\201503191243316_CostsPlusNotes.Designer.cs">
-      <DependentUpon>201503191243316_CostsPlusNotes.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Context\DatabaseContext.cs" />
     <Compile Include="Notification\Notification.cs" />
@@ -1462,18 +1446,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201503170918335_oneToMany_ManyToOneTest.resx">
       <DependentUpon>201503170918335_oneToMany_ManyToOneTest.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201503180723403_TravelProposal_1.resx">
-      <DependentUpon>201503180723403_TravelProposal_1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201503190710301_accommodationsProposalLink.resx">
-      <DependentUpon>201503190710301_accommodationsProposalLink.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201503190753280_flightsProposalLink.resx">
-      <DependentUpon>201503190753280_flightsProposalLink.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201503191243316_CostsPlusNotes.resx">
-      <DependentUpon>201503191243316_CostsPlusNotes.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

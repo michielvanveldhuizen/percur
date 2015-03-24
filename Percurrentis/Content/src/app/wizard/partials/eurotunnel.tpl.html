@@ -56,6 +56,15 @@
             </span>
         </div>
 
+        <hr />
+        <div data-form-control data-label="Note">
+            <textarea class="form-control"
+                      data-ng-model="eurotunnel.Note"
+                      rows="5"
+                      placeholder="Notes..."
+                      data-z-validate />
+        </div>
+
         <div data-ng-show="!eurotunnel.IsReturnEuroTunnel" data-form-control data-label="Add Return Eurotunnel">
             <button class="btn btn-sm btn-success"
                     data-ng-click="addEurotunnel(eurotunnel)">

@@ -604,7 +604,6 @@
         }
 
 
-
         // -- flight -------------------------------------------------------//
         function addFlight(request, departureFlight) {
             var entity = manager.createEntity('FlightRequest');
@@ -752,7 +751,6 @@
             entity.StartDate.setHours(0, 0, 0);
             entity.EndDate = new Date();
             entity.EndDate.setHours(0, 0, 0);
-            //entity.Driver = request.RequestTravellers[0];
 
             request.RentalCarRequests.push(entity);
         }
@@ -921,6 +919,14 @@
                     _.forEach(request.RentalCarRequests, function (val) {
                         removeRentalcar(request, val);
                     });
+                } else {
+                    //To set driver if there is only 1 traveller
+                    if (request.TravelRequest_RequestTravellers.length == 1) {
+                        _.forEach(request.RentalCarRequests, function (val) {
+                            val.Driver = request.TravelRequest_RequestTravellers[0].RequestTraveller;
+                            val.DriverID = request.TravelRequest_RequestTravellers[0].RequestTravellerID;
+                        });
+                    }
                 }
 
                 if (!options.hasTaxi) {

@@ -8,12 +8,8 @@
 
     function travellerService($q, breeze) {
         var serviceName = 'breeze/TravelRequest';
-
-        //console.log(breeze);
         
         var managerTraveller = new breeze.EntityManager(serviceName);
-
-        //console.log(manager);
 
         //To use a function first declare it here 
         var service = {
@@ -23,11 +19,14 @@
             deleteTraveller: deleteTraveller,
             removeCompanyFromTraveller: removeCompanyFromTraveller,
             saveChanges: saveChanges,
+            getTravellerById: getTravellerById,
+            getTravellers:getTravellers,
         };
 
 
         return service;
 
+        //Creating the traveller Entity based on the manager
         function createTraveller() {
             managerTraveller = new breeze.EntityManager(serviceName);
             var deferred = $q.defer();
@@ -52,22 +51,12 @@
 
                 var request = managerTraveller.createEntity('RequestTraveller');
 
-
-                /*managerTraveller.executeQuery(query).then(function (q) {
-                    request.CustomerOrProspect.Address.AddressType =
-                        _.first(q.results);*/
-
-                    deferred.resolve(request);
-               /* }, function (error) {
-                    console.log('Error while creating travel ' +
-                        'request (fetching address types)', error);
-                    deferred.reject(error);
-                });*/
-
+                deferred.resolve(request);
                 return deferred.promise;
             }
         }
 
+        //Getting all companies from the database where default company = 1
         function getTravellerCompanies() {
             var query = breeze.EntityQuery
                 .from('Company')
@@ -84,19 +73,23 @@
             }
         }
 
+        //Create company Entity and connects it to the traveller
         function addCompanyToTraveller(traveller) {
             traveller.Company = managerTraveller.createEntity('Company');
         }
 
+        //Removes the traveller from the TravelRequest_RequestTravellers and detaches the entity so it isn't created during the saveChange
         function deleteTraveller(request, traveller) {
             request.TravelRequest_RequestTravellers.splice(_.indexOf(request.TravelRequest_RequestTravellers, traveller), 1);
             managerTraveller.detachEntity(traveller);
         }
 
+        //Detaching the traveller Entity so it isn't created during the saveChange
         function detachTraveller(traveller) {
             managerTraveller.detachEntity(traveller);
         }
-
+        
+        //Detaching the Company if the company is not a default one.
         function removeCompanyFromTraveller(traveller) {
             if (traveller.Company && !traveller.Company.DefaultCompany) {
                 managerTraveller.detachEntity(traveller.Company);
@@ -112,6 +105,37 @@
             return message;
         }
 
+        //Get All travellers
+        function getTravellers() {
+            var query = breeze.EntityQuery
+                .from('RequestTraveller');
+
+
+            var promise = managerTraveller.executeQuery(query).catch(queryFailed);
+            return promise;
+
+            function queryFailed(error) {
+                console.log(error.message, 'query failed');
+                throw error;
+            }
+        }
+
+        //Gets traveller from database by ID
+        function getTravellerById(id) {
+            var query = breeze.EntityQuery
+                .from('RequestTraveller')
+                .where("Id", "==", id);
+
+            var promise = managerTraveller.executeQuery(query).catch(queryFailed);
+            return promise;
+
+            function queryFailed(error) {
+                console.log(error.message, 'query failed');
+                throw error;
+            }
+        }
+
+        //Saves entities
         function saveChanges(onSuccess, onFailure) {
             return managerTraveller.saveChanges()
                 .then(saveSucceeded)

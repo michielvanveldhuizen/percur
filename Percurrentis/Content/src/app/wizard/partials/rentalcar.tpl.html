@@ -100,42 +100,58 @@
 
         <div data-form-control data-label="Driver">
             <div class="btn-group-vertical btn-group-block"
-                 data-ng-show="model.RequestTravellers.length > 1">
+                 data-ng-show="model.TravelRequest_RequestTravellers.length > 1">
                 <button type="button"
                         class="btn btn-sm"
-                        data-ng-repeat="driver in model.RequestTravellers track by $index"
-                        data-ng-class="{'btn-alt btn-default': !rentalcar.Driver.entityAspect.getKey().equals(driver.entityAspect.getKey()), 
-                                        'btn-primary active' : rentalcar.Driver.entityAspect.getKey().equals(driver.entityAspect.getKey())}"
+                        data-ng-repeat="driver in model.TravelRequest_RequestTravellers track by $index"
+                        data-ng-class="{'btn-alt btn-default': !rentalcar.Driver.entityAspect.getKey().equals(driver.RequestTraveller.entityAspect.getKey()),
+                                        'btn-primary active' : rentalcar.Driver.entityAspect.getKey().equals(driver.RequestTraveller.entityAspect.getKey())}"
                         data-ng-model="driver"
-                        data-ng-click="rentalcar.Driver = driver; rentalcar.SecondaryDriver = null">{{driver.FirstName + ' ' + driver.FamilyName}}</button>
+                        data-ng-click="rentalcar.Driver = driver.RequestTraveller; rentalcar.SecondaryDriver = null">
+                    {{driver.RequestTraveller.FirstName + ' ' + driver.RequestTraveller.FamilyName}}
+                </button>
                 <span class="help-block">Please select the traveller who will be the primary driver of this rental car.</span>
             </div>
-            <div data-ng-show="model.RequestTravellers.length <= 1">
+            <div data-ng-show="model.TravelRequest_RequestTravellers.length <= 1">
                 <p class="form-control-static">
-                    {{model.travellers[0].FirstName + ' ' + model.travellers[0].FamilyName}}
+                    {{model.TravelRequest_RequestTravellers[0].RequestTraveller.FirstName + ' ' + model.TravelRequest_RequestTravellers[0].RequestTraveller.FamilyName}}
                 </p>
                 <span class="help-block">This travel request has one traveller, which will be the driver of this rental car.</span>
             </div>
         </div>
 
-        <div data-form-control data-label="Secondary Driver" data-ng-show="model.RequestTravellers.length > 1">
+        <div data-form-control data-label="Secondary Driver" data-ng-show="model.TravelRequest_RequestTravellers.length > 1">
             <div class="btn-group-vertical btn-group-block">
                 <button type="button"
                         class="btn btn-sm"
-                        data-ng-repeat="driver in model.RequestTravellers track by $index"
-                        data-ng-class="{'btn-alt btn-default': !rentalcar.SecondaryDriver.entityAspect.getKey().equals(driver.entityAspect.getKey()), 
-                                        'btn-primary active' : rentalcar.SecondaryDriver.entityAspect.getKey().equals(driver.entityAspect.getKey()), 
-                                        'disabled'           : rentalcar.Driver.entityAspect.getKey().equals(driver.entityAspect.getKey()) }"
+                        data-ng-repeat="driver in model.TravelRequest_RequestTravellers track by $index"
+                        data-ng-class="{'btn-alt btn-default': !rentalcar.SecondaryDriver.entityAspect.getKey().equals(driver.RequestTraveller.entityAspect.getKey()),
+                                        'btn-primary active' : rentalcar.SecondaryDriver.entityAspect.getKey().equals(driver.RequestTraveller.entityAspect.getKey()),
+                                        'disabled'           : rentalcar.Driver.entityAspect.getKey().equals(driver.RequestTraveller.entityAspect.getKey()) }"
                         data-ng-model="driver"
-                        data-ng-click="rentalcar.SecondaryDriver = driver">{{driver.FirstName + ' ' + driver.FamilyName}}</button>
+                        data-ng-click="rentalcar.SecondaryDriver = driver">
+                    {{driver.FirstName + ' ' + driver.FamilyName}}
+                </button>
                 <button type="button"
                         class="btn btn-sm"
                         data-ng-class="{'btn-alt btn-default': rentalcar.getProperty('SecondaryDriver') != null,
                                         'btn-primary active' : rentalcar.getProperty('SecondaryDriver') == null}"
-                        data-ng-click="rentalcar.SecondaryDriver = null">No secondary driver</button>
+                        data-ng-click="rentalcar.SecondaryDriver = null">
+                    No secondary driver
+                </button>
                 <span class="help-block">Please select the traveller who will be the secondary driver of this rental car.</span>
             </div>
         </div>
+
+        <hr />
+        <div data-form-control data-label="Note">
+            <textarea class="form-control"
+                      data-ng-model="rentalcar.Note"
+                      rows="5"
+                      placeholder="Notes..."
+                      data-z-validate />
+        </div>
+
     </fieldset>
     
     <fieldset>

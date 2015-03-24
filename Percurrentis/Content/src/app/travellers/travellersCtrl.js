@@ -2,10 +2,10 @@
     'use strict';
     var app = angular.module('app');
     app.controller('travellersCtrl',
-        ['$scope', '$location', '$route', 'travelRequestService', 'modalService', travellersCtrl]);
+        ['$scope', '$location', '$route', 'travellerService', 'modalService', travellersCtrl]);
 
-    function travellersCtrl($scope, $location, $route, travelRequestService, modalService) {
-        travelRequestService.getTravellers()
+    function travellersCtrl($scope, $location, $route, travellerService, modalService) {
+        travellerService.getTravellers()
             .then(function (query) {
                 $scope.travellers = query.results;
             });
@@ -23,22 +23,24 @@
     }
 
     angular.module('app').controller('travellersDetailCtrl',
-        ['$scope', '$location', '$route', 'travelRequestService', 'modalService', travellersDetailCtrl]);
+        ['$scope', '$location', '$route', 'travellerService', 'modalService', travellersDetailCtrl]);
 
-    function travellersDetailCtrl($scope, $route, $location, travelRequestService, modalService) {
+    function travellersDetailCtrl($scope, $route, $location, travellerService, modalService) {
 
         var urlArray = $route.url().split("/");
         var lastParam = urlArray[urlArray.length - 1];
         var oldData = "";
         
-        travelRequestService.getTravellerById(lastParam).then(function (query) {
+        //gets traveller data and set old data to nothing to not keep connected to a previous traveller.
+        travellerService.getTravellerById(lastParam).then(function (query) {
             $scope.request = query.results[0];
             oldData = {};
             jQuery.extend(oldData, query.results[0]);
         });
 
+        //Shows modal to edit a traveller.
         $scope.showTravellerEditing = function () {
-            travelRequestService.getTravellerById(lastParam).then(function (query) {
+            travellerService.getTravellerById(lastParam).then(function (query) {
                 $scope.request = query.results[0];
                 oldData = {};
                 jQuery.extend(oldData, query.results[0]);

@@ -29,6 +29,8 @@
             $location.hash('');
         };
 
+        $scope.c = "a73d1a5e-b640-467e-8583-e4b52cfae437";
+
         function initializeFilters() {
             function Filter(filterFn, title, order, icon, tooltip) {
                 this.filterFn = filterFn || function () {
@@ -104,21 +106,36 @@
                     }, 'All', 0, 'fa-bars', 'View both open and archived travel requests.'),
                     currentByMe: new Filter(function () {
                         return _.filter($scope.allRequests, function (req) {
-                            return req.IsArchived == false && req.IsDeleted == false && req.IsApproved == 0 && ownGuid == req.SuperiorID;;
+                            return req.IsArchived == false && req.IsDeleted == false && req.IsApproved == 0 && ownGuid == req.SuperiorID;
                         });
                     }, 'Awaiting for me', 1, 'fa-inbox', 'View requests that are awaiting approval.'),
                     approvedByMe: new Filter(function () {
                         return _.filter($scope.allRequests, function (req) {
+                            if (ownGuid == $scope.c) {
+                                if (req.CountryID == 173) {
+                                    return req.IsApproved == 2 && req.IsDeleted == false
+                                }
+                            }
                             return req.IsApproved == 2 && req.IsDeleted == false && ownGuid == req.SuperiorID;
                         });
                     }, 'Approved by me', 2, 'fa-check', 'View approved travel requests.'),
                     rejectedByMe: new Filter(function () {
                         return _.filter($scope.allRequests, function (req) {
+                            if (ownGuid == $scope.c) {
+                                if (req.CountryID == 173) {
+                                    return req.IsApproved == 1 && req.IsDeleted == false;
+                                }
+                            }
                             return req.IsApproved == 1 && req.IsDeleted == false && ownGuid == req.SuperiorID;;
                         });
                     }, 'Rejected by me', 3, 'fa-times', 'View rejected travel requests.'),
                     current: new Filter(function () {
                         return _.filter($scope.allRequests, function (req) {
+                            if (ownGuid == $scope.c) {
+                                if (req.CountryID == 173) {
+                                    return req.IsArchived == false && req.IsDeleted;
+                                }
+                            }
                             return req.IsArchived == false && req.IsDeleted == false && req.IsApproved == 0;
                         });
                     }, 'Awaiting total', 4, 'fa-inbox', 'View requests that are awaiting approval.'),

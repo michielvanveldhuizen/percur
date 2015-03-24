@@ -162,7 +162,6 @@
                 return true;
             },
             onSubmit: function () {
-                console.log($scope.model);
                 // clean up entities that should be empty
                 if (!$scope.options.hasFlight) {
                     _.each($scope.model.FlightRequests, function (v) {
@@ -472,6 +471,8 @@
         // when the start date changes to beyond the end date, also set the
         // end date to the new start date.
         $scope.onRentalCarStartDateChanged = function (rentalcar) {
+            console.log($scope);
+            console.log($scope.model.TravelRequest_RequestTravellers)
             if (rentalcar.rentalStart > rentalcar.rentalEnd) {
                 rentalcar.rentalEnd = rentalcar.rentalStart;
             }
@@ -543,7 +544,6 @@
         // Accommodation
 
         $scope.addAccommodation = function () {
-            console.log("add");
             travelRequestService.addAccommodation($scope.model);
         };
 

@@ -6,6 +6,10 @@
     margin: 5px;
 }
 
+.note-size{
+    width:66%;
+}
+
 .btn-group-block {
     width: 100%;
 }

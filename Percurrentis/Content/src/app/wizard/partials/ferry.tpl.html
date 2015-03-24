@@ -84,6 +84,15 @@
             </div>
         </div>
 
+        <hr />
+        <div data-form-control data-label="Note">
+            <textarea class="form-control"
+                      data-ng-model="ferry.Note"
+                      rows="5"
+                      placeholder="Notes..."
+                      data-z-validate />
+        </div>
+
         <div data-ng-show="!ferry.IsReturnFerry" data-form-control data-label="Add Return Ferry">
             <button class="btn btn-sm btn-success"
                     data-ng-click="addFerry(ferry)">

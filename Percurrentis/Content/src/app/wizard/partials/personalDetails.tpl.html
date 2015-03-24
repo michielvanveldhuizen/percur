@@ -1,11 +1,13 @@
 ﻿<div data-ng-form="personal">
     <fieldset data-ng-repeat="traveller in model.TravelRequest_RequestTravellers track by $index">
-        <h4>If the traveller you want to add is not in the select box then add them by using this button</h4>
-        <button class="btn btn-sm btn-success navbar-right margin-5"
-                data-ng-click="createTraveller()">
-            <i class="fa fa-plus"></i>
-            Create new traveller
-        </button>
+        <div data-ng-hide="!$first">
+            <h4>If the traveller you want to add is not in the select box then add them by using this button</h4>
+            <button class="btn btn-sm btn-success navbar-right margin-5"
+                    data-ng-click="createTraveller()">
+                <i class="fa fa-plus"></i>
+                Create new traveller
+            </button>
+        </div>
         <div data-legend-title="{{ $first ? 'Primary Traveller' : 'Traveller' }}">
             <a data-ng-click="deleteTraveller(traveller)"
                data-ng-hide="$first"
@@ -20,7 +22,7 @@
             <div data-form-control data-label="Select Traveller">
                 <select class="form-control"
                         data-ng-model="traveller.RequestTravellerID"
-                        data-placeholder="Traveller"
+                        data-placeholder=""
                         data-chosen
                         data-ng-options="travellerSelect.Id as (travellerSelect.FirstName+' '+travellerSelect.FamilyName+' ('+travellerSelect.FullName+')') for travellerSelect in travellers"
                         data-z-validate></select>
