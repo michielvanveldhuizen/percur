@@ -214,7 +214,7 @@
             $scope.proposal = query.results[0];
             travelRequestService.getTravelRequestById($scope.proposal.TravelRequestID)
             .then(function (query) {
-                $scope.itinerary = query.results[0];
+                $scope.itinerary = query.results[0]; 
             });
         });
 

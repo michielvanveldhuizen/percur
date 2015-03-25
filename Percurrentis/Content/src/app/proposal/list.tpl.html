@@ -1,0 +1,76 @@
+﻿<div data-ng-controller="proposalListCtrl">
+    <div class="block">
+        <div class="block-title">
+            <h2><strong>Proposals</strong></h2>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-vcenter table-condensed table-hover">
+                <thead>
+                    <tr>
+                        <th class="col-md-3">Created By</th>
+                        <th class="col-md-3">Date Approved</th>
+                        <th class="col-md-2">Options</th>
+                        <th class="col-md-1">Sent</th>
+                        <th class="col-md-1">Approval</th>
+                        <th class="col-md-2">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr data-ng-repeat="proposal in proposals"
+                        style="cursor:pointer">
+                        <td data-ng-click="go('/Proposal/' + proposal.Id)">{{ proposal.TravelRequest.ApplicantID }}</td>
+                        <td data-ng-click="go('/Itinerary/' + proposal.Id)">
+                            {{ proposal.TravelRequest.UpdatedDate|date:'EEEE H:mm, d MMMM yyyy' }}
+                        </td>
+                        <td data-ng-click="go('/Proposal/' + proposal.TravelRequest.Id)">
+                            <i data-ng-show="request.FlightRequests.length > 0" data-tooltip="Flight" class="fa-fw gi gi-airplane"></i>
+                            <i data-ng-show="request.FerryRequests.length > 0" data-tooltip="Ferry" class="fa-fw gi gi-boat"></i>
+                            <i data-ng-show="request.EuroTunnelRequests.length > 0" data-tooltip="Eurotunnel" class="fa-fw gi gi-train"></i>
+                            <i data-ng-show="request.RentalCarRequests.length > 0" data-tooltip="Rental Car" class="fa-fw gi gi-cars"></i>
+                            <i data-ng-show="request.TaxiRequests.length > 0" data-tooltip="Taxi" class="fa-fw gi gi-car"></i>
+                            <i data-ng-show="request.AccommodationRequests.length > 0" data-tooltip="Accommodation" class="fa-fw gi gi-home"></i>
+                        </td>
+                        <td>
+                            <span class="info-hover" data-tooltip="{{ proposal.CreatedDate|date:'EEEE H:mm, d MMMM yyyy' }}">{{proposal.CreatedDate|date:'d MMM'}}</span>
+                        </td>
+                        <td data-ng-click="go('/Proposal/' + proposal.Id)">
+                            <span class="label label-warning" data-ng-show="proposal.IsApproved == 0">Awaiting</span>
+                            <span class="label label-danger" data-ng-show="proposal.IsApproved == 1">Rejected</span>
+                            <span class="label label-success" data-ng-show="proposal.IsApproved == 2">Approved</span>
+                        </td>
+                        <td>
+                            <div class="btn-group btn-group-sm">
+                                <a href="#/Proposal/{{proposal.Id}}"
+                                   class="btn btn-sm btn-default">
+                                    <i class="fa fa-eye"></i>
+                                    View
+                                </a>
+                                <!--<a data-ng-click="toggleArchive(request)"
+                                   class="btn btn-sm btn-default"
+                                   data-tooltip="{{request.IsArchived ? 'Unarchive' : 'Archive'}}"
+                                   href="javascript:void(0)">
+                                    <i class="fa fa-archive"></i>
+                                </a>-->
+                                <a data-ng-click="toggleDelete(request)"
+                                   data-ng-show="request.IsFinal == false"
+                                   class="btn btn-sm"
+                                   data-ng-class="request.IsDeleted ? 'btn-default' : 'btn-default'"
+                                   data-tooltip="{{request.IsDeleted ? 'Recover' : 'Delete'}}"
+                                   href="javascript:void(0)">
+                                    <i data-ng-show="!request.IsDeleted" class="fa fa-times"></i>
+                                    <i data-ng-show="request.IsDeleted" class="fa fa-undo"></i>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr data-ng-show="proposals.length == 0">
+                        <td colspan="6" class="text-center" style="padding: 12px">
+                            There are no new proposals.<br />
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

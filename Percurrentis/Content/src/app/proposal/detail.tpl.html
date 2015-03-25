@@ -1,0 +1,31 @@
+﻿<div data-ng-controller="proposalDetailCtrl">
+    <div class="block">
+        <div class="block-title">
+            <h2><strong>Proposal</strong></h2>
+        </div>
+        <p>Proposal for <a target="_blank" href="/TravelAgency/#/Itinerary/{{ proposal.TravelRequest.Hash }}">Itinerary</a> (opens in new window) by {{ proposal.TravelRequest.ApplicantID }}.</p>
+
+        <div ng-repeat="flight in itinerary.FlightRequests">
+            <div class="list-group form-group">
+                <a href="#" class="list-group-item active">
+                    Options for Flight from <strong>{{ flight.DepartureAddress.City }}</strong> to <strong>
+                        {{ flight.DestinationAddress.City }}
+                    </strong> on {{ flight.DepartureDate | date:'d MMMM yyyy' }}
+                </a>
+                <a href="javascript:void(0)" class="list-group-item" ng-repeat="fl in proposal.FlightRequests | filter: { ParentID: flight.Id }">
+                    <input id="option{{ fl.ParentID }}_{{ $index }}" type="radio" name="option1" />
+                    <label for="option{{ fl.ParentID }}_{{ $index }}">
+                        {{ fl.DepartureAddress.City }} to {{ fl.DestinationAddress.City }}
+                        <i ng-if="fl.Note != NULL" class="gi gi-comments" data-tooltip="{{ fl.Note }}"></i>
+                         | 
+                        {{ fl.DepartureDate | date:'d MMMM yyyy' }}
+                         |
+                        {{ fl.Cost }}€ / {{ fl.CostSecondary }} {{ fl.SecondaryCurrency }}
+                    </label>
+                </a>
+                <a href="javascript:void(0)" class="list-group-item disabled" style="text-align: right"></a>
+            </div>
+        </div>
+    </div>
+
+</div>

@@ -375,6 +375,8 @@
     <Content Include="Content\src\app\personalDetails\personalDetailsCtrl.js" />
     <Content Include="Content\src\app\proposalWizard\partials\accommodation.tpl.html" />
     <Content Include="Content\src\app\proposalWizard\partials\flight.tpl.html" />
+    <Content Include="Content\src\app\proposal\detail.tpl.html" />
+    <Content Include="Content\src\app\proposal\list.tpl.html" />
     <Content Include="Content\src\app\travellers\detail.tpl.html" />
     <Content Include="Content\src\app\travellers\list.tpl.html" />
     <Content Include="Content\src\app\travellers\travellersCtrl.js" />
