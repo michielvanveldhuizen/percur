@@ -147,6 +147,13 @@
         .then(function (query) {
             $scope.request = query.results[0];
             $scope.total = 0;
+
+            travelRequestService.getProposalIdFromItinerary($scope.request.Id)
+            .then(function (query) {
+                if (query.results.length > 0) {
+                    $scope.proposalID = query.results[0].Id;
+                }
+            });
             return query.results[0];
         })
         .then(function (request) {
@@ -154,7 +161,7 @@
         })
         .then(function (employee) {
             $scope.supervisorName = employee.userName;
-        });
+        });        
 
         $scope.go = function (path, hash) {
             $location.path(path);

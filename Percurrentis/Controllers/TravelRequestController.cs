@@ -69,6 +69,17 @@ namespace Percurrentis.Controllers
             return _contextProvider.Context.Insurance;
         }
 
+        //retrieve Proposals
+        [HttpGet]
+        public IQueryable<TravelProposal> Proposals()
+        {
+            return _contextProvider.Context.TravelProposal
+                .Include("TravelRequest")
+                .Include("FlightRequests")
+                .Include("FlightRequests.DepartureAddress")
+                .Include("FlightRequests.DestinationAddress");
+        }
+
 
         //retrieve ArchivedTravelRequests
         [HttpGet]

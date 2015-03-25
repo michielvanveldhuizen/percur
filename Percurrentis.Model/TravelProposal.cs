@@ -14,6 +14,8 @@ namespace Percurrentis.Model
         public bool IsApproved { get; set; }
         public int TravelRequestID { get; set; }
 
+        public virtual TravelRequest TravelRequest { get; set; }
+
         public virtual ICollection<Accommodation> Accommodations { get; set; }
         public virtual ICollection<FlightRequest> FlightRequests { get; set; }
         /*public virtual ICollection<RentalCarRequest> RentalCarRequests { get; set; }

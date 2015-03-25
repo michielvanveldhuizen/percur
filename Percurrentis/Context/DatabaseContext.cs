@@ -80,6 +80,7 @@ namespace Percurrentis.Context
             modelBuilder.Configurations.Add(new TaxiRequestMap());
             modelBuilder.Configurations.Add(new TravelRequestApprovalMap());
             modelBuilder.Configurations.Add(new TravelRequestMap());
+            modelBuilder.Configurations.Add(new TravelProposalMap());
             //other declarations such as keys, properties and required attributes are 
             //described in the pocos related mapping class (eg TravelRequest is mapped 
             //in TravelRequestMap.
@@ -105,6 +106,14 @@ namespace Percurrentis.Context
                     if (specEntity != null && !GlobalVar.defaultCompanies.Contains(specEntity.Name))
                     {
                         specEntity.DefaultCompany = false;
+                    }
+                }
+                if (changedEntity.Entity is FlightRequest)
+                {
+                    var specEntity = changedEntity.Entity as FlightRequest;
+                    if ((specEntity.TravelProposalID).Equals(0))
+                    {
+                        specEntity.TravelProposalID = null;
                     }
                 }
                 if (changedEntity.Entity is MetaEntity)
@@ -216,7 +225,7 @@ namespace Percurrentis.Context
                         bool isRejected = false;
 
                         //If Country is Romania and Supervisor is not kees
-                        //Need 2 approves in this case
+                        //Need 2 approves in this kees
                         if (country.Name.Equals("Romania") && !travelRequest.SuperiorID.Equals(GlobalVar.COOGuid))
                         {
                             //Check if fully approved now
@@ -236,7 +245,7 @@ namespace Percurrentis.Context
                         else
                         {
                             //(Country != Romania && Supervisor = Kees) Or (Country != Romania) 
-                            //Only need 1 approve in that case
+                            //Only need 1 approve in that kees
                             travelRequest.IsApproved = specEntity.HasApproved;
                             if (specEntity.HasApproved == 2)
                             {

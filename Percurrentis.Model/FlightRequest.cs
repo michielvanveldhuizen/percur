@@ -28,8 +28,9 @@ namespace Percurrentis.Model
         public int DestinationAddressID { get; set; }
         //not required due to lack of implementation
         public string Airline { get; set; }
-        public int TravelRequestID { get; set; }
+        public int? TravelRequestID { get; set; }
         public int? TravelProposalID { get; set; }
+        public int? ParentID { get; set; }
         public double? Cost { get; set; }
         public double? CostSecondary { get; set; }
         public string SecondaryCurrency { get; set; }

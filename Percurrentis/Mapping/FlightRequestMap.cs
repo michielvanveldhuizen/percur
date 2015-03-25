@@ -21,7 +21,9 @@ namespace Percurrentis.Mapping
             this.Property(f => f.HasSpecialEquipment).IsRequired();
             this.Property(f => f.DepartureAddressID).IsRequired();
             this.Property(f => f.DestinationAddressID).IsRequired();
-            this.Property(f => f.TravelRequestID).IsRequired();
+            this.Property(f => f.TravelRequestID).IsOptional();
+            this.Property(f => f.TravelProposalID).IsOptional();
+            this.Property(f => f.ParentID).IsOptional();
             this.HasOptional(f => f.FlyerMemberCard).WithMany().HasForeignKey(f => f.FlyerMemberCardID);
             this.HasRequired(f => f.DepartureAddress).WithMany().HasForeignKey(f => f.DepartureAddressID);
             this.HasRequired(f => f.DestinationAddress).WithMany().HasForeignKey(f => f.DestinationAddressID);

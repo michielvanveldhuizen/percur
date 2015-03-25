@@ -108,6 +108,38 @@
                     }]
                 }
             })
+            .when('/Proposal/',
+            {
+                templateUrl: base + '/proposal/list.tpl.html',
+                data: {
+                    title: "Proposals",
+                    icon: "gi-log_book",
+                    breadcrumbs: [{
+                        name: "Home",
+                        path: "/TravelAgency/#/"
+                    },
+                    {
+                        name: "Proposals",
+                        path: "/TravelAgency/#/ProposalWizard/"
+                    }]
+                }
+            })
+            .when('/Proposal/:Id',
+            {
+                templateUrl: base + '/proposal/detail.tpl.html',
+                data: {
+                    title: "Proposals",
+                    icon: "gi-log_book",
+                    breadcrumbs: [{
+                        name: "Home",
+                        path: "/TravelAgency/#/"
+                    },
+                    {
+                        name: "Proposal Detail",
+                        path: "/TravelAgency/#/Proposal/"
+                    }]
+                }
+            })
             .when('/ProposalWizard/',
             {
                 templateUrl: base + '/proposalWizard/index.tpl.html',
