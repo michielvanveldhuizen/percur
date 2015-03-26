@@ -211,6 +211,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\FileUploadController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\TravelRequestApprovalController.cs" />
     <Compile Include="Controllers\TravelRequestController.cs" />
@@ -350,22 +351,6 @@
     <Compile Include="Migrations\201503170918335_oneToMany_ManyToOneTest.Designer.cs">
       <DependentUpon>201503170918335_oneToMany_ManyToOneTest.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201503180723403_TravelProposal_1.cs" />
-    <Compile Include="Migrations\201503180723403_TravelProposal_1.Designer.cs">
-      <DependentUpon>201503180723403_TravelProposal_1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201503190710301_accommodationsProposalLink.cs" />
-    <Compile Include="Migrations\201503190710301_accommodationsProposalLink.Designer.cs">
-      <DependentUpon>201503190710301_accommodationsProposalLink.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201503190753280_flightsProposalLink.cs" />
-    <Compile Include="Migrations\201503190753280_flightsProposalLink.Designer.cs">
-      <DependentUpon>201503190753280_flightsProposalLink.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201503191243316_CostsPlusNotes.cs" />
-    <Compile Include="Migrations\201503191243316_CostsPlusNotes.Designer.cs">
-      <DependentUpon>201503191243316_CostsPlusNotes.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\201503230839213_killTreqIdKey.cs" />
     <Compile Include="Migrations\201503230839213_killTreqIdKey.Designer.cs">
       <DependentUpon>201503230839213_killTreqIdKey.cs</DependentUpon>
@@ -385,10 +370,6 @@
     <Compile Include="Migrations\201503240623072_FlightRequestParentID.cs" />
     <Compile Include="Migrations\201503240623072_FlightRequestParentID.Designer.cs">
       <DependentUpon>201503240623072_FlightRequestParentID.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201503251355330_AddFerryReqProposal.cs" />
-    <Compile Include="Migrations\201503251355330_AddFerryReqProposal.Designer.cs">
-      <DependentUpon>201503251355330_AddFerryReqProposal.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Context\DatabaseContext.cs" />
@@ -1489,18 +1470,6 @@
     <EmbeddedResource Include="Migrations\201503170918335_oneToMany_ManyToOneTest.resx">
       <DependentUpon>201503170918335_oneToMany_ManyToOneTest.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201503180723403_TravelProposal_1.resx">
-      <DependentUpon>201503180723403_TravelProposal_1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201503190710301_accommodationsProposalLink.resx">
-      <DependentUpon>201503190710301_accommodationsProposalLink.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201503190753280_flightsProposalLink.resx">
-      <DependentUpon>201503190753280_flightsProposalLink.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201503191243316_CostsPlusNotes.resx">
-      <DependentUpon>201503191243316_CostsPlusNotes.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201503230839213_killTreqIdKey.resx">
       <DependentUpon>201503230839213_killTreqIdKey.cs</DependentUpon>
     </EmbeddedResource>
@@ -1515,9 +1484,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201503240623072_FlightRequestParentID.resx">
       <DependentUpon>201503240623072_FlightRequestParentID.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201503251355330_AddFerryReqProposal.resx">
-      <DependentUpon>201503251355330_AddFerryReqProposal.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

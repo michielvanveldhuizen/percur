@@ -45,7 +45,7 @@
                     data-ng-options="c.Name for c in travellerCompanies"
                     data-ng-change="selectTravellerCompany(traveller, traveller.tempCompany)"
                     data-z-validate>
-                <option value="" disabled>Please select a company</option>
+                <option value="" disabled>Please select company</option>
             </select>
         </div>
 
@@ -57,6 +57,15 @@
                    placeholder="Company"
                    data-z-validate />
         </div>
+        <!--<hr />
+        
+        <div data-form-control data-label="Travel document photo">          
+            <div ng-controller="fileUploadCtrl">
+                <input type="file" ng-file-select="" file-model="myFile" multiple>
+                <button ng-click="uploadFile()">upload me</button>
+            </div>
+        </div>-->
+        
     </div>
 </div>
 <div class="modal-footer" style="margin-top:265px;">

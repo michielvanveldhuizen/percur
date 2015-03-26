@@ -15,7 +15,7 @@
 --><span data-ng-show="model.PostalCode"><!--
     -->{{model.StateProvince}}, <!--
 --></span><!--
--->{{model.CountryRegion}}</div>
+-->{{model.CountryRegion.Name}}</div>
 </div>
 <div data-ng-if="!(model.AddressName || model.Street || model.City || model.PostalCode || model.StateProvince || model.CountryRegion)">
     <div data-ng-transclude></div>

@@ -13,11 +13,11 @@
                 <div class="table">
                     <table class="table table-vcenter table-condensed table-striped">
                         <tbody>
-                            <tr data-ng-repeat="traveller in request.RequestTravellers">
+                            <tr data-ng-repeat="traveller in request.TravelRequest_RequestTravellers">
                                 <td>{{index !== 0 ? $index+1 : ''}} {{ index }}</td>
-                                <td>{{traveller.FullName || 'No full name given.'}}</td>
-                                <td>{{traveller.PhoneNumberID || 'No number given.'}}</td>
-                                <td>{{traveller.Company.Name || 'No company specified.' }}</td>
+                                <td>{{traveller.RequestTraveller.FullName || 'No full name given.'}}</td>
+                                <td>{{traveller.RequestTraveller.PhoneNumberID || 'No number given.'}}</td>
+                                <td>{{traveller.RequestTraveller.Company.Name || 'No company specified.' }}</td>
                             </tr>
                         </tbody>
                     </table>

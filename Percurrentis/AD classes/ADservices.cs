@@ -86,7 +86,9 @@ namespace Percurrentis.AD_classes
                     UserAC userAC = new UserAC();
                     userAC.objectGuid = new Guid((System.Byte[])qw.Properties["objectGUID"][0]).ToString();
                     userAC.userName = qw.Properties["cn"][0].ToString();
-                    
+
+
+                    //Trace.WriteLine(userAC.userName + " " + userAC.objectGuid);
                     /*Trace.WriteLine("----------");
                     Trace.WriteLine(qw.Properties["cn"][0].ToString());
                     var q = 0;

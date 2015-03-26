@@ -5,33 +5,40 @@
         ['$scope', '$location', 'travelRequestService', requestCtrl]);
 
     function requestCtrl($scope, $location, travelRequestService) {
-        travelRequestService.getTravelRequests(false)
-        .then(function (query) {
-            $scope.allRequests = query.results;
-
-            initializeFilters();
-
-            $scope.currentFilter = _.find($scope.filters, function (filter) {
-                return filter.title == $location.hash();
-            }) || $scope.filters.current;
-
-            $scope.currentFilter.filter();
-        });
-
+        //Getting employees and filling the dbGuidToName
         travelRequestService.getEmployees().then(function (query) {
             angular.forEach(query.results, function (value, key) {
                 dbGuidToName[value.objectGuid] = value.userName;
             });
         });
 
+        //Getting all travel Requests
+        travelRequestService.getTravelRequests(false)
+        .then(function (query) {
+            $scope.allRequests = query.results;
+
+            initializeFilters();
+
+            //Setting the current fillter
+            $scope.currentFilter = _.find($scope.filters, function (filter) {
+                //setting the titel
+                return filter.title == $location.hash();
+            }) || $scope.filters.current;
+
+            $scope.currentFilter.filter();
+        });
+
+       
+        //Used for onclick to go to another page
         $scope.go = function (path) {
             $location.path(path);
             $location.hash('');
         };
 
         $scope.c = "a73d1a5e-b640-467e-8583-e4b52cfae437";
-
+        
         function initializeFilters() {
+            //Prototyping the filter
             function Filter(filterFn, title, order, icon, tooltip) {
                 this.filterFn = filterFn || function () {
                     return [];
@@ -44,16 +51,15 @@
 
             Filter.prototype = {
                 filter: function () {
-                    $scope.requests = this.filterFn();                 
+                    $scope.requests = this.filterFn();
                     
+                    //setting the superiorName, BUG: the dbGuidToName might not be filled yet so this works like 80% of the time
                     angular.forEach($scope.requests, function (value, key) {
                         if (typeof dbGuidToName[value.SuperiorID] != typeof undefined) {
-                            value.superiorName = dbGuidToName[value.SuperiorID];
+                            $scope.requests[key].superiorName = dbGuidToName[value.SuperiorID];
                         }
                     });
-
-
-
+                    
                     $scope.currentFilter = this;
                     $location.hash(this.title);
                 },
@@ -98,71 +104,59 @@
                 }
             } else {
                 //Filters for non travel agency (project managers)
-                $scope.filters = {
-                    all: new Filter(function () {
-                        return _.filter($scope.allRequests, function (req) {
-                            return req.IsDeleted == false;
-                        });
-                    }, 'All', 0, 'fa-bars', 'View both open and archived travel requests.'),
-                    currentByMe: new Filter(function () {
-                        return _.filter($scope.allRequests, function (req) {
-                            return req.IsArchived == false && req.IsDeleted == false && req.IsApproved == 0 && ownGuid == req.SuperiorID;
-                        });
-                    }, 'Awaiting for me', 1, 'fa-inbox', 'View requests that are awaiting approval.'),
-                    approvedByMe: new Filter(function () {
-                        return _.filter($scope.allRequests, function (req) {
-                            if (ownGuid == $scope.c) {
-                                if (req.CountryID == 173) {
-                                    return req.IsApproved == 2 && req.IsDeleted == false
+                //if(isEmployee)
+                if (true == false) {
+
+                }
+
+                if (true == true) {
+                    $scope.filters = {
+                        all: new Filter(function () {
+                            return _.filter($scope.allRequests, function (req) {
+                                return req.IsDeleted == false;
+                            });
+                        }, 'All', 0, 'fa-bars', 'View both open and archived travel requests.'),
+                        current: new Filter(function () {
+                            return _.filter($scope.allRequests, function (req) {
+                                return req.IsArchived == false && req.IsDeleted == false && req.IsApproved == 0 && ownGuid == req.SuperiorID;
+                            });
+                        }, 'Awaiting', 1, 'fa-inbox', 'View requests that are awaiting approval.'),
+                        approved: new Filter(function () {
+                            return _.filter($scope.allRequests, function (req) {
+                                if (ownGuid == $scope.c) {
+                                    if (req.CountryID == 173) {
+                                        return req.IsApproved == 2 && req.IsDeleted == false
+                                    }
                                 }
-                            }
-                            return req.IsApproved == 2 && req.IsDeleted == false && ownGuid == req.SuperiorID;
-                        });
-                    }, 'Approved by me', 2, 'fa-check', 'View approved travel requests.'),
-                    rejectedByMe: new Filter(function () {
-                        return _.filter($scope.allRequests, function (req) {
-                            if (ownGuid == $scope.c) {
-                                if (req.CountryID == 173) {
-                                    return req.IsApproved == 1 && req.IsDeleted == false;
+                                return req.IsApproved == 2 && req.IsDeleted == false && ownGuid == req.SuperiorID;
+                            });
+                        }, 'Approved', 2, 'fa-check', 'View approved travel requests.'),
+                        rejected: new Filter(function () {
+                            return _.filter($scope.allRequests, function (req) {
+                                if (ownGuid == $scope.c) {
+                                    if (req.CountryID == 173) {
+                                        return req.IsApproved == 1 && req.IsDeleted == false && ownGuid == req.SuperiorID;
+                                    }
                                 }
-                            }
-                            return req.IsApproved == 1 && req.IsDeleted == false && ownGuid == req.SuperiorID;;
-                        });
-                    }, 'Rejected by me', 3, 'fa-times', 'View rejected travel requests.'),
-                    current: new Filter(function () {
-                        return _.filter($scope.allRequests, function (req) {
-                            if (ownGuid == $scope.c) {
-                                if (req.CountryID == 173) {
-                                    return req.IsArchived == false && req.IsDeleted;
-                                }
-                            }
-                            return req.IsArchived == false && req.IsDeleted == false && req.IsApproved == 0;
-                        });
-                    }, 'Awaiting total', 4, 'fa-inbox', 'View requests that are awaiting approval.'),
-                    approved: new Filter(function () {
-                        return _.filter($scope.allRequests, function (req) {
-                            return req.IsApproved == 2 && req.IsDeleted == false;
-                        });
-                    }, 'Approved total', 5, 'fa-check', 'View approved travel requests.'),
-                    rejected: new Filter(function () {
-                        return _.filter($scope.allRequests, function (req) {
-                            return req.IsApproved == 1 && req.IsDeleted == false;
-                        });
-                    }, 'Rejected total', 6, 'fa-times', 'View rejected travel requests.'),
-                    archived: new Filter(function () {
-                        return _.filter($scope.allRequests, function (req) {
-                            return req.IsArchived == true && req.IsDeleted == false;
-                        });
-                    }, 'Archived', 7, 'fa-archive', 'View archived travel requests.'),
-                    deleted: new Filter(function () {
-                        return _.filter($scope.allRequests, function (req) {
-                            return req.IsDeleted == true;
-                        });
-                    }, 'Deleted', 8, 'fa-ban', 'View deleted travel requests.'),
+                                return req.IsApproved == 1 && req.IsDeleted == false && ownGuid == req.SuperiorID;;
+                            });
+                        }, 'Rejected', 3, 'fa-times', 'View rejected travel requests.'),
+                        archived: new Filter(function () {
+                            return _.filter($scope.allRequests, function (req) {
+                                return req.IsArchived == true && req.IsDeleted == false;
+                            });
+                        }, 'Archived', 4, 'fa-archive', 'View archived travel requests.'),
+                        deleted: new Filter(function () {
+                            return _.filter($scope.allRequests, function (req) {
+                                return req.IsDeleted == true && ownGuid == req.SuperiorID;
+                            });
+                        }, 'Deleted', 5, 'fa-ban', 'View deleted travel requests.'),
+                    }
                 }
             }
         }
 
+        //Archiving a travel request
         $scope.toggleArchive = function (request) {
             if (travelRequestService.toggleArchive(request)) {
                 $scope.addArchiveAlert();
@@ -172,6 +166,7 @@
             $scope.currentFilter.filter();
         };
 
+        //Deleting a travel request
         $scope.toggleDelete = function (request) {
             if (travelRequestService.toggleDelete(request)) {
                 $scope.addDeleteAlert();
@@ -255,22 +250,36 @@
         travelRequestService.getTravelRequestByHash($route.current.params.Hash)
         .then(function (query) {
             $scope.request = query.results[0];
+
+            console.log($scope.request);
+            
             if (query.results[0] == null) {
                 failedToLoadDetailPage();
             } else {
                 $scope.c = "a73d1a5e-b640-467e-8583-e4b52cfae437";
-                //Get 
+                //Getting the country
                 travelRequestService.getCountryById($scope.request.CountryID)
                 .then(function (result) {
                     $scope.request.Country = result.results[0];
+
+                    //For the approval box
                     showApproveBoxIfNeeded($scope.request);
                 });
 
+                //getting the Country
                 travelRequestService.getCountryById($scope.request.CustomerOrProspect.Address.CountryRegionID)
                .then(function (result) {
                    $scope.request.CustomerOrProspect.Address.CountryRegion = result.results[0];
                });
 
+                //Getting the company
+                angular.forEach($scope.request.TravelRequest_RequestTravellers, function (value, key) {
+                    travelRequestService.getCompanyById(value.RequestTraveller.CompanyID).then(function (result) {
+                        
+                    });
+                });
+
+                //Getting the supervisor
                 travelRequestService.getEmployeeByObjectGuid(query.results[0].SuperiorID)
                 .then(function (employee) {
                     $scope.supervisorName = employee.userName;

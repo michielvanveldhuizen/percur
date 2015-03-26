@@ -130,6 +130,10 @@
                                 No preferred address given.
                             </div>
                         </div>
+                        <div data-form-control-static data-label="Notes" ng-show="accommodation.Note.length > 0">
+                            {{accommodation.Note}}
+                        </div>
+                        
                     </fieldset>
                 </div>
             </div>
@@ -162,6 +166,9 @@
                         </div>
                         <div data-form-control-static data-label="Extra Luggage">
                             {{flight.LargeLuggageCount ? flight.LargeLuggageCount + ' kg' : 'None' }}
+                        </div>
+                        <div data-form-control-static data-label="Notes" ng-show="flight.Note.length > 0">
+                            {{flight.Note}}
                         </div>
                     </fieldset>
                 </div>
@@ -203,6 +210,9 @@
                                 </div>
                             </div>
                         </div>
+                        <div data-form-control-static data-label="Notes" ng-show="ferry.Note.length > 0">
+                            {{ferry.Note}}
+                        </div>
                     </fieldset>
                 </div>
             </div>
@@ -224,6 +234,9 @@
                         </div>
                         <div data-form-control-static data-label="License Plate">
                             {{tunnel.LicensePlate || 'No licence plate given.'}}
+                        </div>
+                        <div data-form-control-static data-label="Notes" ng-show="tunnel.Note.length > 0">
+                            {{tunnel.Note}}
                         </div>
                     </fieldset>
                 </div>
@@ -255,6 +268,9 @@
                         <div data-form-control-static data-label="Secondary Driver">
                             {{car.SecondaryDriver.FirstName||'No secondary driver.'}} {{car.SecondaryDriver.FamilyName}}
                         </div>
+                        <div data-form-control-static data-label="Notes" ng-show="car.Note.length > 0">
+                            {{car.Note}}
+                        </div>
                     </fieldset>
                 </div>
             </div>
@@ -277,6 +293,9 @@
                         </div>
                         <div data-form-control-static data-label="Date of Departure">
                             {{taxi.DepartureDate|date:'EEEE, d MMMM yyyy'}}
+                        </div>
+                        <div data-form-control-static data-label="Notes" ng-show="taxi.Note.length > 0">
+                            {{taxi.Note}}
                         </div>
                     </fieldset>
                 </div>

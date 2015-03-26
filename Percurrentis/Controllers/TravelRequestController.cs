@@ -18,6 +18,8 @@ using System.Data.Entity.Infrastructure;
 using System.Diagnostics;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
+using System.Web;
 using System.Web.Http;
 using System.Web.Script.Serialization;
 using System.Web.Services;
@@ -95,6 +97,8 @@ namespace Percurrentis.Controllers
             return _contextProvider.Context.TravelRequest
                 .Include("TravelRequest_RequestTravellers")
                 .Include("TravelRequest_RequestTravellers.RequestTraveller")
+                .Include("TravelRequest_RequestTravellers.RequestTraveller.Company")
+                .Include("TravelRequest_RequestTravellers.RequestTraveller.Company.Address")
                 .Include("CustomerOrProspect")
                 .Include("CustomerOrProspect.Address")
                 .Include("FlightRequests")
@@ -116,6 +120,7 @@ namespace Percurrentis.Controllers
                 .Include("TaxiRequests.DepartureAddress")
                 .Include("TaxiRequests.DestinationAddress")
                 .Include("Accommodations")
+                .Include("Accommodations.Address")
                 .Include("TravelRequestApproval");
         }
 
@@ -232,6 +237,6 @@ namespace Percurrentis.Controllers
             ADservices ADservices = ADservices.InstanceCreation();
             List<UserAC> List = ADservices.GetUsers();
             return List;
-        }  
+        }
     }
 }

@@ -471,8 +471,6 @@
         // when the start date changes to beyond the end date, also set the
         // end date to the new start date.
         $scope.onRentalCarStartDateChanged = function (rentalcar) {
-            console.log($scope);
-            console.log($scope.model.TravelRequest_RequestTravellers)
             if (rentalcar.rentalStart > rentalcar.rentalEnd) {
                 rentalcar.rentalEnd = rentalcar.rentalStart;
             }

@@ -147,7 +147,7 @@
         .then(function (query) {
             $scope.request = query.results[0];
             $scope.total = 0;
-
+            console.log($scope.request);
             travelRequestService.getProposalIdFromItinerary($scope.request.Id)
             .then(function (query) {
                 if (query.results.length > 0) {
