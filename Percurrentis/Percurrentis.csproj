@@ -350,6 +350,42 @@
     <Compile Include="Migrations\201503170918335_oneToMany_ManyToOneTest.Designer.cs">
       <DependentUpon>201503170918335_oneToMany_ManyToOneTest.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201503180723403_TravelProposal_1.cs" />
+    <Compile Include="Migrations\201503180723403_TravelProposal_1.Designer.cs">
+      <DependentUpon>201503180723403_TravelProposal_1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201503190710301_accommodationsProposalLink.cs" />
+    <Compile Include="Migrations\201503190710301_accommodationsProposalLink.Designer.cs">
+      <DependentUpon>201503190710301_accommodationsProposalLink.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201503190753280_flightsProposalLink.cs" />
+    <Compile Include="Migrations\201503190753280_flightsProposalLink.Designer.cs">
+      <DependentUpon>201503190753280_flightsProposalLink.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201503191243316_CostsPlusNotes.cs" />
+    <Compile Include="Migrations\201503191243316_CostsPlusNotes.Designer.cs">
+      <DependentUpon>201503191243316_CostsPlusNotes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201503230839213_killTreqIdKey.cs" />
+    <Compile Include="Migrations\201503230839213_killTreqIdKey.Designer.cs">
+      <DependentUpon>201503230839213_killTreqIdKey.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201503230946262_apparentlySomethingChanged.cs" />
+    <Compile Include="Migrations\201503230946262_apparentlySomethingChanged.Designer.cs">
+      <DependentUpon>201503230946262_apparentlySomethingChanged.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201503231059050_ProposalHasRequest.cs" />
+    <Compile Include="Migrations\201503231059050_ProposalHasRequest.Designer.cs">
+      <DependentUpon>201503231059050_ProposalHasRequest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201503231203338_FlightsInProposal.cs" />
+    <Compile Include="Migrations\201503231203338_FlightsInProposal.Designer.cs">
+      <DependentUpon>201503231203338_FlightsInProposal.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201503240623072_FlightRequestParentID.cs" />
+    <Compile Include="Migrations\201503240623072_FlightRequestParentID.Designer.cs">
+      <DependentUpon>201503240623072_FlightRequestParentID.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201503251355330_AddFerryReqProposal.cs" />
     <Compile Include="Migrations\201503251355330_AddFerryReqProposal.Designer.cs">
       <DependentUpon>201503251355330_AddFerryReqProposal.cs</DependentUpon>
@@ -1452,6 +1488,33 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201503170918335_oneToMany_ManyToOneTest.resx">
       <DependentUpon>201503170918335_oneToMany_ManyToOneTest.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503180723403_TravelProposal_1.resx">
+      <DependentUpon>201503180723403_TravelProposal_1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503190710301_accommodationsProposalLink.resx">
+      <DependentUpon>201503190710301_accommodationsProposalLink.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503190753280_flightsProposalLink.resx">
+      <DependentUpon>201503190753280_flightsProposalLink.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503191243316_CostsPlusNotes.resx">
+      <DependentUpon>201503191243316_CostsPlusNotes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503230839213_killTreqIdKey.resx">
+      <DependentUpon>201503230839213_killTreqIdKey.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503230946262_apparentlySomethingChanged.resx">
+      <DependentUpon>201503230946262_apparentlySomethingChanged.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503231059050_ProposalHasRequest.resx">
+      <DependentUpon>201503231059050_ProposalHasRequest.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503231203338_FlightsInProposal.resx">
+      <DependentUpon>201503231203338_FlightsInProposal.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503240623072_FlightRequestParentID.resx">
+      <DependentUpon>201503240623072_FlightRequestParentID.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201503251355330_AddFerryReqProposal.resx">
       <DependentUpon>201503251355330_AddFerryReqProposal.cs</DependentUpon>

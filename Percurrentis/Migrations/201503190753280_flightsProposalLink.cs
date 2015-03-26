@@ -10,6 +10,7 @@ namespace Percurrentis.Migrations
             AddColumn("dbo.FlightRequest", "TravelProposalID", c => c.Int());
             CreateIndex("dbo.FlightRequest", "TravelProposalID");
             AddForeignKey("dbo.FlightRequest", "TravelProposalID", "dbo.TravelProposal", "Id");
+
         }
         
         public override void Down()
