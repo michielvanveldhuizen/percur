@@ -45,7 +45,7 @@
 
             <h4><i class="fa fa-plane"></i> Flight Request Details</h4>
         </div>
-        <div class="row" data-ng-repeat="flightreq in request.FlightRequests">
+        <div class="row" data-ng-repeat="flightreq in request.FlightRequests | orderBy: 'DepartureDate'">
             <div class="table fable">
                 <div class="col-md-6">
                     <table class="table table-vcenter table-condensed table-striped">
