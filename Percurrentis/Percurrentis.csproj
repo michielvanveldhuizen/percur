@@ -350,6 +350,10 @@
     <Compile Include="Migrations\201503170918335_oneToMany_ManyToOneTest.Designer.cs">
       <DependentUpon>201503170918335_oneToMany_ManyToOneTest.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201503251355330_AddFerryReqProposal.cs" />
+    <Compile Include="Migrations\201503251355330_AddFerryReqProposal.Designer.cs">
+      <DependentUpon>201503251355330_AddFerryReqProposal.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Context\DatabaseContext.cs" />
     <Compile Include="Notification\Notification.cs" />
@@ -1448,6 +1452,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201503170918335_oneToMany_ManyToOneTest.resx">
       <DependentUpon>201503170918335_oneToMany_ManyToOneTest.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503251355330_AddFerryReqProposal.resx">
+      <DependentUpon>201503251355330_AddFerryReqProposal.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

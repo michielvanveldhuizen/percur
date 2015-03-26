@@ -116,6 +116,14 @@ namespace Percurrentis.Context
                         specEntity.TravelProposalID = null;
                     }
                 }
+                if (changedEntity.Entity is Accommodation)
+                {
+                    var specEntity = changedEntity.Entity as Accommodation;
+                    if ((specEntity.TravelProposalID).Equals(0))
+                    {
+                        specEntity.TravelProposalID = null;
+                    }
+                }
                 if (changedEntity.Entity is MetaEntity)
                 {
                     var specEntity = changedEntity.Entity as MetaEntity;

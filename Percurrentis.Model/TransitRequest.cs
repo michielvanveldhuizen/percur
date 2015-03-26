@@ -20,6 +20,7 @@ namespace Percurrentis.Model
         public virtual Address DepartureAddress { get; set; }
         [Address]
         public virtual Address DestinationAddress { get; set; }
-        public int TravelRequestID { get; set; }
+        public int? TravelRequestID { get; set; }
+        public int? TravelProposalID { get; set; }
     }
 }

@@ -31,7 +31,7 @@
         <div data-form-control data-label="Car License Plate">
             <input type="text"
                    class="form-control"
-                   data-ng-model="ferry.LicensePlate"
+                   data-ng-model="currentEntity.LicensePlate"
                    placeholder="License Plate"
                    data-typeahead="car.LicensePlate as car.LicensePlate for car in ferryLicensePlates | filter:{LicensePlate:$viewValue} | limitTo:8"
                    data-z-validate />

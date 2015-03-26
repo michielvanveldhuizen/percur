@@ -46,6 +46,7 @@
 
         // Save when proposal is completed.
         $scope.saveProposal = function () {
+            console.log($scope.proposal);
             console.log(travelRequestService.hasChanges($scope.proposal));
             travelRequestService.saveChanges($scope.proposal,
                                              undefined,
@@ -130,6 +131,8 @@
                     $scope.currentEntity                         = $scope.proposal.Accommodations[$scope.currentIndex];
                     // Copying all this stuff by hand because it will screw up otherwise... :(
                     $scope.currentEntity.TravelProposalID        = $scope.proposal.Id;
+                    $scope.currentEntity.TravelRequestID         = 0;
+                    $scope.currentEntity.TravelRequest           = null;
                     $scope.currentEntity.Address.AddressName     = request.Address.AddressName;
                     $scope.currentEntity.Address.Street          = request.Address.Street;
                     $scope.currentEntity.Address.PostalCode      = request.Address.PostalCode;
@@ -146,9 +149,9 @@
                     $scope.currentEntity.SecondaryCurrency       = request.SecondaryCurrency;
                     $scope.currentEntity.Note                    = request.Note;
                     break;
+
                 case 'Flight':
                     travelRequestService.addFlight(proposal);
-                    console.log(request);
                     // Setting the index
                     $scope.currentIndex                               = $scope.proposal.FlightRequests.length - 1;
                     $scope.currentEntity                              = $scope.proposal.FlightRequests[$scope.currentIndex];
@@ -179,6 +182,17 @@
                     $scope.currentEntity.SecondaryCurrency = request.SecondaryCurrency;
                     $scope.currentEntity.Note = request.Note;
                     break;
+                case 'Ferry':
+                    console.log(proposal);
+                    travelRequestService.addFerry(proposal);
+
+                    $scope.currentIndex = $scope.proposal.FerryRequests.length - 1;
+                    $scope.currentEntity = $scope.proposal.FerryRequests[$scope.currentIndex];
+
+                    $scope.currentEntity.CarHeight = request.CarHeight;
+                    $scope.currentEntity.CarWidth = request.CarWidth;
+                    $scope.currentEntity.LicensePlate = request.LicensePlate;
+
             }
         }
 

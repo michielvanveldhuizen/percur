@@ -13,19 +13,26 @@
                     </strong> on {{ flight.DepartureDate | date:'d MMMM yyyy' }}
                 </a>
                 <a href="javascript:void(0)" class="list-group-item" ng-repeat="fl in proposal.FlightRequests | filter: { ParentID: flight.Id }">
-                    <input id="option{{ fl.ParentID }}_{{ $index }}" type="radio" name="option1" />
-                    <label for="option{{ fl.ParentID }}_{{ $index }}">
-                        {{ fl.DepartureAddress.City }} to {{ fl.DestinationAddress.City }}
-                        <i ng-if="fl.Note != NULL" class="gi gi-comments" data-tooltip="{{ fl.Note }}"></i>
-                         | 
-                        {{ fl.DepartureDate | date:'d MMMM yyyy' }}
-                         |
-                        {{ fl.Cost }}€ / {{ fl.CostSecondary }} {{ fl.SecondaryCurrency }}
-                    </label>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <input id="option{{ fl.ParentID }}_{{ $index }}" type="radio" name="option1" />
+                            <label for="option{{ fl.ParentID }}_{{ $index }}">
+                                {{ fl.DepartureAddress.City }} to {{ fl.DestinationAddress.City }}
+                                <i ng-if="fl.Note != NULL" class="gi gi-comments" data-tooltip="{{ fl.Note }}"></i>
+                                |
+                                {{ fl.DepartureDate | date:'d MMMM yyyy' }}
+                            </label>
+                        </div>
+                        <div class="col-md-5">
+
+                        </div>
+                        <div class="col-md-1">
+                            {{ fl.Cost }}€ / {{ fl.CostSecondary }} {{ fl.SecondaryCurrency }}
+                        </div>
+                    </div>
                 </a>
-                <a href="javascript:void(0)" class="list-group-item disabled" style="text-align: right"></a>
+                <!--<a href="javascript:void(0)" class="list-group-item disabled" style="text-align: right"></a>-->
             </div>
         </div>
     </div>
-
 </div>

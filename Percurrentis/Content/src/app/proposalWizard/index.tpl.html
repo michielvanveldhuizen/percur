@@ -16,7 +16,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr ng-repeat="flight in itinerary.FlightRequests" ng-model="flight">
+                                <tr ng-repeat="flight in itinerary.FlightRequests | orderBy:'DepartureDate'" ng-model="flight">
                                     <td>Flight</td>
                                     <td>{{ flight.DepartureAddress.City }}</td>
                                     <td>{{ flight.DestinationAddress.City }}</td>

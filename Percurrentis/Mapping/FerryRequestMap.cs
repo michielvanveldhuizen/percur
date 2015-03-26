@@ -24,7 +24,8 @@ namespace Percurrentis.Mapping
             this.Property(f => f.DepartureDate).IsRequired();
             this.Property(f => f.DepartureAddressID).IsRequired();
             this.Property(f => f.DestinationAddressID).IsRequired();
-            this.Property(f => f.TravelRequestID).IsRequired();
+            this.Property(f => f.TravelRequestID).IsOptional();
+            this.Property(f => f.TravelProposalID).IsOptional();
             this.Property(f => f.LicensePlate).IsOptional().HasMaxLength(256);
             this.Property(f => f.CarHeight).IsOptional();
             this.Property(f => f.CarLength).IsOptional();

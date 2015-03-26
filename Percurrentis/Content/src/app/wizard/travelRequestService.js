@@ -716,6 +716,8 @@
 
         // -- ferry --------------------------------------------------------//
         function addFerry(request, departure) {
+            console.log(request);
+
             if (departure) {
                 var entity = manager.createEntity('FerryRequest');
                 entity.DepartureDate = departure.DepartureDate;

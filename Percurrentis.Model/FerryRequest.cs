@@ -19,5 +19,6 @@ namespace Percurrentis.Model
         public string Note { get; set; }
 
         public virtual TravelRequest TravelRequest { get; set; }
+        public virtual TravelProposal TravelProposal { get; set; }
     }
 }
