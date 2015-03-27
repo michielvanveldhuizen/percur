@@ -105,15 +105,48 @@
             } else {
                 //Filters for non travel agency (project managers)
                 //if(isEmployee)
-                if (true == false) {
-
-                }
-
                 if (true == true) {
+                    console.log("banana");
                     $scope.filters = {
                         all: new Filter(function () {
                             return _.filter($scope.allRequests, function (req) {
-                                return req.IsDeleted == false;
+                                return req.IsDeleted == false && userName == req.ApplicantID;
+                            });
+                        }, 'All', 0, 'fa-bars', 'View both open and archived travel requests.'),
+                        current: new Filter(function () {
+                            return _.filter($scope.allRequests, function (req) {
+                                return req.IsArchived == false && req.IsDeleted == false && req.IsApproved == 0 && isMyRequest(req);
+                            });
+                        }, 'Awaiting', 1, 'fa-inbox', 'View requests that are awaiting approval.'),
+                        approved: new Filter(function () {
+                            return _.filter($scope.allRequests, function (req) {
+                                return req.IsApproved == 2 && req.IsDeleted == false && isMyRequest(req);
+                            });
+                        }, 'Approved', 2, 'fa-check', 'View approved travel requests.'),
+                        rejected: new Filter(function () {
+                            return _.filter($scope.allRequests, function (req) {
+                                return req.IsApproved == 1 && req.IsDeleted == false && isMyRequest(req);
+                            });
+                        }, 'Rejected', 3, 'fa-times', 'View rejected travel requests.'),
+                        archived: new Filter(function () {
+                            return _.filter($scope.allRequests, function (req) {
+                                return req.IsArchived == true && req.IsDeleted == false && isMyRequest(req);
+                            });
+                        }, 'Archived', 4, 'fa-archive', 'View archived travel requests.'),
+                        deleted: new Filter(function () {
+                            return _.filter($scope.allRequests, function (req) {
+                                return req.IsDeleted == true && isMyRequest(req);
+                            });
+                        }, 'Deleted', 5, 'fa-ban', 'View deleted travel requests.'),
+                    }
+                }
+                
+                //Manager
+                if (true == false) {
+                    $scope.filters = {
+                        all: new Filter(function () {
+                            return _.filter($scope.allRequests, function (req) {
+                                return req.IsDeleted == false && ownGuid == req.SuperiorID;
                             });
                         }, 'All', 0, 'fa-bars', 'View both open and archived travel requests.'),
                         current: new Filter(function () {
@@ -143,17 +176,37 @@
                         }, 'Rejected', 3, 'fa-times', 'View rejected travel requests.'),
                         archived: new Filter(function () {
                             return _.filter($scope.allRequests, function (req) {
-                                return req.IsArchived == true && req.IsDeleted == false;
+                                return req.IsArchived == true && req.IsDeleted == false && ownGuid == req.SuperiorID;;
                             });
                         }, 'Archived', 4, 'fa-archive', 'View archived travel requests.'),
                         deleted: new Filter(function () {
                             return _.filter($scope.allRequests, function (req) {
-                                return req.IsDeleted == true && ownGuid == req.SuperiorID;
+                                return req.IsDeleted == true && ownGuid == req.SuperiorID && ownGuid == req.SuperiorID;;
                             });
                         }, 'Deleted', 5, 'fa-ban', 'View deleted travel requests.'),
                     }
                 }
             }
+        }
+
+        //Check if request is made by me or that i am the traveller
+        function isMyRequest(req) {
+            //by me
+            if (req.ApplicantID.toLowerCase() == userName.toLowerCase()) {
+                return true;
+            }
+
+            //for me as traveller
+            angular.forEach(req.TravelRequest_RequestTravellers, function (value, key) {
+                if(userName.toLowerCase() == value.RequestTraveller.firstName+" "+value.RequestTraveller.lastName){
+                    return true;
+                }
+                if (userName.toLowerCase() == value.RequestTraveller.fullName) {
+                    return true;
+                }
+            });
+
+            return false;
         }
 
         //Archiving a travel request

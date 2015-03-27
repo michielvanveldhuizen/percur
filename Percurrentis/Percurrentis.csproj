@@ -1285,6 +1285,10 @@
     <Content Include="Content\vendor\ProUI\js\vendor\jquery-1.11.0.min.js" />
     <Content Include="Content\vendor\ProUI\js\vendor\modernizr-2.7.1-respond-1.4.2.min.js" />
     <Content Include="favicon.ico" />
+    <Content Include="FileUpload\TravelDocuments\-2056543020.png" />
+    <Content Include="FileUpload\TravelDocuments\Untitled%280%29%280%29.png" />
+    <Content Include="FileUpload\TravelDocuments\Untitled%280%29.png" />
+    <Content Include="FileUpload\TravelDocuments\Untitled.png" />
     <Content Include="Global.asax" />
     <Content Include="Content\vendor\angular\angular.min.js.map" />
     <Content Include="Content\vendor\angular\angular-route.min.js.map" />

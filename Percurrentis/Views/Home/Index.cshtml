@@ -9,28 +9,29 @@
 
 @section PreScript {
     <script>
-        var activeProfile = {
-            'obj'      : 'window.activeProfile',
-            'username' : '@Model.Name',
-            'roles'    : {
-                        },
-            'features' : { approveRequest: true, 
-                           readRequest:    true,
-                           createRequest:  false  }
-        };
+    var activeProfile = {
+        'obj'      : 'window.activeProfile',
+        'username' : '@Model.Name',
+        'roles'    : {
+        },
+        'features' : { approveRequest: true,
+            readRequest:    true,
+            createRequest:  false  }
+    };
 
-        var roles = {"TravelAgency":@Model.AccessLevels.TravelAgency.ToString().ToLower(),
-            "COO":@Model.AccessLevels.COO.ToString().ToLower(),
-            "Employee":true,
-            "ProjectManager":@Model.AccessLevels.ProjectManager.ToString().ToLower()};
-        var dbCompanies = [];
-        var dbAddresses = [];
-        var dbCountries = [];
-        var dbGuidToName = [];
-        
-        @{ var developer = @User.IsInRole("Travel_Agency_Project").ToString().ToLower(); }
-        activeProfile.roles.developer = @developer
-        var ownGuid = "@Model.Guid";        
+    var roles = {"TravelAgency":@Model.AccessLevels.TravelAgency.ToString().ToLower(),
+        "COO":@Model.AccessLevels.COO.ToString().ToLower(),
+        "Employee":true,
+        "ProjectManager":@Model.AccessLevels.ProjectManager.ToString().ToLower()};
+    var dbCompanies = [];
+    var dbAddresses = [];
+    var dbCountries = [];
+    var dbGuidToName = [];
+
+    @{ var developer = @User.IsInRole("Travel_Agency_Project").ToString().ToLower(); }
+    activeProfile.roles.developer = @developer
+    var ownGuid = "@Model.Guid";
+    var userName = "@ViewBag.UserName";
     </script>
 }
 
