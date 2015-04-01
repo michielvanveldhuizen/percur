@@ -19,6 +19,7 @@ namespace Percurrentis.AD_classes
         private volatile static ADservices singletonObject;
 
         private Dictionary<string, UserAC> userDictonary = new Dictionary<string, UserAC>();
+        private List<string> departmentList = new List<string>();
 
         /// <summary>
         /// Singleton use examble: 
@@ -104,19 +105,28 @@ namespace Percurrentis.AD_classes
                         q++;
                     }*/
 
+                    //setting Title if it is a property
                     if (qw.Properties.Contains("title"))
                     {
                         userAC.title = qw.Properties["title"][0].ToString();
                     }
 
+                    //setting Manager if it is a property
                     if (qw.Properties.Contains("manager"))
                     {
                         userAC.managerString = qw.Properties["manager"][0].ToString();
                     }
 
+                    //setting department if it is a property
                     if (qw.Properties.Contains("department"))
                     {
                         userAC.department = qw.Properties["department"][0].ToString();
+
+                        //Adding depart ment to the list if it isn't in there yet
+                        if (!departmentList.Contains(userAC.department))
+                        {
+                            departmentList.Add(userAC.department);
+                        }
                     }
 
                     if (qw.Properties.Contains("mail"))
@@ -163,7 +173,7 @@ namespace Percurrentis.AD_classes
         }
 
         /// <summary>
-        /// Gives a list of users from the ActiveDirectory
+        /// Gives a list of users from the ActiveDirectory after filling the dictonary (if needed)
         /// </summary>
         /// <returns>List of users</returns>
         public List<UserAC> GetUsers()
@@ -174,6 +184,17 @@ namespace Percurrentis.AD_classes
             List<UserAC> userList = userDictonary.Values.ToList();
 
             return userList;
+        }
+        
+        /// <summary>
+        /// Returns the departmentList after filling the dictonary (if needed)
+        /// </summary>
+        /// <returns>departmentList</returns>
+        public List<string> GetDepartments()
+        {
+            FillUserDictonaryIfNeeded();
+
+            return departmentList;
         }
         
         /// <summary>
@@ -199,7 +220,6 @@ namespace Percurrentis.AD_classes
         /// <summary>
         /// Getting all users where isManager = true
         /// </summary>
-        /// <param name="department"></param>
         /// <returns>A list of Users</returns>
         public List<UserAC> GetManagers()
         {
@@ -218,7 +238,6 @@ namespace Percurrentis.AD_classes
         /// <summary>
         /// Getting all travel Agencies
         /// </summary>
-        /// <param name="department"></param>
         /// <returns>A list of Users</returns>
         public List<UserAC> GetTravelAgents()
         {
@@ -238,7 +257,7 @@ namespace Percurrentis.AD_classes
         /// Gets user by full name. upper or lower case doesn't matter
         /// If name is not found an empty UserAC object is returned with the name "UserNotFound"
         /// </summary>
-        /// <param name="department"></param>
+        /// <param name="name"></param>
         /// <returns>A list of Users</returns>
         public UserAC GetUserByName(string name)
         {
@@ -259,7 +278,7 @@ namespace Percurrentis.AD_classes
         /// Gets user by GUID
         /// If GUID is not found an empty UserAC object is returned with the name "UserNotFound"
         /// </summary>
-        /// <param name="department"></param>
+        /// <param name="GUID"></param>
         /// <returns>A list of Users</returns>
         public UserAC GetUserByGuid(string GUID)
         {

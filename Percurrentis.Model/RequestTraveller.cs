@@ -22,6 +22,10 @@ namespace Percurrentis.Model
         [_256]
         public string FullName { get; set; }
         public string PhoneNumberID { get; set; }
+        public string TravelDocument { get; set; }
+
+        public string Department { get; set; }
+
         public int? CompanyID { get; set; }
         //public string FlyerMemberCardID { get; set; }
         //[ValidateObject]

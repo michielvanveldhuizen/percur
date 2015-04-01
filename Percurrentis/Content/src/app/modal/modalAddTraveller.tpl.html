@@ -37,6 +37,16 @@
                    data-z-validate />
         </div>
 
+        <div data-form-control data-label="Department">
+            <select data-chosen
+                    data-width="'100%'"
+                    data-ng-model="traveller.Department"
+                    data-ng-options="department for department in departments"
+                    data-z-validate>
+                <option value="" disabled>Please select department</option>
+            </select>
+        </div>
+
         <div data-form-control data-label="Company">
             <select data-chosen
                     id="selectTravellerCompany"
@@ -57,18 +67,17 @@
                    placeholder="Company"
                    data-z-validate />
         </div>
-        <!--<hr />
-        
-        <div data-form-control data-label="Travel document photo">          
-            <div ng-controller="fileUploadCtrl">
-                <input type="file" ng-file-select="" file-model="myFile" multiple>
-                <button ng-click="uploadFile()">upload me</button>
+        <div data-form-control data-label="Copy of Travel Document">
+            <div ng-controller="myCtrl">
+                <input class="btn btn-success pull-left" style="margin-top: 5px;" type="file" file-model="myFile" />
+                <button id="upload-button" class="btn btn-success pull-left" style="padding: 7px;padding-bottom: 8px;margin-left: 5px;margin-top: 5px;" ng-click="uploadFile()">Upload</button>
             </div>
-        </div>-->
-        
+        </div>
+        <div data-form-control data-label="">
+            <div class="expired" style="display:none;" id="upload-error"></div>
+        </div>
     </div>
-</div>
-<div class="modal-footer" style="margin-top:265px;">
+<div class="modal-footer" style="margin-top:355px;">
     <button class="btn btn-primary" data-ng-click="primary.action()" data-ng-disabled="primary.disabled">
         <i class="fa fa-check"></i>
         Save and close

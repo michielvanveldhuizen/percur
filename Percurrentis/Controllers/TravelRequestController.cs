@@ -241,5 +241,15 @@ namespace Percurrentis.Controllers
             List<UserAC> List = ADservices.GetUsers();
             return List;
         }
+
+        //retrieve ActiveDirectory Users
+        [HttpGet]
+        public List<string> Departments()
+        {
+            //Using Adservice as Singleton
+            ADservices ADservices = ADservices.InstanceCreation();
+            List<string> List = ADservices.GetDepartments();
+            return List;
+        }
     }
 }

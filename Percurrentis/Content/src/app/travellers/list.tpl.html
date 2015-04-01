@@ -23,6 +23,7 @@
                         <th class="col-md-1">First Name</th>
                         <th class="col-md-1">Family Name</th>
                         <th class="col-md-1">Full Name</th>
+                        <th class="col-md-1">Department</th>
                         <th class="col-md-1">Company</th>
                     </tr>
                 </thead>
@@ -32,6 +33,7 @@
                         <td data-ng-click="go('/Travellers/' + traveller.Id)">{{traveller.FirstName}}</td>
                         <td data-ng-click="go('/Travellers/' + traveller.Id)">{{traveller.FamilyName}}</td>
                         <td data-ng-click="go('/Travellers/' + traveller.Id)">{{traveller.FullName}}</td>
+                        <td data-ng-click="go('/Travellers/' + traveller.Id)">{{traveller.Department}}</td>
                         <td data-ng-click="go('/Travellers/' + traveller.Id)">{{traveller.Company.Name}}</td>
                     </tr>
                 </tbody>

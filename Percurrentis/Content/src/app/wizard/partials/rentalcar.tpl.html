@@ -130,7 +130,7 @@
                                         'disabled'           : rentalcar.Driver.entityAspect.getKey().equals(driver.RequestTraveller.entityAspect.getKey()) }"
                         data-ng-model="driver"
                         data-ng-click="rentalcar.SecondaryDriver = driver">
-                    {{driver.FirstName + ' ' + driver.FamilyName}}
+                    {{driver.RequestTraveller.FirstName + ' ' + driver.RequestTraveller.FamilyName}}
                 </button>
                 <button type="button"
                         class="btn btn-sm"

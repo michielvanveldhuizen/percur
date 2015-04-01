@@ -33,7 +33,14 @@
         
         //gets traveller data and set old data to nothing to not keep connected to a previous traveller.
         travellerService.getTravellerById(lastParam).then(function (query) {
+
             $scope.request = query.results[0];
+            if ($scope.request.TravelDocument !== null) {
+                $scope.request.ShowTravelDocument = true;
+                $scope.request.TravelDocumentLocation = "Picture/TravelDocument/" + $scope.request.TravelDocument;
+            } else {
+                $scope.request.ShowTravelDocument = false;
+            }
             oldData = {};
             jQuery.extend(oldData, query.results[0]);
         });
@@ -60,7 +67,7 @@
                 jQuery.extend(oldData, query.results[0]);
             
                 modalService.openAddTraveller(function () {
-                    //Saved Maybe a note for that?
+                    $location.reload();
                 }, $scope.request,
                 function () {
                     $scope.request = oldData;

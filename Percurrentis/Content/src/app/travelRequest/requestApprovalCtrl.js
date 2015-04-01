@@ -1,4 +1,6 @@
-﻿(function () {
+﻿//NO LONGER OF USE
+//MAYBE DELETE?
+(function () {
     'use strict';
 
     var controllerId = 'requestApprovalCtrl';

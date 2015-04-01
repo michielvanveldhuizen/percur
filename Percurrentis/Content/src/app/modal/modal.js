@@ -6,9 +6,9 @@
     // Define the factory on the module.
     // Inject the dependencies. 
     // Point to the factory definition function.
-    var myModalApp = angular.module('app').factory(serviceId, ['$modal', '$sanitize','travellerService', modal]);
+    var myModalApp = angular.module('app').factory(serviceId, ['$modal', '$sanitize', 'fileUpload', 'travellerService', modal]);
 
-    function modal($modal, $sanitize, travellerService) {
+    function modal($modal, $sanitize,fileUpload, travellerService) {
         // Define the functions and properties to reveal.
         var service = {
             openDelete: openDelete,
@@ -16,6 +16,8 @@
             openAddTraveller: openAddTraveller
         };
 
+        var sTravelDocument = "";
+        
         return service;
 
         //Special modal just for adding travellers
@@ -34,21 +36,6 @@
             }
 
             function modalAddTravellerCtrl($scope, $modalInstance) {
-                $scope.onFileSelect = function ($files) {
-                    //$files: an array of files selected, each file has name, size, and type.
-                    for (var i = 0; i < $files.length; i++) {
-                        var $file = $files[i];
-                        angularFileUpload.upload({
-                            url: '',
-                            file: $file,
-                            progress: function (e) { }
-                        }).then(function (data, status, headers, config) {
-                            // file is uploaded successfully
-                            console.log(data);
-                        });
-                    }
-                }
-
                 //Create a new entity if preTravellerData is not defined
                 if (typeof preTravellerData == typeof undefined) {
                     travellerService.createTraveller()
@@ -69,6 +56,10 @@
                     $scope.travellerCompanies.push({ Name: 'Other...' });
                 });
 
+                //SetDepartments
+                travellerService.getDepartments().then(function (query) {
+                    $scope.departments = query.results;
+                });
                 
 
                 $scope.selectTravellerCompany = function (traveller, newValue) {
@@ -92,6 +83,16 @@
 
                 function primaryAction() {
                     try {
+                        
+                        //Setting the travelDocument name to save it in the entity if its not empty
+                        if (typeof travellerService.sTravelDocument != typeof undefined) {
+                            fileUpload.deleteOldFile($scope.traveller.TravelDocument);
+
+
+                            $scope.traveller.TravelDocument = travellerService.sTravelDocument;
+                        }
+
+                        //Standard save changes to update the entities
                         travellerService.saveChanges(function (result) {
                             $scope.primary.disabled = true;
                             $modalInstance.close('delete');
@@ -183,8 +184,11 @@
                  fnCancel,
                  '/TravelAgency/Content/src/app/modal/deleteBtnSet.tpl.html');
         }
+
+        
     }
 
+    //fileModel
     myModalApp.directive('fileModel', ['$parse', function ($parse) {
         return {
             restrict: 'A',
@@ -201,28 +205,72 @@
         };
     }]);
 
-    myModalApp.service('fileUpload', ['$http', function ($http) {
-        this.uploadFileToUrl = function (file, uploadUrl) {
+    //Uploading travelDocument file
+    myModalApp.service('fileUpload', ['$http', 'travellerService', function ($http, travellerService) {
+        this.uploadFileToUrl = function (file, uploadUrl, request) {
             var fd = new FormData();
             fd.append('file', file);
+
+            //Uploading the file
             $http.post(uploadUrl, fd, {
                 transformRequest: angular.identity,
                 headers: { 'Content-Type': undefined }
             })
-            .success(function () {
+            .success(function (data) {
+                //Setting the data to the travellerService and updating the button text
+                data = data.substring(1, data.length - 1);
+                travellerService.sTravelDocument = data;
+                document.getElementById("upload-button").innerHTML = "File saved!";
             })
             .error(function () {
+                document.getElementById("upload-error").innerHTML = "Couldn't upload the file";
             });
+        }
+
+        this.deleteOldFile = function (id) {
+            var fd = new FormData();
+            fd.append('delID', id);
+            var uploadUrl = "api/FileUpload";
+            //Uploading the file
+            $http.post(uploadUrl, fd, {
+                transformRequest: angular.identity,
+                headers: { 'Content-Type': undefined }
+            })
         }
     }]);
 
-    myModalApp.controller('fileUploadCtrl', ['$scope', 'fileUpload', function ($scope, fileUpload) {
-
+    myModalApp.controller('myCtrl', ['$scope', 'fileUpload', function ($scope, fileUpload) {
         $scope.uploadFile = function () {
+            //Check that its only a image
+            var check = false;
             var file = $scope.myFile;
-            console.log('file is ' + JSON.stringify(file));
-            var uploadUrl = "/TravelAgency/api/FileUpload";
-            fileUpload.uploadFileToUrl(file, uploadUrl);
+            var whiteList = ["jpg", "png", "jpeg"];
+            if (typeof file != typeof undefined) {
+                if (typeof file.name != typeof undefined) {
+                    var splitFileName = file.name.split(".");
+                    if (typeof splitFileName[1] != typeof undefined) {
+                        for (var extention in whiteList) {
+                            if (splitFileName[1].toLowerCase() == whiteList[extention]) {
+                                check = true;
+                            }
+                        }
+                    }
+                }
+            }
+            //To upload or not to upload
+            if (check) {   
+                var uploadUrl = "api/FileUpload";
+                fileUpload.uploadFileToUrl(file, uploadUrl, $scope.request);
+                
+                document.getElementById("upload-error").innerHTML = "";
+            } else {
+                //document.getElementById("upload-error").innerHTML = "Please upload a PNG, JPG or JPEG file!";
+                $("#upload-error").html("Please upload a PNG, JPG or JPEG file!").show(500);
+                setTimeout(function () {
+                    $("#upload-error").hide(500);
+                }, 5000);
+                
+            }
         };
 
     }]);

@@ -22,6 +22,7 @@
             getTravellerById: getTravellerById,
             getTravellers: getTravellers,
             getTravellerRequests: getTravellerRequests,
+            getDepartments: getDepartments,
         };
 
 
@@ -70,6 +71,21 @@
 
             function queryFailed(error) {
                 console.log(error.message, 'query failed');
+                throw error;
+            }
+        }
+
+        //Getting all departments from the AD
+        function getDepartments() {
+            var query = breeze.EntityQuery
+                .from('Departments');
+
+            var promise = managerTraveller.executeQuery(query).catch(queryFailed);
+            return promise;
+
+            function queryFailed(error) {
+                console.log(error.message, 'query failed');
+                alert(error.message);
                 throw error;
             }
         }

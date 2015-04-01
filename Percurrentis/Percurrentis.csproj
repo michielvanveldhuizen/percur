@@ -213,6 +213,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\FileUploadController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\PictureController.cs" />
     <Compile Include="Controllers\TravelRequestApprovalController.cs" />
     <Compile Include="Controllers\TravelRequestController.cs" />
     <Compile Include="Global.asax.cs">
@@ -395,13 +396,17 @@
     <Compile Include="Migrations\201503310617097_MakeIdNullableHopefully2.Designer.cs">
       <DependentUpon>201503310617097_MakeIdNullableHopefully2.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201503310648395_MakeIdNullableHopefully3.cs" />
-    <Compile Include="Migrations\201503310648395_MakeIdNullableHopefully3.Designer.cs">
-      <DependentUpon>201503310648395_MakeIdNullableHopefully3.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\201503311208144_AccoParentID.cs" />
     <Compile Include="Migrations\201503311208144_AccoParentID.Designer.cs">
       <DependentUpon>201503311208144_AccoParentID.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201504010553229_fixAutoMigration.cs" />
+    <Compile Include="Migrations\201504010553229_fixAutoMigration.Designer.cs">
+      <DependentUpon>201504010553229_fixAutoMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201504010707348_DeparmentForRequestTraveller.cs" />
+    <Compile Include="Migrations\201504010707348_DeparmentForRequestTraveller.Designer.cs">
+      <DependentUpon>201504010707348_DeparmentForRequestTraveller.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Context\DatabaseContext.cs" />
@@ -1395,6 +1400,7 @@
     <Content Include="Scripts\modernizr-2.7.2.js" />
     <Content Include="Scripts\q.js" />
     <Content Include="Scripts\q.min.js" />
+    <Content Include="Views\Picture\fkgit.txt" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -1541,11 +1547,14 @@
     <EmbeddedResource Include="Migrations\201503310617097_MakeIdNullableHopefully2.resx">
       <DependentUpon>201503310617097_MakeIdNullableHopefully2.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201503310648395_MakeIdNullableHopefully3.resx">
-      <DependentUpon>201503310648395_MakeIdNullableHopefully3.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201503311208144_AccoParentID.resx">
       <DependentUpon>201503311208144_AccoParentID.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201504010553229_fixAutoMigration.resx">
+      <DependentUpon>201504010553229_fixAutoMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201504010707348_DeparmentForRequestTraveller.resx">
+      <DependentUpon>201504010707348_DeparmentForRequestTraveller.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

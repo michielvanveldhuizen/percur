@@ -7,18 +7,18 @@ namespace Percurrentis.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.2-31219")]
-    public sealed partial class TravelProposal_1 : IMigrationMetadata
+    public sealed partial class DeparmentForRequestTraveller : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(TravelProposal_1));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(DeparmentForRequestTraveller));
         
         string IMigrationMetadata.Id
         {
-            get { return "201503180723403_TravelProposal_1"; }
+            get { return "201504010707348_DeparmentForRequestTraveller"; }
         }
         
         string IMigrationMetadata.Source
         {
-            get { return Resources.GetString("Source"); }
+            get { return null; }
         }
         
         string IMigrationMetadata.Target

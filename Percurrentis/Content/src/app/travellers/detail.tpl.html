@@ -25,9 +25,26 @@
                         <div data-form-control-static data-label="Phone Number">
                             {{request.PhoneNumberID }}
                         </div>
+                        <div data-form-control-static data-label="Department">
+                            {{request.Department }}
+                        </div>
                         <div data-form-control-static data-label="Company">
                             {{request.Company.Name}}
                         </div>
+                    </div>
+                </div>
+            </div>
+            <div class="block">
+                <div class="block-title">
+                    <h4>Travel Document</h4>
+                </div>
+
+                <div class="block">
+                    <div ng-show="request.ShowTravelDocument">
+                        <img class="img-responsive" src="{{request.TravelDocumentLocation}}" />
+                    </div>
+                    <div ng-show="!request.ShowTravelDocument">
+                        No Travel Document found.
                     </div>
                 </div>
             </div>

@@ -7,13 +7,13 @@ namespace Percurrentis.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.2-31219")]
-    public sealed partial class CostsPlusNotes : IMigrationMetadata
+    public sealed partial class fixAutoMigration : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(CostsPlusNotes));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(fixAutoMigration));
         
         string IMigrationMetadata.Id
         {
-            get { return "201503191243316_CostsPlusNotes"; }
+            get { return "201504010553229_fixAutoMigration"; }
         }
         
         string IMigrationMetadata.Source
