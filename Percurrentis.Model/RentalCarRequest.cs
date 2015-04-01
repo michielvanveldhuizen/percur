@@ -20,7 +20,8 @@ namespace Percurrentis.Model
         public int DriverID { get; set; }
         public int? SecondaryDriverID { get; set; }
         public int AddressID { get; set; }
-        public int TravelRequestID { get; set; }
+        public int? TravelRequestID { get; set; }
+        public int? TravelProposalID { get; set; }
         public int? ServiceCompanyID { get; set; }
         [ValidateObject]
         public virtual RequestTraveller Driver { get; set; }
@@ -29,6 +30,7 @@ namespace Percurrentis.Model
         [Address]
         public Address Address { get; set; }
         public virtual TravelRequest TravelRequest { get; set; }
+        public virtual TravelProposal TravelProposal { get; set; }
         public virtual ServiceCompany ServiceCompany { get; set; }
         public double? Cost { get; set; }
         public double? CostSecondary { get; set; }

@@ -100,6 +100,7 @@ namespace Percurrentis.Context
             foreach (var changedEntity in changedEntities.Where(e => e.State == EntityState.Added))
             {
                 //COmpany
+                Console.WriteLine(changedEntity);
                 if (changedEntity.Entity is Company)
                 {
                     var specEntity = changedEntity.Entity as Company;
@@ -119,6 +120,14 @@ namespace Percurrentis.Context
                 if (changedEntity.Entity is Accommodation)
                 {
                     var specEntity = changedEntity.Entity as Accommodation;
+                    if ((specEntity.TravelProposalID).Equals(0))
+                    {
+                        specEntity.TravelProposalID = null;
+                    }
+                }
+                if (changedEntity.Entity is FerryRequest)
+                {
+                    var specEntity = changedEntity.Entity as FerryRequest;
                     if ((specEntity.TravelProposalID).Equals(0))
                     {
                         specEntity.TravelProposalID = null;

@@ -13,15 +13,16 @@ namespace Percurrentis.Model
         [TrueOrFalse]
         public bool IsApproved { get; set; }
         public int TravelRequestID { get; set; }
+        public int? TravelRequestApprovalID { get; set; }
 
         public virtual TravelRequest TravelRequest { get; set; }
+        public virtual TravelRequestApproval TravelRequestApproval { get; set; }
 
         public virtual ICollection<Accommodation> Accommodations { get; set; }
         public virtual ICollection<FlightRequest> FlightRequests { get; set; }
         public virtual ICollection<FerryRequest> FerryRequests { get; set; }
-        /*public virtual ICollection<RentalCarRequest> RentalCarRequests { get; set; }
+        public virtual ICollection<RentalCarRequest> RentalCarRequests { get; set; }
         public virtual ICollection<EuroTunnelRequest> EuroTunnelRequests { get; set; }
         public virtual ICollection<TaxiRequest> TaxiRequests { get; set; }
-        */
     }
 }

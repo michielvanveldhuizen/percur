@@ -371,6 +371,38 @@
     <Compile Include="Migrations\201503240623072_FlightRequestParentID.Designer.cs">
       <DependentUpon>201503240623072_FlightRequestParentID.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201503270658150_redoForeignKeys.cs" />
+    <Compile Include="Migrations\201503270658150_redoForeignKeys.Designer.cs">
+      <DependentUpon>201503270658150_redoForeignKeys.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201503270706432_reapplyForeignKeys.cs" />
+    <Compile Include="Migrations\201503270706432_reapplyForeignKeys.Designer.cs">
+      <DependentUpon>201503270706432_reapplyForeignKeys.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201503301043114_ProposalHasApproval.cs" />
+    <Compile Include="Migrations\201503301043114_ProposalHasApproval.Designer.cs">
+      <DependentUpon>201503301043114_ProposalHasApproval.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201503310600084_MakeIdNullableHopefully.cs" />
+    <Compile Include="Migrations\201503310600084_MakeIdNullableHopefully.Designer.cs">
+      <DependentUpon>201503310600084_MakeIdNullableHopefully.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201503310613024_MakeIdNullableHopefully1.cs" />
+    <Compile Include="Migrations\201503310613024_MakeIdNullableHopefully1.Designer.cs">
+      <DependentUpon>201503310613024_MakeIdNullableHopefully1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201503310617097_MakeIdNullableHopefully2.cs" />
+    <Compile Include="Migrations\201503310617097_MakeIdNullableHopefully2.Designer.cs">
+      <DependentUpon>201503310617097_MakeIdNullableHopefully2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201503310648395_MakeIdNullableHopefully3.cs" />
+    <Compile Include="Migrations\201503310648395_MakeIdNullableHopefully3.Designer.cs">
+      <DependentUpon>201503310648395_MakeIdNullableHopefully3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201503311208144_AccoParentID.cs" />
+    <Compile Include="Migrations\201503311208144_AccoParentID.Designer.cs">
+      <DependentUpon>201503311208144_AccoParentID.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Context\DatabaseContext.cs" />
     <Compile Include="Notification\Notification.cs" />
@@ -387,6 +419,8 @@
     <Content Include="Content\src\app\itinerary\itineraryCtrl.js" />
     <Content Include="Content\src\app\itinerary\list.tpl.html" />
     <Content Include="Content\src\app\modal\discardBtnSet.tpl.html" />
+    <Content Include="Content\src\app\modal\editBtnSet.tpl.html" />
+    <Content Include="Content\src\app\modal\custommodal.tpl.html" />
     <Content Include="Content\src\app\modal\modalAddTraveller.tpl.html" />
     <Content Include="Content\src\app\modal\primaryBtnSet.tpl.html" />
     <Content Include="Content\src\app\modal\deleteBtnSet.tpl.html" />
@@ -1488,6 +1522,30 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201503240623072_FlightRequestParentID.resx">
       <DependentUpon>201503240623072_FlightRequestParentID.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503270658150_redoForeignKeys.resx">
+      <DependentUpon>201503270658150_redoForeignKeys.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503270706432_reapplyForeignKeys.resx">
+      <DependentUpon>201503270706432_reapplyForeignKeys.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503301043114_ProposalHasApproval.resx">
+      <DependentUpon>201503301043114_ProposalHasApproval.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503310600084_MakeIdNullableHopefully.resx">
+      <DependentUpon>201503310600084_MakeIdNullableHopefully.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503310613024_MakeIdNullableHopefully1.resx">
+      <DependentUpon>201503310613024_MakeIdNullableHopefully1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503310617097_MakeIdNullableHopefully2.resx">
+      <DependentUpon>201503310617097_MakeIdNullableHopefully2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503310648395_MakeIdNullableHopefully3.resx">
+      <DependentUpon>201503310648395_MakeIdNullableHopefully3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503311208144_AccoParentID.resx">
+      <DependentUpon>201503311208144_AccoParentID.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

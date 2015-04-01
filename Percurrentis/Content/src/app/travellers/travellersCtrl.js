@@ -37,6 +37,20 @@
             oldData = {};
             jQuery.extend(oldData, query.results[0]);
         });
+        travellerService.getTravellerRequests(lastParam).then(function (query) {
+            $scope.travelRequests = query.results;
+        });
+
+        $scope.getLinkType = function (data) {
+            if(data.IsItinerary)
+            {
+                return "Itinerary/" + data.Hash;
+            }
+            else
+            {
+                return "Request/" + data.Hash;
+            }
+        }
 
         //Shows modal to edit a traveller.
         $scope.showTravellerEditing = function () {

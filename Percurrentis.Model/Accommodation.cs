@@ -19,13 +19,14 @@ namespace Percurrentis.Model
         public double? CostSecondary { get; set; }
         public string SecondaryCurrency { get; set; }
         public string Note { get; set; }
+        public int? ParentID { get; set; }
 
         [Address]
         public virtual Address Address { get; set; }
 
         public virtual Note FeeSpecification { get; set; }
 
-        public int? TravelRequestID { get; set; }
+        public int TravelRequestID { get; set; }
         public int? TravelProposalID { get; set; }
 
         public virtual TravelRequest TravelRequest { get; set; }

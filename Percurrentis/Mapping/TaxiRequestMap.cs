@@ -24,7 +24,8 @@ namespace Percurrentis.Mapping
             this.Property(t => t.DepartureDate).IsRequired();
             this.Property(t => t.DepartureAddressID).IsRequired();
             this.Property(t => t.DestinationAddressID).IsRequired();
-            this.Property(t => t.TravelRequestID).IsRequired();
+            this.Property(t => t.TravelRequestID).IsOptional();
+            this.Property(t => t.TravelProposalID).IsOptional();
             this.HasRequired(t => t.DepartureAddress).WithMany().HasForeignKey(t => t.DepartureAddressID);
             this.HasRequired(t => t.DestinationAddress).WithMany().HasForeignKey(t => t.DestinationAddressID);
         }

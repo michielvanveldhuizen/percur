@@ -3,87 +3,86 @@
         <!--Wizard-->
         <div class="col-sm-12">
             <div class="block">
-                
-                    <div class="table">
-                        <table class="table table-vcenter table-condensed table-striped">
-                            <thead>
-                                <tr>
-                                    <td><strong>Type</strong></td>
-                                    <td><strong>From</strong></td>
-                                    <td><strong>To</strong></td>
-                                    <td><strong>Date</strong></td>
-                                    <td></td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr ng-repeat="flight in itinerary.FlightRequests | orderBy:'DepartureDate'" ng-model="flight">
-                                    <td>Flight</td>
-                                    <td>{{ flight.DepartureAddress.City }}</td>
-                                    <td>{{ flight.DestinationAddress.City }}</td>
-                                    <td>{{ flight.DepartureDate | date:'d MMMM yyyy' }}</td>
-                                    <td>
-                                        <div class="btn-group btn-group-sm">
-                                            <a ng-click="updateTemplateUrl('Flight', flight)"
-                                               class="btn btn-sm btn-default">
-                                                <i class="fa fa-plus"></i>
-                                                Add Option
-                                            </a>
-                                            <a ng-click=""
-                                               class="btn btn-sm btn-default">
-                                                <i class="fa fa-info-circle"></i>
-                                                More Info
-                                            </a>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr ng-repeat="acco in itinerary.Accommodations">
-                                    <td>Accommodations</td>
-                                    <td>{{ acco.Address.AddressName }}</td>
-                                    <td>{{ acco.Address.Country.Name }}</td>
-                                    <td>{{ acco.CheckInDate | date:'d MMMM yyyy' }}</td>
-                                    <td>
-                                        <div class="btn-group btn-group-sm">
-                                            <a ng-click="updateTemplateUrl('Accommodation', acco)"
-                                               class="btn btn-sm btn-default">
-                                                <i class="fa fa-plus"></i>
-                                                Add Option
-                                            </a>
-                                            <a ng-click=""
-                                               class="btn btn-sm btn-default">
-                                                <i class="fa fa-info-circle"></i>
-                                                More Info
-                                            </a>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr ng-repeat="ferry in itinerary.FerryRequests">
-                                    <td>Ferry</td>
-                                    <td>{{ ferry.DepartureAddress.AddressName }}</td>
-                                    <td>{{ ferry.DestinationAddress.AddressName }}</td>
-                                    <td>{{ ferry.DepartureDate | date:'d MMMM yyyy' }}</td>
-                                    <td>
-                                        <div class="btn-group btn-group-sm">
-                                            <a ng-click="updateTemplateUrl('Ferry', ferry)"
-                                               class="btn btn-sm btn-default">
-                                                <i class="fa fa-plus"></i>
-                                                Add Option
-                                            </a>
-                                            <a ng-click=""
-                                               class="btn btn-sm btn-default">
-                                                <i class="fa fa-info-circle"></i>
-                                                More Info
-                                            </a>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
 
+                <div class="table">
+                    <table class="table table-vcenter table-condensed table-striped">
+                        <thead>
+                            <tr>
+                                <td><strong>Type</strong></td>
+                                <td><strong>From</strong></td>
+                                <td><strong>To</strong></td>
+                                <td><strong>Date</strong></td>
+                                <td></td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="flight in itinerary.FlightRequests | orderBy:'DepartureDate'" ng-model="flight" class="datarow">
+                                <td>Flight</td>
+                                <td>{{ flight.DepartureAddress.City }}</td>
+                                <td>{{ flight.DestinationAddress.City }}</td>
+                                <td>{{ flight.DepartureDate | date:'d MMMM yyyy' }}</td>
+                                <td>
+                                    <div class="btn-group btn-group-sm">
+                                        <a ng-click="updateTemplateUrl('Flight', flight)"
+                                           class="btn btn-sm btn-default">
+                                            <i class="fa fa-plus"></i>
+                                            Add Option
+                                        </a>
+                                        <a ng-click=""
+                                           class="btn btn-sm btn-default">
+                                            <i class="fa fa-info-circle"></i>
+                                            More Info
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr ng-repeat="acco in itinerary.Accommodations">
+                                <td>Accommodations</td>
+                                <td>{{ acco.Address.AddressName }}</td>
+                                <td>{{ acco.Address.Country.Name }}</td>
+                                <td>{{ acco.CheckInDate | date:'d MMMM yyyy' }}</td>
+                                <td>
+                                    <div class="btn-group btn-group-sm">
+                                        <a ng-click="updateTemplateUrl('Accommodation', acco)"
+                                           class="btn btn-sm btn-default">
+                                            <i class="fa fa-plus"></i>
+                                            Add Option
+                                        </a>
+                                        <a ng-click=""
+                                           class="btn btn-sm btn-default">
+                                            <i class="fa fa-info-circle"></i>
+                                            More Info
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr ng-repeat="ferry in itinerary.FerryRequests">
+                                <td>Ferry</td>
+                                <td>{{ ferry.DepartureAddress.AddressName }}</td>
+                                <td>{{ ferry.DestinationAddress.AddressName }}</td>
+                                <td>{{ ferry.DepartureDate | date:'d MMMM yyyy' }}</td>
+                                <td>
+                                    <div class="btn-group btn-group-sm">
+                                        <a ng-click="updateTemplateUrl('Ferry', ferry)"
+                                           class="btn btn-sm btn-default">
+                                            <i class="fa fa-plus"></i>
+                                            Add Option
+                                        </a>
+                                        <a ng-click=""
+                                           class="btn btn-sm btn-default">
+                                            <i class="fa fa-info-circle"></i>
+                                            More Info
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
         <div class="col-md-8">
-            <div class="block">
+            <div class="block" id="addblock">
                 <!--Title-->
                 <div class="block-title">
                     <h1>Add {{ type }}</h1>
@@ -101,10 +100,26 @@
                 <div class="block-title">
                     <h2>Preview</h2>
                 </div>
-                <!--<p>ID: {{ proposal.Id }}</p>-->
-                <p>Accommodations: {{ proposal.Accommodations.length }}</p>
-                <p>Flights: {{ proposal.FlightRequests.length }}</p>
-                <p>TravelRequestID: <span class="badge">{{ proposal.TravelRequestID }}</span></p>
+                <div class="list-group">
+                    <div class="list-group-item" ng-click="showFlights = !showFlights" ng-show="proposal.FlightRequests.length > 0" style="cursor:pointer">
+                        Flights: <span class="badge">{{ proposal.FlightRequests.length }}</span>
+                        <div ng-repeat="flight in proposal.FlightRequests">
+                            <span ng-show="showFlights">
+                                {{ flight.DepartureDate | date:'d MMMM yyyy' }}: {{ flight.DepartureAddress.City }} - {{ flight.DestinationAddress.City }}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="list-group-item" ng-click="showAccommodations = !showAccommodations" ng-show="proposal.Accommodations.length > 0" style="cursor:pointer">
+                        Accommodations: <span class="badge">{{ proposal.Accommodations.length }}</span>
+                        <div ng-repeat="acco in proposal.Accommodations">
+                            <span ng-show="showAccommodations">
+                                {{ acco.CheckInDate | date:'d MMMM yyyy' }}: {{ acco.Address.AddressName }} in {{ acco.Address.City }}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="list-group-item">Ferries: <span class="badge">{{ proposal.FerryRequests.length }}</span></div>
+                </div>
+
                 <p>
                     <button type="button" class="btn btn-success" ng-click="saveProposal()">
                         Save Proposal
@@ -113,9 +128,9 @@
                         Discard Proposal
                     </button>
                 </p>
-
             </div>
+
         </div>
     </div>
-    <!--<button ng-click="hoi()">HOI</button>-->
+    <button ng-click="hoi()">HOI</button>
 </div>

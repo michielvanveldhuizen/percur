@@ -136,7 +136,10 @@ namespace Percurrentis.Controllers
         [HttpGet]
         public IQueryable<TravelRequest_RequestTraveller> TravelRequest_RequestTravellers()
         {
-            return _contextProvider.Context.TravelRequest_RequestTraveller.AsNoTracking();
+            return _contextProvider.Context.TravelRequest_RequestTraveller.AsNoTracking()
+                .Include("TravelRequest")
+                .Include("TravelRequest.Country")
+                .Include("TravelRequest.TravelRequestApproval");
         }
 
         //retrieve AddressTypes

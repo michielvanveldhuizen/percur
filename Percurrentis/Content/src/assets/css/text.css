@@ -2,6 +2,16 @@
     padding: 0;
 }
 
+.disabled {
+    z-index: 1000;
+    background-color: lightgrey;
+    opacity: 0.6;
+}
+
+.enabled {
+    z-index: 1000;
+}
+
 .margin-5 {
     margin: 5px;
 }

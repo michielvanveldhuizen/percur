@@ -20,7 +20,8 @@
             removeCompanyFromTraveller: removeCompanyFromTraveller,
             saveChanges: saveChanges,
             getTravellerById: getTravellerById,
-            getTravellers:getTravellers,
+            getTravellers: getTravellers,
+            getTravellerRequests: getTravellerRequests,
         };
 
 
@@ -125,6 +126,21 @@
             var query = breeze.EntityQuery
                 .from('RequestTraveller')
                 .where("Id", "==", id);
+
+            var promise = managerTraveller.executeQuery(query).catch(queryFailed);
+            return promise;
+
+            function queryFailed(error) {
+                console.log(error.message, 'query failed');
+                throw error;
+            }
+        }
+
+        //Gets travellers travelrequests/itineraries from database by ID
+        function getTravellerRequests(id) {
+            var query = breeze.EntityQuery
+                .from('TravelRequest_RequestTravellers')
+                .where("RequestTravellerID", "==", parseInt(id));
 
             var promise = managerTraveller.executeQuery(query).catch(queryFailed);
             return promise;

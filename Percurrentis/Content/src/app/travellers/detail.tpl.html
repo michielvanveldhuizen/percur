@@ -12,7 +12,7 @@
                 </div>
 
                 <div class="block">
-                    <div class="form-horizontal">    
+                    <div class="form-horizontal">
                         <div data-form-control-static data-label="First Name">
                             {{request.FirstName}}
                         </div>
@@ -37,9 +37,14 @@
                 <div class="block-title">
                     <h4>Travel Requests for this traveller</h4>
                 </div>
-                <div class="block">
-                    ...something for later?
-                </div>
+                    <div class="list-group">
+                        <a target="_blank" ng-href="/TravelAgency/#/{{ getLinkType(travel.TravelRequest) }}" class="list-group-item" ng-repeat="travel in travelRequests | orderBy: 'TravelRequest.DepartureDate'">
+                            {{ travel.TravelRequest.DepartureDate | date:'dd-MM-yyyy' }} - {{ travel.TravelRequest.ReturnDate | date:'dd-MM-yyyy' }}: Travelling to {{ travel.TravelRequest.Country.Name }}
+                            <p class="label label-warning pull-right" data-ng-show="travel.TravelRequest.IsApproved == 0">Awaiting</p>
+                            <p class="label label-danger pull-right" data-ng-show="travel.TravelRequest.IsApproved == 1">Rejected</p>
+                            <p class="label label-success pull-right" data-ng-show="travel.TravelRequest.IsApproved == 2">Approved</p>
+                        </a>
+                    </div>
             </div>
         </div>
     </div>
