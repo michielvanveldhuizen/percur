@@ -73,7 +73,48 @@
                 </div>
             </div>
         </div>
+        <span class="help-block">
+            Additional data
+        </span>
+        <br />
 
+        <div data-form-control data-label="Cost in Euro">
+            <input type="number"
+                   class="form-control"
+                   data-ng-model="currentEntity.Cost"
+                   style="width: 80pt"
+                   placeholder=""
+                   data-z-validate />
+        </div>
+
+        <div class="control-group">
+            <div data-form-control data-label="Cost in secondary currency">
+                <div class="controls form-inline">
+                    <input type="number"
+                           class="form-control"
+                           data-ng-model="currentEntity.CostSecondary"
+                           placeholder=""
+                           data-z-validate />
+                    <select class="form-control" data-z-validate>
+                        <option id="secCur" selected="selected">{{ currentEntity.SecondaryCurrency }}</option>
+                        <option id="secCur">RON</option>
+                        <option id="secCur">RUPEES</option>
+                        <option id="secCur">Dropmunten</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+
+        <div data-form-control data-label="Note">
+            <textarea type="text"
+                      class="form-control"
+                      rows="10"
+                      data-ng-model="currentEntity.Note"
+                      placeholder="Any notes"
+                      data-z-validate></textarea>
+
+        </div>
     </fieldset>
 
 </div>

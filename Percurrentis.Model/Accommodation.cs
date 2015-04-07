@@ -26,7 +26,7 @@ namespace Percurrentis.Model
 
         public virtual Note FeeSpecification { get; set; }
 
-        public int TravelRequestID { get; set; }
+        public int? TravelRequestID { get; set; }
         public int? TravelProposalID { get; set; }
 
         public virtual TravelRequest TravelRequest { get; set; }

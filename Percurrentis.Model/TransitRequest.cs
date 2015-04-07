@@ -22,5 +22,6 @@ namespace Percurrentis.Model
         public virtual Address DestinationAddress { get; set; }
         public int? TravelRequestID { get; set; }
         public int? TravelProposalID { get; set; }
+        public int? ParentID { get; set; }
     }
 }

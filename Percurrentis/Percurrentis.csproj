@@ -396,9 +396,49 @@
     <Compile Include="Migrations\201503310617097_MakeIdNullableHopefully2.Designer.cs">
       <DependentUpon>201503310617097_MakeIdNullableHopefully2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201503310648395_MakeIdNullableHopefully3.cs" />
+    <Compile Include="Migrations\201503310648395_MakeIdNullableHopefully3.Designer.cs">
+      <DependentUpon>201503310648395_MakeIdNullableHopefully3.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201503311208144_AccoParentID.cs" />
     <Compile Include="Migrations\201503311208144_AccoParentID.Designer.cs">
       <DependentUpon>201503311208144_AccoParentID.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201504010610435_makeTRIDnullableOnAcco.cs" />
+    <Compile Include="Migrations\201504010610435_makeTRIDnullableOnAcco.Designer.cs">
+      <DependentUpon>201504010610435_makeTRIDnullableOnAcco.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201504010614204_reAddFerry.cs" />
+    <Compile Include="Migrations\201504010614204_reAddFerry.Designer.cs">
+      <DependentUpon>201504010614204_reAddFerry.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201504030529465_FerryGodParentsId.cs" />
+    <Compile Include="Migrations\201504030529465_FerryGodParentsId.Designer.cs">
+      <DependentUpon>201504030529465_FerryGodParentsId.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201504060703130_removeIDsOnAcco.cs" />
+    <Compile Include="Migrations\201504060703130_removeIDsOnAcco.Designer.cs">
+      <DependentUpon>201504060703130_removeIDsOnAcco.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201504060705272_rebuildAccommodations.cs" />
+    <Compile Include="Migrations\201504060705272_rebuildAccommodations.Designer.cs">
+      <DependentUpon>201504060705272_rebuildAccommodations.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201504060824227_ApprovalIntOnProposal.cs" />
+    <Compile Include="Migrations\201504060824227_ApprovalIntOnProposal.Designer.cs">
+      <DependentUpon>201504060824227_ApprovalIntOnProposal.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201504061220274_redoIsApproved.cs" />
+    <Compile Include="Migrations\201504061220274_redoIsApproved.Designer.cs">
+      <DependentUpon>201504061220274_redoIsApproved.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201504061221437_reenableIsApproved.cs" />
+    <Compile Include="Migrations\201504061221437_reenableIsApproved.Designer.cs">
+      <DependentUpon>201504061221437_reenableIsApproved.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201504070837111_transitParentID.cs" />
+    <Compile Include="Migrations\201504070837111_transitParentID.Designer.cs">
+      <DependentUpon>201504070837111_transitParentID.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\201504010553229_fixAutoMigration.cs" />
     <Compile Include="Migrations\201504010553229_fixAutoMigration.Designer.cs">
@@ -415,6 +455,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\src\app\app.js" />
+    <Content Include="Content\src\app\copyService.js" />
     <Content Include="Content\src\app\current\currentCtrl.js" />
     <Content Include="Content\src\app\current\travels.tpl.html" />
     <Content Include="Content\src\app\home\home.tpl.html" />
@@ -434,7 +475,9 @@
     <Content Include="Content\src\app\personalDetails\personalDetails.tpl.html" />
     <Content Include="Content\src\app\personalDetails\personalDetailsCtrl.js" />
     <Content Include="Content\src\app\proposalWizard\partials\accommodation.tpl.html" />
+    <Content Include="Content\src\app\proposalWizard\partials\eurotunnel.tpl.html" />
     <Content Include="Content\src\app\proposalWizard\partials\flight.tpl.html" />
+    <Content Include="Content\src\app\proposalWizard\partials\taxi.tpl.html" />
     <Content Include="Content\src\app\proposal\detail.tpl.html" />
     <Content Include="Content\src\app\proposal\list.tpl.html" />
     <Content Include="Content\src\app\travellers\detail.tpl.html" />
@@ -1549,6 +1592,33 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201503311208144_AccoParentID.resx">
       <DependentUpon>201503311208144_AccoParentID.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201504010610435_makeTRIDnullableOnAcco.resx">
+      <DependentUpon>201504010610435_makeTRIDnullableOnAcco.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201504010614204_reAddFerry.resx">
+      <DependentUpon>201504010614204_reAddFerry.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201504030529465_FerryGodParentsId.resx">
+      <DependentUpon>201504030529465_FerryGodParentsId.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201504060703130_removeIDsOnAcco.resx">
+      <DependentUpon>201504060703130_removeIDsOnAcco.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201504060705272_rebuildAccommodations.resx">
+      <DependentUpon>201504060705272_rebuildAccommodations.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201504060824227_ApprovalIntOnProposal.resx">
+      <DependentUpon>201504060824227_ApprovalIntOnProposal.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201504061220274_redoIsApproved.resx">
+      <DependentUpon>201504061220274_redoIsApproved.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201504061221437_reenableIsApproved.resx">
+      <DependentUpon>201504061221437_reenableIsApproved.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201504070837111_transitParentID.resx">
+      <DependentUpon>201504070837111_transitParentID.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201504010553229_fixAutoMigration.resx">
       <DependentUpon>201504010553229_fixAutoMigration.cs</DependentUpon>

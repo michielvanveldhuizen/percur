@@ -94,6 +94,7 @@ namespace Percurrentis.Context
 
             ChangeTracker.DetectChanges();
             var changedEntities = ChangeTracker.Entries();
+            Console.WriteLine(changedEntities);
             //space for server-side edits on entites which are about to be saved into the database
 
             //Oncreate
@@ -109,12 +110,65 @@ namespace Percurrentis.Context
                         specEntity.DefaultCompany = false;
                     }
                 }
+                #region nullHacks
                 if (changedEntity.Entity is FlightRequest)
                 {
                     var specEntity = changedEntity.Entity as FlightRequest;
                     if ((specEntity.TravelProposalID).Equals(0))
                     {
                         specEntity.TravelProposalID = null;
+                    }
+                    else
+                    {
+                        if (specEntity.TravelRequestID.Equals(0))
+                        {
+                            specEntity.TravelRequestID = null;
+                        }
+                    }
+                }
+                if (changedEntity.Entity is RentalCarRequest)
+                {
+                    var specEntity = changedEntity.Entity as RentalCarRequest;
+                    if ((specEntity.TravelProposalID).Equals(0))
+                    {
+                        specEntity.TravelProposalID = null;
+                    }
+                    else
+                    {
+                        if (specEntity.TravelRequestID.Equals(0))
+                        {
+                            specEntity.TravelRequestID = null;
+                        }
+                    }
+                }
+                if (changedEntity.Entity is TaxiRequest)
+                {
+                    var specEntity = changedEntity.Entity as TaxiRequest;
+                    if ((specEntity.TravelProposalID).Equals(0))
+                    {
+                        specEntity.TravelProposalID = null;
+                    }
+                    else
+                    {
+                        if (specEntity.TravelRequestID.Equals(0))
+                        {
+                            specEntity.TravelRequestID = null;
+                        }
+                    }
+                }
+                if (changedEntity.Entity is EuroTunnelRequest)
+                {
+                    var specEntity = changedEntity.Entity as EuroTunnelRequest;
+                    if ((specEntity.TravelProposalID).Equals(0))
+                    {
+                        specEntity.TravelProposalID = null;
+                    }
+                    else
+                    {
+                        if (specEntity.TravelRequestID.Equals(0))
+                        {
+                            specEntity.TravelRequestID = null;
+                        }
                     }
                 }
                 if (changedEntity.Entity is Accommodation)
@@ -124,6 +178,13 @@ namespace Percurrentis.Context
                     {
                         specEntity.TravelProposalID = null;
                     }
+                    else
+                    {
+                        if(specEntity.TravelRequestID.Equals(0))
+                        {
+                            specEntity.TravelRequestID = null;
+                        }
+                    }
                 }
                 if (changedEntity.Entity is FerryRequest)
                 {
@@ -132,7 +193,15 @@ namespace Percurrentis.Context
                     {
                         specEntity.TravelProposalID = null;
                     }
+                    else
+                    {
+                        if (specEntity.TravelRequestID.Equals(0))
+                        {
+                            specEntity.TravelRequestID = null;
+                        }
+                    }
                 }
+                #endregion
                 if (changedEntity.Entity is MetaEntity)
                 {
                     var specEntity = changedEntity.Entity as MetaEntity;
@@ -140,6 +209,11 @@ namespace Percurrentis.Context
                     {
                         specEntity.OnBeforeInsert();
                     }
+                }
+                //TravelRequest
+                if (changedEntity.Entity is TravelProposal)
+                {
+                    Console.WriteLine("Proposal!");
                 }
                 //TravelRequest
                 if (changedEntity.Entity is TravelRequest)

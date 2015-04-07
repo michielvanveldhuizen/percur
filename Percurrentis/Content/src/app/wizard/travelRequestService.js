@@ -109,6 +109,8 @@
                 var deferred = $q.defer();
 
                 var request = manager.createEntity('TravelProposal');
+                console.log('hier');
+                console.log(request);
 
                 var query = breeze.EntityQuery
                     .from('AddressTypes')
@@ -205,10 +207,9 @@
         {
             manager = new breeze.EntityManager(serviceName);
 
-            var query = new breeze.EntityQuery('Proposals')
-                .where('TravelRequestID', 'eq', id);
+            var promise = manager.fetchEntityByKey('Proposals', id)
+            .catch(queryFailed);
 
-            var promise = manager.executeQuery(query).catch(queryFailed);
             return promise;
 
             function queryFailed(error) {
@@ -962,6 +963,7 @@
         }
 
         function saveChanges(request, options, onSuccess, onFailure) {
+            //console.log(request);
             if (options) {
                 if (!options.hasFlight) {
                     _.forEach(request.FlightRequests, function (val) {

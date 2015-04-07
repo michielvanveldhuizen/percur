@@ -79,6 +79,7 @@
         $scope.currentEntity;
         $scope.currentIndex;
         $scope.type = "";
+        $scope.info = false;
         $scope.templateUrl = '/TravelAgency/Content/src/app/proposalWizard/partials/index.tpl.html';
 
         
@@ -86,7 +87,7 @@
         // Save when proposal is completed.
         $scope.saveProposal = function () {
             // Maybe check if the proposal isn't empty?
-            $scope.proposal.IsApproved = false;
+            $scope.proposal.IsApproved = 0;
             
             modalService.open("Confirm ready?", "Are you sure you are done editing this proposal?",
                     function yes() {
@@ -104,6 +105,20 @@
                     },
                     '/TravelAgency/Content/src/app/modal/editBtnSet.tpl.html');
            
+        }
+
+        $scope.infoEnabled = false;
+        $scope.toggleInfo = function (data, type) {
+            var dataString = "";
+            if ($scope.infoEnabled) {
+                $scope.infoEnabled = false;
+                jQuery("#inforow").remove();
+            }
+            else {
+                $scope.infoEnabled = true;
+                var newrow = "<tr id='inforow'><td colspan='100%'>" + dataString + "</td></tr>";
+                jQuery(newrow).insertAfter("#" + type + "_" + data.Id);
+            }
         }
 
         // Discard the current proposal.
@@ -168,8 +183,8 @@
                     $scope.currentEntity.Address.CountryRegionID = request.Address.CountryRegionID;
                     $scope.currentEntity.ParentID = request.Id;
 
+                    $scope.currentEntity.TravelProposalID = $scope.proposal.Id;
                     $scope.currentEntity.TravelRequestID = 0;
-                    $scope.currentEntity.TravelRequest = null;
 
                     $scope.currentEntity.CheckInDate = request.CheckInDate;
                     $scope.currentEntity.CheckOutDate = request.CheckOutDate;
@@ -179,6 +194,40 @@
                     $scope.currentEntity.SecondaryCurrency = request.SecondaryCurrency;
                     break;
 
+                case 'Taxi':
+                    travelRequestService.addTaxi($scope.proposal);
+                    console.log("HOI");
+                    // Setting the index
+                    $scope.currentIndex = $scope.proposal.TaxiRequests.length - 1;
+                    $scope.currentEntity = $scope.proposal.TaxiRequests[$scope.currentIndex];
+
+                    $scope.currentEntity.ParentID = request.Id;
+                    $scope.currentEntity.DepartureDate = request.DepartureDate;
+
+                    $scope.currentEntity.DepartureAddress.AddressName = request.DepartureAddress.AddressName;
+                    $scope.currentEntity.DepartureAddress.Street = request.DepartureAddress.Street;
+                    $scope.currentEntity.DepartureAddress.PostalCode = request.DepartureAddress.PostalCode;
+                    $scope.currentEntity.DepartureAddress.City = request.DepartureAddress.City;
+                    $scope.currentEntity.DepartureAddress.StateProvince = request.DepartureAddress.StateProvince;
+                    $scope.currentEntity.DepartureAddress.CountryRegionID = request.DepartureAddress.CountryRegionID;
+
+                    $scope.currentEntity.DestinationAddress.AddressName = request.DestinationAddress.AddressName;
+                    $scope.currentEntity.DestinationAddress.Street = request.DestinationAddress.Street;
+                    $scope.currentEntity.DestinationAddress.PostalCode = request.DestinationAddress.PostalCode;
+                    $scope.currentEntity.DestinationAddress.City = request.DestinationAddress.City;
+                    $scope.currentEntity.DestinationAddress.StateProvince = request.DestinationAddress.StateProvince;
+                    $scope.currentEntity.DestinationAddress.CountryRegionID = request.DestinationAddress.CountryRegionID;
+
+                    $scope.currentEntity.Cost = request.Cost;
+                    $scope.currentEntity.CostSecondary = request.CostSecondary;
+                    $scope.currentEntity.SecondaryCurrency = request.SecondaryCurrency;
+                    console.log($scope.proposal);
+                    break;
+
+                case 'EuroTunnel':
+                    travelRequestService.addEurotunnel($scope.proposal)
+                    console.log("Hoop dat die tunnel doorzakt");
+                    break;
                 case 'Flight':
                     travelRequestService.addFlight(proposal);
                     // Setting the index
@@ -200,9 +249,6 @@
                     $scope.currentEntity.DestinationAddress = request.DestinationAddress;
 
 
-                    $scope.currentEntity.TravelRequestID = 0;
-                    $scope.currentEntity.TravelRequest = null;
-
                     $scope.currentEntity.FlyerMemberCard.Id = request.FlyerMemberCard.Id;
                     $scope.currentEntity.FlyerMemberCard.FMCNumber = request.FlyerMemberCard.FMCNumber;
 
@@ -217,7 +263,7 @@
                     $scope.currentIndex = $scope.proposal.FerryRequests.length - 1;
                     $scope.currentEntity = $scope.proposal.FerryRequests[$scope.currentIndex];
 
-                    $scope.currentEntity.TravelRequestID = 0;
+                    $scope.currentEntity.ParentID = request.Id;
 
                     $scope.currentEntity.CarHeight = request.CarHeight;
                     $scope.currentEntity.CarLength = request.CarLength;
@@ -235,9 +281,9 @@
                     $scope.currentEntity.CostSecondary = request.CostSecondary;
                     $scope.currentEntity.SecondaryCurrency = request.SecondaryCurrency;
 
+                    break;
             }
         }
-
 
         $scope.detach = function (proposal) {
             
@@ -251,13 +297,14 @@
                 case 'Ferry':
                     travelRequestService.removeFerry($scope.proposal, proposal);
                     break;
+                case 'EuroTunnel':
+                    travelRequestService.removeEurotunnel($scope.proposal, proposal);
+                    break;
                 default:
                     console.log('Defaulted.');
                     break;
             }
         }
-
-     
 
         // Item is complete, add it to the proposal
         $scope.commitItem = function()
@@ -282,9 +329,9 @@
     }
 
     angular.module('app').controller('proposalDetailCtrl',
-        ['$scope', '$route', 'wizard', '$location', 'travelRequestService', 'modalService', proposalDetailCtrl]);
+        ['$scope', '$route', 'wizard', '$location', 'travelRequestService', 'modalService', 'copyService', proposalDetailCtrl]);
 
-    function proposalDetailCtrl($scope, $route, wizard, $location, travelRequestService, modalService) {
+    function proposalDetailCtrl($scope, $route, wizard, $location, travelRequestService, modalService, copyService) {
         $scope.costs = [];
         $scope.totalCost = 0;
         $scope.selectedOptions = [];
@@ -296,8 +343,6 @@
             travelRequestService.getTravelRequestById($scope.proposal.TravelRequestID)
             .then(function (query) {
                 $scope.itinerary = query.results[0];
-
-                console.log($scope.itinerary);
             })
             .then(function (query) {
                 travelRequestService.getEmployeeByObjectGuid($scope.proposal.TravelRequest.SuperiorID)
@@ -307,6 +352,30 @@
             });
         });
 
+        //When approved is pressed in the approving dialog
+        $scope.onApproveConfirm = function () {
+
+            $scope.mode = 'approveConfirmed';
+            angular.forEach($scope.itinerary.Accommodations, function (value, key) {
+                var option = $scope.selectedOptions[value.Id].id;
+                angular.forEach($scope.proposal.Accommodations, function (v, k) {
+                    if (v.Id === option) {
+                        copyService.copyAccommodation(v, value);
+                    }
+                });
+
+            });
+
+            console.log("Before: " + $scope.proposal.entityAspect.entityState.name);
+            $scope.proposal.IsApproved = 2;
+            console.log("After: " + $scope.proposal.entityAspect.entityState.name);
+
+            travelRequestService.saveChanges($scope.proposal, undefined, function (result) {
+                console.log("Saved: " + result.entities.length);
+            }, function () {
+                console.log("Save failed");
+            });
+        };
 
         // Load all the addresses again -.-'
         travelRequestService.getAddresses().then(function (query) {
@@ -318,13 +387,12 @@
             if ($scope.proposal.IsApproved == '0') {
                 $scope.costs[iets.ParentID] = iets.Cost;
                 $scope.updateTotal();
-                $scope.selectedOptions[iets.ParentID] = iets.Id;
+                $scope.selectedOptions[iets.ParentID] = { "id": iets.Id, "type": iets.entityAspect._entityKey.entityType.shortName };
                 var selector = "#option_" + iets.ParentID + "_" + id;
                 jQuery(selector).removeClass("disabled");
                 jQuery(selector).find("i.check").addClass("fa fa-check text-success");
                 jQuery(".group_" + iets.ParentID + ":not(" + selector + ")").addClass("disabled");
                 jQuery(".group_" + iets.ParentID + ":not(" + selector + ")").find("i.check").removeClass("fa fa-check text-success");
-
                 $scope.checkCompletion();
             }
         }
@@ -332,20 +400,17 @@
         $scope.checkCompletion = function () {
             var hasEmpty = false;
             angular.forEach($scope.selectedOptions, function (value, key) {
-                
-                if(value == "")
-                {
+
+                if (value == "") {
                     hasEmpty = true;
                 }
             });
-            if(!hasEmpty)
-            {
+            if (!hasEmpty) {
                 $scope.approvalMode = true;
             }
         };
 
-        $scope.updateTotal = function()
-        {
+        $scope.updateTotal = function () {
             var sum = 0;
             angular.forEach($scope.costs, function (value, key) {
                 sum += value;
@@ -363,31 +428,6 @@
 
         $scope.onCancel = function () {
             $scope.mode = 'init';
-        };
-
-
-        //When approved is pressed in the approving dialog
-        $scope.onApproveConfirm = function () {
-            $scope.mode = 'approveConfirmed';
-            $scope.proposal.IsApproved = 2;
-            // Insert logic
-
-
-
-            /*$scope.TRArequest.Flag = true;
-
-            //Check if self is COO
-            if (ownGuid == $scope.c && $scope.request.Country.Name == "Romania" && $scope.c != $scope.request.SuperiorID) {
-                $scope.TRArequest.COOApproved = 2;
-            } else {
-                $scope.TRArequest.HasApproved = 2;
-            }
-            $scope.TRArequest.Note = angular.copy($scope.comments);
-            $scope.TRArequest.ApprovedBy = ownGuid;
-            travelRequestService.saveChanges($scope.TRArequest, undefined, function (result) {
-                reloadPage();
-            }, angular.noop);*/
-
         };
     }
 })();

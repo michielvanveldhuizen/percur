@@ -1,0 +1,91 @@
+﻿<div data-ng-form="eurotunnels">
+
+        <div data-form-control data-label="Destination">
+            <button type="button"
+                    class="btn btn-sm btn-block"
+                    data-ng-click="eurotunnelChangeDestination(currentEntity, 'Eurotunnel Coquelles')"
+                    data-ng-class="isEurotunnelToFolkstone(currentEntity) ? 'btn-alt btn-default' : 'btn-primary active'">
+                Coquelles, Pas-de-Calais, France
+            </button>
+
+            <div class="text-center col-xs-12 margin-5">
+                <span class="text-primary">
+                    <i class="fa fa-2x" data-ng-class="isEurotunnelToFolkstone(currentEntity) ? 'fa-arrow-down' : 'fa-arrow-up'"></i>
+                </span>
+            </div>
+
+            <button type="button"
+                    class="btn btn-sm btn-block"
+                    data-ng-click="eurotunnelChangeDestination(currentEntity, 'Eurotunnel Folkstone')"
+                    data-ng-class="!isEurotunnelToFolkstone(currentEntity) ? 'btn-alt btn-default' : 'btn-primary active'">
+                Folkestone, Kent, United Kingdom
+            </button>
+        </div>
+
+        <div data-form-control data-label="Date of Departure">
+            <div data-datepicker data-ng-model="currentEntity.DepartureDate"></div>
+        </div>
+
+        <div data-form-control data-label="Time of Departure">
+            <div data-timepicker
+                 data-show-meridian="false"
+                 data-minute-step="5"
+                 data-ng-model="currentEntity.DepartureDate"></div>
+        </div>
+
+        <div data-form-control data-label="Car License Plate">
+            <input type="text"
+                   class="form-control"
+                   data-ng-model="currentEntity.LicensePlate"
+                   placeholder="License Plate"
+                   data-z-validate />
+            <span class="help-block">
+                The license plate number of the car that will be transported along with the passengers.
+                Only fill this in when you will be transporting a car.
+            </span>
+        </div>
+
+        <hr />
+    <span class="help-block">
+        Additional data
+    </span>
+    <br />
+
+    <div data-form-control data-label="Cost in Euro">
+        <input type="number"
+               class="form-control"
+               data-ng-model="currentEntity.Cost"
+               style="width: 80pt"
+               placeholder=""
+               data-z-validate />
+    </div>
+
+    <div class="control-group">
+        <div data-form-control data-label="Cost in secondary currency">
+            <div class="controls form-inline">
+                <input type="number"
+                       class="form-control"
+                       data-ng-model="currentEntity.CostSecondary"
+                       placeholder=""
+                       data-z-validate />
+                <select class="form-control" data-z-validate>
+                    <option id="secCur" selected="selected">{{ currentEntity.SecondaryCurrency }}</option>
+                    <option id="secCur">RON</option>
+                    <option id="secCur">RUPEES</option>
+                    <option id="secCur">Dropmunten</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+
+    <div data-form-control data-label="Note">
+        <textarea type="text"
+                  class="form-control"
+                  rows="10"
+                  data-ng-model="currentEntity.Note"
+                  placeholder="Any notes"
+                  data-z-validate></textarea>
+
+    </div>
+</div>

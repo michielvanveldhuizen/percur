@@ -22,6 +22,8 @@ namespace Percurrentis.Mapping
             this.Property(a => a.TravelProposalID).IsOptional();
             this.Property(f => f.ParentID).IsOptional();
             this.HasOptional(a => a.Address).WithMany().HasForeignKey(a => a.AddressID);
+            this.HasOptional(t => t.TravelRequest).WithMany().HasForeignKey(t => t.TravelRequestID);
+            this.HasOptional(t => t.TravelProposal).WithMany().HasForeignKey(t => t.TravelProposalID);
         }
     }
 }

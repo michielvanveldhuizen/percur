@@ -1,0 +1,156 @@
+﻿<div data-ng-form="taxis">
+
+    <p class="sub-header">Departure</p>
+
+    <div data-form-control data-label="Date of Departure">
+        <div data-datepicker data-ng-model="currentEntity.DepartureDate"></div>
+    </div>
+
+    <div data-form-control data-label="Time of Departure">
+        <div data-timepicker
+             data-show-meridian="false"
+             data-minute-step="5"
+             data-ng-model="currentEntity.DepartureDate"></div>
+    </div>
+
+    <div data-form-control data-label="Address Description">
+        <input type="text"
+               class="form-control"
+               data-ng-model="currentEntity.DepartureAddress.AddressName"
+               placeholder="Address Description"
+               data-z-validate />
+    </div>
+
+    <div data-form-control data-label="Street">
+        <input type="text"
+               class="form-control"
+               data-ng-model="currentEntity.DepartureAddress.Street"
+               placeholder="Street and House Number"
+               data-z-validate />
+    </div>
+
+    <div data-form-control data-label="City">
+        <input type="text"
+               class="form-control"
+               data-ng-model="currentEntity.DepartureAddress.City"
+               placeholder="City"
+               data-z-validate />
+    </div>
+
+    <div data-form-control data-label="Postal Code">
+        <input type="text"
+               class="form-control"
+               data-ng-model="currentEntity.DepartureAddress.PostalCode"
+               placeholder="Postal Code"
+               data-z-validate />
+    </div>
+
+    <div data-form-control data-label="State/Province">
+        <input type="text"
+               class="form-control"
+               data-ng-model="currentEntity.DepartureAddress.StateProvince"
+               placeholder="State/Province"
+               data-z-validate />
+    </div>
+    <div data-form-control data-label="Country">
+        <select class="form-control"
+                data-ng-model="currentEntity.DepartureAddress.CountryRegion"
+                data-placeholder="Country"
+                data-chosen
+                data-ng-options="country as country.Name for country in countries"
+                data-z-validate></select>
+    </div>
+
+    <p class="sub-header">Destination</p>
+
+    <div data-form-control data-label="Address Description">
+        <input type="text"
+               class="form-control"
+               data-ng-model="currentEntity.DestinationAddress.AddressName"
+               placeholder="Address Description"
+               data-z-validate />
+    </div>
+
+    <div data-form-control data-label="Street">
+        <input type="text"
+               class="form-control"
+               data-ng-model="currentEntity.DestinationAddress.Street"
+               placeholder="Street and House Number"
+               data-z-validate />
+    </div>
+
+    <div data-form-control data-label="City">
+        <input type="text"
+               class="form-control"
+               data-ng-model="currentEntity.DestinationAddress.City"
+               placeholder="City"
+               data-z-validate />
+    </div>
+
+    <div data-form-control data-label="Postal Code">
+        <input type="text"
+               class="form-control"
+               data-ng-model="currentEntity.DestinationAddress.PostalCode"
+               placeholder="Postal Code"
+               data-z-validate />
+    </div>
+
+    <div data-form-control data-label="State/Province">
+        <input type="text"
+               class="form-control"
+               data-ng-model="currentEntity.DestinationAddress.StateProvince"
+               placeholder="State/Province"
+               data-z-validate />
+    </div>
+    <div data-form-control data-label="Country">
+        <select class="form-control"
+                data-ng-model="currentEntity.DestinationAddress.CountryRegion"
+                data-placeholder="Country"
+                data-chosen
+                data-ng-options="country as country.Name for country in countries"
+                data-z-validate></select>
+    </div>
+    <hr />
+    <span class="help-block">
+        Additional data
+    </span>
+    <br />
+
+    <div data-form-control data-label="Cost in Euro">
+        <input type="number"
+               class="form-control"
+               data-ng-model="currentEntity.Cost"
+               style="width: 80pt"
+               placeholder=""
+               data-z-validate />
+    </div>
+
+    <div class="control-group">
+        <div data-form-control data-label="Cost in secondary currency">
+            <div class="controls form-inline">
+                <input type="number"
+                       class="form-control"
+                       data-ng-model="currentEntity.CostSecondary"
+                       placeholder=""
+                       data-z-validate />
+                <select class="form-control" data-z-validate>
+                    <option id="secCur" selected="selected">{{ currentEntity.SecondaryCurrency }}</option>
+                    <option id="secCur">RON</option>
+                    <option id="secCur">RUPEES</option>
+                    <option id="secCur">Dropmunten</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+
+    <div data-form-control data-label="Note">
+        <textarea type="text"
+                  class="form-control"
+                  rows="10"
+                  data-ng-model="currentEntity.Note"
+                  placeholder="Any notes"
+                  data-z-validate></textarea>
+
+    </div>
+</div>

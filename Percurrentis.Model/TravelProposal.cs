@@ -10,8 +10,8 @@ namespace Percurrentis.Model
     public class TravelProposal : MetaEntity
     {
         public int Id { get; set; }
-        [TrueOrFalse]
-        public bool IsApproved { get; set; }
+        
+        public int IsApproved { get; set; }
         public int TravelRequestID { get; set; }
         public int? TravelRequestApprovalID { get; set; }
 

@@ -79,7 +79,23 @@ namespace Percurrentis.Controllers
                 .Include("TravelRequest")
                 .Include("FlightRequests")
                 .Include("FlightRequests.DepartureAddress")
-                .Include("FlightRequests.DestinationAddress");
+                .Include("FlightRequests.DestinationAddress")
+                .Include("FerryRequests")
+                .Include("FerryRequests.DepartureAddress")
+                .Include("FerryRequests.DestinationAddress")
+                .Include("Accommodations")
+                .Include("Accommodations.Address")
+                .Include("EuroTunnelRequests")
+                .Include("EuroTunnelRequests.DepartureAddress")
+                .Include("EuroTunnelRequests.DestinationAddress")
+                .Include("RentalCarRequests")
+                .Include("RentalCarRequests.Driver")
+                .Include("RentalCarRequests.SecondaryDriver")
+                .Include("RentalCarRequests.ServiceCompany")
+                .Include("RentalCarRequests")
+                .Include("TaxiRequests")
+                .Include("TaxiRequests.DepartureAddress")
+                .Include("TaxiRequests.DestinationAddress");
         }
 
 
