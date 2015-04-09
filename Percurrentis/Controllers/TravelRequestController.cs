@@ -179,6 +179,13 @@ namespace Percurrentis.Controllers
             return _contextProvider.Context.ExchangeRate.AsNoTracking().First();
         }
 
+        //retrieve Currencies
+        [HttpGet]
+        public IQueryable<Currency> Currency()
+        {
+            return _contextProvider.Context.Currency;
+        }
+
         //
         [HttpGet]
         public IQueryable<Company> Company()

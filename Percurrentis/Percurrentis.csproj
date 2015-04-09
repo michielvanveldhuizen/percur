@@ -396,10 +396,6 @@
     <Compile Include="Migrations\201503310617097_MakeIdNullableHopefully2.Designer.cs">
       <DependentUpon>201503310617097_MakeIdNullableHopefully2.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201503310648395_MakeIdNullableHopefully3.cs" />
-    <Compile Include="Migrations\201503310648395_MakeIdNullableHopefully3.Designer.cs">
-      <DependentUpon>201503310648395_MakeIdNullableHopefully3.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\201503311208144_AccoParentID.cs" />
     <Compile Include="Migrations\201503311208144_AccoParentID.Designer.cs">
       <DependentUpon>201503311208144_AccoParentID.cs</DependentUpon>
@@ -447,6 +443,18 @@
     <Compile Include="Migrations\201504010707348_DeparmentForRequestTraveller.cs" />
     <Compile Include="Migrations\201504010707348_DeparmentForRequestTraveller.Designer.cs">
       <DependentUpon>201504010707348_DeparmentForRequestTraveller.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201504090538584_updatedParentIDs.cs" />
+    <Compile Include="Migrations\201504090538584_updatedParentIDs.Designer.cs">
+      <DependentUpon>201504090538584_updatedParentIDs.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201504090545488_updatedParentIDs2.cs" />
+    <Compile Include="Migrations\201504090545488_updatedParentIDs2.Designer.cs">
+      <DependentUpon>201504090545488_updatedParentIDs2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201504091155063_addedCurrencies.cs" />
+    <Compile Include="Migrations\201504091155063_addedCurrencies.Designer.cs">
+      <DependentUpon>201504091155063_addedCurrencies.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Context\DatabaseContext.cs" />
@@ -1412,6 +1420,7 @@
     <Content Include="Microsoft.SqlServer.Dac.xml" />
     <None Include="Scripts\breeze.intellisense.js" />
     <Content Include="Migrations\AirportInformation.sql" />
+    <Content Include="Migrations\Currency.sql" />
     <Content Include="Migrations\CountryInformation.sql" />
     <Content Include="Migrations\dbo_Address.sql" />
     <Content Include="Migrations\dbo_AddressType.sql" />
@@ -1625,6 +1634,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201504010707348_DeparmentForRequestTraveller.resx">
       <DependentUpon>201504010707348_DeparmentForRequestTraveller.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201504090538584_updatedParentIDs.resx">
+      <DependentUpon>201504090538584_updatedParentIDs.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201504090545488_updatedParentIDs2.resx">
+      <DependentUpon>201504090545488_updatedParentIDs2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201504091155063_addedCurrencies.resx">
+      <DependentUpon>201504091155063_addedCurrencies.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

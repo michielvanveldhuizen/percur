@@ -9,13 +9,13 @@
     function copyService($q, breeze) {
 
         var service = {
-            createEntity: createEntity,
-            copyAccommodation: copyAccommodation
+            copyAccommodation: copyAccommodation,
+            copyTaxiRequest: copyTaxiRequest
         };
 
         return service;
         
-        function createEntity(entityType)
+        /*function createEntity(entityType)
         {
             console.log(entityType);
             var serviceName = 'breeze/TravelRequest';
@@ -44,7 +44,7 @@
                 request.Address = manager.createEntity('Address');
                 return request;
             }
-        }
+        }*/
 
         function copyAccommodation(source, destination) {
             destination.Address.AddressName = source.Address.AddressName;
@@ -61,6 +61,31 @@
             destination.CheckInDate = source.CheckInDate;
             destination.CheckOutDate = source.CheckOutDate;
 
+            destination.Cost = source.Cost;
+            destination.CostSecondary = source.CostSecondary;
+            destination.SecondaryCurrency = source.SecondaryCurrency;
+
+            return destination;
+        }
+
+        function copyTaxiRequest(source, destination)
+        {
+
+            destination.DepartureDate = source.DepartureDate;
+
+            destination.DepartureAddress.AddressName = source.DepartureAddress.AddressName;
+            destination.DepartureAddress.Street = source.DepartureAddress.Street;
+            destination.DepartureAddress.PostalCode = source.DepartureAddress.PostalCode;
+            destination.DepartureAddress.City = source.DepartureAddress.City;
+            destination.DepartureAddress.StateProvince = source.DepartureAddress.StateProvince;
+            destination.DepartureAddress.CountryRegionID = source.DepartureAddress.CountryRegionID;
+
+            destination.DestinationAddress.AddressName = source.DestinationAddress.AddressName;
+            destination.DestinationAddress.Street = source.DestinationAddress.Street;
+            destination.DestinationAddress.PostalCode = source.DestinationAddress.PostalCode;
+            destination.DestinationAddress.City = source.DestinationAddress.City;
+            destination.DestinationAddress.StateProvince = source.DestinationAddress.StateProvince;
+            destination.DestinationAddress.CountryRegionID = source.DestinationAddress.CountryRegionID;
             destination.Cost = source.Cost;
             destination.CostSecondary = source.CostSecondary;
             destination.SecondaryCurrency = source.SecondaryCurrency;

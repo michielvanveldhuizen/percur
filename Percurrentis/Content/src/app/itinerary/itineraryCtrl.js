@@ -147,11 +147,12 @@
         .then(function (query) {
             $scope.request = query.results[0];
             $scope.total = 0;
-            console.log($scope.request);
             travelRequestService.getProposalIdFromItinerary($scope.request.Id)
             .then(function (query) {
+                console.log("Length: " + query.results.length);
                 if (query.results.length > 0) {
                     $scope.proposalID = query.results[0].Id;
+                    console.log($scope.proposalID);
                 }
             });
             return query.results[0];

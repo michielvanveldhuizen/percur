@@ -9,27 +9,18 @@
                 <thead>
                     <tr>
                         <th class="col-md-3">Created By</th>
-                        <th class="col-md-3">Date Approved</th>
-                        <th class="col-md-2">Options</th>
+                        <th class="col-md-3">Last update</th>
                         <th class="col-md-1">Sent</th>
                         <th class="col-md-1">Approval</th>
                         <th class="col-md-2">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr data-ng-repeat="proposal in proposals"
+                    <tr data-ng-repeat="proposal in proposals | orderBy:'UpdatedDate'"
                         style="cursor:pointer">
                         <td data-ng-click="go('/Proposal/' + proposal.Id)">{{ proposal.TravelRequest.ApplicantID }}</td>
                         <td data-ng-click="go('/Itinerary/' + proposal.Id)">
-                            {{ proposal.TravelRequest.UpdatedDate|date:'EEEE H:mm, d MMMM yyyy' }}
-                        </td>
-                        <td data-ng-click="go('/Proposal/' + proposal.TravelRequest.Id)">
-                            <i data-ng-show="request.FlightRequests.length > 0" data-tooltip="Flight" class="fa-fw gi gi-airplane"></i>
-                            <i data-ng-show="request.FerryRequests.length > 0" data-tooltip="Ferry" class="fa-fw gi gi-boat"></i>
-                            <i data-ng-show="request.EuroTunnelRequests.length > 0" data-tooltip="Eurotunnel" class="fa-fw gi gi-train"></i>
-                            <i data-ng-show="request.RentalCarRequests.length > 0" data-tooltip="Rental Car" class="fa-fw gi gi-cars"></i>
-                            <i data-ng-show="request.TaxiRequests.length > 0" data-tooltip="Taxi" class="fa-fw gi gi-car"></i>
-                            <i data-ng-show="request.AccommodationRequests.length > 0" data-tooltip="Accommodation" class="fa-fw gi gi-home"></i>
+                            {{ proposal.TravelRequest.UpdatedDate|date:'d MMMM yyyy, H:mm' }}
                         </td>
                         <td>
                             <span class="info-hover" data-tooltip="{{ proposal.CreatedDate|date:'EEEE H:mm, d MMMM yyyy' }}">{{proposal.CreatedDate|date:'d MMM'}}</span>
@@ -47,11 +38,11 @@
                                     View
                                 </a>
                                 <!--<a data-ng-click="toggleArchive(request)"
-                                   class="btn btn-sm btn-default"
-                                   data-tooltip="{{request.IsArchived ? 'Unarchive' : 'Archive'}}"
-                                   href="javascript:void(0)">
-                                    <i class="fa fa-archive"></i>
-                                </a>-->
+                   class="btn btn-sm btn-default"
+                   data-tooltip="{{request.IsArchived ? 'Unarchive' : 'Archive'}}"
+                   href="javascript:void(0)">
+                    <i class="fa fa-archive"></i>
+                </a>-->
                                 <a data-ng-click="toggleDelete(request)"
                                    data-ng-show="request.IsFinal == false"
                                    class="btn btn-sm"

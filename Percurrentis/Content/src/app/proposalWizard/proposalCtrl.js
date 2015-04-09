@@ -75,6 +75,10 @@
             $scope.countries = query.results;
         });
 
+        travelRequestService.getCurrencies().then(function (query) {
+            $scope.currencies = query.results;
+        });
+
         $scope.currentlyAdding = false;
         $scope.currentEntity;
         $scope.currentIndex;
@@ -352,30 +356,54 @@
             });
         });
 
-        //When approved is pressed in the approving dialog
-        $scope.onApproveConfirm = function () {
+        $scope.createItinerary = function()
+        {
 
-            $scope.mode = 'approveConfirmed';
+            // Copy all selected accommodations into itinerary
             angular.forEach($scope.itinerary.Accommodations, function (value, key) {
                 var option = $scope.selectedOptions[value.Id].id;
                 angular.forEach($scope.proposal.Accommodations, function (v, k) {
                     if (v.Id === option) {
-                        copyService.copyAccommodation(v, value);
+                        var freshEntity = copyService.copyAccommodation(v, value);
+                        $scope.itinerary.Accommodations.push(freshEntity);
+                        console.log("pushing... " + freshEntity.Id);
                     }
                 });
 
             });
+            // Copy all selected taxi requests into itinerary
+            angular.forEach($scope.itinerary.TaxiRequests, function (value, key) {
+                var option = $scope.selectedOptions[value.Id].id;
+                angular.forEach($scope.proposal.TaxiRequests, function (v, k) {
+                    if (v.Id === option) {
+                        var freshEntity = copyService.copyTaxiRequest(v, value);
+                        $scope.itinerary.TaxiRequests.push(freshEntity);
+                        console.log("pushing... " + freshEntity.Id);
+                    }
+                });
+
+            });
+        }
+
+        //When approved is pressed in the approving dialog
+        $scope.onApproveConfirm = function () {
+            console.log($scope.proposal);
+            $scope.mode = 'approveConfirmed';
+
+            $scope.createItinerary();
 
             console.log("Before: " + $scope.proposal.entityAspect.entityState.name);
             $scope.proposal.IsApproved = 2;
             console.log("After: " + $scope.proposal.entityAspect.entityState.name);
 
-            travelRequestService.saveChanges($scope.proposal, undefined, function (result) {
+            console.log($scope.itinerary);
+
+            /*travelRequestService.saveChanges($scope.proposal, undefined, function (result) {
                 console.log("Saved: " + result.entities.length);
             }, function () {
                 console.log("Save failed");
-            });
-        };
+            });*/
+        }; 
 
         // Load all the addresses again -.-'
         travelRequestService.getAddresses().then(function (query) {

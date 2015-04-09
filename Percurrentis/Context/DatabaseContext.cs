@@ -28,6 +28,7 @@ namespace Percurrentis.Context
         public DbSet<Company> Company { get; set; }
         public DbSet<Insurance> Insurance { get; set; }
         public DbSet<CountryInformation> CountryInformation { get; set; }
+        public DbSet<Currency> Currency { get; set; }
         public DbSet<ServiceCompany> ServiceCompany { get; set; }
         public DbSet<ServiceCompanyType> ServiceCompanyType { get; set; }
         public DbSet<ContactPerson> ContactPerson { get; set; }
@@ -94,7 +95,6 @@ namespace Percurrentis.Context
 
             ChangeTracker.DetectChanges();
             var changedEntities = ChangeTracker.Entries();
-            Console.WriteLine(changedEntities);
             //space for server-side edits on entites which are about to be saved into the database
 
             //Oncreate

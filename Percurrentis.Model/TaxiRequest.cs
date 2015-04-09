@@ -14,6 +14,7 @@ namespace Percurrentis.Model
         public double? CostSecondary { get; set; }
         public string SecondaryCurrency { get; set; }
         public string Note { get; set; }
+        public int? ParentID { get; set; }
 
     }
 }

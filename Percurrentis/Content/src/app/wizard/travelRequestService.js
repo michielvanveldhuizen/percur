@@ -44,6 +44,7 @@
             getEmployeeByObjectGuid: getEmployeeByObjectGuid,
             getTravellerById:getTravellerById,
             getAirports: getAirports,
+            getCurrencies: getCurrencies,
             getCompanies: getCompanies,
             getFerries: getFerries,
             getTaxiRequests: getTaxiRequests,
@@ -207,9 +208,10 @@
         {
             manager = new breeze.EntityManager(serviceName);
 
-            var promise = manager.fetchEntityByKey('Proposals', id)
-            .catch(queryFailed);
+            var query = new breeze.EntityQuery('Proposals')
+                .where('TravelRequestID', 'eq', id);
 
+            var promise = manager.executeQuery(query).catch(queryFailed);
             return promise;
 
             function queryFailed(error) {
@@ -551,6 +553,19 @@
         function getFerries() {
             var query = breeze.EntityQuery
             .from('FerryRequest');
+
+            var promise = manager.executeQuery(query).catch(queryFailed);
+            return promise;
+
+            function queryFailed(error) {
+                console.log(error.message, 'query failed');
+                throw error;
+            }
+        }
+
+        function getCurrencies() {
+            var query = breeze.EntityQuery
+            .from('Currency');
 
             var promise = manager.executeQuery(query).catch(queryFailed);
             return promise;
