@@ -8,9 +8,6 @@
 
     function travelRequestService($q, breeze) {
         var serviceName = 'breeze/TravelRequest';
-
-        //console.log(breeze);
-        
         var manager = new breeze.EntityManager(serviceName);
 
         //console.log(manager);
@@ -63,6 +60,7 @@
             addCompanyToTraveller: addCompanyToTraveller,
             removeCompanyFromTraveller: removeCompanyFromTraveller,
             addFlight: addFlight,
+            copyFlight: copyFlight,
             removeFlight: removeFlight,
             changeFlyerMemberCard: changeFlyerMemberCard,
             addFerry: addFerry,
@@ -76,6 +74,7 @@
             removeTaxi: removeTaxi,
             addAccommodation: addAccommodation,
             removeAccommodation: removeAccommodation,
+            copyAccommodation: copyAccommodation,
             getExchangeRates: getExchangeRates,
             hasChanges: hasChanges,
             saveChanges: saveChanges,
@@ -726,6 +725,35 @@
             request.FlightRequests.push(entity);
         }
 
+        function copyFlight(source) {
+
+            var destination = manager.createEntity("FlightRequest");
+            destination.FlyerMemberCard = manager.createEntity("FlyerMemberCard");
+            destination.DepartureDate = source.DepartureDate;
+            destination.HasLargeCabinLuggage = source.HasLargeCabinLuggage;
+            destination.HasSpecialEquipment = source.HasSpecialEquipment;
+            destination.LargeLuggageCount = source.LargeLuggageCount;
+            destination.IsOnlineCheckIn = source.IsOnlineCheckIn;
+            destination.FlyerMemberCardID = source.FlyerMemberCardID;
+            destination.FlyerMemberCard.Id = source.FlyerMemberCard.Id;
+            destination.FlyerMemberCard.FMCNumber = source.FlyerMemberCard.FMCNumber;
+            // DepartureAddress
+            destination.DepartureAddressID = source.DepartureAddressID;
+            destination.DepartureAddress = source.DepartureAddress;
+            // DestinationAddress
+            destination.DestinationAddressID = source.DestinationAddressID;
+            destination.DestinationAddress = source.DestinationAddress;
+
+            destination.Cost = source.Cost;
+            destination.CostSecondary = source.CostSecondary;
+            destination.SecondaryCurrency = source.SecondaryCurrency;
+
+            destination.TravelProposalID = 0;
+            destination.ParentID = null;
+
+            return destination;
+        }
+
         function removeFlight(request, flight, force) {
             if (flight == request.FlightRequests[0] || force) {
                 manager.detachEntity(flight.FlyerMemberCard);
@@ -912,9 +940,33 @@
         }
 
         function removeAccommodation(request, accommodation) {
+            console.log(accommodation);
             request.Accommodations.splice(_.indexOf(request.Accommodations, accommodation), 1);
             manager.detachEntity(accommodation.Address);
             manager.detachEntity(accommodation);
+        }
+
+        function copyAccommodation(source, destination) {
+
+            destination = manager.createEntity('Accommodation');
+            destination.Address = manager.createEntity("Address");
+            destination.Address.AddressName = source.Address.AddressName;
+            destination.Address.Street = source.Address.Street;
+            destination.Address.PostalCode = source.Address.PostalCode;
+            destination.Address.City = source.Address.City;
+            destination.Address.StateProvince = source.Address.StateProvince;
+            destination.Address.CountryRegionID = source.Address.CountryRegionID;
+            destination.TravelRequestID = source.TravelRequestID;
+            destination.ParentID = null;
+
+            destination.CheckInDate = source.CheckInDate;
+            destination.CheckOutDate = source.CheckOutDate;
+
+            destination.Cost = source.Cost;
+            destination.CostSecondary = source.CostSecondary;
+            destination.SecondaryCurrency = source.SecondaryCurrency;
+
+            return destination;
         }
 
         function setPreUsedAccommodation(request, index) {

@@ -463,7 +463,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\src\app\app.js" />
-    <Content Include="Content\src\app\copyService.js" />
     <Content Include="Content\src\app\current\currentCtrl.js" />
     <Content Include="Content\src\app\current\travels.tpl.html" />
     <Content Include="Content\src\app\home\home.tpl.html" />

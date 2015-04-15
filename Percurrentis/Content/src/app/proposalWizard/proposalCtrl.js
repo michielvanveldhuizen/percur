@@ -333,78 +333,25 @@
     }
 
     angular.module('app').controller('proposalDetailCtrl',
-        ['$scope', '$route', 'wizard', '$location', 'travelRequestService', 'modalService', 'copyService', proposalDetailCtrl]);
+        ['$scope', '$route', 'wizard', '$location', 'travelRequestService', 'modalService', proposalDetailCtrl]);
 
-    function proposalDetailCtrl($scope, $route, wizard, $location, travelRequestService, modalService, copyService) {
+    function proposalDetailCtrl($scope, $route, wizard, $location, travelRequestService, modalService) {
         $scope.costs = [];
         $scope.totalCost = 0;
         $scope.selectedOptions = [];
         $scope.approvalMode = 'false';
         $scope.mode = 'init';
+        $scope.itinerary = '';
         travelRequestService.getProposalById($route.current.params.Id)
         .then(function (query) {
             $scope.proposal = query.results[0];
-            travelRequestService.getTravelRequestById($scope.proposal.TravelRequestID)
-            .then(function (query) {
-                $scope.itinerary = query.results[0];
-            })
-            .then(function (query) {
-                travelRequestService.getEmployeeByObjectGuid($scope.proposal.TravelRequest.SuperiorID)
+            travelRequestService.getEmployeeByObjectGuid($scope.proposal.TravelRequest.SuperiorID)
                 .then(function (employee) {
                     $scope.supervisorName = employee.userName;
-                })
-            });
+                });
         });
 
-        $scope.createItinerary = function()
-        {
-
-            // Copy all selected accommodations into itinerary
-            angular.forEach($scope.itinerary.Accommodations, function (value, key) {
-                var option = $scope.selectedOptions[value.Id].id;
-                angular.forEach($scope.proposal.Accommodations, function (v, k) {
-                    if (v.Id === option) {
-                        var freshEntity = copyService.copyAccommodation(v, value);
-                        $scope.itinerary.Accommodations.push(freshEntity);
-                        console.log("pushing... " + freshEntity.Id);
-                    }
-                });
-
-            });
-            // Copy all selected taxi requests into itinerary
-            angular.forEach($scope.itinerary.TaxiRequests, function (value, key) {
-                var option = $scope.selectedOptions[value.Id].id;
-                angular.forEach($scope.proposal.TaxiRequests, function (v, k) {
-                    if (v.Id === option) {
-                        var freshEntity = copyService.copyTaxiRequest(v, value);
-                        $scope.itinerary.TaxiRequests.push(freshEntity);
-                        console.log("pushing... " + freshEntity.Id);
-                    }
-                });
-
-            });
-        }
-
-        //When approved is pressed in the approving dialog
-        $scope.onApproveConfirm = function () {
-            console.log($scope.proposal);
-            $scope.mode = 'approveConfirmed';
-
-            $scope.createItinerary();
-
-            console.log("Before: " + $scope.proposal.entityAspect.entityState.name);
-            $scope.proposal.IsApproved = 2;
-            console.log("After: " + $scope.proposal.entityAspect.entityState.name);
-
-            console.log($scope.itinerary);
-
-            /*travelRequestService.saveChanges($scope.proposal, undefined, function (result) {
-                console.log("Saved: " + result.entities.length);
-            }, function () {
-                console.log("Save failed");
-            });*/
-        }; 
-
+        
         // Load all the addresses again -.-'
         travelRequestService.getAddresses().then(function (query) {
             $scope.addresses = query.results;
@@ -453,9 +400,56 @@
         $scope.onReject = function () {
             $scope.mode = 'reject';
         };
-
         $scope.onCancel = function () {
             $scope.mode = 'init';
+        };
+        //When approved is pressed in the approving dialog
+        $scope.onApproveConfirm = function () {
+
+            $scope.mode = 'approveConfirmed';
+
+            // Copy all selected accommodations into itinerary
+            angular.forEach($scope.proposal.TravelRequest.Accommodations, function (value, key) {
+                var option = $scope.selectedOptions[value.Id].id;
+                angular.forEach($scope.proposal.Accommodations, function (v, k) {
+                    if (v.Id === option) {
+                        var entityCopy = travelRequestService.copyAccommodation(v, value);
+                        entityCopy.TravelRequestID = $scope.proposal.TravelRequest.Id;
+                        $scope.proposal.TravelRequest.Accommodations.push(entityCopy);
+                    }
+                });
+                travelRequestService.removeAccommodation($scope.proposal.TravelRequest, value);
+            });
+
+            // Copy all selected accommodations into itinerary
+            angular.forEach($scope.proposal.TravelRequest.FlightRequests, function (value, key) {
+                var option = $scope.selectedOptions[value.Id].id;
+                angular.forEach($scope.proposal.FlightRequests, function (v, k) {
+                    if (v.Id === option) {
+                        console.log(v.ParentID);
+                        var entityCopy = travelRequestService.copyFlight(v);
+                        $scope.proposal.TravelRequest.FlightRequests.push(entityCopy);
+                    }
+                });
+                travelRequestService.removeFlight($scope.proposal.TravelRequest, value, true);
+            });
+
+            $scope.proposal.IsApproved = 2;
+            $scope.proposal.TravelRequest.IsFinal = true;
+
+
+
+            travelRequestService.saveChanges(
+                $scope,
+                undefined,
+                function (result) {
+                    console.log(result);
+                    //$location.path("TravelAgency/#/Itinerary/#Final");
+                },
+                function () {
+                    console.log("Save failed");
+                }
+             );
         };
     }
 })();

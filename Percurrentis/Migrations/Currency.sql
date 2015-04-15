@@ -167,6 +167,7 @@ INSERT INTO Currency (Id,Name,CurrencyCode) VALUES ('159','Yemeni Rial','YER');
 INSERT INTO Currency (Id,Name,CurrencyCode) VALUES ('160','South African Rand','ZAR');
 INSERT INTO Currency (Id,Name,CurrencyCode) VALUES ('161','Kwacha','ZMK');
 INSERT INTO Currency (Id,Name,CurrencyCode) VALUES ('162','Zimbabwe Dollar','ZWD');
+INSERT INTO Currency (Id,Name,CurrencyCode) VALUES ('163','Chinese Yuan Renminbi','CNY');
 
 
 --

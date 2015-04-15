@@ -33,7 +33,6 @@ namespace Percurrentis
             bundles.Add(new ScriptBundle("~/bundles/src/js").Include(
                 "~/Content/src/app/app.js",
                 "~/Content/src/app/constants.js",
-                "~/Content/src/app/copyService.js",
                 "~/Content/src/app/breadcrumbs/breadcrumbs.js",
                 "~/Content/src/app/breadcrumbs/breadcrumbCtrl.js",
                 "~/Content/src/app/modal/modal.js",

@@ -37,7 +37,7 @@
             </div>
         </div>
         <!-- Start of block containing all the flights -->
-        <div ng-repeat="flight in itinerary.FlightRequests" ng-init="selectedOptions[flight.Id] = ''">
+        <div ng-repeat="flight in proposal.TravelRequest.FlightRequests" ng-init="selectedOptions[flight.Id] = ''">
             <div class="list-group form-group option-group">
                 <a href="javascript:void(0)" class="list-group-item active">
                     Options for Flight from <strong>{{ flight.DepartureAddress.City }}</strong> to <strong>
@@ -64,7 +64,7 @@
         <!-- End of block containing all the flights -->
 
         <!-- Start of block containing all the ferries -->
-        <div ng-repeat="ferry in itinerary.FerryRequests" ng-init="selectedOptions[ferry.Id] = ''">
+        <div ng-repeat="ferry in proposal.TravelRequest.FerryRequests" ng-init="selectedOptions[ferry.Id] = ''">
             <div class="list-group form-group option-group">
                 <a href="javascript:void(0)" class="list-group-item active">
                     Options for Ferry from <strong>{{ ferry.DepartureAddress.AddressName }}</strong> to <strong>
@@ -91,7 +91,7 @@
         <!-- End of block containing all the ferries -->
 
         <!-- Start of block containing all the taxis -->
-        <div ng-repeat="taxi in itinerary.TaxiRequests" ng-init="selectedOptions[taxi.Id] = ''">
+        <div ng-repeat="taxi in proposal.TravelRequest.TaxiRequests" ng-init="selectedOptions[taxi.Id] = ''">
             <div class="list-group form-group option-group">
                 <a href="javascript:void(0)" class="list-group-item active">
                     Options for Taxi from <strong>{{ taxi.DepartureAddress.AddressName }}</strong> to <strong>
@@ -118,18 +118,18 @@
         <!-- End of block containing all the taxis -->
 
         <!-- Start of block containing all the accommodations -->
-        <div ng-repeat="acco in itinerary.Accommodations" ng-init="selectedOptions[acco.Id] = ''">
+        <div ng-repeat="acco in proposal.TravelRequest.Accommodations" ng-init="selectedOptions[acco.Id] = ''">
             <div class="list-group form-group option-group">
                 <a href="javascript:void(0)" class="list-group-item active">
-                    Options for Accommodation stay in {{ acco.Address.City }} ({{ acco.Address.Country }}) from 
-                    <strong>{{ acco.CheckInDate | date:'d MMMM yyyy' }}</strong> to 
+                    Options for Accommodation stay in {{ acco.Address.City }} ({{ acco.Address.CountryName }}) from
+                    <strong>{{ acco.CheckInDate | date:'d MMMM yyyy' }}</strong> to
                     <strong>{{ acco.CheckOutDate | date:'d MMMM yyyy' }}</strong>
                 </a>
                 <div class="list-group-item group_{{ acco.Id }} disabled" ng-repeat="ac in proposal.Accommodations | filter: { ParentID: acco.Id }" id="option_{{ ac.ParentID }}_{{ $index }}" ng-click="select(ac, $index);" style="cursor:pointer">
                     <div class="row option_row">
                         <div class="col-md-6">
                             <i class="check"></i>
-                            {{ ac.Address.AddressName }} in {{ ac.Address.City }} 
+                            {{ ac.Address.AddressName }} in {{ ac.Address.City }}
                             <i ng-if="ac.Note != NULL" class="gi gi-comments" data-tooltip="{{ ac.Note }}"></i>
                         </div>
                         <div class="col-md-4">
@@ -152,7 +152,8 @@
 
     </div>
     <footer class="clearfix"
-            style="min-height: 168px;">
+            style="min-height: 168px;"
+            ng-show="proposal.IsApproved == false">
         <div>
             <div class="block-title"
                  style="border-top: 1px solid #dbe1e8">

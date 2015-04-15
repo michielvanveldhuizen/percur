@@ -77,6 +77,18 @@ namespace Percurrentis.Controllers
         {
             return _contextProvider.Context.TravelProposal
                 .Include("TravelRequest")
+                .Include("TravelRequest.TravelRequest_RequestTravellers.RequestTraveller")
+                .Include("TravelRequest.TravelRequest_RequestTravellers.RequestTraveller.Company")
+                .Include("TravelRequest.Accommodations")
+                .Include("TravelRequest.Accommodations.Address")
+                .Include("TravelRequest.FlightRequests")
+                .Include("TravelRequest.FlightRequests.FlyerMemberCard")
+                .Include("TravelRequest.FlightRequests.DepartureAddress")
+                .Include("TravelRequest.FlightRequests.DestinationAddress")
+                .Include("TravelRequest.FerryRequests")
+                .Include("TravelRequest.TaxiRequests")
+                .Include("TravelRequest.RentalCarRequests")
+                .Include("TravelRequest.EuroTunnelRequests")
                 .Include("FlightRequests")
                 .Include("FlightRequests.DepartureAddress")
                 .Include("FlightRequests.DestinationAddress")
