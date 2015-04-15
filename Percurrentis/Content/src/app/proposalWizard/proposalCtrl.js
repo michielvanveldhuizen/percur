@@ -400,6 +400,25 @@
         $scope.onReject = function () {
             $scope.mode = 'reject';
         };
+        $scope.onRejectConfirm = function () {
+            jQuery(".option_row").addClass("disabled");
+
+            $scope.proposal.IsApproved = 1;
+            // > notify TA?
+
+            $scope.mode = 'rejectConfirmed';
+
+            travelRequestService.saveChanges(
+                $scope.proposal,
+                undefined,
+                function (result) {
+                    //$location.path("TravelAgency/#/");
+                },
+                function () {
+                    //console.log("Save failed");
+                }
+             );
+        }
         $scope.onCancel = function () {
             $scope.mode = 'init';
         };
@@ -418,6 +437,7 @@
                         $scope.proposal.TravelRequest.Accommodations.push(entityCopy);
                     }
                 });
+                console.log("Accommodation to be removed: " + value.Id);
                 travelRequestService.removeAccommodation($scope.proposal.TravelRequest, value);
             });
 
@@ -426,7 +446,6 @@
                 var option = $scope.selectedOptions[value.Id].id;
                 angular.forEach($scope.proposal.FlightRequests, function (v, k) {
                     if (v.Id === option) {
-                        console.log(v.ParentID);
                         var entityCopy = travelRequestService.copyFlight(v);
                         $scope.proposal.TravelRequest.FlightRequests.push(entityCopy);
                     }
