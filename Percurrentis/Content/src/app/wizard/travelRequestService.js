@@ -109,8 +109,6 @@
                 var deferred = $q.defer();
 
                 var request = manager.createEntity('TravelProposal');
-                console.log('hier');
-                console.log(request);
 
                 var query = breeze.EntityQuery
                     .from('AddressTypes')
@@ -725,9 +723,9 @@
             request.FlightRequests.push(entity);
         }
 
-        function copyFlight(source) {
+        function copyFlight(destination, source) {
 
-            var destination = manager.createEntity("FlightRequest");
+            //var destination = manager.createEntity("FlightRequest");
             destination.FlyerMemberCard = manager.createEntity("FlyerMemberCard");
             destination.DepartureDate = source.DepartureDate;
             destination.HasLargeCabinLuggage = source.HasLargeCabinLuggage;
@@ -737,6 +735,8 @@
             destination.FlyerMemberCardID = source.FlyerMemberCardID;
             destination.FlyerMemberCard.Id = source.FlyerMemberCard.Id;
             destination.FlyerMemberCard.FMCNumber = source.FlyerMemberCard.FMCNumber;
+            destination.ParentID = null;
+            destination.TravelProposalID = null;
             // DepartureAddress
             destination.DepartureAddressID = source.DepartureAddressID;
             destination.DepartureAddress = source.DepartureAddress;
@@ -748,10 +748,8 @@
             destination.CostSecondary = source.CostSecondary;
             destination.SecondaryCurrency = source.SecondaryCurrency;
 
-            destination.TravelProposalID = 0;
-            destination.ParentID = null;
-
-            return destination;
+            console.log("Flight TrId: " + destination.TravelRequestID);
+            console.log("Flight TrPrId: " + destination.TravelProposalID);
         }
 
         function removeFlight(request, flight, force) {
@@ -940,7 +938,6 @@
         }
 
         function removeAccommodation(request, accommodation) {
-            console.log(accommodation);
             request.Accommodations.splice(_.indexOf(request.Accommodations, accommodation), 1);
             manager.detachEntity(accommodation.Address);
             manager.detachEntity(accommodation);
@@ -956,8 +953,10 @@
             destination.Address.City = source.Address.City;
             destination.Address.StateProvince = source.Address.StateProvince;
             destination.Address.CountryRegionID = source.Address.CountryRegionID;
-            destination.TravelRequestID = source.TravelRequestID;
+            console.log("source parent ID for acco: " + source.ParentID);
+            destination.TravelRequestID = source.ParentID;
             destination.ParentID = null;
+            destination.TravelProposalID = 0;
 
             destination.CheckInDate = source.CheckInDate;
             destination.CheckOutDate = source.CheckOutDate;
@@ -966,7 +965,8 @@
             destination.CostSecondary = source.CostSecondary;
             destination.SecondaryCurrency = source.SecondaryCurrency;
 
-            return destination;
+            console.log("Accommodation TrId: " + destination.TravelRequestID);
+            console.log("Accommodation TrPrId: " + destination.TravelProposalID);
         }
 
         function setPreUsedAccommodation(request, index) {
@@ -1053,6 +1053,13 @@
                 if (!options.hasRentalCar) {
                     _.forEach(request.RentalCarRequests, function (val) {
                         removeRentalcar(request, val);
+                    });
+                } else {
+                    _.forEach(request.RentalCarRequests, function (val) {
+                        //Setting the first traveller as driver if there are no drivers set
+                        if (val.DriverID == 0) {
+                            val.DriverID = request.TravelRequest_RequestTravellers[0].RequestTraveller.Id;
+                        }
                     });
                 }
 

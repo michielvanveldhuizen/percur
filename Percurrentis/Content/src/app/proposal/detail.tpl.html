@@ -13,7 +13,7 @@
                     <table class="table table-vcenter table-condensed table-striped">
                         <tbody>
                             <tr data-ng-repeat="traveller in proposal.TravelRequest.TravelRequest_RequestTravellers">
-                                <td>{{ $index }}</td>
+                                <td>{{ $index+1 }}</td>
                                 <td>{{traveller.RequestTraveller.FullName || 'No full name given.'}}</td>
                                 <td>{{traveller.RequestTraveller.PhoneNumberID || 'No number given.'}}</td>
                                 <td>{{traveller.RequestTraveller.Company.Name || 'No company specified.' }}</td>
@@ -55,7 +55,7 @@
                             {{ fl.DepartureDate | date:'d MMMM yyyy' }}
                         </div>
                         <div class="col-md-2" style="text-align: right">
-                            {{ fl.Cost }}€ / {{ fl.CostSecondary }} {{ fl.SecondaryCurrency }}
+                            {{ fl.Cost | number:2 }}€ / {{ fl.CostSecondary | number:2 }} {{ fl.SecondaryCurrency }}
                         </div>
                     </div>
                 </div>
@@ -82,13 +82,73 @@
                             {{ fe.DepartureDate | date:'d MMMM yyyy' }}
                         </div>
                         <div class="col-md-2" style="text-align: right">
-                            {{ fe.Cost }}€ / {{ fe.CostSecondary }} {{ fe.SecondaryCurrency }}
+                            {{ fe.Cost | number:2 }}€ | {{ fe.CostSecondary | number:2 }} {{ fe.SecondaryCurrency }}
                         </div>
                     </div>
                 </div>
             </div>
         </div>
         <!-- End of block containing all the ferries -->
+
+        <!-- Start of block containing all the tunnels -->
+        <div ng-repeat="tunnel in proposal.TravelRequest.EuroTunnelRequests" ng-init="selectedOptions[tunnel.Id] = ''">
+            <div class="list-group form-group option-group">
+                <a href="javascript:void(0)" class="list-group-item active">
+                    Options for EuroTunnel from <strong>{{ tunnel.DepartureAddress.AddressName }}</strong> to <strong>
+                        {{ tunnel.DestinationAddress.AddressName }}
+                    </strong> on {{ tunnel.DepartureDate | date:'d MMMM yyyy' }}
+                </a>
+                <div class="list-group-item group_{{ tunnel.Id }} disabled" ng-repeat="tu in proposal.EuroTunnelRequests | filter: { ParentID: tunnel.Id }" id="option_{{ tu.ParentID }}_{{ $index }}" ng-click="select(tu, $index);" style="cursor:pointer">
+                    <div class="row option_row">
+                        <div class="col-md-6">
+                            <i class="check"></i>
+                            {{ tu.DepartureAddress.AddressName }} to {{ tu.DestinationAddress.AddressName }}
+                            <i ng-if="tu.Note != NULL" class="gi gi-comments" data-tooltip="{{ tu.Note }}"></i>
+                        </div>
+                        <div class="col-md-2">
+                            {{ tu.DepartureDate | date:'d MMMM yyyy' }}
+                        </div>
+                        <div class="col-md-2" style="text-align: right">
+                            {{ tu.Cost | number:2 }}€ 
+                        </div>
+                        <div class="col-md-2" style="text-align: right">
+                            {{ tu.CostSecondary | number:2 }} {{ tu.SecondaryCurrency }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End of block containing all the tunnels -->
+
+        <!-- Start of block containing all the rentalcars -->
+        <div ng-repeat="rcar in proposal.TravelRequest.RentalCarRequests" ng-init="selectedOptions[rcar.Id] = ''">
+            <div class="list-group form-group option-group">
+                <a href="javascript:void(0)" class="list-group-item active">
+                    Options for RentalCar from <strong>{{ rcar.Address.AddressName }}</strong> to <strong>
+                        {{ rcar.Address.AddressName }}
+                    </strong> on {{ rcar.DepartureDate | date:'d MMMM yyyy' }}
+                </a>
+                <div class="list-group-item group_{{ rcar.Id }} disabled" n ng-repeat="rc in proposal.RentalCarRequests | filter: { ParentID: rcar.Id }" id="option_{{ rc.ParentID }}_{{ $index }}" ng-click="select(rc, $index);" style="cursor:pointer">
+                    <div class="row option_row">
+                        <div class="col-md-6">
+                            <i class="check"></i>
+                            {{ rc.Address.AddressName }} 
+                            <i ng-if="rc.Note != NULL" class="gi gi-comments" data-tooltip="{{ rc.Note }}"></i>
+                        </div>
+                        <div class="col-md-2">
+                            {{ rc.DepartureDate | date:'d MMMM yyyy' }}
+                        </div>
+                        <div class="col-md-2" style="text-align: right">
+                            {{ rc.Cost | number:2 }}€
+                        </div>
+                        <div class="col-md-2" style="text-align: right">
+                            {{ rc.CostSecondary | number:2 }} {{ rc.SecondaryCurrency }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End of block containing all the rentalcars -->
 
         <!-- Start of block containing all the taxis -->
         <div ng-repeat="taxi in proposal.TravelRequest.TaxiRequests" ng-init="selectedOptions[taxi.Id] = ''">
@@ -109,7 +169,7 @@
                             {{ ta.DepartureDate | date:'d MMMM yyyy' }}
                         </div>
                         <div class="col-md-2" style="text-align: right">
-                            {{ ta.Cost }}€ / {{ ta.CostSecondary }} {{ ta.SecondaryCurrency }}
+                            {{ ta.Cost | number:2 }}€ / {{ ta.CostSecondary  | number:2}} {{ ta.SecondaryCurrency }}
                         </div>
                     </div>
                 </div>
@@ -121,7 +181,7 @@
         <div ng-repeat="acco in proposal.TravelRequest.Accommodations" ng-init="selectedOptions[acco.Id] = ''">
             <div class="list-group form-group option-group">
                 <a href="javascript:void(0)" class="list-group-item active">
-                    Options for Accommodation stay in {{ acco.Address.City }} ({{ acco.Address.CountryName }}) from
+                    Options for Accommodation stay in {{ acco.Address.City }} from
                     <strong>{{ acco.CheckInDate | date:'d MMMM yyyy' }}</strong> to
                     <strong>{{ acco.CheckOutDate | date:'d MMMM yyyy' }}</strong>
                 </a>
@@ -136,7 +196,7 @@
                             {{ ac.CheckOutDate | date:'d MMMM yyyy' }}
                         </div>
                         <div class="col-md-2" style="text-align: right">
-                            {{ ac.Cost }}€ / {{ ac.CostSecondary }} {{ ac.SecondaryCurrency }}
+                            {{ ac.Cost | number:2 }}€ / {{ ac.CostSecondary | number:2 }} {{ ac.SecondaryCurrency }}
                         </div>
                     </div>
                 </div>
@@ -145,7 +205,7 @@
         <div class="list-group form-group">
 
             <a class="list-group-item active" style="text-align: right">
-                Total: {{ totalCost }} €
+                Total: {{ totalCost | number:2 }} €
             </a>
         </div>
 

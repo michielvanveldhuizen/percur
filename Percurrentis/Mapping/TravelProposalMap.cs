@@ -20,17 +20,17 @@ namespace Percurrentis.Mapping
             this.Property(t => t.IsApproved).IsRequired();*/
 
             this.HasMany<Accommodation>(t => t.Accommodations)
-            .WithRequired(a => a.TravelProposal).HasForeignKey(r => r.TravelProposalID);
+            .WithOptional(a => a.TravelProposal).HasForeignKey(r => r.TravelProposalID);
             this.HasMany<FlightRequest>(t => t.FlightRequests)
-            .WithRequired(f => f.TravelProposal).HasForeignKey(f => f.TravelProposalID);
+            .WithOptional(f => f.TravelProposal).HasForeignKey(f => f.TravelProposalID);
             this.HasMany<FerryRequest>(t => t.FerryRequests)
             .WithOptional(f => f.TravelProposal).HasForeignKey(f => f.TravelProposalID);
             this.HasMany<RentalCarRequest>(t => t.RentalCarRequests)
-            .WithRequired(r => r.TravelProposal).HasForeignKey(r => r.TravelProposalID);
+            .WithOptional(r => r.TravelProposal).HasForeignKey(r => r.TravelProposalID);
             this.HasMany<TaxiRequest>(t => t.TaxiRequests)
-            .WithRequired(t => t.TravelProposal).HasForeignKey(t => t.TravelProposalID);
+            .WithOptional(t => t.TravelProposal).HasForeignKey(t => t.TravelProposalID);
             this.HasMany<EuroTunnelRequest>(t => t.EuroTunnelRequests)
-            .WithRequired(e => e.TravelProposal).HasForeignKey(e => e.TravelProposalID);
+            .WithOptional(e => e.TravelProposal).HasForeignKey(e => e.TravelProposalID);
 
             this.HasOptional(t => t.TravelRequestApproval).WithMany().HasForeignKey(t => t.TravelRequestApprovalID);
         }

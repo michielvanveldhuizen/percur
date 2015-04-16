@@ -13,12 +13,11 @@
             travelRequestService.createTravelProposal()
             .then(function (request) {
                 $scope.proposal = request;
-                // Check if already exists and give options.
                 $scope.proposal.TravelRequestID = $scope.itinerary.Id;
             });
         });
 
-        // And the ferries as well
+        // Load all the stuffs!
         travelRequestService.getFerries().then(function (query) {
             var uniqueResults = [];
             var alreadyHad = [];
@@ -59,22 +58,15 @@
             }, 1000);
 
         });
-
-        // Load all the airports again -.-'
         travelRequestService.getAirports().then(function (query) {
             $scope.airports = query.results;
         });
-
-        // Load all the addresses again -.-'
         travelRequestService.getAddresses().then(function (query) {
             $scope.addresses = query.results;
         });
-
-        // Load all the countries again -.-'
         travelRequestService.getCountries().then(function (query) {
             $scope.countries = query.results;
         });
-
         travelRequestService.getCurrencies().then(function (query) {
             $scope.currencies = query.results;
         });
@@ -200,7 +192,6 @@
 
                 case 'Taxi':
                     travelRequestService.addTaxi($scope.proposal);
-                    console.log("HOI");
                     // Setting the index
                     $scope.currentIndex = $scope.proposal.TaxiRequests.length - 1;
                     $scope.currentEntity = $scope.proposal.TaxiRequests[$scope.currentIndex];
@@ -229,8 +220,19 @@
                     break;
 
                 case 'EuroTunnel':
-                    travelRequestService.addEurotunnel($scope.proposal)
-                    console.log("Hoop dat die tunnel doorzakt");
+                    travelRequestService.addEurotunnel($scope.proposal, request);
+                    // Setting the index
+                    $scope.currentIndex = $scope.proposal.EuroTunnelRequests.length - 1;
+                    $scope.currentEntity = $scope.proposal.EuroTunnelRequests[$scope.currentIndex];
+
+                    $scope.currentEntity.ParentID = request.Id;
+
+                    $scope.currentEntity.Cost = request.Cost;
+                    $scope.currentEntity.CostSecondary = request.CostSecondary;
+                    $scope.currentEntity.SecondaryCurrency = request.SecondaryCurrency;
+
+                    console.log($scope.proposal);
+
                     break;
                 case 'Flight':
                     travelRequestService.addFlight(proposal);
@@ -313,12 +315,34 @@
         // Item is complete, add it to the proposal
         $scope.commitItem = function()
         {
+            if ($scope.currentEntity.Cost == null || $scope.currentEntity.CostSecondary == null || $scope.currentEntity.SecondaryCurrency == null)
+            {
+                modalService.open("Not all cost related fields have been filled in",
+                                  "Continue anyway?",
+                                  function () {
+                                      // User wants to continue despite the empty fields.
+                                      $scope.confirmCommit();
+                                      },
+                                  function () {
+                                      // Don't really need to do anything here. User cancelled the commit.
+                                  },
+                                  '/TravelAgency/Content/src/app/modal/primaryBtnSet.tpl.html');
+            }
+            else
+            {
+                $scope.confirmCommit();
+            }
+        }
+
+        $scope.confirmCommit = function()
+        {
             $scope.currentlyAdding = false;
             $scope.type = "";
             $scope.currentEntity = null;
             $scope.currentIndex = null;
             // Revert to default template
             $scope.templateUrl = '/TravelAgency/Content/src/app/proposalWizard/partials/index.tpl.html';
+
         }
     };
 
@@ -341,7 +365,6 @@
         $scope.selectedOptions = [];
         $scope.approvalMode = 'false';
         $scope.mode = 'init';
-        $scope.itinerary = '';
         travelRequestService.getProposalById($route.current.params.Id)
         .then(function (query) {
             $scope.proposal = query.results[0];
@@ -371,7 +394,6 @@
                 $scope.checkCompletion();
             }
         }
-
         $scope.checkCompletion = function () {
             var hasEmpty = false;
             angular.forEach($scope.selectedOptions, function (value, key) {
@@ -384,7 +406,6 @@
                 $scope.approvalMode = true;
             }
         };
-
         $scope.updateTotal = function () {
             var sum = 0;
             angular.forEach($scope.costs, function (value, key) {
@@ -432,38 +453,48 @@
                 var option = $scope.selectedOptions[value.Id].id;
                 angular.forEach($scope.proposal.Accommodations, function (v, k) {
                     if (v.Id === option) {
-                        var entityCopy = travelRequestService.copyAccommodation(v, value);
+                        travelRequestService.copyAccommodation(value, v);
+                        /*
                         entityCopy.TravelRequestID = $scope.proposal.TravelRequest.Id;
                         $scope.proposal.TravelRequest.Accommodations.push(entityCopy);
+                        var id = value.Id;
+                        jQuery.extend(value, v);
+                        value.Id = id;
+                        value.TravelRequestID = $scope.proposal.TravelRequest.Id;*/
                     }
                 });
-                console.log("Accommodation to be removed: " + value.Id);
-                travelRequestService.removeAccommodation($scope.proposal.TravelRequest, value);
             });
 
-            // Copy all selected accommodations into itinerary
+            // Copy all selected flights into itinerary
             angular.forEach($scope.proposal.TravelRequest.FlightRequests, function (value, key) {
                 var option = $scope.selectedOptions[value.Id].id;
                 angular.forEach($scope.proposal.FlightRequests, function (v, k) {
                     if (v.Id === option) {
-                        var entityCopy = travelRequestService.copyFlight(v);
-                        $scope.proposal.TravelRequest.FlightRequests.push(entityCopy);
+                        travelRequestService.copyFlight(value, v);
+                        value.TravelRequestID = $scope.proposal.TravelRequest.Id;
+                        /*entityCopy.TravelRequestID = $scope.proposal.TravelRequest.Id;
+                        $scope.proposal.TravelRequest.Accommodations.push(entityCopy);
+                        var id = value.Id;
+                        jQuery.extend(value, v);
+                        value.Id = id;
+                        value.TravelRequestID = $scope.proposal.TravelRequest.Id;*/
                     }
                 });
-                travelRequestService.removeFlight($scope.proposal.TravelRequest, value, true);
             });
 
             $scope.proposal.IsApproved = 2;
             $scope.proposal.TravelRequest.IsFinal = true;
 
-
+            console.log("Items in collections: ");
+            console.log("Acco: " + $scope.proposal.TravelRequest.Accommodations.length);
+            console.log("Flights: " + $scope.proposal.TravelRequest.FlightRequests.length);
 
             travelRequestService.saveChanges(
                 $scope,
                 undefined,
                 function (result) {
                     console.log(result);
-                    //$location.path("TravelAgency/#/Itinerary/#Final");
+                    //$location.path("/TravelAgency/#/Itinerary/#Final");
                 },
                 function () {
                     console.log("Save failed");

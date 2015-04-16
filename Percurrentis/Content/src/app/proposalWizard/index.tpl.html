@@ -43,7 +43,7 @@
                                         <div class="col-md-4">
                                             <h5>Financial</h5>
                                             <strong>Costs: </strong>{{ flight.Cost ? Flight.Cost : '-' }}<br />
-                                            <strong>Secondary Costs: </strong>{{ flight.CostSecondary }} {{ flight.SecondaryCurrency }}<br /><br />
+                                            <strong>Secondary Costs: </strong>{{ flight.CostSecondary | number:2 }} {{ flight.SecondaryCurrency }}<br /><br />
                                             <strong>Flyer Member Card:</strong> {{flight.FlyerMemberCard.FMCNumber}}
                                         </div>
                                         <div class="col-md-4">
@@ -142,6 +142,50 @@
                                         <div class="col-md-4">
                                             <h5>Notes</h5>
                                             <div class="well">{{ taxi.Note }}</div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+
+                        <!-- Start of tbody for RentalCarRequests -->
+                        <tbody ng-repeat="rcar in itinerary.RentalCarRequests">
+                            <tr>
+                                <td>Rental car</td>
+                                <td>{{ rcar.Address.AddressName }}</td>
+                                <td></td>
+                                <td>{{ rcar.StartDate | date:'d MMMM yyyy' }} to {{ rcar.EndDate | date:'d MMMM yyyy' }}</td>
+                                <td>
+                                    <div class="btn-group btn-group-sm">
+                                        <a ng-click="updateTemplateUrl('Taxi', rcar)"
+                                           class="btn btn-sm btn-default">
+                                            <i class="fa fa-plus"></i>
+                                            Add Option
+                                        </a>
+                                        <a ng-click="info = !info"
+                                           class="btn btn-sm btn-default">
+                                            <i class="fa fa-info-circle"></i>
+                                            More Info
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr ng-show="info">
+                                <td colspan="1"></td>
+                                <td colspan="100">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <h5>Financial</h5>
+                                            <strong>Costs: </strong>{{ rcar.Cost ? rcar.Cost : '-' }}<br />
+                                            <strong>Secondary Costs: </strong>{{ rcar.CostSecondary }} {{ rcar.SecondaryCurrency }}<br /><br />
+
+                                        </div>
+                                        <div class="col-md-4">
+
+                                        </div>
+                                        <div class="col-md-4">
+                                            <h5>Notes</h5>
+                                            <div class="well">{{ rcar.Note }}</div>
                                         </div>
                                     </div>
                                 </td>
@@ -291,16 +335,16 @@
                             </span>
                         </div>
                     </div>
-                    <div class="list-group-item" ng-click="showEurotunnelRequests = !showEurotunnelRequests" ng-show="proposal.FerryRequests.length > 0" style="cursor:pointer">
-                        Eurotunnel Requests: <span class="badge">{{ proposal.EurotunnelRequests.length }}</span>
-                        <div ng-repeat="tunnel in proposal.EurotunnelRequests">
+                    <div class="list-group-item" ng-click="showEurotunnelRequests = !showEurotunnelRequests" ng-show="proposal.EuroTunnelRequests.length > 0" style="cursor:pointer">
+                        Eurotunnel Requests: <span class="badge">{{ proposal.EuroTunnelRequests.length }}</span>
+                        <div ng-repeat="tunnel in proposal.EuroTunnelRequests">
                             <span ng-show="showEurotunnelRequests">
-                                {{ tunnel.CheckInDate | date:'d MMMM yyyy' }}: {{ tunnel.Address.AddressName }} in {{ tunnel.Address.City }}
+                                {{ tunnel.DepartureAddress.AddressName }} to {{ tunnel.DestinationAddress.AddressName }}
                             </span>
                         </div>
                     </div>
                     <div class="list-group-item" ng-click="showTaxiRequests = !showTaxiRequests" ng-show="proposal.TaxiRequests.length > 0" style="cursor:pointer">
-                        Eurotunnel Requests: <span class="badge">{{ proposal.TaxiRequests.length }}</span>
+                        Taxi Requests: <span class="badge">{{ proposal.TaxiRequests.length }}</span>
                         <div ng-repeat="taxi in proposal.TaxiRequests">
                             <span ng-show="showTaxiRequests">
                                 {{ taxi.DepartureDate | date:'d MMMM yyyy' }}: {{ taxi.DepartureAddress.Name }} in {{ taxi.DepartureAddress.City }}
@@ -321,5 +365,4 @@
 
         </div>
     </div>
-    <button ng-click="hoi()">HOI</button>
 </div>

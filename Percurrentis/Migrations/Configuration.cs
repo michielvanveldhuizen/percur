@@ -30,7 +30,7 @@ namespace Percurrentis.Migrations
                 var baseDir = AppDomain.CurrentDomain.BaseDirectory.Replace("\\bin", string.Empty) + "\\Migrations";
                 context.Database.ExecuteSqlCommand(File.ReadAllText(baseDir + "\\CountryInformation.sql"));
             }
-            if (!context.Currency.Any(c => c.Name == "Euro"))
+            if (!context.Currency.Any(c => c.Name == "Romanian New Leu"))
             {
                 var baseDir = AppDomain.CurrentDomain.BaseDirectory.Replace("\\bin", string.Empty) + "\\Migrations";
                 context.Database.ExecuteSqlCommand(File.ReadAllText(baseDir + "\\Currency.sql"));

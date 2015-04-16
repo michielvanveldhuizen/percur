@@ -456,6 +456,10 @@
     <Compile Include="Migrations\201504091155063_addedCurrencies.Designer.cs">
       <DependentUpon>201504091155063_addedCurrencies.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201504161214472_blijkbaarDingen.cs" />
+    <Compile Include="Migrations\201504161214472_blijkbaarDingen.Designer.cs">
+      <DependentUpon>201504161214472_blijkbaarDingen.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Context\DatabaseContext.cs" />
     <Compile Include="Notification\Notification.cs" />
@@ -1642,6 +1646,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201504091155063_addedCurrencies.resx">
       <DependentUpon>201504091155063_addedCurrencies.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201504161214472_blijkbaarDingen.resx">
+      <DependentUpon>201504161214472_blijkbaarDingen.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

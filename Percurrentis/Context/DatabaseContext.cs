@@ -126,6 +126,7 @@ namespace Percurrentis.Context
                         }
                     }
                 }
+
                 if (changedEntity.Entity is RentalCarRequest)
                 {
                     var specEntity = changedEntity.Entity as RentalCarRequest;

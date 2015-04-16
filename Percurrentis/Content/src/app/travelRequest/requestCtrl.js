@@ -303,8 +303,6 @@
         travelRequestService.getTravelRequestByHash($route.current.params.Hash)
         .then(function (query) {
             $scope.request = query.results[0];
-
-            console.log($scope.request);
             
             if (query.results[0] == null) {
                 failedToLoadDetailPage();
@@ -450,10 +448,10 @@
                                               undefined,
                                               function succes() {
                                                   //travelRequestService.archiveTravelRequest(request);
-                                                  console.log("Saved");
+                                                  //console.log("Saved");
                                               },
                                               function failed() {
-                                                  console.log("Failed");
+                                                  alert("Something went wrong. Please check the information in the form and try again.");
                                               });
                                   $location.path('/Itinerary');
                                 },

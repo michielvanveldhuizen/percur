@@ -52,7 +52,6 @@ INSERT INTO Currency (Id,Name,CurrencyCode) VALUES ('44','Kroon','EEK');
 INSERT INTO Currency (Id,Name,CurrencyCode) VALUES ('45','Egyptian Pound','EGP');
 INSERT INTO Currency (Id,Name,CurrencyCode) VALUES ('46','Nakfa','ERN');
 INSERT INTO Currency (Id,Name,CurrencyCode) VALUES ('47','Ethiopian Birr','ETB');
-INSERT INTO Currency (Id,Name,CurrencyCode) VALUES ('48','Euro','EUR');
 INSERT INTO Currency (Id,Name,CurrencyCode) VALUES ('49','Fiji Dollar','FJD');
 INSERT INTO Currency (Id,Name,CurrencyCode) VALUES ('50','Falkland Islands Pound','FKP');
 INSERT INTO Currency (Id,Name,CurrencyCode) VALUES ('51','Pound Sterling','GBP');
