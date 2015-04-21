@@ -73,6 +73,7 @@
             getServiceCompanies: getServiceCompanies,
             removeRentalcar: removeRentalcar,
             addTaxi: addTaxi,
+            copyTaxi: copyTaxi,
             removeTaxi: removeTaxi,
             addAccommodation: addAccommodation,
             removeAccommodation: removeAccommodation,
@@ -926,6 +927,26 @@
             entity.DepartureAddress = manager.createEntity('Address');
             entity.DestinationAddress = manager.createEntity('Address');
             request.TaxiRequests.push(entity);
+        }
+
+        function copyTaxi(source, destination) {
+
+            destination.DepartureDate = source.DepartureDate;
+
+            destination.DepartureAddressID = source.DepartureAddressID;
+            destination.DepartureAddress = source.DepartureAddress;
+
+            destination.DestinationAddressID = source.DestinationAddressID;
+            destination.DestinationAddress = source.DestinationAddress;
+
+            destination.ParentID = null;
+            destination.TravelProposalID = null;
+
+            destination.Cost = source.Cost;
+            destination.CostSecondary = source.CostSecondary;
+            destination.SecondaryCurrency = source.SecondaryCurrency;
+            destination.Note = source.Note;
+
         }
 
         function removeTaxi(request, taxi) {

@@ -326,10 +326,17 @@
                 case 'EuroTunnel':
                     travelRequestService.removeEurotunnel($scope.proposal, proposal);
                     break;
+                case 'RentalCar':
+                    travelRequestService.removeRentalcar($scope.proposal, proposal);
+                    break;
+                case 'RentalCar':
+                    travelRequestService.removeRentalcar($scope.proposal, proposal);
+                    break;
                 default:
                     console.log('Defaulted.');
                     break;
             }
+
         }
 
         // Item is complete, add it to the proposal
@@ -393,7 +400,7 @@
                     $scope.supervisorName = employee.userName;
                 });
         });
-        
+
         // Load all the addresses again -.-'
         travelRequestService.getAddresses().then(function (query) {
             $scope.addresses = query.results;
@@ -468,7 +475,6 @@
 
             $scope.mode = 'approveConfirmed';
 
-            
             // Copy all selected accommodations into itinerary
             angular.forEach($scope.proposal.TravelRequest.Accommodations, function (value, key) {
                 var option = $scope.selectedOptions[value.Id].id;
@@ -491,6 +497,17 @@
                 });
             });
 
+            // Copy all selected taxirequests into itinerary
+            angular.forEach($scope.proposal.TravelRequest.TaxiRequests, function (value, key) {
+                var option = $scope.selectedOptions[value.Id].id;
+                angular.forEach($scope.proposal.TaxiRequests, function (v, k) {
+                    if (v.Id === option) {
+                        travelRequestService.copyTaxi(value, v);
+                        value.TravelRequestID = $scope.proposal.TravelRequest.Id;
+                    }
+                });
+            });
+
             // Copy all selected ferries into itinerary
             angular.forEach($scope.proposal.TravelRequest.FerryRequests, function (value, key) {
                 var option = $scope.selectedOptions[value.Id].id;
@@ -508,13 +525,10 @@
                 angular.forEach($scope.proposal.RentalCarRequests, function (v, k) {
                     if (v.Id === option) {
                         travelRequestService.copyRentalcar(value, v);
-                        console.log(value.TravelRequestID);
                         value.TravelRequestID = $scope.proposal.TravelRequest.Id;
-                        console.log(value.TravelRequestID);
                     }
                 });
             });
-
 
             // Make the appropriate status changes for the Proposal and TravelRequest
             $scope.proposal.IsApproved = 2;

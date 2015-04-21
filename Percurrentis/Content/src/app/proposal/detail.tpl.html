@@ -55,7 +55,7 @@
                             {{ fl.DepartureDate | date:'d MMMM yyyy' }}
                         </div>
                         <div class="col-md-2" style="text-align: right">
-                            {{ fl.Cost | number:2 }}€ / {{ fl.CostSecondary | number:2 }} {{ fl.SecondaryCurrency }}
+                            {{ fl.Cost | number:2 }}€ | {{ fl.CostSecondary | number:2 }} {{ fl.SecondaryCurrency }}
                         </div>
                     </div>
                 </div>
@@ -105,14 +105,11 @@
                             {{ tu.DepartureAddress.AddressName }} to {{ tu.DestinationAddress.AddressName }}
                             <i ng-if="tu.Note != NULL" class="gi gi-comments" data-tooltip="{{ tu.Note }}"></i>
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-md-4">
                             {{ tu.DepartureDate | date:'d MMMM yyyy' }}
                         </div>
                         <div class="col-md-2" style="text-align: right">
-                            {{ tu.Cost | number:2 }}€ 
-                        </div>
-                        <div class="col-md-2" style="text-align: right">
-                            {{ tu.CostSecondary | number:2 }} {{ tu.SecondaryCurrency }}
+                            {{ tu.Cost | number:2 }}€ | {{ tu.CostSecondary | number:2 }} {{ tu.SecondaryCurrency }}
                         </div>
                     </div>
                 </div>
@@ -133,14 +130,11 @@
                             {{ rc.Address.AddressName }} 
                             <i ng-if="rc.Note != NULL" class="gi gi-comments" data-tooltip="{{ rc.Note }}"></i>
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-md-4">
                             {{ rc.DepartureDate | date:'d MMMM yyyy' }}
                         </div>
                         <div class="col-md-2" style="text-align: right">
-                            {{ rc.Cost | number:2 }}&euro;
-                        </div>
-                        <div class="col-md-2" style="text-align: right">
-                            {{ rc.CostSecondary | number:2 }} {{ rc.SecondaryCurrency }}
+                            {{ rc.Cost | number:2 }}&euro; | {{ rc.CostSecondary | number:2 }} {{ rc.SecondaryCurrency }}
                         </div>
                     </div>
                 </div>
@@ -167,7 +161,7 @@
                             {{ ta.DepartureDate | date:'d MMMM yyyy' }}
                         </div>
                         <div class="col-md-2" style="text-align: right">
-                            {{ ta.Cost | number:2 }}€ / {{ ta.CostSecondary  | number:2}} {{ ta.SecondaryCurrency }}
+                            {{ ta.Cost | number:2 }}€ | {{ ta.CostSecondary  | number:2}} {{ ta.SecondaryCurrency }}
                         </div>
                     </div>
                 </div>
@@ -194,7 +188,7 @@
                             {{ ac.CheckOutDate | date:'d MMMM yyyy' }}
                         </div>
                         <div class="col-md-2" style="text-align: right">
-                            {{ ac.Cost | number:2 }}€ / {{ ac.CostSecondary | number:2 }} {{ ac.SecondaryCurrency }}
+                            {{ ac.Cost | number:2 }}€ | {{ ac.CostSecondary | number:2 }} {{ ac.SecondaryCurrency }}
                         </div>
                     </div>
                 </div>

@@ -15,7 +15,7 @@
                 return filter.title == $location.hash();
             }) || $scope.filters.current;
 
-            $scope.currentFilter.filter();
+            $scope.currentFilter.filter();      
         });
 
         $scope.go = function (path) {

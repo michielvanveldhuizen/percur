@@ -67,7 +67,7 @@
                                 <td>Ferry</td>
                                 <td>{{ ferry.DepartureAddress.AddressName }}</td>
                                 <td>{{ ferry.DestinationAddress.AddressName }}</td>
-                                <td>{{ ferry.DepartureDate | date:'d MMMM yyyy' }}</td>
+                                <td>{{ ferry.DepartureDate | date:'EEEE, d MMMM yyyy, H:mm' }}</td>
                                 <td>
                                     <div class="btn-group btn-group-sm">
                                         <a ng-click="updateTemplateUrl('Ferry', ferry)"
@@ -110,7 +110,7 @@
                                 <td>Taxi</td>
                                 <td>{{ taxi.DepartureAddress.AddressName }}</td>
                                 <td>{{ taxi.DestinationAddress.AddressName }}</td>
-                                <td>{{ taxi.DepartureDate | date:'d MMMM yyyy' }}</td>
+                                <td>{{ taxi.DepartureDate | date:'EEEE, d MMMM yyyy, H:mm' }}</td>
                                 <td>
                                     <div class="btn-group btn-group-sm">
                                         <a ng-click="updateTemplateUrl('Taxi', taxi)"
@@ -198,7 +198,7 @@
                                 <td>Eurotunnel</td>
                                 <td>{{ tunnel.DepartureAddress.AddressName }}</td>
                                 <td>{{ tunnel.DestinationAddress.AddressName }}</td>
-                                <td>{{ tunnel.DepartureDate | date:'d MMMM yyyy' }}</td>
+                                <td>{{ tunnel.DepartureDate | date:'EEEE, d MMMM yyyy, H:mm' }}</td>
                                 <td>
                                     <div class="btn-group btn-group-sm">
                                         <a ng-click="updateTemplateUrl('EuroTunnel', tunnel)"
@@ -305,6 +305,8 @@
                 </form>
             </div>
         </div>
+
+        <!-- Preview Box -->
         <div class="col-md-4">
             <div class="block">
                 <div class="block-title">
@@ -320,6 +322,7 @@
                     </button>
                 </p>
 
+                
                 <div class="list-group">
                     <div ng-click="showFlights = !showFlights" ng-show="proposal.FlightRequests.length > 0" style="cursor:pointer">
                         <div class="list-group-item">Flights: <span class="badge">{{ proposal.FlightRequests.length }}</span></div>
@@ -336,12 +339,13 @@
                             </span>
                         </div>
                     </div>
-                    <div class="list-group-item" ng-click="showFerries = !showFerries" ng-show="proposal.FerryRequests.length > 0" style="cursor:pointer">
-                        Ferries: <span class="badge">{{ proposal.Accommodations.length }}</span>
-                        <div ng-repeat="ferry in proposal.FerryRequests">
-                            <span ng-show="showFerries">
-                                {{ ferry.CheckInDate | date:'d MMMM yyyy' }}: {{ ferry.Address.AddressName }} in {{ ferry.Address.City }}
-                            </span>
+                    <div class="list-group">
+                        <div ng-click="showFerries = !showFerries" ng-show="proposal.FerryRequests.length > 0" style="cursor:pointer">
+                            <div class="list-group-item">Ferry requests <span class="badge">{{ proposal.FerryRequests.length }}</span></div>
+                            <div class="list-group-item" ng-repeat="ferry in proposal.FerryRequests" ng-show="showFerries">
+                                <p>{{ ferry.DepartureDate | date:'d MMMM yyyy' }}: {{ ferry.DepartureAddress.AddressName }} to {{ ferry.DestinationAddress.AddressName }}</p>
+                                <p>{{ ferry.Cost | number:2 }} &euro; | {{ ferry.CostSecondary | number:2 }} {{ ferry.SecondaryCurrency }}</p>
+                            </div>
                         </div>
                     </div>
                     <div class="list-group-item" ng-click="showEurotunnelRequests = !showEurotunnelRequests" ng-show="proposal.EuroTunnelRequests.length > 0" style="cursor:pointer">
@@ -365,7 +369,7 @@
                     <div ng-click="showRentalCarRequests = !showRentalCarRequests" ng-show="proposal.RentalCarRequests.length > 0" style="cursor:pointer">
                         <div class="list-group-item">Rentalcar requests <span class="badge">{{ proposal.RentalCarRequests.length }}</span></div>
                         <div class="list-group-item" ng-repeat="rcar in proposal.RentalCarRequests" ng-show="showRentalCarRequests">
-                            <p>{{ rcar.StartDate | date:'d MMMM yyyy' }} until {{ rcar.EndDate | date:'d MMMM yyyy' }} in {{ rcar.Cost }} &euro;</p>
+                            <p>{{ rcar.StartDate | date:'d MMMM yyyy' }} until {{ rcar.EndDate | date:'d MMMM yyyy' }}</p>
                             <p>{{ rcar.Cost | number:2 }} &euro; | {{ rcar.CostSecondary | number:2 }} {{ rcar.SecondaryCurrency }}</p>
                         </div>
                     </div>
