@@ -61,7 +61,7 @@
                                 </td>
                             </tr>
                         </tbody>
-                        
+
                         <tbody ng-repeat="ferry in itinerary.FerryRequests">
                             <tr>
                                 <td>Ferry</td>
@@ -91,10 +91,10 @@
                                             <h5>Financial</h5>
                                             <strong>Costs: </strong>{{ ferry.Cost ? ferry.Cost : '-' }}<br />
                                             <strong>Secondary Costs: </strong>{{ ferry.CostSecondary }} {{ ferry.SecondaryCurrency }}<br /><br />
-                                            
+
                                         </div>
                                         <div class="col-md-4">
-                                            
+
                                         </div>
                                         <div class="col-md-4">
                                             <h5>Notes</h5>
@@ -157,7 +157,7 @@
                                 <td>{{ rcar.StartDate | date:'d MMMM yyyy' }} to {{ rcar.EndDate | date:'d MMMM yyyy' }}</td>
                                 <td>
                                     <div class="btn-group btn-group-sm">
-                                        <a ng-click="updateTemplateUrl('Taxi', rcar)"
+                                        <a ng-click="updateTemplateUrl('RentalCar', rcar)"
                                            class="btn btn-sm btn-default">
                                             <i class="fa fa-plus"></i>
                                             Add Option
@@ -176,7 +176,7 @@
                                     <div class="row">
                                         <div class="col-md-4">
                                             <h5>Financial</h5>
-                                            <strong>Costs: </strong>{{ rcar.Cost ? rcar.Cost : '-' }}<br />
+                                            <strong>Costs: </strong>{{ rcar.Cost ? rcar.Cost : '-' }}€<br />
                                             <strong>Secondary Costs: </strong>{{ rcar.CostSecondary }} {{ rcar.SecondaryCurrency }}<br /><br />
 
                                         </div>
@@ -310,13 +310,22 @@
                 <div class="block-title">
                     <h2>Preview</h2>
                 </div>
+
+                <p>
+                    <button type="button" class="btn btn-success" ng-click="saveProposal()">
+                        Save Proposal
+                    </button>
+                    <button type="button" class="btn btn-danger" ng-click="discardProposal()">
+                        Discard Proposal
+                    </button>
+                </p>
+
                 <div class="list-group">
-                    <div class="list-group-item" ng-click="showFlights = !showFlights" ng-show="proposal.FlightRequests.length > 0" style="cursor:pointer">
-                        Flights: <span class="badge">{{ proposal.FlightRequests.length }}</span>
-                        <div ng-repeat="flight in proposal.FlightRequests">
-                            <span ng-show="showFlights">
-                                {{ flight.DepartureDate | date:'d MMMM yyyy' }}: {{ flight.DepartureAddress.City }} - {{ flight.DestinationAddress.City }}
-                            </span>
+                    <div ng-click="showFlights = !showFlights" ng-show="proposal.FlightRequests.length > 0" style="cursor:pointer">
+                        <div class="list-group-item">Flights: <span class="badge">{{ proposal.FlightRequests.length }}</span></div>
+                        <div class="list-group-item" ng-show="showFlights" ng-repeat="flight in proposal.FlightRequests">
+                            <p>{{ flight.DepartureDate | date:'d MMMM yyyy' }}: {{ flight.DepartureAddress.City }} - {{ flight.DestinationAddress.City }}</p>
+                            <p>{{ flight.Cost | number:2 }} &euro; | {{ flight.CostSecondary | number:2 }} {{ flight.SecondaryCurrency }}</p>
                         </div>
                     </div>
                     <div class="list-group-item" ng-click="showAccommodations = !showAccommodations" ng-show="proposal.Accommodations.length > 0" style="cursor:pointer">
@@ -352,15 +361,17 @@
                         </div>
                     </div>
                 </div>
+                <div class="list-group">
+                    <div ng-click="showRentalCarRequests = !showRentalCarRequests" ng-show="proposal.RentalCarRequests.length > 0" style="cursor:pointer">
+                        <div class="list-group-item">Rentalcar requests <span class="badge">{{ proposal.RentalCarRequests.length }}</span></div>
+                        <div class="list-group-item" ng-repeat="rcar in proposal.RentalCarRequests" ng-show="showRentalCarRequests">
+                            <p>{{ rcar.StartDate | date:'d MMMM yyyy' }} until {{ rcar.EndDate | date:'d MMMM yyyy' }} in {{ rcar.Cost }} &euro;</p>
+                            <p>{{ rcar.Cost | number:2 }} &euro; | {{ rcar.CostSecondary | number:2 }} {{ rcar.SecondaryCurrency }}</p>
+                        </div>
+                    </div>
+                </div>
 
-                <p>
-                    <button type="button" class="btn btn-success" ng-click="saveProposal()">
-                        Save Proposal
-                    </button>
-                    <button type="button" class="btn btn-danger" ng-click="discardProposal()">
-                        Discard Proposal
-                    </button>
-                </p>
+
             </div>
 
         </div>

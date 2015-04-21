@@ -160,7 +160,11 @@
         })
         .then(function (employee) {
             $scope.supervisorName = employee.userName;
-        });        
+        });
+
+        $scope.isTravelAgency = function () {
+            return roles.TravelAgency;
+        }
 
         $scope.go = function (path, hash) {
             $location.path(path);
@@ -184,7 +188,7 @@
 
 
         /* == Euro/RON conversion ========================================== */
-        travelRequestService.getExchangeRates().then(function (query) {
+        /*travelRequestService.getExchangeRates().then(function (query) {
             $scope.rate = query.results[0];
         });
 
@@ -208,7 +212,7 @@
                 }
                 return eurVal.toFixed(2);
             }
-        }
+        }*/
 
         function show(request) {
             if($scope.request.SuperiorID == ownGuid){

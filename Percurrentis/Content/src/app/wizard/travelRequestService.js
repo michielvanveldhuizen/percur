@@ -64,10 +64,12 @@
             removeFlight: removeFlight,
             changeFlyerMemberCard: changeFlyerMemberCard,
             addFerry: addFerry,
+            copyFerry: copyFerry,
             removeFerry: removeFerry,
             addEurotunnel: addEurotunnel,
             removeEurotunnel: removeEurotunnel,
             addRentalcar: addRentalcar,
+            copyRentalcar: copyRentalcar,
             getServiceCompanies: getServiceCompanies,
             removeRentalcar: removeRentalcar,
             addTaxi: addTaxi,
@@ -725,8 +727,6 @@
 
         function copyFlight(destination, source) {
 
-            //var destination = manager.createEntity("FlightRequest");
-            destination.FlyerMemberCard = manager.createEntity("FlyerMemberCard");
             destination.DepartureDate = source.DepartureDate;
             destination.HasLargeCabinLuggage = source.HasLargeCabinLuggage;
             destination.HasSpecialEquipment = source.HasSpecialEquipment;
@@ -747,9 +747,7 @@
             destination.Cost = source.Cost;
             destination.CostSecondary = source.CostSecondary;
             destination.SecondaryCurrency = source.SecondaryCurrency;
-
-            console.log("Flight TrId: " + destination.TravelRequestID);
-            console.log("Flight TrPrId: " + destination.TravelProposalID);
+            destination.Note = source.Note;
         }
 
         function removeFlight(request, flight, force) {
@@ -798,6 +796,28 @@
             entity.Title = "Ferry";
 
             request.FerryRequests.push(entity);
+        }
+
+        function copyFerry(source, destination) {
+            destination.CarHeight = source.CarHeight;
+            destination.CarLength = source.CarLength;
+            destination.LicensePlate = source.LicensePlate;
+
+            destination.DepartureDate = source.DepartureDate;
+            // DepartureAddress
+            destination.DepartureAddressID = source.DepartureAddressID;
+            destination.DepartureAddress = source.DepartureAddress;
+            // DestinationAddress
+            destination.DestinationAddressID = source.DestinationAddressID;
+            destination.DestinationAddress = source.DestinationAddress;
+
+            destination.ParentID = null;
+            destination.TravelProposalID = 0;
+
+            destination.Cost = source.Cost;
+            destination.CostSecondary = source.CostSecondary;
+            destination.SecondaryCurrency = source.SecondaryCurrency;
+            destination.Note = source.Note;
         }
 
         function removeFerry(request, ferry) {
@@ -861,6 +881,21 @@
             //entity.Driver = request.RequestTravellers[0];
 
             request.RentalCarRequests.push(entity);
+        }
+
+        function copyRentalcar(source, destination) {
+            destination.StartDate = source.StartDate;
+            destination.EndDate = source.EndDate;
+            destination.DriverID = source.DriverID;
+            destination.SecondaryDriverID = source.SecondaryDriverID;
+            destination.Address = source.Address;
+
+            destination.ParentID = null;
+            destination.TravelProposalID = 0;
+
+            destination.Cost = source.Cost;
+            destination.CostSecondary = source.CostSecondary;
+            destination.SecondaryCurrency = source.SecondaryCurrency;
         }
 
         function removeRentalcar(request, rentalcar) {
@@ -953,8 +988,7 @@
             destination.Address.City = source.Address.City;
             destination.Address.StateProvince = source.Address.StateProvince;
             destination.Address.CountryRegionID = source.Address.CountryRegionID;
-            console.log("source parent ID for acco: " + source.ParentID);
-            destination.TravelRequestID = source.ParentID;
+
             destination.ParentID = null;
             destination.TravelProposalID = 0;
 
@@ -964,9 +998,7 @@
             destination.Cost = source.Cost;
             destination.CostSecondary = source.CostSecondary;
             destination.SecondaryCurrency = source.SecondaryCurrency;
-
-            console.log("Accommodation TrId: " + destination.TravelRequestID);
-            console.log("Accommodation TrPrId: " + destination.TravelProposalID);
+            destination.Note = source.Note;
         }
 
         function setPreUsedAccommodation(request, index) {

@@ -86,11 +86,16 @@
                         <strong>Flyer Card:</strong>
                         {{ flightreq.FlyerMemberCard.FMCNumber }}
                     </div>
+                    
                 </div>
                 <div class="col-md-3">
                     <div>
                         <strong>Check-in:</strong>
                         {{ flightreq.IsOnlineCheckIn == true ? "Online" : "Regular" }}
+                    </div>
+                    <!-- Maybe this ng-if has to be changed to another group sometime in the future -->
+                    <div ng-if="isTravelAgency()">
+                        <strong>Costs: </strong>{{ flightreq.Cost | number:2 }}&euro; | {{ flightreq.CostSecondary | number:2 }} {{ flightreq.SecondaryCurrency }}
                     </div>
                 </div>
             </div>
@@ -273,7 +278,7 @@
             </table>
         </div>
     </div>
-    <div class="block" style="padding-bottom: 15px;">
+    <div class="block" style="padding-bottom: 15px;" ng-if="request.IsFinal == false">
         <!--<button data-ng-show="request.IsFinal == false && request.IsApproved == 2" class="btn btn-sm btn-default " data-ng-click="CommitItinerary()">Commit Itinerary</button>-->
         <button data-ng-if="request.IsFinal == false && request.IsApproved == 2 && proposalID == null" class="btn btn-sm btn-default " data-ng-click="startProposalWizard(request)">Create Proposal</button>
         <button data-ng-if="proposalID != null" class="btn btn-sm btn-default" data-ng-click="go('/Proposal/' + proposalID)">Open Proposal</button>

@@ -1,0 +1,147 @@
+﻿<div>
+        <p class="sub-header">Rental Period</p>
+
+        <div data-form-control data-label="Start of Rental">
+            <div data-datepicker data-ng-model="currentEntity.StartDate" data-ng-change="onRentalCarStartDateChanged(currentEntity)"></div>
+            <span class="help-block">The day on which the contract starts is also the day on which the rental car will be delivered.</span>
+        </div>
+
+        <div data-form-control data-label="Time of Delivery">
+            <div data-timepicker
+                 data-show-meridian="false"
+                 data-minute-step="5"
+                 data-ng-model="currentEntity.StartDate"></div>
+        </div>
+
+        <div data-form-control data-label="End of Rental">
+            <div data-datepicker
+                 min="currentEntity.rentalStart"
+                 data-ng-model="currentEntity.EndDate"></div>
+        </div>
+
+
+        <p class="sub-header">Delivery Address</p>
+
+        <div data-form-control data-label="Select a previously used delivery address">
+            <select class="form-control"
+                    data-placeholder="Delivery address selection"
+                    data-ng-model="model.TempRentalCarAddress[$index]"
+                    data-ng-options="rentalCarRequest as rentalCarRequest.ShowName for rentalCarRequest in uniqueRentalCar"
+                    data-z-validate
+                    data-ng-change="setPreUsedRentalCar($index)"></select>
+        </div>
+        <hr />
+        <div style="width: 25%;text-align: right;margin-bottom: 5px;padding-right: 22px;font-weight:600;">
+            Or create a new one:
+        </div>
+        <div data-form-control data-label="Address Description">
+            <input type="text"
+                   class="form-control"
+                   data-ng-model="currentEntity.Address.AddressName"
+                   placeholder="Address Description"
+                   data-z-validate />
+        </div>
+
+        <div data-form-control data-label="Street">
+            <input type="text"
+                   class="form-control"
+                   data-ng-model="currentEntity.Address.Street"
+                   placeholder="Street and House Number"
+                   data-z-validate />
+        </div>
+
+        <div data-form-control data-label="City">
+            <input type="text"
+                   class="form-control"
+                   data-ng-model="currentEntity.Address.City"
+                   placeholder="City"
+                   data-z-validate />
+        </div>
+
+        <div data-form-control data-label="Postal Code">
+            <input type="text"
+                   class="form-control"
+                   data-ng-model="currentEntity.Address.PostalCode"
+                   placeholder="Postal Code"
+                   data-z-validate />
+        </div>
+
+        <div data-form-control data-label="State/Province">
+            <input type="text"
+                   class="form-control"
+                   data-ng-model="currentEntity.Address.StateProvince"
+                   placeholder="State/Province"
+                   data-z-validate />
+        </div>
+        <div data-form-control data-label="Country">
+            <select class="form-control"
+                    data-ng-model="currentEntity.Address.CountryRegion"
+                    data-placeholder="Country"
+                    data-chosen
+                    data-ng-options="country as country.Name for country in countries"
+                    data-z-validate></select>
+        </div>
+
+
+        <p class="sub-header h5">Driver</p>
+
+    <div data-form-control data-label="Driver">
+        <input type="text"
+               disabled="disabled"
+               class="form-control"
+               data-ng-model="currentEntity.Driver.FullName"
+               placeholder="Driver"/>
+    </div>
+
+    <div data-form-control data-label="Secondary Driver" ng-show="currentEntity.SecondaryDriver != null">
+        <input type="text"
+               disabled="disabled"
+               class="form-control"
+               data-ng-model="currentEntity.SecondaryDriver.FullName"
+               placeholder="Secondary Driver" />
+    </div>
+
+
+        <hr />
+    <span class="help-block">
+        Additional data
+    </span>
+    <br />
+
+    <div data-form-control data-label="Cost in Euro">
+        <input type="number"
+               class="form-control"
+               data-ng-model="currentEntity.Cost"
+               style="width: 80pt"
+               placeholder=""
+               data-z-validate />
+    </div>
+
+    <div class="control-group">
+        <div data-form-control data-label="Cost in secondary currency">
+            <div class="controls form-inline">
+                <input type="number"
+                       class="form-control"
+                       data-ng-model="currentEntity.CostSecondary"
+                       placeholder=""
+                       data-z-validate />
+                <input type="text"
+                       class="form-control"
+                       data-typeahead="currencies.CurrencyCode as currencies.Name for currencies in currencies | filter:{Name:$viewValue} | limitTo:8"
+                       data-ng-model="currentEntity.SecondaryCurrency"
+                       placeholder="Secondary Currency" />
+            </div>
+        </div>
+    </div>
+
+
+    <div data-form-control data-label="Note">
+        <textarea type="text"
+                  class="form-control"
+                  rows="10"
+                  data-ng-model="currentEntity.Note"
+                  placeholder="Any notes"
+                  data-z-validate></textarea>
+
+    </div>
+</div>

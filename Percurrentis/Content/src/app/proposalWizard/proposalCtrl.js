@@ -188,6 +188,7 @@
                     $scope.currentEntity.Cost = request.Cost;
                     $scope.currentEntity.CostSecondary = request.CostSecondary;
                     $scope.currentEntity.SecondaryCurrency = request.SecondaryCurrency;
+
                     break;
 
                 case 'Taxi':
@@ -277,17 +278,36 @@
 
                     $scope.currentEntity.DepartureDate = request.DepartureDate;
                     // DepartureAddress
-                    $scope.currentEntity.DepartureAddressID = request.DepartureAddressID;
-                    $scope.currentEntity.DepartureAddress = request.DepartureAddress;
+                    $scope.currentEntity.DepartureAddress.AddressName = request.DepartureAddress.AddressName;
                     // DestinationAddress
-                    $scope.currentEntity.DestinationAddressID = request.DestinationAddressID;
-                    $scope.currentEntity.DestinationAddress = request.DestinationAddress;
+                    $scope.currentEntity.DestinationAddress.AddressName = request.DestinationAddress.AddressName;
 
                     $scope.currentEntity.Cost = request.Cost;
                     $scope.currentEntity.CostSecondary = request.CostSecondary;
                     $scope.currentEntity.SecondaryCurrency = request.SecondaryCurrency;
-
                     break;
+                case 'RentalCar':
+                    travelRequestService.addRentalcar(proposal);
+
+                    $scope.currentIndex = $scope.proposal.RentalCarRequests.length - 1;
+                    $scope.currentEntity = $scope.proposal.RentalCarRequests[$scope.currentIndex];
+
+                    console.log(request.Id);
+
+                    $scope.currentEntity.ParentID = request.Id;
+
+                    $scope.currentEntity.StartDate = request.StartDate;
+                    $scope.currentEntity.EndDate = request.EndDate;
+                    $scope.currentEntity.DriverID = request.DriverID;
+                    $scope.currentEntity.SecondaryDriverID = request.SecondaryDriverID;
+                    $scope.currentEntity.Address = request.Address;
+
+                    $scope.currentEntity.Cost = request.Cost;
+                    $scope.currentEntity.CostSecondary = request.CostSecondary;
+                    $scope.currentEntity.SecondaryCurrency = request.SecondaryCurrency;
+                    console.log($scope.currentEntity);
+                    break;
+
             }
         }
 
@@ -373,7 +393,6 @@
                     $scope.supervisorName = employee.userName;
                 });
         });
-
         
         // Load all the addresses again -.-'
         travelRequestService.getAddresses().then(function (query) {
@@ -444,23 +463,19 @@
             $scope.mode = 'init';
         };
         //When approved is pressed in the approving dialog
+
         $scope.onApproveConfirm = function () {
 
             $scope.mode = 'approveConfirmed';
 
+            
             // Copy all selected accommodations into itinerary
             angular.forEach($scope.proposal.TravelRequest.Accommodations, function (value, key) {
                 var option = $scope.selectedOptions[value.Id].id;
                 angular.forEach($scope.proposal.Accommodations, function (v, k) {
                     if (v.Id === option) {
                         travelRequestService.copyAccommodation(value, v);
-                        /*
-                        entityCopy.TravelRequestID = $scope.proposal.TravelRequest.Id;
-                        $scope.proposal.TravelRequest.Accommodations.push(entityCopy);
-                        var id = value.Id;
-                        jQuery.extend(value, v);
-                        value.Id = id;
-                        value.TravelRequestID = $scope.proposal.TravelRequest.Id;*/
+                        value.TravelRequestID = $scope.proposal.TravelRequest.Id;
                     }
                 });
             });
@@ -472,29 +487,45 @@
                     if (v.Id === option) {
                         travelRequestService.copyFlight(value, v);
                         value.TravelRequestID = $scope.proposal.TravelRequest.Id;
-                        /*entityCopy.TravelRequestID = $scope.proposal.TravelRequest.Id;
-                        $scope.proposal.TravelRequest.Accommodations.push(entityCopy);
-                        var id = value.Id;
-                        jQuery.extend(value, v);
-                        value.Id = id;
-                        value.TravelRequestID = $scope.proposal.TravelRequest.Id;*/
                     }
                 });
             });
 
+            // Copy all selected ferries into itinerary
+            angular.forEach($scope.proposal.TravelRequest.FerryRequests, function (value, key) {
+                var option = $scope.selectedOptions[value.Id].id;
+                angular.forEach($scope.proposal.FerryRequests, function (v, k) {
+                    if (v.Id === option) {
+                        travelRequestService.copyFerry(value, v);
+                        value.TravelRequestID = $scope.proposal.TravelRequest.Id;
+                    }
+                });
+            });
+
+            // Copy all selected rentalcars into itinerary
+            angular.forEach($scope.proposal.TravelRequest.RentalCarRequests, function (value, key) {
+                var option = $scope.selectedOptions[value.Id].id;
+                angular.forEach($scope.proposal.RentalCarRequests, function (v, k) {
+                    if (v.Id === option) {
+                        travelRequestService.copyRentalcar(value, v);
+                        console.log(value.TravelRequestID);
+                        value.TravelRequestID = $scope.proposal.TravelRequest.Id;
+                        console.log(value.TravelRequestID);
+                    }
+                });
+            });
+
+
+            // Make the appropriate status changes for the Proposal and TravelRequest
             $scope.proposal.IsApproved = 2;
             $scope.proposal.TravelRequest.IsFinal = true;
-
-            console.log("Items in collections: ");
-            console.log("Acco: " + $scope.proposal.TravelRequest.Accommodations.length);
-            console.log("Flights: " + $scope.proposal.TravelRequest.FlightRequests.length);
 
             travelRequestService.saveChanges(
                 $scope,
                 undefined,
                 function (result) {
                     console.log(result);
-                    //$location.path("/TravelAgency/#/Itinerary/#Final");
+                    $location.path("TravelAgency/#/Itinerary/#Final");
                 },
                 function () {
                     console.log("Save failed");

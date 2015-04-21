@@ -460,6 +460,14 @@
     <Compile Include="Migrations\201504161214472_blijkbaarDingen.Designer.cs">
       <DependentUpon>201504161214472_blijkbaarDingen.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201504200830501_redoTrIdforRental.cs" />
+    <Compile Include="Migrations\201504200830501_redoTrIdforRental.Designer.cs">
+      <DependentUpon>201504200830501_redoTrIdforRental.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201504200834098_reAddTrIdforRental.cs" />
+    <Compile Include="Migrations\201504200834098_reAddTrIdforRental.Designer.cs">
+      <DependentUpon>201504200834098_reAddTrIdforRental.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Context\DatabaseContext.cs" />
     <Compile Include="Notification\Notification.cs" />
@@ -488,6 +496,7 @@
     <Content Include="Content\src\app\proposalWizard\partials\accommodation.tpl.html" />
     <Content Include="Content\src\app\proposalWizard\partials\eurotunnel.tpl.html" />
     <Content Include="Content\src\app\proposalWizard\partials\flight.tpl.html" />
+    <Content Include="Content\src\app\proposalWizard\partials\rentalcar.tpl.html" />
     <Content Include="Content\src\app\proposalWizard\partials\taxi.tpl.html" />
     <Content Include="Content\src\app\proposal\detail.tpl.html" />
     <Content Include="Content\src\app\proposal\list.tpl.html" />
@@ -1649,6 +1658,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201504161214472_blijkbaarDingen.resx">
       <DependentUpon>201504161214472_blijkbaarDingen.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201504200830501_redoTrIdforRental.resx">
+      <DependentUpon>201504200830501_redoTrIdforRental.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201504200834098_reAddTrIdforRental.resx">
+      <DependentUpon>201504200834098_reAddTrIdforRental.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

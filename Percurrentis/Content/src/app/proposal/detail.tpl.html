@@ -124,9 +124,7 @@
         <div ng-repeat="rcar in proposal.TravelRequest.RentalCarRequests" ng-init="selectedOptions[rcar.Id] = ''">
             <div class="list-group form-group option-group">
                 <a href="javascript:void(0)" class="list-group-item active">
-                    Options for RentalCar from <strong>{{ rcar.Address.AddressName }}</strong> to <strong>
-                        {{ rcar.Address.AddressName }}
-                    </strong> on {{ rcar.DepartureDate | date:'d MMMM yyyy' }}
+                    Options for Rental car from {{ rcar.StartDate | date:'d MMMM yyyy' }} until {{ rcar.EndDate | date:'d MMMM yyyy' }}
                 </a>
                 <div class="list-group-item group_{{ rcar.Id }} disabled" n ng-repeat="rc in proposal.RentalCarRequests | filter: { ParentID: rcar.Id }" id="option_{{ rc.ParentID }}_{{ $index }}" ng-click="select(rc, $index);" style="cursor:pointer">
                     <div class="row option_row">
@@ -139,7 +137,7 @@
                             {{ rc.DepartureDate | date:'d MMMM yyyy' }}
                         </div>
                         <div class="col-md-2" style="text-align: right">
-                            {{ rc.Cost | number:2 }}€
+                            {{ rc.Cost | number:2 }}&euro;
                         </div>
                         <div class="col-md-2" style="text-align: right">
                             {{ rc.CostSecondary | number:2 }} {{ rc.SecondaryCurrency }}
