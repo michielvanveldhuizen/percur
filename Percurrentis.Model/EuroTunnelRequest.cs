@@ -5,19 +5,26 @@
 // <summary>Model classes for the database</summary>
 
 using Percurrentis.Model.Validation.Attributes;
+using System;
 namespace Percurrentis.Model
 {
-    public class EuroTunnelRequest : TransitRequest
+    public class EuroTunnelRequest : BaseRequest
     {
         [_256]
         public string LicensePlate { get; set; }
+
+        [DateTime]
+        public DateTime DepartureDate { get; set; }
+        public int DepartureAddressID { get; set; }
+        public int DestinationAddressID { get; set; }
+
+        public virtual Address DepartureAddress { get; set; }
+        public virtual Address DestinationAddress { get; set; }
+
+        public int? TravelRequestID { get; set; }
+        public int? TravelProposalID { get; set; }
         public virtual TravelRequest TravelRequest { get; set; }
         public virtual TravelProposal TravelProposal { get; set; }
-        public double? Cost { get; set; }
-        public double? CostSecondary { get; set; }
-        public string SecondaryCurrency { get; set; }
-        public string Note { get; set; }
-        public int? ParentID { get; set; }
 
     }
 }

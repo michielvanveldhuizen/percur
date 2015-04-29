@@ -10,9 +10,8 @@ using System;
 
 namespace Percurrentis.Model
 {
-    public class RentalCarRequest
+    public class RentalCarRequest : BaseRequest
     {
-        public int Id { get; set; }
         [DateTime]
         public DateTime StartDate { get; set; }
         [DateTime]
@@ -20,8 +19,6 @@ namespace Percurrentis.Model
         public int DriverID { get; set; }
         public int? SecondaryDriverID { get; set; }
         public int AddressID { get; set; }
-        public int? TravelRequestID { get; set; }
-        public int? TravelProposalID { get; set; }
         public int? ServiceCompanyID { get; set; }
         [ValidateObject]
         public virtual RequestTraveller Driver { get; set; }
@@ -29,13 +26,11 @@ namespace Percurrentis.Model
         public virtual RequestTraveller SecondaryDriver { get; set; }
         [Address]
         public Address Address { get; set; }
+        public virtual ServiceCompany ServiceCompany { get; set; }
+
+        public int? TravelRequestID { get; set; }
+        public int? TravelProposalID { get; set; }
         public virtual TravelRequest TravelRequest { get; set; }
         public virtual TravelProposal TravelProposal { get; set; }
-        public virtual ServiceCompany ServiceCompany { get; set; }
-        public double? Cost { get; set; }
-        public double? CostSecondary { get; set; }
-        public string SecondaryCurrency { get; set; }
-        public string Note { get; set; }
-        public int? ParentID { get; set; }
     }
 }

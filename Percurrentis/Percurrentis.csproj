@@ -468,6 +468,26 @@
     <Compile Include="Migrations\201504200834098_reAddTrIdforRental.Designer.cs">
       <DependentUpon>201504200834098_reAddTrIdforRental.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201504221205128_implementBaseRequest.cs" />
+    <Compile Include="Migrations\201504221205128_implementBaseRequest.Designer.cs">
+      <DependentUpon>201504221205128_implementBaseRequest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201504221220341_removeActiveFlag.cs" />
+    <Compile Include="Migrations\201504221220341_removeActiveFlag.Designer.cs">
+      <DependentUpon>201504221220341_removeActiveFlag.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201504270830305_addChosenFlag.cs" />
+    <Compile Include="Migrations\201504270830305_addChosenFlag.Designer.cs">
+      <DependentUpon>201504270830305_addChosenFlag.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201504280644541_addCopyOf.cs" />
+    <Compile Include="Migrations\201504280644541_addCopyOf.Designer.cs">
+      <DependentUpon>201504280644541_addCopyOf.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201504280749052_addMetaToRequests.cs" />
+    <Compile Include="Migrations\201504280749052_addMetaToRequests.Designer.cs">
+      <DependentUpon>201504280749052_addMetaToRequests.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Context\DatabaseContext.cs" />
     <Compile Include="Notification\Notification.cs" />
@@ -1664,6 +1684,21 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201504200834098_reAddTrIdforRental.resx">
       <DependentUpon>201504200834098_reAddTrIdforRental.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201504221205128_implementBaseRequest.resx">
+      <DependentUpon>201504221205128_implementBaseRequest.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201504221220341_removeActiveFlag.resx">
+      <DependentUpon>201504221220341_removeActiveFlag.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201504270830305_addChosenFlag.resx">
+      <DependentUpon>201504270830305_addChosenFlag.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201504280644541_addCopyOf.resx">
+      <DependentUpon>201504280644541_addCopyOf.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201504280749052_addMetaToRequests.resx">
+      <DependentUpon>201504280749052_addMetaToRequests.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

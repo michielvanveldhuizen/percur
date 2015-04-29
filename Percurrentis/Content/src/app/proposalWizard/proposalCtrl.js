@@ -14,6 +14,30 @@
             .then(function (request) {
                 $scope.proposal = request;
                 $scope.proposal.TravelRequestID = $scope.itinerary.Id;
+            })
+            .then(function () {
+                // Copy all requests from itinerary to proposal
+                angular.forEach($scope.itinerary.FlightRequests, function (value, key) {
+                    var copy = travelRequestService.copyFlight(value);
+                    copy.TravelProposalID = $scope.proposal.Id;
+                    copy.TravelRequestID = 0;
+                    // todo: test
+                    copy.CopyOf = value.Id;
+                    copy.Note = "Dit is de kopie";
+                    $scope.proposal.FlightRequests.push(copy);
+                });
+                travelRequestService.saveChanges(
+                $scope.proposal,
+                undefined,
+                function (result) {
+                    console.log("Saved the new items");
+                    console.log(result);
+                    //$location.path("TravelAgency/#/Itinerary/#Final");
+                },
+                function () {
+                    console.log("Save failed");
+                }
+             );
             });
         });
 
@@ -77,8 +101,6 @@
         $scope.type = "";
         $scope.info = false;
         $scope.templateUrl = '/TravelAgency/Content/src/app/proposalWizard/partials/index.tpl.html';
-
-        
 
         // Save when proposal is completed.
         $scope.saveProposal = function () {
@@ -247,7 +269,10 @@
                     $scope.currentEntity.LargeLuggageCount = request.LargeLuggageCount;
                     $scope.currentEntity.IsOnlineCheckIn = request.IsOnlineCheckIn;
                     $scope.currentEntity.FlyerMemberCardID = request.FlyerMemberCardID;
+
+                    // Do something else here
                     $scope.currentEntity.ParentID = request.Id;
+
                     // DepartureAddress
                     $scope.currentEntity.DepartureAddressID = request.DepartureAddressID;
                     $scope.currentEntity.DepartureAddress = request.DepartureAddress;
@@ -310,7 +335,6 @@
 
             }
         }
-
         $scope.detach = function (proposal) {
             
             switch ($scope.type) {
@@ -360,7 +384,6 @@
                 $scope.confirmCommit();
             }
         }
-
         $scope.confirmCommit = function()
         {
             $scope.currentlyAdding = false;
@@ -409,6 +432,7 @@
         // Set selected item per group.
         $scope.select = function (iets, id) {
             if ($scope.proposal.IsApproved == '0') {
+                iets.Chosen = !iets.Chosen;
                 $scope.costs[iets.ParentID] = iets.Cost;
                 $scope.updateTotal();
                 $scope.selectedOptions[iets.ParentID] = { "id": iets.Id, "type": iets.entityAspect._entityKey.entityType.shortName };
@@ -420,6 +444,7 @@
                 $scope.checkCompletion();
             }
         }
+
         $scope.checkCompletion = function () {
             var hasEmpty = false;
             angular.forEach($scope.selectedOptions, function (value, key) {
@@ -432,10 +457,21 @@
                 $scope.approvalMode = true;
             }
         };
+
+        // Update total cost amount in Euro
         $scope.updateTotal = function () {
             var sum = 0;
             angular.forEach($scope.costs, function (value, key) {
                 sum += value;
+            });
+            $scope.totalCost = sum;
+        }
+
+        // Calculate total cost for approved proposal
+        $scope.calcTotal = function () {
+            var sum = 0;
+            jQuery(".euro_cost.true").each(function () {
+                sum += jQuery(this).text();
             });
             $scope.totalCost = sum;
         }
@@ -470,81 +506,49 @@
             $scope.mode = 'init';
         };
         //When approved is pressed in the approving dialog
-
         $scope.onApproveConfirm = function () {
-
             $scope.mode = 'approveConfirmed';
 
-            // Copy all selected accommodations into itinerary
-            angular.forEach($scope.proposal.TravelRequest.Accommodations, function (value, key) {
-                var option = $scope.selectedOptions[value.Id].id;
-                angular.forEach($scope.proposal.Accommodations, function (v, k) {
-                    if (v.Id === option) {
-                        travelRequestService.copyAccommodation(value, v);
-                        value.TravelRequestID = $scope.proposal.TravelRequest.Id;
-                    }
-                });
-            });
+            $scope.copyOfID = 0;
 
-            // Copy all selected flights into itinerary
-            angular.forEach($scope.proposal.TravelRequest.FlightRequests, function (value, key) {
-                var option = $scope.selectedOptions[value.Id].id;
-                angular.forEach($scope.proposal.FlightRequests, function (v, k) {
-                    if (v.Id === option) {
-                        travelRequestService.copyFlight(value, v);
-                        value.TravelRequestID = $scope.proposal.TravelRequest.Id;
-                    }
-                });
+            // Iterate thorugh all the requests in the proposal, copy the chosen ones to the itinerary
+            angular.forEach($scope.proposal.FlightRequests, function (value, key) {
+                if (value.CopyOf != null)
+                {
+                    $scope.copyOfID = value.CopyOf;
+                }
+                if (value.Chosen) {
+                    var newFlight = travelRequestService.copyFlight(value);
+                    value.TravelRequestID = 0;
+                    newFlight.TravelRequestID = $scope.proposal.TravelRequestID;
+                    $scope.proposal.TravelRequest.FlightRequests.push(newFlight);
+                    angular.forEach($scope.proposal.TravelRequest.FlightRequests, function (v, k) {
+                        console.log(v.Id + " == " + $scope.copyOfID);
+                        if (v.Id == $scope.copyOfID) {
+                            $scope.proposal.TravelRequest.FlightRequests[k].IsDeleted = true;
+                        }
+                    });
+                }
             });
-
-            // Copy all selected taxirequests into itinerary
-            angular.forEach($scope.proposal.TravelRequest.TaxiRequests, function (value, key) {
-                var option = $scope.selectedOptions[value.Id].id;
-                angular.forEach($scope.proposal.TaxiRequests, function (v, k) {
-                    if (v.Id === option) {
-                        travelRequestService.copyTaxi(value, v);
-                        value.TravelRequestID = $scope.proposal.TravelRequest.Id;
-                    }
-                });
-            });
-
-            // Copy all selected ferries into itinerary
-            angular.forEach($scope.proposal.TravelRequest.FerryRequests, function (value, key) {
-                var option = $scope.selectedOptions[value.Id].id;
-                angular.forEach($scope.proposal.FerryRequests, function (v, k) {
-                    if (v.Id === option) {
-                        travelRequestService.copyFerry(value, v);
-                        value.TravelRequestID = $scope.proposal.TravelRequest.Id;
-                    }
-                });
-            });
-
-            // Copy all selected rentalcars into itinerary
-            angular.forEach($scope.proposal.TravelRequest.RentalCarRequests, function (value, key) {
-                var option = $scope.selectedOptions[value.Id].id;
-                angular.forEach($scope.proposal.RentalCarRequests, function (v, k) {
-                    if (v.Id === option) {
-                        travelRequestService.copyRentalcar(value, v);
-                        value.TravelRequestID = $scope.proposal.TravelRequest.Id;
-                    }
-                });
-            });
-
+                      
             // Make the appropriate status changes for the Proposal and TravelRequest
             $scope.proposal.IsApproved = 2;
             $scope.proposal.TravelRequest.IsFinal = true;
+            
 
             travelRequestService.saveChanges(
-                $scope,
+                $scope.proposal,
                 undefined,
                 function (result) {
                     console.log(result);
-                    $location.path("TravelAgency/#/Itinerary/#Final");
+                    console.log("Saved");
+                    //$location.path("TravelAgency/#/Itinerary/#Final");
                 },
                 function () {
                     console.log("Save failed");
                 }
              );
+             
         };
     }
 })();

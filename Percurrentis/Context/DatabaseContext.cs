@@ -100,7 +100,7 @@ namespace Percurrentis.Context
             //Oncreate
             foreach (var changedEntity in changedEntities.Where(e => e.State == EntityState.Added))
             {
-                //COmpany
+                //Company
                 Console.WriteLine(changedEntity);
                 if (changedEntity.Entity is Company)
                 {
@@ -377,7 +377,7 @@ namespace Percurrentis.Context
                     var pe = e as DbEntityValidationException;
                     foreach (var eve in pe.EntityValidationErrors)
                     {
-                        Trace.WriteLine("Entity of type " + eve.Entry.Entity.GetType().Name + " in state "+eve.Entry.State+" has the following validation errors:");
+                        Trace.WriteLine("Entity of type " + eve.Entry.Entity.GetType().Name + " in state " + eve.Entry.State + " has the following validation errors:");
                         foreach (var ve in eve.ValidationErrors)
                         {
                             Trace.WriteLine("- Property: " + ve.PropertyName + ", Error: " + ve.ErrorMessage);

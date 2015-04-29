@@ -138,10 +138,12 @@
     angular.module('app').controller('itineraryDetailCtrl',
         ['$scope', '$route', '$location', 'travelRequestService', "modalService", itineraryDetailCtrl]);
 
+
     function itineraryDetailCtrl($scope, $route, $location, travelRequestService, modalService) {
         var request;
         $scope.totalPrice = 0;
         $scope.editInProgress = false;
+        var items = [];
 
         travelRequestService.getTravelRequestByHash($route.current.params.Hash)
         .then(function (query) {
@@ -185,34 +187,6 @@
         travelRequestService.getServiceCompanies().then(function (query) {
             $scope.serviceCompanies = query.results;
         });
-
-
-        /* == Euro/RON conversion ========================================== */
-        /*travelRequestService.getExchangeRates().then(function (query) {
-            $scope.rate = query.results[0];
-        });
-
-        $scope.toRON = function(eurVal)
-        {
-            if ($scope.rate != undefined) {
-                var ronVal = parseFloat(eurVal) * parseFloat($scope.rate.RON);
-                if (isNaN(ronVal))
-                {
-                    ronVal = 0;
-                }
-                return ronVal.toFixed(2);
-            }
-        }
-
-        $scope.toEUR = function (ronVal) {
-            if ($scope.rate != undefined) {
-                var eurVal = parseFloat(ronVal) / parseFloat($scope.rate.RON);
-                if (isNaN(eurVal)) {
-                    eurVal = 0;
-                }
-                return eurVal.toFixed(2);
-            }
-        }*/
 
         function show(request) {
             if($scope.request.SuperiorID == ownGuid){

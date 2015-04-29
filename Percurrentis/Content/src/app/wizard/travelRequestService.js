@@ -61,7 +61,9 @@
             removeCompanyFromTraveller: removeCompanyFromTraveller,
             addFlight: addFlight,
             copyFlight: copyFlight,
+            getFlightById: getFlightById,
             removeFlight: removeFlight,
+            removeFlightById: removeFlightById,
             changeFlyerMemberCard: changeFlyerMemberCard,
             addFerry: addFerry,
             copyFerry: copyFerry,
@@ -88,7 +90,7 @@
         return service;
 
         /* == Create ======================================================= */
-
+        
         // creating a TravelProposal
         function createTravelProposal() {
             var deferred = $q.defer();
@@ -726,29 +728,55 @@
             request.FlightRequests.push(entity);
         }
 
-        function copyFlight(destination, source) {
+        function getFlightById(id) {
+               // manager = new breeze.EntityManager(serviceName);
+
+                var query = new breeze.EntityQuery('FlightRequest')
+                    .where('Id', 'eq', parseInt(id));
+
+                var promise = manager.executeQuery(query).catch(queryFailed);
+                return promise;
+
+                function queryFailed(error) {
+                    console.log(error.message, 'query failed');
+                    throw error;
+                }
+        }
+
+        function copyFlight(source) {
+
+            var destination = manager.createEntity("FlightRequest");
 
             destination.DepartureDate = source.DepartureDate;
             destination.HasLargeCabinLuggage = source.HasLargeCabinLuggage;
             destination.HasSpecialEquipment = source.HasSpecialEquipment;
             destination.LargeLuggageCount = source.LargeLuggageCount;
             destination.IsOnlineCheckIn = source.IsOnlineCheckIn;
-            destination.FlyerMemberCardID = source.FlyerMemberCardID;
-            destination.FlyerMemberCard.Id = source.FlyerMemberCard.Id;
-            destination.FlyerMemberCard.FMCNumber = source.FlyerMemberCard.FMCNumber;
+
+            destination.FlyerMemberCard = manager.createEntity("FlyerMemberCard");
+            if (source.FlyerMemberCard != null) {
+                destination.FlyerMemberCard.FMCNumber = source.FlyerMemberCard.FMCNumber;
+            }
+            //destination.TravelRequestID = source.ParentID;
             destination.ParentID = null;
             destination.TravelProposalID = null;
+            destination.TravelRequestID = 0;//null;
+
             // DepartureAddress
+            destination.DepartureAddress = manager.createEntity('Address');
             destination.DepartureAddressID = source.DepartureAddressID;
-            destination.DepartureAddress = source.DepartureAddress;
-            // DestinationAddress
+
+            destination.DestinationAddress = manager.createEntity("Address");
             destination.DestinationAddressID = source.DestinationAddressID;
-            destination.DestinationAddress = source.DestinationAddress;
+
 
             destination.Cost = source.Cost;
             destination.CostSecondary = source.CostSecondary;
             destination.SecondaryCurrency = source.SecondaryCurrency;
             destination.Note = source.Note;
+            destination.Chosen = source.Chosen;
+
+            return destination;
         }
 
         function removeFlight(request, flight, force) {
@@ -760,6 +788,13 @@
             manager.detachEntity(flight.DestinationAddress);
             
             manager.detachEntity(flight);
+        }
+
+        function removeFlightById(request, id) {
+            getFlightById(id).then(function (query) {
+                var removeEntity = query.results[0]
+                removeFlight(request, removeEntity);
+            });
         }
 
         function changeFlyerMemberCard(request, flight, shouldAttachNewCard) {
@@ -1001,8 +1036,6 @@
 
         function copyAccommodation(source, destination) {
 
-            destination = manager.createEntity('Accommodation');
-            destination.Address = manager.createEntity("Address");
             destination.Address.AddressName = source.Address.AddressName;
             destination.Address.Street = source.Address.Street;
             destination.Address.PostalCode = source.Address.PostalCode;
@@ -1011,7 +1044,7 @@
             destination.Address.CountryRegionID = source.Address.CountryRegionID;
 
             destination.ParentID = null;
-            destination.TravelProposalID = 0;
+            destination.TravelProposalID = null;
 
             destination.CheckInDate = source.CheckInDate;
             destination.CheckOutDate = source.CheckOutDate;

@@ -246,6 +246,13 @@ namespace Percurrentis.Controllers
             return _contextProvider.Context.RentalCarRequest;
         }
 
+        //retrieve FlightRequest
+        [HttpGet]
+        public IQueryable<FlightRequest> FlightRequest()
+        {
+            return _contextProvider.Context.FlightRequest;
+        }
+
         //retrieve AirportInformation
         [HttpGet]
         public IQueryable<AirportInformation> AirportInformation()

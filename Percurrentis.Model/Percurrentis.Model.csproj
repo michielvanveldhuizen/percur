@@ -85,7 +85,7 @@
     <Compile Include="ServiceCompany.cs" />
     <Compile Include="ServiceCompanyType.cs" />
     <Compile Include="TaxiRequest.cs" />
-    <Compile Include="TransitRequest.cs" />
+    <Compile Include="BaseRequest.cs" />
     <Compile Include="TravelProposal.cs" />
     <Compile Include="TravelRequest.cs" />
     <Compile Include="TravelRequestApproval.cs" />
