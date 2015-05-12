@@ -65,7 +65,7 @@
         <!-- End of block containing all the flights -->
 
         <!-- Start of block containing all the ferries -->
-        <div ng-repeat="ferry in proposal.TravelRequest.FerryRequests | filter: { ParentID: null}">
+        <div ng-repeat="ferry in proposal.FerryRequests | filter: proposalItems">
             <div class="list-group form-group option-group">
                 <a href="javascript:void(0)" class="list-group-item active">
                     Options for Ferry from <strong>{{ ferry.DepartureAddress.AddressName }}</strong> to <strong>
@@ -170,7 +170,7 @@
         <!-- End of block containing all the taxis -->
 
         <!-- Start of block containing all the accommodations -->
-        <div ng-repeat="acco in proposal.TravelRequest.Accommodations | filter: { TravelProposalID : !null } " ng-init="selectedOptions[acco.Id] = ''">
+        <div ng-repeat="acco in proposal.Accommodations | filter: proposalItems" ng-init="selectedOptions[acco.Id] = ''">
             <div class="list-group form-group option-group">
                 <a href="javascript:void(0)" class="list-group-item active">
                     Options for Accommodation stay in {{ acco.Address.City }} from

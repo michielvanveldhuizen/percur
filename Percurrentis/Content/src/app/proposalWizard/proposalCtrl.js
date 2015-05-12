@@ -21,6 +21,7 @@
                     var copy = travelRequestService.copyFlight(value);
                     copy.TravelProposalID = $scope.proposal.Id;
                     copy.TravelRequestID = 0;
+                    copy.IsProposalItem = true;
                     copy.CopyOf = value.Id;
                     $scope.proposal.FlightRequests.push(copy);
                 });
@@ -28,6 +29,7 @@
                     var copy = travelRequestService.copyFerry(fvalue);
                     copy.TravelProposalID = $scope.proposal.Id;
                     copy.TravelRequestID = 0;
+                    copy.IsProposalItem = true;
                     copy.CopyOf = fvalue.Id;
                     $scope.proposal.FerryRequests.push(copy);
                 });
@@ -35,6 +37,7 @@
                     var copy = travelRequestService.copyTaxi(tvalue);
                     copy.TravelProposalID = $scope.proposal.Id;
                     copy.TravelRequestID = 0;
+                    copy.IsProposalItem = true;
                     copy.CopyOf = tvalue.Id;
                     $scope.proposal.TaxiRequests.push(copy);
                 });
@@ -50,6 +53,7 @@
                     var copy = travelRequestService.copyAccommodation(avalue);
                     copy.TravelProposalID = $scope.proposal.Id;
                     copy.TravelRequestID = 0;
+                    copy.IsProposalItem = true;
                     copy.CopyOf = avalue.Id;
                     $scope.proposal.Accommodations.push(copy);
                 });
@@ -57,6 +61,7 @@
                     var copy = travelRequestService.copyEurotunnel(evalue);
                     copy.TravelProposalID = $scope.proposal.Id;
                     copy.TravelRequestID = 0;
+                    copy.IsProposalItem = true;
                     copy.CopyOf = evalue.Id;
                     $scope.proposal.EuroTunnelRequests.push(copy);
                 });
@@ -136,6 +141,15 @@
         $scope.type = "";
         $scope.info = false;
         $scope.templateUrl = '/TravelAgency/Content/src/app/proposalWizard/partials/index.tpl.html';
+
+        $scope.eurotunnelChangeDestination = function (eurotunnel, val) {
+            console.log("BLA");
+            if (eurotunnel.DestinationAddress.AddressName != val) {
+                var tempAddress = eurotunnel.DepartureAddress;
+                eurotunnel.DepartureAddress = eurotunnel.DestinationAddress;
+                eurotunnel.DestinationAddress = tempAddress;
+            }
+        };
 
         // Save when proposal is completed.
         $scope.saveProposal = function () {
@@ -235,7 +249,7 @@
                     $scope.currentEntity.Address.StateProvince = request.Address.StateProvince;
                     $scope.currentEntity.Address.CountryRegionID = request.Address.CountryRegionID;
                     $scope.currentEntity.ParentID = request.Id;
-
+                    $scope.currentEntity.IsProposalItem = true;
                     $scope.currentEntity.TravelProposalID = $scope.proposal.Id;
                     $scope.currentEntity.TravelRequestID = 0;
 
@@ -256,7 +270,7 @@
 
                     $scope.currentEntity.ParentID = request.Id;
                     $scope.currentEntity.DepartureDate = request.DepartureDate;
-
+                    $scope.currentEntity.IsProposalItem = true;
                     $scope.currentEntity.DepartureAddress.AddressName = request.DepartureAddress.AddressName;
                     $scope.currentEntity.DepartureAddress.Street = request.DepartureAddress.Street;
                     $scope.currentEntity.DepartureAddress.PostalCode = request.DepartureAddress.PostalCode;
@@ -282,7 +296,7 @@
                     // Setting the index
                     $scope.currentIndex = $scope.proposal.EuroTunnelRequests.length - 1;
                     $scope.currentEntity = $scope.proposal.EuroTunnelRequests[$scope.currentIndex];
-
+                    $scope.currentEntity.IsProposalItem = true;
                     $scope.currentEntity.ParentID = request.Id;
 
                     $scope.currentEntity.Cost = request.Cost;
@@ -315,7 +329,7 @@
                     $scope.currentEntity.DestinationAddressID = request.DestinationAddressID;
                     $scope.currentEntity.DestinationAddress = request.DestinationAddress;
 
-
+                    $scope.currentEntity.IsProposalItem = true;
                     $scope.currentEntity.FlyerMemberCard.Id = request.FlyerMemberCard.Id;
                     $scope.currentEntity.FlyerMemberCard.FMCNumber = request.FlyerMemberCard.FMCNumber;
 
@@ -331,6 +345,7 @@
                     $scope.currentEntity = $scope.proposal.FerryRequests[$scope.currentIndex];
 
                     $scope.currentEntity.ParentID = request.Id;
+                    $scope.currentEntity.IsProposalItem = true;
 
                     $scope.currentEntity.CarHeight = request.CarHeight;
                     $scope.currentEntity.CarLength = request.CarLength;
@@ -514,6 +529,7 @@
         // Filter
         $scope.proposalItems = function(item)
         {
+            console.log(item.Id);
             if ((item.ParentID == null) && (item.IsProposalItem)) {
                 return item;
             }

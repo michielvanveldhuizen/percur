@@ -69,6 +69,7 @@
             copyFerry: copyFerry,
             removeFerry: removeFerry,
             addEurotunnel: addEurotunnel,
+            copyEurotunnel: copyEurotunnel,
             removeEurotunnel: removeEurotunnel,
             addRentalcar: addRentalcar,
             copyRentalcar: copyRentalcar,
@@ -904,6 +905,30 @@
                     request.EuroTunnelRequests.push(entity);
                 })
             });
+        }
+
+        function copyEurotunnel(source) {
+            
+            var destination = manager.createEntity('EuroTunnelRequest');
+
+            destination.DepartureDate = source.DepartureDate;
+            destination.DepartureAddressID = source.DepartureAddressID;
+            destination.DestinationAddressID = source.DestinationAddressID;
+
+            destination.LicensePlate = source.LicensePlate;
+
+            destination.ParentID = null;
+            destination.TravelProposalID = null;
+            destination.TravelRequestID = 0;
+
+            destination.Cost = source.Cost;
+            destination.CostSecondary = source.CostSecondary;
+            destination.SecondaryCurrency = source.SecondaryCurrency;
+            destination.Note = source.Note;
+            destination.Chosen = source.Chosen;
+
+            return destination;
+
         }
 
         function removeEurotunnel(request, eurotunnel) {
