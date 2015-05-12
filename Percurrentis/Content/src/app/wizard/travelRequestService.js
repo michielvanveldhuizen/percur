@@ -760,7 +760,7 @@
             //destination.TravelRequestID = source.ParentID;
             destination.ParentID = null;
             destination.TravelProposalID = null;
-            destination.TravelRequestID = 0;//null;
+            destination.TravelRequestID = 0;
 
             // DepartureAddress
             destination.DepartureAddress = manager.createEntity('Address');
@@ -768,7 +768,6 @@
 
             destination.DestinationAddress = manager.createEntity("Address");
             destination.DestinationAddressID = source.DestinationAddressID;
-
 
             destination.Cost = source.Cost;
             destination.CostSecondary = source.CostSecondary;
@@ -834,26 +833,33 @@
             request.FerryRequests.push(entity);
         }
 
-        function copyFerry(source, destination) {
+        function copyFerry(source) {
+
+            var destination = manager.createEntity("FerryRequest");
             destination.CarHeight = source.CarHeight;
             destination.CarLength = source.CarLength;
             destination.LicensePlate = source.LicensePlate;
 
             destination.DepartureDate = source.DepartureDate;
-            // DepartureAddress
+
+            destination.DepartureAddress = manager.createEntity('Address');
             destination.DepartureAddressID = source.DepartureAddressID;
-            destination.DepartureAddress = source.DepartureAddress;
-            // DestinationAddress
+
+            destination.DestinationAddress = manager.createEntity("Address");
             destination.DestinationAddressID = source.DestinationAddressID;
-            destination.DestinationAddress = source.DestinationAddress;
 
             destination.ParentID = null;
             destination.TravelProposalID = 0;
+            destination.TravelRequestID = 0;
 
             destination.Cost = source.Cost;
             destination.CostSecondary = source.CostSecondary;
             destination.SecondaryCurrency = source.SecondaryCurrency;
             destination.Note = source.Note;
+            destination.Chosen = source.Chosen;
+
+            console.log(destination);
+            return destination;
         }
 
         function removeFerry(request, ferry) {
@@ -919,7 +925,10 @@
             request.RentalCarRequests.push(entity);
         }
 
-        function copyRentalcar(source, destination) {
+        function copyRentalcar(source) {
+
+            var destination = manager.createEntity("RentalCarRequest");
+
             destination.StartDate = source.StartDate;
             destination.EndDate = source.EndDate;
             destination.DriverID = source.DriverID;
@@ -927,11 +936,16 @@
             destination.Address = source.Address;
 
             destination.ParentID = null;
-            destination.TravelProposalID = 0;
+            destination.TravelProposalID = null;
+            destination.TravelRequestID = 0;
 
             destination.Cost = source.Cost;
             destination.CostSecondary = source.CostSecondary;
             destination.SecondaryCurrency = source.SecondaryCurrency;
+            destination.Note = source.Note;
+            destination.Chosen = source.Chosen;
+
+            return destination;
         }
 
         function removeRentalcar(request, rentalcar) {
@@ -964,23 +978,28 @@
             request.TaxiRequests.push(entity);
         }
 
-        function copyTaxi(source, destination) {
+        function copyTaxi(source) {
 
+            var destination = manager.createEntity("TaxiRequest");
             destination.DepartureDate = source.DepartureDate;
 
+            destination.DepartureAddress = manager.createEntity('Address');
             destination.DepartureAddressID = source.DepartureAddressID;
-            destination.DepartureAddress = source.DepartureAddress;
 
+            destination.DestinationAddress = manager.createEntity("Address");
             destination.DestinationAddressID = source.DestinationAddressID;
-            destination.DestinationAddress = source.DestinationAddress;
 
             destination.ParentID = null;
             destination.TravelProposalID = null;
+            destination.TravelRequestID = 0;
 
             destination.Cost = source.Cost;
             destination.CostSecondary = source.CostSecondary;
             destination.SecondaryCurrency = source.SecondaryCurrency;
             destination.Note = source.Note;
+            destination.Chosen = source.Chosen;
+
+            return destination;
 
         }
 
@@ -1034,8 +1053,11 @@
             manager.detachEntity(accommodation);
         }
 
-        function copyAccommodation(source, destination) {
+        function copyAccommodation(source) {
 
+            var destination = manager.createEntity("Accommodation");
+
+            destination.Address = manager.createEntity("Address");
             destination.Address.AddressName = source.Address.AddressName;
             destination.Address.Street = source.Address.Street;
             destination.Address.PostalCode = source.Address.PostalCode;
@@ -1043,16 +1065,20 @@
             destination.Address.StateProvince = source.Address.StateProvince;
             destination.Address.CountryRegionID = source.Address.CountryRegionID;
 
-            destination.ParentID = null;
-            destination.TravelProposalID = null;
-
             destination.CheckInDate = source.CheckInDate;
             destination.CheckOutDate = source.CheckOutDate;
+
+            destination.ParentID = null;
+            destination.TravelProposalID = null;
+            destination.TravelRequestID = 0;
 
             destination.Cost = source.Cost;
             destination.CostSecondary = source.CostSecondary;
             destination.SecondaryCurrency = source.SecondaryCurrency;
             destination.Note = source.Note;
+            destination.Chosen = source.Chosen;
+
+            return destination;
         }
 
         function setPreUsedAccommodation(request, index) {

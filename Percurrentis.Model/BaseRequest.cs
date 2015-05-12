@@ -19,6 +19,7 @@ namespace Percurrentis.Model
         public string Note { get; set; }
 
         public bool Chosen { get; set; }
+        public bool IsProposalItem { get; set; }
         public int? CopyOf { get; set; }
     }
 }

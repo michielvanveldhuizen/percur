@@ -17,7 +17,7 @@
                         </thead>
                         <tbody ng-repeat="flight in proposal.FlightRequests | filter: { ParentID: null } | orderBy:'DepartureDate'" ng-model="flight">
                             <tr id="flight_{{ flight.Id }}" class="datarow">
-                                <td>Flight {{ flight.Id }}</td>
+                                <td>Flight</td>
                                 <td>{{ flight.DepartureAddress.City }}</td>
                                 <td>{{ flight.DestinationAddress.City }}</td>
                                 <td>{{ flight.DepartureDate|date:'EEEE, d MMMM yyyy, H:mm' }}</td>
@@ -64,7 +64,7 @@
 
                         <tbody ng-repeat="ferry in itinerary.FerryRequests">
                             <tr>
-                                <td>Ferry</td>
+                                <td>Ferry {{ ferry.Id }}</td>
                                 <td>{{ ferry.DepartureAddress.AddressName }}</td>
                                 <td>{{ ferry.DestinationAddress.AddressName }}</td>
                                 <td>{{ ferry.DepartureDate | date:'EEEE, d MMMM yyyy, H:mm' }}</td>
@@ -149,9 +149,9 @@
                         </tbody>
 
                         <!-- Start of tbody for RentalCarRequests -->
-                        <tbody ng-repeat="rcar in itinerary.RentalCarRequests">
+                        <tbody ng-repeat="rcar in proposal.RentalCarRequests | filter: { ParentID: null } ">
                             <tr>
-                                <td>Rental car</td>
+                                <td>{{ rcar.Id }} Rental car</td>
                                 <td>{{ rcar.Address.AddressName }}</td>
                                 <td></td>
                                 <td>{{ rcar.StartDate | date:'d MMMM yyyy' }} to {{ rcar.EndDate | date:'d MMMM yyyy' }}</td>
@@ -326,7 +326,7 @@
                 <div class="list-group">
                     <div ng-click="showFlights = !showFlights" ng-show="proposal.FlightRequests.length > 0" style="cursor:pointer">
                         <div class="list-group-item">Flights: <span class="badge">{{ proposal.FlightRequests.length }}</span></div>
-                        <div class="list-group-item" ng-show="showFlights" ng-repeat="flight in proposal.FlightRequests">
+                        <div class="list-group-item" ng-show="showFlights" ng-repeat="flight in proposal.FlightRequests | filter: { CopyOf: !null}">
                             <p>{{ flight.DepartureDate | date:'d MMMM yyyy' }}: {{ flight.DepartureAddress.City }} - {{ flight.DestinationAddress.City }}</p>
                             <p>{{ flight.Cost | number:2 }} &euro; | {{ flight.CostSecondary | number:2 }} {{ flight.SecondaryCurrency }}</p>
                         </div>

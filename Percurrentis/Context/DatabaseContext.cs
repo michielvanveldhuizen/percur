@@ -95,6 +95,7 @@ namespace Percurrentis.Context
 
             ChangeTracker.DetectChanges();
             var changedEntities = ChangeTracker.Entries();
+            Console.WriteLine(changedEntities);
             //space for server-side edits on entites which are about to be saved into the database
 
             //Oncreate
@@ -262,6 +263,66 @@ namespace Percurrentis.Context
                 {
                     var specEntity = changedEntity.Entity as MetaEntity;
                     specEntity.OnBeforeUpdate();
+                }
+                if (changedEntity.Entity is TaxiRequest)
+                {
+                    var specEntity = changedEntity.Entity as TaxiRequest;
+                    if ((specEntity.TravelProposalID).Equals(0))
+                    {
+                        specEntity.TravelProposalID = null;
+                    }
+                    else
+                    {
+                        if (specEntity.TravelRequestID.Equals(0))
+                        {
+                            specEntity.TravelRequestID = null;
+                        }
+                    }
+                }
+                if (changedEntity.Entity is RentalCarRequest)
+                {
+                    var specEntity = changedEntity.Entity as RentalCarRequest;
+                    if ((specEntity.TravelProposalID).Equals(0))
+                    {
+                        specEntity.TravelProposalID = null;
+                    }
+                    else
+                    {
+                        if (specEntity.TravelRequestID.Equals(0))
+                        {
+                            specEntity.TravelRequestID = null;
+                        }
+                    }
+                }
+                if (changedEntity.Entity is Accommodation)
+                {
+                    var specEntity = changedEntity.Entity as Accommodation;
+                    if ((specEntity.TravelProposalID).Equals(0))
+                    {
+                        specEntity.TravelProposalID = null;
+                    }
+                    else
+                    {
+                        if (specEntity.TravelRequestID.Equals(0))
+                        {
+                            specEntity.TravelRequestID = null;
+                        }
+                    }
+                }
+                if (changedEntity.Entity is FerryRequest)
+                {
+                    var specEntity = changedEntity.Entity as FerryRequest;
+                    if ((specEntity.TravelProposalID).Equals(0))
+                    {
+                        specEntity.TravelProposalID = null;
+                    }
+                    else
+                    {
+                        if (specEntity.TravelRequestID.Equals(0))
+                        {
+                            specEntity.TravelRequestID = null;
+                        }
+                    }
                 }
                 //TravelRequest
                 if (changedEntity.Entity is TravelRequest)

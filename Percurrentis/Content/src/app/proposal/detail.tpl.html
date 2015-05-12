@@ -40,7 +40,7 @@
         <div ng-repeat="flight in proposal.FlightRequests | filter: { ParentID: null}">
             <div class="list-group form-group option-group">
                 <a href="javascript:void(0)" class="list-group-item active">
-                    {{ flight.Id }} Options for Flight from <strong>{{ flight.DepartureAddress.City }}</strong> to <strong>
+                    Options for Flight from <strong>{{ flight.DepartureAddress.City }}</strong> to <strong>
                         {{ flight.DestinationAddress.City }}
                     </strong> on {{ flight.DepartureDate | date:'d MMMM yyyy' }}
                 </a>
@@ -48,7 +48,7 @@
                     <div class="row option_row">
                         <div class="col-md-6">
                             <i class="check"></i>
-                            <input type="hidden" id="hoi" ng-model="fl.Chosen" />
+                            <input type="hidden" ng-model="fl.Chosen" />
                             {{ fl.DepartureAddress.City }} to {{ fl.DestinationAddress.City }} 
                             <i ng-if="fl.Note != NULL" class="gi gi-comments" data-tooltip="{{ fl.Note }}"></i>
                         </div>
@@ -65,19 +65,20 @@
         <!-- End of block containing all the flights -->
 
         <!-- Start of block containing all the ferries -->
-        <div ng-repeat="ferry in proposal.TravelRequest.FerryRequests" ng-init="selectedOptions[ferry.Id] = ''">
+        <div ng-repeat="ferry in proposal.TravelRequest.FerryRequests | filter: { ParentID: null}">
             <div class="list-group form-group option-group">
                 <a href="javascript:void(0)" class="list-group-item active">
                     Options for Ferry from <strong>{{ ferry.DepartureAddress.AddressName }}</strong> to <strong>
                         {{ ferry.DestinationAddress.AddressName }}
                     </strong> on {{ ferry.DepartureDate | date:'d MMMM yyyy' }}
                 </a>
-                <div class="list-group-item group_{{ ferry.Id }} disabled" ng-repeat="fe in proposal.FerryRequests | filter: { ParentID: ferry.Id }" id="option_{{ fe.ParentID }}_{{ $index }}" ng-click="select(fe, $index);" style="cursor:pointer">
+                <div ng-class="{ 'disabled': !fe.Chosen && proposal.IsApproved }" class="list-group-item group_{{ ferry.Id }}" ng-repeat="fe in proposal.FerryRequests | filter: { ParentID: ferry.Id }" id="option_{{ fe.ParentID }}_{{ $index }}" ng-click="select(fe, $index, Ferry.Id);" style="cursor:pointer">
                     <div class="row option_row">
                         <div class="col-md-6">
                             <i class="check"></i>
+                            <input type="hidden" ng-model="fe.Chosen" />
                             {{ fe.DepartureAddress.AddressName }} to {{ fe.DestinationAddress.AddressName }}
-                            <i ng-if="fl.Note != NULL" class="gi gi-comments" data-tooltip="{{ fe.Note }}"></i>
+                            <i ng-if="fe.Note != NULL" class="gi gi-comments" data-tooltip="{{ fe.Note }}"></i>
                         </div>
                         <div class="col-md-4">
                             {{ fe.DepartureDate | date:'d MMMM yyyy' }}
@@ -119,16 +120,15 @@
         <!-- End of block containing all the tunnels -->
 
         <!-- Start of block containing all the rentalcars -->
-        <div ng-repeat="rcar in proposal.TravelRequest.RentalCarRequests" ng-init="selectedOptions[rcar.Id] = ''">
-            <div class="list-group form-group option-group">
+        <div ng-repeat="rcar in proposal.RentalCarRequests | filter: proposalItems" ng-init="selectedOptions[rcar.Id] = ''">
                 <a href="javascript:void(0)" class="list-group-item active">
-                    Options for Rental car from {{ rcar.StartDate | date:'d MMMM yyyy' }} until {{ rcar.EndDate | date:'d MMMM yyyy' }}
+                     Options for Rental car from {{ rcar.StartDate | date:'d MMMM yyyy' }} until {{ rcar.EndDate | date:'d MMMM yyyy' }}
                 </a>
                 <div class="list-group-item group_{{ rcar.Id }} disabled" n ng-repeat="rc in proposal.RentalCarRequests | filter: { ParentID: rcar.Id }" id="option_{{ rc.ParentID }}_{{ $index }}" ng-click="select(rc, $index);" style="cursor:pointer">
                     <div class="row option_row">
                         <div class="col-md-6">
                             <i class="check"></i>
-                            {{ rc.Address.AddressName }} 
+                            {{ rc.Address.AddressName }}
                             <i ng-if="rc.Note != NULL" class="gi gi-comments" data-tooltip="{{ rc.Note }}"></i>
                         </div>
                         <div class="col-md-4">
@@ -139,7 +139,6 @@
                         </div>
                     </div>
                 </div>
-            </div>
         </div>
         <!-- End of block containing all the rentalcars -->
 
@@ -171,7 +170,7 @@
         <!-- End of block containing all the taxis -->
 
         <!-- Start of block containing all the accommodations -->
-        <div ng-repeat="acco in proposal.TravelRequest.Accommodations" ng-init="selectedOptions[acco.Id] = ''">
+        <div ng-repeat="acco in proposal.TravelRequest.Accommodations | filter: { TravelProposalID : !null } " ng-init="selectedOptions[acco.Id] = ''">
             <div class="list-group form-group option-group">
                 <a href="javascript:void(0)" class="list-group-item active">
                     Options for Accommodation stay in {{ acco.Address.City }} from
@@ -185,11 +184,11 @@
                             {{ ac.Address.AddressName }} in {{ ac.Address.City }}
                             <i ng-if="ac.Note != NULL" class="gi gi-comments" data-tooltip="{{ ac.Note }}"></i>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             {{ ac.CheckOutDate | date:'d MMMM yyyy' }}
                         </div>
-                        <div class="col-md-2" style="text-align: right">
-                            <div class="euro_cost {{ fl.Chosen }}">{{ ac.Cost | number:2 }}</div><i class="gi gi-euro"></i> | {{ ac.CostSecondary | number:2 }} {{ ac.SecondaryCurrency }}
+                        <div class="col-md-3" style="text-align: right">
+                            <span class="euro_cost {{ fl.Chosen }}">{{ ac.Cost | number:2 }}</span>&euro; | {{ ac.CostSecondary | number:2 }} {{ ac.SecondaryCurrency }}
                         </div>
                     </div>
                 </div>

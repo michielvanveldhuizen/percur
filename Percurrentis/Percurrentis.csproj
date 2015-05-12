@@ -488,6 +488,10 @@
     <Compile Include="Migrations\201504280749052_addMetaToRequests.Designer.cs">
       <DependentUpon>201504280749052_addMetaToRequests.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201505120616342_addedProposalFlag.cs" />
+    <Compile Include="Migrations\201505120616342_addedProposalFlag.Designer.cs">
+      <DependentUpon>201505120616342_addedProposalFlag.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Context\DatabaseContext.cs" />
     <Compile Include="Notification\Notification.cs" />
@@ -1699,6 +1703,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201504280749052_addMetaToRequests.resx">
       <DependentUpon>201504280749052_addMetaToRequests.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201505120616342_addedProposalFlag.resx">
+      <DependentUpon>201505120616342_addedProposalFlag.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
