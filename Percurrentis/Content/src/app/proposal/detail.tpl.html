@@ -100,7 +100,7 @@
                         {{ tunnel.DestinationAddress.AddressName }}
                     </strong> on {{ tunnel.DepartureDate | date:'d MMMM yyyy' }}
                 </a>
-                <div class="list-group-item group_{{ tunnel.Id }} disabled" ng-repeat="tu in proposal.EuroTunnelRequests | filter: { ParentID: tunnel.Id }" id="option_{{ tu.ParentID }}_{{ $index }}" ng-click="select(tu, $index);" style="cursor:pointer">
+                <div ng-class="{ 'disabled': !tu.Chosen && proposal.IsApproved }" class="list-group-item group_{{ tunnel.Id }}" ng-repeat="tu in proposal.EuroTunnelRequests | filter: { ParentID: tunnel.Id }" id="option_{{ tu.ParentID }}_{{ $index }}" ng-click="select(tu, $index);" style="cursor:pointer">
                     <div class="row option_row">
                         <div class="col-md-6">
                             <i class="check"></i>
@@ -124,33 +124,33 @@
                 <a href="javascript:void(0)" class="list-group-item active">
                      Options for Rental car from {{ rcar.StartDate | date:'d MMMM yyyy' }} until {{ rcar.EndDate | date:'d MMMM yyyy' }}
                 </a>
-                <div class="list-group-item group_{{ rcar.Id }} disabled" n ng-repeat="rc in proposal.RentalCarRequests | filter: { ParentID: rcar.Id }" id="option_{{ rc.ParentID }}_{{ $index }}" ng-click="select(rc, $index);" style="cursor:pointer">
-                    <div class="row option_row">
-                        <div class="col-md-6">
-                            <i class="check"></i>
-                            {{ rc.Address.AddressName }}
-                            <i ng-if="rc.Note != NULL" class="gi gi-comments" data-tooltip="{{ rc.Note }}"></i>
-                        </div>
-                        <div class="col-md-4">
-                            {{ rc.StartDate | date:'d MMMM yyyy' }}
-                        </div>
-                        <div class="col-md-2" style="text-align: right">
-                            {{ rc.Cost | number:2 }}&euro; | {{ rc.CostSecondary | number:2 }} {{ rc.SecondaryCurrency }}
-                        </div>
+            <div ng-class="{ 'disabled': !rc.Chosen && proposal.IsApproved }" class="list-group-item group_{{ rcar.Id }}" n ng-repeat="rc in proposal.RentalCarRequests | filter: { ParentID: rcar.Id }" id="option_{{ rc.ParentID }}_{{ $index }}" ng-click="select(rc, $index);" style="cursor:pointer">
+                <div class="row option_row">
+                    <div class="col-md-6">
+                        <i class="check"></i>
+                        {{ rc.Address.AddressName }}
+                        <i ng-if="rc.Note != NULL" class="gi gi-comments" data-tooltip="{{ rc.Note }}"></i>
+                    </div>
+                    <div class="col-md-4">
+                        {{ rc.StartDate | date:'d MMMM yyyy' }}
+                    </div>
+                    <div class="col-md-2" style="text-align: right">
+                        {{ rc.Cost | number:2 }}&euro; | {{ rc.CostSecondary | number:2 }} {{ rc.SecondaryCurrency }}
                     </div>
                 </div>
+            </div>
         </div>
         <!-- End of block containing all the rentalcars -->
 
         <!-- Start of block containing all the taxis -->
-        <div ng-repeat="taxi in proposal.TravelRequest.TaxiRequests" ng-init="selectedOptions[taxi.Id] = ''">
+        <div ng-repeat="taxi in proposal.TaxiRequests | filter: proposalItems" ng-init="selectedOptions[taxi.Id] = ''">
             <div class="list-group form-group option-group">
                 <a href="javascript:void(0)" class="list-group-item active">
                     Options for Taxi from <strong>{{ taxi.DepartureAddress.AddressName }}</strong> to <strong>
                         {{ taxi.DestinationAddress.AddressName }}
                     </strong> on {{ taxi.DepartureDate | date:'d MMMM yyyy' }}
                 </a>
-                <div class="list-group-item group_{{ taxi.Id }} disabled" ng-repeat="ta in proposal.TaxiRequests | filter: { ParentID: taxi.Id }" id="option_{{ ta.ParentID }}_{{ $index }}" ng-click="select(ta, $index);" style="cursor:pointer">
+                <div ng-class="{ 'disabled': !ta.Chosen && proposal.IsApproved }" class="list-group-item group_{{ taxi.Id }}" ng-repeat="ta in proposal.TaxiRequests | filter: { ParentID: taxi.Id }" id="option_{{ ta.ParentID }}_{{ $index }}" ng-click="select(ta, $index);" style="cursor:pointer">
                     <div class="row option_row">
                         <div class="col-md-6">
                             <i class="check"></i>
@@ -177,7 +177,7 @@
                     <strong>{{ acco.CheckInDate | date:'d MMMM yyyy' }}</strong> to
                     <strong>{{ acco.CheckOutDate | date:'d MMMM yyyy' }}</strong>
                 </a>
-                <div class="list-group-item group_{{ acco.Id }} disabled" ng-repeat="ac in proposal.Accommodations | filter: { ParentID: acco.Id }" id="option_{{ ac.ParentID }}_{{ $index }}" ng-click="select(ac, $index);" style="cursor:pointer">
+                <div ng-class="{ 'disabled': !ac.Chosen && proposal.IsApproved }" class="list-group-item group_{{ acco.Id }}" ng-repeat="ac in proposal.Accommodations | filter: { ParentID: acco.Id }" id="option_{{ ac.ParentID }}_{{ $index }}" ng-click="select(ac, $index);" style="cursor:pointer">
                     <div class="row option_row">
                         <div class="col-md-6">
                             <i class="check"></i>

@@ -288,7 +288,6 @@
                     $scope.currentEntity.Cost = request.Cost;
                     $scope.currentEntity.CostSecondary = request.CostSecondary;
                     $scope.currentEntity.SecondaryCurrency = request.SecondaryCurrency;
-                    console.log($scope.proposal);
                     break;
 
                 case 'EuroTunnel':
@@ -302,8 +301,6 @@
                     $scope.currentEntity.Cost = request.Cost;
                     $scope.currentEntity.CostSecondary = request.CostSecondary;
                     $scope.currentEntity.SecondaryCurrency = request.SecondaryCurrency;
-
-                    console.log($scope.proposal);
 
                     break;
                 case 'Flight':
@@ -529,7 +526,6 @@
         // Filter
         $scope.proposalItems = function(item)
         {
-            console.log(item.Id);
             if ((item.ParentID == null) && (item.IsProposalItem)) {
                 return item;
             }
