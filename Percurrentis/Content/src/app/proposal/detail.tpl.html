@@ -4,6 +4,7 @@
         <div class="block-title">
             <h2><strong>Proposal</strong></h2>
         </div>
+        <!-- Start of basic proposal info -->
         <div class="row">
             <div class="col-md-6">
                 <span><strong>Departure: </strong>{{ proposal.TravelRequest.DepartureDate|date:'EEEE d MMMM yyyy - H:mm'}}</span><br />
@@ -36,6 +37,9 @@
                 </ul>
             </div>
         </div>
+        <!-- End of basic proposal info -->
+
+
         <!-- Start of block containing all the flights -->
         <div ng-repeat="flight in proposal.FlightRequests | filter: { ParentID: null}">
             <div class="list-group form-group option-group">
@@ -49,7 +53,7 @@
                         <div class="col-md-6">
                             <i class="check"></i>
                             <input type="hidden" ng-model="fl.Chosen" />
-                            {{ fl.DepartureAddress.City }} to {{ fl.DestinationAddress.City }} 
+                            {{ fl.DepartureAddress.City }} to {{ fl.DestinationAddress.City }}
                             <i ng-if="fl.Note != NULL" class="gi gi-comments" data-tooltip="{{ fl.Note }}"></i>
                         </div>
                         <div class="col-md-3">
@@ -63,7 +67,6 @@
             </div>
         </div>
         <!-- End of block containing all the flights -->
-
         <!-- Start of block containing all the ferries -->
         <div ng-repeat="ferry in proposal.FerryRequests | filter: proposalItems">
             <div class="list-group form-group option-group">
@@ -91,7 +94,6 @@
             </div>
         </div>
         <!-- End of block containing all the ferries -->
-
         <!-- Start of block containing all the tunnels -->
         <div ng-repeat="tunnel in proposal.TravelRequest.EuroTunnelRequests" ng-init="selectedOptions[tunnel.Id] = ''">
             <div class="list-group form-group option-group">
@@ -118,12 +120,11 @@
             </div>
         </div>
         <!-- End of block containing all the tunnels -->
-
         <!-- Start of block containing all the rentalcars -->
         <div ng-repeat="rcar in proposal.RentalCarRequests | filter: proposalItems" ng-init="selectedOptions[rcar.Id] = ''">
-                <a href="javascript:void(0)" class="list-group-item active">
-                     Options for Rental car from {{ rcar.StartDate | date:'d MMMM yyyy' }} until {{ rcar.EndDate | date:'d MMMM yyyy' }}
-                </a>
+            <a href="javascript:void(0)" class="list-group-item active">
+                Options for Rental car from {{ rcar.StartDate | date:'d MMMM yyyy' }} until {{ rcar.EndDate | date:'d MMMM yyyy' }}
+            </a>
             <div ng-class="{ 'disabled': !rc.Chosen && proposal.IsApproved }" class="list-group-item group_{{ rcar.Id }}" n ng-repeat="rc in proposal.RentalCarRequests | filter: { ParentID: rcar.Id }" id="option_{{ rc.ParentID }}_{{ $index }}" ng-click="select(rc, $index);" style="cursor:pointer">
                 <div class="row option_row">
                     <div class="col-md-6">
@@ -141,7 +142,6 @@
             </div>
         </div>
         <!-- End of block containing all the rentalcars -->
-
         <!-- Start of block containing all the taxis -->
         <div ng-repeat="taxi in proposal.TaxiRequests | filter: proposalItems" ng-init="selectedOptions[taxi.Id] = ''">
             <div class="list-group form-group option-group">
@@ -194,7 +194,8 @@
                 </div>
             </div>
         </div>
-        
+
+        <!-- Bar to display the total costs -->
         <div class="list-group form-group">
 
             <a class="list-group-item active" style="text-align: right">
@@ -205,6 +206,7 @@
 
 
     </div>
+    <!-- Footer -->
     <footer class="clearfix"
             style="min-height: 168px;"
             ng-show="proposal.IsApproved == false">

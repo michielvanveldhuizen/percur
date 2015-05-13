@@ -73,29 +73,21 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="col-md-3">
-                    <div>
+                <div class="col-md-4">
                         <strong>Large Cabin Luggage:</strong>
-                        {{ flightreq.HasLargeCabinLuggage == true ? "Yes" : "No" }}
-                    </div>
-                    <div>
+                        {{ flightreq.HasLargeCabinLuggage == true ? "Yes" : "No" }}<br />
                         <strong>Equipment:</strong>
-                        {{ flightreq.HasSpecialEquipment == true ? "Yes" : "No" }}
-                    </div>
-                    <div>
+                        {{ flightreq.HasSpecialEquipment == true ? "Yes" : "No" }}<br />
                         <strong>Flyer Card:</strong>
-                        {{ flightreq.FlyerMemberCard.FMCNumber }}
-                    </div>
-
-                </div>
-                <div class="col-md-3">
-                    <div>
+                        {{ flightreq.FlyerMemberCard.FMCNumber }}<br />
                         <strong>Check-in:</strong>
-                        {{ flightreq.IsOnlineCheckIn == true ? "Online" : "Regular" }}
-                    </div>
+                        {{ flightreq.IsOnlineCheckIn == true ? "Online" : "Regular" }}<br />
+                </div>
+                <div class="col-md-2">
+                    
                     <!-- Maybe this ng-if has to be changed to another group sometime in the future -->
                     <div ng-if="isTravelAgency()">
-                        <strong>Costs: </strong>{{ flightreq.Cost | number:2 }}&euro; | {{ flightreq.CostSecondary | number:2 }} {{ flightreq.SecondaryCurrency }}
+                        <strong>Costs: </strong><br /><br />{{ flightreq.Cost | number:2 }}&euro; | {{ flightreq.CostSecondary | number:2 }} {{ flightreq.SecondaryCurrency }}
                     </div>
                 </div>
             </div>
@@ -147,7 +139,7 @@
                 </div>
             </div>
             <div class="col-md-2" ng-if="isTravelAgency()">
-                <strong>Costs: </strong>{{ accomreq.Cost | number:2 }}&euro; | {{ accomreq.CostSecondary | number:2 }} {{ accomreq.SecondaryCurrency }}
+                <strong>Costs: </strong><br /><br />{{ accomreq.Cost | number:2 }}&euro; | {{ accomreq.CostSecondary | number:2 }} {{ accomreq.SecondaryCurrency }}
             </div>
         </div>
     </div>
@@ -158,7 +150,7 @@
             <h4><i class="gi gi-boat"></i> Ferry Request Details</h4>
         </div>
         <div class="row" data-ng-repeat="ferryreq in request.FerryRequests | filter: { IsDeleted: false }">
-            <div class="col-md-9">
+            <div class="col-md-10">
                 <div class="table">
                     <table class=" table table-vcenter table-condensed table-striped">
                         <thead>
@@ -184,10 +176,11 @@
                     </table>
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-2">
                 <!-- Maybe this ng-if has to be changed to another group sometime in the future -->
                 <div ng-if="isTravelAgency()">
-                    <strong>Costs: </strong>{{ ferryreq.Cost | number:2 }}&euro; | {{ ferryreq.CostSecondary | number:2 }} {{ ferryreq.SecondaryCurrency }}
+                    <strong>Costs: </strong><br /><br />
+                    {{ ferryreq.Cost | number:2 }}&euro; | {{ ferryreq.CostSecondary | number:2 }} {{ ferryreq.SecondaryCurrency }}
                 </div>
             </div>
         </div>
@@ -198,7 +191,7 @@
         </div>
         <div class="table" data-ng-repeat="taxireq in request.TaxiRequests | filter: { IsDeleted: false }">
             <div class="row">
-                <div class="col-md-9">
+                <div class="col-md-10">
                     <table class="table table-vcenter table-condensed">
                         <tbody>
                             <tr>
@@ -219,8 +212,9 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="col-md-3">
-                    <strong>Costs: </strong>{{ taxireq.Cost | number:2 }}&euro; | {{ taxireq.CostSecondary | number:2 }} {{ taxireq.SecondaryCurrency }}
+                <div class="col-md-2">
+                    <strong>Costs: </strong><br /><br />
+                    {{ taxireq.Cost | number:2 }}&euro; | {{ taxireq.CostSecondary | number:2 }} {{ taxireq.SecondaryCurrency }}
                 </div>
             </div>
         </div>
@@ -258,22 +252,23 @@
                     </table>
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <ul class="list-group">
                     <li class="list-group-item disabled"><strong>Primary Driver</strong></li>
                     <li class=" list-group-item">{{ rcarreq.Driver.FullName }}</li>
                     <li class="list-group-item">{{ rcarreq.Driver.PhoneNumberID }}</li>
                 </ul>
             </div>
-            <div class="col-md-4" ng-if="rcarreq.SecondaryDriverID != null">
-                <ul class="list-group">
+            <div class="col-md-3">
+                <ul class="list-group" ng-if="rcarreq.SecondaryDriverID != null">
                     <li class="list-group-item disabled"><strong>Secondary Driver</strong></li>
                     <li class=" list-group-item">{{ rcarreq.SecondaryDriver.FullName }}</li>
                     <li class="list-group-item">{{ rcarreq.SecondaryDriver.PhoneNumberID }}</li>
                 </ul>
             </div>
-            <div class="col-md-3">
-                <strong>Costs: </strong>{{ rcarreq.Cost | number:2 }}&euro; | {{ rcarreq.CostSecondary | number:2 }} {{ rcarreq.SecondaryCurrency }}
+            <div class="col-md-2">
+                <strong>Costs: </strong><br /><br />
+                {{ rcarreq.Cost | number:2 }}&euro; | {{ rcarreq.CostSecondary | number:2 }} {{ rcarreq.SecondaryCurrency }}
             </div>
         </div>
     </div>
@@ -281,25 +276,36 @@
         <div class="block-title">
             <h4><i class="gi gi-train"></i> EuroTunnel Request Details</h4>
         </div>
-        <div class="table">
-            <table class="table table-vcenter table-condensed table-striped">
-                <thead>
-                    <tr>
-                        <td>From</td>
-                        <td>To</td>
-                        <td>Departure Date</td>
-                        <td>License Plate</td>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr data-ng-repeat="euroreq in request.EuroTunnelRequests">
-                        <td>{{ euroreq.DepartureAddress.AddressName }}</td>
-                        <td>{{ euroreq.DestinationAddress.AddressName }}</td>
-                        <td>{{ euroreq.DepartureDate|date:'d MMMM yyyy' }}</td>
-                        <td>{{ euroreq.LicensePlate != null ? euroreq.LicensePlate : "No car"  }}</td>
-                    </tr>
-                </tbody>
-            </table>
+        <div class="row" data-ng-repeat="euroreq in request.EuroTunnelRequests">
+            <div class="col-md-10">
+                <div class="table">
+                    <table class="table table-vcenter table-condensed table-striped">
+                        <thead>
+                            <tr>
+                                <td>From</td>
+                                <td>To</td>
+                                <td>Departure Date</td>
+                                <td>License Plate</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>{{ euroreq.DepartureAddress.AddressName }}</td>
+                                <td>{{ euroreq.DestinationAddress.AddressName }}</td>
+                                <td>{{ euroreq.DepartureDate|date:'d MMMM yyyy' }}</td>
+                                <td>{{ euroreq.LicensePlate != null ? euroreq.LicensePlate : "No car"  }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-md-2">
+
+                <!-- Maybe this ng-if has to be changed to another group sometime in the future -->
+                <div ng-if="isTravelAgency()">
+                    <strong>Costs: </strong><br /><br />{{ euroreq.Cost | number:2 }}&euro; | {{ euroreq.CostSecondary | number:2 }} {{ euroreq.SecondaryCurrency }}
+                </div>
+            </div>
         </div>
     </div>
     <div class="block" style="padding-bottom: 15px;" ng-if="request.IsFinal == false">

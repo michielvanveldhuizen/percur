@@ -117,7 +117,12 @@
                             </div>
                         </td>
                     </tr>
-                    <tr data-ng-show="requests.length == 0">
+                    <tr data-ng-show="requests.length == 0 && currentFilter.title == 'All'">
+                        <td colspan="6" class="text-center" style="padding: 12px">
+                            There are no new itineraries.<br />
+                        </td>
+                    </tr>
+                    <tr data-ng-show="requests.length == 0 && currentFilter.title != 'All'">
                         <td colspan="6" class="text-center" style="padding: 12px">
                             There are no itineraries with this filter ({{currentFilter.title}}). Please apply another filter.<br />
                             <button type="button"
