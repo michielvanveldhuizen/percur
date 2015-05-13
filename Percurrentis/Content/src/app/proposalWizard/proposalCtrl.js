@@ -17,6 +17,7 @@
             })
             .then(function () {
                 // Copy all requests from itinerary to proposal
+                $scope.initialFlightCount = $scope.itinerary.FlightRequests.length;
                 angular.forEach($scope.itinerary.FlightRequests, function (value, key) {
                     var copy = travelRequestService.copyFlight(value);
                     copy.TravelProposalID = $scope.proposal.Id;
@@ -25,6 +26,7 @@
                     copy.CopyOf = value.Id;
                     $scope.proposal.FlightRequests.push(copy);
                 });
+                $scope.initialFerryCount = $scope.itinerary.FerryRequests.length;
                 angular.forEach($scope.itinerary.FerryRequests, function (fvalue, fkey) {
                     var copy = travelRequestService.copyFerry(fvalue);
                     copy.TravelProposalID = $scope.proposal.Id;
@@ -33,6 +35,7 @@
                     copy.CopyOf = fvalue.Id;
                     $scope.proposal.FerryRequests.push(copy);
                 });
+                $scope.initialTaxiCount = $scope.itinerary.TaxiRequests.length;
                 angular.forEach($scope.itinerary.TaxiRequests, function (tvalue, tkey) {
                     var copy = travelRequestService.copyTaxi(tvalue);
                     copy.TravelProposalID = $scope.proposal.Id;
@@ -41,6 +44,7 @@
                     copy.CopyOf = tvalue.Id;
                     $scope.proposal.TaxiRequests.push(copy);
                 });
+                $scope.initialRentalCount = $scope.itinerary.RentalCarRequests.length;
                 angular.forEach($scope.itinerary.RentalCarRequests, function (rvalue, rkey) {
                     var copy = travelRequestService.copyRentalcar(rvalue);
                     copy.TravelProposalID = $scope.proposal.Id;
@@ -49,6 +53,7 @@
                     copy.CopyOf = rvalue.Id;
                     $scope.proposal.RentalCarRequests.push(copy);
                 });
+                $scope.initialAccoCount = $scope.itinerary.Accommodations.length;
                 angular.forEach($scope.itinerary.Accommodations, function (avalue, akey) {
                     var copy = travelRequestService.copyAccommodation(avalue);
                     copy.TravelProposalID = $scope.proposal.Id;
@@ -57,6 +62,7 @@
                     copy.CopyOf = avalue.Id;
                     $scope.proposal.Accommodations.push(copy);
                 });
+                $scope.initialTunnelCount = $scope.itinerary.EuroTunnelRequests.length;
                 angular.forEach($scope.itinerary.EuroTunnelRequests, function (evalue, ekey) {
                     var copy = travelRequestService.copyEurotunnel(evalue);
                     copy.TravelProposalID = $scope.proposal.Id;
@@ -143,7 +149,6 @@
         $scope.templateUrl = '/TravelAgency/Content/src/app/proposalWizard/partials/index.tpl.html';
 
         $scope.eurotunnelChangeDestination = function (eurotunnel, val) {
-            console.log("BLA");
             if (eurotunnel.DestinationAddress.AddressName != val) {
                 var tempAddress = eurotunnel.DepartureAddress;
                 eurotunnel.DepartureAddress = eurotunnel.DestinationAddress;
@@ -564,98 +569,95 @@
         $scope.onApproveConfirm = function () {
             $scope.mode = 'approveConfirmed';
 
-            $scope.copyOfID = 0;
-
-            console.log($scope.proposal);
+            var copyOfID = 0;
 
             // Iterate thorugh all the requests in the proposal, copy the chosen ones to the itinerary
             angular.forEach($scope.proposal.FlightRequests, function (value, key) {
                 if (value.CopyOf != null)
                 {
-                    $scope.copyOfID = value.CopyOf;
+                    copyOfID = value.CopyOf;
                 }
                 if (value.Chosen) {
                     var newFlight = travelRequestService.copyFlight(value);
                     value.TravelRequestID = 0;
                     newFlight.TravelRequestID = $scope.proposal.TravelRequestID;
                     $scope.proposal.TravelRequest.FlightRequests.push(newFlight);
-                    angular.forEach($scope.proposal.TravelRequest.FlightRequests, function (v, k) { 
-                        if (v.Id == $scope.copyOfID) {
-                            $scope.proposal.TravelRequest.FlightRequests[k].IsDeleted = true;
-                        }
-                    });
                 }
+                angular.forEach($scope.proposal.TravelRequest.FlightRequests, function (v, k) {
+                    if (v.Id == copyOfID) {
+                        $scope.proposal.TravelRequest.FlightRequests[k].IsDeleted = true;
+                    }
+                });
             });
-            $scope.copyOfID = 0;
+            copyOfID = 0;
             angular.forEach($scope.proposal.FerryRequests, function (fvalue, key) {
                 if (fvalue.CopyOf != null) {
-                    $scope.copyOfID = fvalue.CopyOf;
+                    copyOfID = fvalue.CopyOf;
                 }
                 if (fvalue.Chosen) {
                     var newFerry = travelRequestService.copyFerry(fvalue);
                     fvalue.TravelRequestID = 0;
                     newFerry.TravelRequestID = $scope.proposal.TravelRequestID;
                     $scope.proposal.TravelRequest.FerryRequests.push(newFerry);
-                    angular.forEach($scope.proposal.TravelRequest.FerryRequests, function (fv, fk) {
-                        if (fv.Id == $scope.copyOfID) {
-                            $scope.proposal.TravelRequest.FerryRequests[fk].IsDeleted = true;
-                        }
-                    });
                 }
+                angular.forEach($scope.proposal.TravelRequest.FerryRequests, function (fv, fk) {
+                    if (fv.Id == copyOfID) {
+                        $scope.proposal.TravelRequest.FerryRequests[fk].IsDeleted = true;
+                    }
+                });
             });
-            $scope.copyOfID = 0;
+            copyOfID = 0;
             angular.forEach($scope.proposal.TaxiRequests, function (tvalue, tkey) {
                 if (tvalue.CopyOf != null) {
-                    $scope.copyOfID = tvalue.CopyOf;
+                    copyOfID = tvalue.CopyOf;
                 }
                 if (tvalue.Chosen) {
                     var newTaxi = travelRequestService.copyTaxi(tvalue);
                     tvalue.TravelRequestID = 0;
                     newTaxi.TravelRequestID = $scope.proposal.TravelRequestID;
                     $scope.proposal.TravelRequest.TaxiRequests.push(newTaxi);
-                    angular.forEach($scope.proposal.TravelRequest.TaxiRequests, function (tv ,tk) {
-                        if (tv.Id == $scope.copyOfID) {
-                            $scope.proposal.TravelRequest.TaxiRequests[tk].IsDeleted = true;
-                        }
-                    });
                 }
+                angular.forEach($scope.proposal.TravelRequest.TaxiRequests, function (tv, tk) {
+                    if (tv.Id == copyOfID) {
+                        $scope.proposal.TravelRequest.TaxiRequests[tk].IsDeleted = true;
+                    }
+                });
             });
-            $scope.copyOfID = 0;
+            copyOfID = 0;
             angular.forEach($scope.proposal.RentalCarRequests, function (fvalue, key) {
                 if (fvalue.CopyOf != null) {
-                    $scope.copyOfID = fvalue.CopyOf;
+                    copyOfID = fvalue.CopyOf;
                 }
                 if (fvalue.Chosen) {
                     var newRentalcar = travelRequestService.copyRentalcar(fvalue);
                     fvalue.TravelRequestID = 0;
                     newRentalcar.TravelRequestID = $scope.proposal.TravelRequestID;
                     $scope.proposal.TravelRequest.RentalCarRequests.push(newRentalcar);
-                    angular.forEach($scope.proposal.TravelRequest.RentalCarRequests, function (fv, fk) {
-                        if (fv.Id == $scope.copyOfID) {
-                            $scope.proposal.TravelRequest.RentalCarRequests[fk].IsDeleted = true;
-                        }
-                    });
                 }
+                angular.forEach($scope.proposal.TravelRequest.RentalCarRequests, function (fv, fk) {
+                    if (fv.Id == copyOfID) {
+                        $scope.proposal.TravelRequest.RentalCarRequests[fk].IsDeleted = true;
+                    }
+                });
             });
-            $scope.copyOfID = 0;
+            copyOfID = 0;
             angular.forEach($scope.proposal.Accommodations, function (value, key) {
                 if (value.CopyOf != null) {
-                    $scope.copyOfID = value.CopyOf;
+                    copyOfID = value.CopyOf;
                 }
                 if (value.Chosen) {
                     var newAccommodation = travelRequestService.copyAccommodation(value);
                     value.TravelRequestID = 0;
                     newAccommodation.TravelRequestID = $scope.proposal.TravelRequestID;
                     $scope.proposal.TravelRequest.Accommodations.push(newAccommodation);
-                    angular.forEach($scope.proposal.TravelRequest.Accommodations, function (v, k) {
-                        console.log(v.Id + " == " + $scope.copyOfID);
-                        if (v.Id == $scope.copyOfID) {
-                            $scope.proposal.TravelRequest.Accommodations[k].IsDeleted = true;
-                        }
-                    });
                 }
+                angular.forEach($scope.proposal.TravelRequest.Accommodations, function (v, k) {
+                    if (v.Id == copyOfID) {
+                        $scope.proposal.TravelRequest.Accommodations[k].IsDeleted = true;
+                    }
+                });
             });
-            $scope.copyOfID = 0;
+            copyOfID = 0;
             
             // Make the appropriate status changes for the Proposal and TravelRequest
             $scope.proposal.IsApproved = 2;

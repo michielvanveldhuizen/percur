@@ -859,7 +859,6 @@
             destination.Note = source.Note;
             destination.Chosen = source.Chosen;
 
-            console.log(destination);
             return destination;
         }
 

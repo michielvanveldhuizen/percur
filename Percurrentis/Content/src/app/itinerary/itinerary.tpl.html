@@ -313,4 +313,7 @@
         <button data-ng-if="request.IsFinal == false && request.IsApproved == 2 && proposalID == null" class="btn btn-sm btn-default " data-ng-click="startProposalWizard(request)">Create Proposal</button>
         <button data-ng-if="proposalID != null" class="btn btn-sm btn-default" data-ng-click="go('/Proposal/' + proposalID)">Open Proposal</button>
     </div>
+    <div class="block" style="padding-bottom: 15px;" ng-if="request.IsFinal == true">
+        <!-- Total amount stuff. -->
+    </div>
 </div>

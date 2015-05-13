@@ -67,6 +67,7 @@
             </div>
         </div>
         <!-- End of block containing all the flights -->
+
         <!-- Start of block containing all the ferries -->
         <div ng-repeat="ferry in proposal.FerryRequests | filter: proposalItems">
             <div class="list-group form-group option-group">
@@ -83,10 +84,10 @@
                             {{ fe.DepartureAddress.AddressName }} to {{ fe.DestinationAddress.AddressName }}
                             <i ng-if="fe.Note != NULL" class="gi gi-comments" data-tooltip="{{ fe.Note }}"></i>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             {{ fe.DepartureDate | date:'d MMMM yyyy' }}
                         </div>
-                        <div class="col-md-2" style="text-align: right">
+                        <div class="col-md-3" style="text-align: right">
                             {{ fe.Cost | number:2 }}€ | {{ fe.CostSecondary | number:2 }} {{ fe.SecondaryCurrency }}
                         </div>
                     </div>
@@ -120,6 +121,7 @@
             </div>
         </div>
         <!-- End of block containing all the tunnels -->
+
         <!-- Start of block containing all the rentalcars -->
         <div ng-repeat="rcar in proposal.RentalCarRequests | filter: proposalItems" ng-init="selectedOptions[rcar.Id] = ''">
             <a href="javascript:void(0)" class="list-group-item active">
