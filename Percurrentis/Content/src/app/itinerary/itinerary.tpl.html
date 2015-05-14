@@ -74,14 +74,12 @@
                     </table>
                 </div>
                 <div class="col-md-4">
-                        <strong>Large Cabin Luggage:</strong>
-                        {{ flightreq.HasLargeCabinLuggage == true ? "Yes" : "No" }}<br />
-                        <strong>Equipment:</strong>
-                        {{ flightreq.HasSpecialEquipment == true ? "Yes" : "No" }}<br />
-                        <strong>Flyer Card:</strong>
-                        {{ flightreq.FlyerMemberCard.FMCNumber }}<br />
-                        <strong>Check-in:</strong>
-                        {{ flightreq.IsOnlineCheckIn == true ? "Online" : "Regular" }}<br />
+                    <ul class="list-group">
+                        <li class="list-group-item">Large Cabin Luggage: <strong>{{ flightreq.HasLargeCabinLuggage == true ? "Yes" : "No" }}</strong></li>
+                        <li class=" list-group-item">Equipment: <strong>{{ flightreq.HasSpecialEquipment == true ? "Yes" : "No" }}</strong></li>
+                        <li class="list-group-item">Flyer Card: <strong>{{ flightreq.FlyerMemberCard.FMCNumber == true ? flightreq.FlyerMemberCard.FMCNumber : "Not supplied" }}</strong></li>
+                        <li class="list-group-item">Check-in: <strong>{{ flightreq.IsOnlineCheckIn == true ? "Online" : "Regular" }}</strong></li>
+                    </ul>
                 </div>
                 <div class="col-md-2">
                     

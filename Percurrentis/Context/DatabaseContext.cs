@@ -135,12 +135,9 @@ namespace Percurrentis.Context
                     {
                         specEntity.TravelProposalID = null;
                     }
-                    else
+                    if (specEntity.TravelRequestID.Equals(0))
                     {
-                        if (specEntity.TravelRequestID.Equals(0))
-                        {
-                            specEntity.TravelRequestID = null;
-                        }
+                        specEntity.TravelRequestID = null;
                     }
                 }
                 if (changedEntity.Entity is TaxiRequest)

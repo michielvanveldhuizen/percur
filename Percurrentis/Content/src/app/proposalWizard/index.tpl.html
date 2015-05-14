@@ -9,17 +9,14 @@
                         <thead>
                             <tr>
                                 <td><strong>Type</strong></td>
-                                <td><strong>From</strong></td>
-                                <td><strong>To</strong></td>
+                                <td><strong>Information</strong></td>
                                 <td><strong>Date</strong></td>
-                                <td></td>
                             </tr>
                         </thead>
                         <tbody ng-repeat="flight in proposal.FlightRequests | filter: { ParentID: null } | orderBy:'DepartureDate'" ng-model="flight">
                             <tr id="flight_{{ flight.Id }}" class="datarow">
                                 <td>Flight</td>
-                                <td>{{ flight.DepartureAddress.City }}</td>
-                                <td>{{ flight.DestinationAddress.City }}</td>
+                                <td>{{ flight.DepartureAddress.City }} to {{ flight.DestinationAddress.City }}</td>
                                 <td>{{ flight.DepartureDate|date:'EEEE, d MMMM yyyy, H:mm' }}</td>
                                 <td>
                                     <div class="btn-group btn-group-sm">
@@ -149,11 +146,12 @@
                         </tbody>
 
                         <!-- Start of tbody for RentalCarRequests -->
-                        <tbody ng-repeat="rcar in proposal.RentalCarRequests | filter: { ParentID: null } ">
-                            <tr>
-                                <td>{{ rcar.Id }} Rental car</td>
-                                <td>{{ rcar.Address.AddressName }}</td>
-                                <td></td>
+                        <!--<tbody >-->
+                            <tr ng-repeat ="rcar in proposal.RentalCarRequests | filter: { ParentID: null } ">
+<td>Rental car</td>
+                                <td>
+                                    {{ rcar.Address.AddressName }}
+                                </td>
                                 <td>{{ rcar.StartDate | date:'d MMMM yyyy' }} to {{ rcar.EndDate | date:'d MMMM yyyy' }}</td>
                                 <td>
                                     <div class="btn-group btn-group-sm">
@@ -165,12 +163,13 @@
                                         <a ng-click="info = !info"
                                            class="btn btn-sm btn-default">
                                             <i class="fa fa-info-circle"></i>
-                                            More Info
-                                        </a>
+                                            <span ng-show="info">Less Info</span>
+                                            <span ng-show="!info">More Info</span>
+</a>
                                     </div>
                                 </td>
                             </tr>
-                            <tr ng-show="info">
+                            <!--<tr ng-show="info">
                                 <td colspan="1"></td>
                                 <td colspan="100">
                                     <div class="row">
@@ -189,8 +188,8 @@
                                         </div>
                                     </div>
                                 </td>
-                            </tr>
-                        </tbody>
+                            </tr>-->
+                        <!--</tbody>-->
 
                         <!-- Start of tbody for Eurotunnels .-->
                         <tbody ng-repeat="tunnel in proposal.EuroTunnelRequests | filter: { ParentID: null } ">
@@ -236,15 +235,6 @@
                             </tr>
                         </tbody>
                         <!-- Start of tbody for Accommodations.-->
-                        <thead>
-                            <tr>
-                                <td><strong>Type</strong></td>
-                                <td><strong>Name</strong></td>
-                                <td><strong>Date</strong></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                        </thead>
                         <tbody ng-repeat="acco in proposal.Accommodations | filter: { ParentID: null } ">
                             <tr>
                                 <td>Accommodations</td>
@@ -365,7 +355,7 @@
                 <div class="list-group">
                     <div ng-click="showRentalCarRequests = !showRentalCarRequests" ng-show="proposal.RentalCarRequests.length > initialRentalCount" style="cursor:pointer">
                         <div class="list-group-item">Rentalcar requests <span class="badge">{{ proposal.RentalCarRequests.length - initialRentalCount }}</span></div>
-                        <div class="list-group-item" ng-repeat="rcar in proposal.RentalCarRequests" ng-show="showRentalCarRequests">
+                        <div class="list-group-item" ng-if="$index >= initialRentalCount" ng-repeat="rcar in proposal.RentalCarRequests" ng-show="showRentalCarRequests">
                             <p>{{ rcar.StartDate | date:'d MMMM yyyy' }} until {{ rcar.EndDate | date:'d MMMM yyyy' }}</p>
                             <p>{{ rcar.Cost | number:2 }} &euro; | {{ rcar.CostSecondary | number:2 }} {{ rcar.SecondaryCurrency }}</p>
                         </div>

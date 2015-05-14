@@ -957,7 +957,8 @@
             destination.EndDate = source.EndDate;
             destination.DriverID = source.DriverID;
             destination.SecondaryDriverID = source.SecondaryDriverID;
-            destination.Address = source.Address;
+            destination.Address = manager.createEntity("Address");
+            destination.AddressID = source.AddressID;
 
             destination.ParentID = null;
             destination.TravelProposalID = null;

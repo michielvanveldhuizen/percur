@@ -110,10 +110,10 @@
                             {{ tu.DepartureAddress.AddressName }} to {{ tu.DestinationAddress.AddressName }}
                             <i ng-if="tu.Note != NULL" class="gi gi-comments" data-tooltip="{{ tu.Note }}"></i>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             {{ tu.DepartureDate | date:'d MMMM yyyy' }}
                         </div>
-                        <div class="col-md-2" style="text-align: right">
+                        <div class="col-md-3" style="text-align: right">
                             {{ tu.Cost | number:2 }}€ | {{ tu.CostSecondary | number:2 }} {{ tu.SecondaryCurrency }}
                         </div>
                     </div>
@@ -134,10 +134,10 @@
                         {{ rc.Address.AddressName }}
                         <i ng-if="rc.Note != NULL" class="gi gi-comments" data-tooltip="{{ rc.Note }}"></i>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         {{ rc.StartDate | date:'d MMMM yyyy' }}
                     </div>
-                    <div class="col-md-2" style="text-align: right">
+                    <div class="col-md-3" style="text-align: right">
                         {{ rc.Cost | number:2 }}&euro; | {{ rc.CostSecondary | number:2 }} {{ rc.SecondaryCurrency }}
                     </div>
                 </div>
@@ -159,10 +159,10 @@
                             {{ ta.DepartureAddress.AddressName }} to {{ ta.DestinationAddress.AddressName }}
                             <i ng-if="ta.Note != NULL" class="gi gi-comments" data-tooltip="{{ ta.Note }}"></i>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             {{ ta.DepartureDate | date:'d MMMM yyyy' }}
                         </div>
-                        <div class="col-md-2" style="text-align: right">
+                        <div class="col-md-3" style="text-align: right">
                             {{ ta.Cost | number:2 }}€ | {{ ta.CostSecondary  | number:2}} {{ ta.SecondaryCurrency }}
                         </div>
                     </div>
