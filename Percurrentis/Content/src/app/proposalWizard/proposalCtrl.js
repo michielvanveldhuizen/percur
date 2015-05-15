@@ -148,6 +148,10 @@
         $scope.info = false;
         $scope.templateUrl = '/TravelAgency/Content/src/app/proposalWizard/partials/index.tpl.html';
 
+        $scope.isEurotunnelToFolkstone = function (eurotunnel) {
+            return eurotunnel.DestinationAddress.AddressName == "Eurotunnel Folkstone";
+        };
+        
         $scope.eurotunnelChangeDestination = function (eurotunnel, val) {
             if (eurotunnel.DestinationAddress.AddressName != val) {
                 var tempAddress = eurotunnel.DepartureAddress;
