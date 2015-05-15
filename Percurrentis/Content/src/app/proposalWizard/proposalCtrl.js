@@ -658,6 +658,22 @@
                 });
             });
             copyOfID = 0;
+            angular.forEach($scope.proposal.EuroTunnelRequests, function (value, key) {
+                if (value.CopyOf != null) {
+                    copyOfID = value.CopyOf;
+                }
+                if (value.Chosen) {
+                    var newEuroTunnel = travelRequestService.copyEurotunnel(value);
+                    value.TravelRequestID = 0;
+                    newEuroTunnel.TravelRequestID = $scope.proposal.TravelRequestID;
+                    $scope.proposal.TravelRequest.EuroTunnelRequests.push(newEuroTunnel);
+                }
+                angular.forEach($scope.proposal.TravelRequest.EuroTunnelRequests, function (v, k) {
+                    if (v.Id == copyOfID) {
+                        $scope.proposal.TravelRequest.EuroTunnelRequests[k].IsDeleted = true;
+                    }
+                });
+            });
             
             // Make the appropriate status changes for the Proposal and TravelRequest
             $scope.proposal.IsApproved = 2;

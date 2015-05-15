@@ -1,5 +1,6 @@
 ﻿<div id="proposal" data-ng-controller="proposalCtrl">
     <div class="row">
+
         <!--Wizard-->
         <div class="col-sm-12">
             <div class="block">
@@ -11,12 +12,18 @@
                                 <td><strong>Type</strong></td>
                                 <td><strong>Information</strong></td>
                                 <td><strong>Date</strong></td>
+                                <td></td>
                             </tr>
                         </thead>
-                        <tbody ng-repeat="flight in proposal.FlightRequests | filter: { ParentID: null } | orderBy:'DepartureDate'" ng-model="flight">
-                            <tr id="flight_{{ flight.Id }}" class="datarow">
+                        <tbody>
+                            <tr id="flight_{{ flight.Id }}" class="datarow" ng-repeat="flight in proposal.FlightRequests | filter: { ParentID: null } | orderBy:'DepartureDate'" ng-model="flight">
+
                                 <td>Flight</td>
-                                <td>{{ flight.DepartureAddress.City }} to {{ flight.DestinationAddress.City }}</td>
+                                <td>{{ flight.DepartureAddress.City }} to {{ flight.DestinationAddress.City }} <i class="fa fa-caret-down" ng-click="showBox = !showBox"></i>
+                                    <span ng-if="showBox" class="infobox well" style="z-index: 100; position: fixed;">
+                                        <strong>FMC Number:</strong> {{ flight.FlyerMemberCard.FMCNumber }}<br />
+                                    </span>
+                                </td>
                                 <td>{{ flight.DepartureDate|date:'EEEE, d MMMM yyyy, H:mm' }}</td>
                                 <td>
                                     <div class="btn-group btn-group-sm">
@@ -25,45 +32,13 @@
                                             <i class="fa fa-plus"></i>
                                             Add Option
                                         </a>
-                                        <a ng-click="info = !info"
-                                           class="btn btn-sm btn-default">
-                                            <i class="fa fa-info-circle"></i>
-                                            More Info
-                                        </a>
                                     </div>
                                 </td>
                             </tr>
-                            <tr ng-show="info" style="">
-                                <td colspan="1"></td>
-                                <td colspan="100">
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <h5>Financial</h5>
-                                            <strong>Costs: </strong>{{ flight.Cost ? Flight.Cost : '-' }}<br />
-                                            <strong>Secondary Costs: </strong>{{ flight.CostSecondary | number:2 }} {{ flight.SecondaryCurrency }}<br /><br />
-                                            <strong>Flyer Member Card:</strong> {{flight.FlyerMemberCard.FMCNumber}}
-                                        </div>
-                                        <div class="col-md-4">
-                                            <h5>Luggage</h5>
-                                            <strong>Extra Luggage: </strong>{{ flight.HasLargeCabinLuggage ? flight.LargeLuggageCount : 'No' }}<br />
-                                            <strong>Large Equipment: </strong>{{ flight.HasSpecialEquipment ? 'Yes' : 'No' }}<br />
-                                            <strong>Online Checkin: </strong>{{ flight.IsOnlineCheckIn ? 'Yes' : 'No' }}<br />
-
-                                        </div>
-                                        <div class="col-md-4">
-                                            <h5>Notes</h5>
-                                            <div class="well">{{ flight.Note }}</div>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
-
-                        <tbody ng-repeat="ferry in proposal.FerryRequests | filter: { ParentID: null } ">
-                            <tr>
+                            <tr ng-repeat="ferry in proposal.FerryRequests | filter: { ParentID: null } ">
                                 <td>Ferry</td>
-                                <td>{{ ferry.DepartureAddress.AddressName }}</td>
-                                <td>{{ ferry.DestinationAddress.AddressName }}</td>
+                                <td>{{ ferry.DepartureAddress.AddressName }}
+                                to {{ ferry.DestinationAddress.AddressName }}</td>
                                 <td>{{ ferry.DepartureDate | date:'EEEE, d MMMM yyyy, H:mm' }}</td>
                                 <td>
                                     <div class="btn-group btn-group-sm">
@@ -72,41 +47,13 @@
                                             <i class="fa fa-plus"></i>
                                             Add Option
                                         </a>
-                                        <a ng-click="info = !info"
-                                           class="btn btn-sm btn-default">
-                                            <i class="fa fa-info-circle"></i>
-                                            More Info
-                                        </a>
                                     </div>
                                 </td>
                             </tr>
-                            <tr ng-show="info">
-                                <td colspan="1"></td>
-                                <td colspan="100">
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <h5>Financial</h5>
-                                            <strong>Costs: </strong>{{ ferry.Cost ? ferry.Cost : '-' }}<br />
-                                            <strong>Secondary Costs: </strong>{{ ferry.CostSecondary }} {{ ferry.SecondaryCurrency }}<br /><br />
-
-                                        </div>
-                                        <div class="col-md-4">
-
-                                        </div>
-                                        <div class="col-md-4">
-                                            <h5>Notes</h5>
-                                            <div class="well">{{ ferry.Note }}</div>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
                         <!-- Start of tbody for TaxiRequests -->
-                        <tbody ng-repeat="taxi in proposal.TaxiRequests | filter: { ParentID: null } ">
-                            <tr>
+                            <tr ng-repeat="taxi in proposal.TaxiRequests | filter: { ParentID: null } ">
                                 <td>Taxi</td>
-                                <td>{{ taxi.DepartureAddress.AddressName }}</td>
-                                <td>{{ taxi.DestinationAddress.AddressName }}</td>
+                                <td>{{ taxi.DepartureAddress.AddressName }} to {{ taxi.DestinationAddress.AddressName }}</td>
                                 <td>{{ taxi.DepartureDate | date:'EEEE, d MMMM yyyy, H:mm' }}</td>
                                 <td>
                                     <div class="btn-group btn-group-sm">
@@ -115,42 +62,16 @@
                                             <i class="fa fa-plus"></i>
                                             Add Option
                                         </a>
-                                        <a ng-click="info = !info"
-                                           class="btn btn-sm btn-default">
-                                            <i class="fa fa-info-circle"></i>
-                                            More Info
-                                        </a>
                                     </div>
                                 </td>
                             </tr>
-                            <tr ng-show="info">
-                                <td colspan="1"></td>
-                                <td colspan="100">
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <h5>Financial</h5>
-                                            <strong>Costs: </strong>{{ taxi.Cost ? taxi.Cost : '-' }}<br />
-                                            <strong>Secondary Costs: </strong>{{ taxi.CostSecondary }} {{ taxi.SecondaryCurrency }}<br /><br />
-
-                                        </div>
-                                        <div class="col-md-4">
-
-                                        </div>
-                                        <div class="col-md-4">
-                                            <h5>Notes</h5>
-                                            <div class="well">{{ taxi.Note }}</div>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
 
                         <!-- Start of tbody for RentalCarRequests -->
                         <!--<tbody >-->
                             <tr ng-repeat ="rcar in proposal.RentalCarRequests | filter: { ParentID: null } ">
-<td>Rental car</td>
+                                <td>Rental car</td>
                                 <td>
-                                    {{ rcar.Address.AddressName }}
+                                    Dropoff at {{ rcar.Address.AddressName }}
                                 </td>
                                 <td>{{ rcar.StartDate | date:'d MMMM yyyy' }} to {{ rcar.EndDate | date:'d MMMM yyyy' }}</td>
                                 <td>
@@ -160,43 +81,14 @@
                                             <i class="fa fa-plus"></i>
                                             Add Option
                                         </a>
-                                        <a ng-click="info = !info"
-                                           class="btn btn-sm btn-default">
-                                            <i class="fa fa-info-circle"></i>
-                                            <span ng-show="info">Less Info</span>
-                                            <span ng-show="!info">More Info</span>
-</a>
                                     </div>
                                 </td>
                             </tr>
-                            <!--<tr ng-show="info">
-                                <td colspan="1"></td>
-                                <td colspan="100">
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <h5>Financial</h5>
-                                            <strong>Costs: </strong>{{ rcar.Cost ? rcar.Cost : '-' }}€<br />
-                                            <strong>Secondary Costs: </strong>{{ rcar.CostSecondary }} {{ rcar.SecondaryCurrency }}<br /><br />
-
-                                        </div>
-                                        <div class="col-md-4">
-
-                                        </div>
-                                        <div class="col-md-4">
-                                            <h5>Notes</h5>
-                                            <div class="well">{{ rcar.Note }}</div>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>-->
-                        <!--</tbody>-->
 
                         <!-- Start of tbody for Eurotunnels .-->
-                        <tbody ng-repeat="tunnel in proposal.EuroTunnelRequests | filter: { ParentID: null } ">
-                            <tr>
+                            <tr ng-repeat="tunnel in proposal.EuroTunnelRequests | filter: { ParentID: null } ">
                                 <td>Eurotunnel</td>
-                                <td>{{ tunnel.DepartureAddress.AddressName }}</td>
-                                <td>{{ tunnel.DestinationAddress.AddressName }}</td>
+                                <td>{{ tunnel.DepartureAddress.AddressName }} to {{ tunnel.DestinationAddress.AddressName }}</td>
                                 <td>{{ tunnel.DepartureDate | date:'EEEE, d MMMM yyyy, H:mm' }}</td>
                                 <td>
                                     <div class="btn-group btn-group-sm">
@@ -205,42 +97,14 @@
                                             <i class="fa fa-plus"></i>
                                             Add Option
                                         </a>
-                                        <a ng-click="info = !info"
-                                           class="btn btn-sm btn-default">
-                                            <i class="fa fa-info-circle"></i>
-                                            More Info
-                                        </a>
                                     </div>
                                 </td>
                             </tr>
-                            <tr ng-show="info">
-                                <td colspan="1"></td>
-                                <td colspan="100">
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <h5>Financial</h5>
-                                            <strong>Costs: </strong>{{ tunnel.Cost ? tunnel.Cost : '-' }}<br />
-                                            <strong>Secondary Costs: </strong>{{ tunnel.CostSecondary }} {{ tunnel.SecondaryCurrency }}<br /><br />
-
-                                        </div>
-                                        <div class="col-md-4">
-
-                                        </div>
-                                        <div class="col-md-4">
-                                            <h5>Notes</h5>
-                                            <div class="well">{{ tunnel.Note }}</div>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
                         <!-- Start of tbody for Accommodations.-->
-                        <tbody ng-repeat="acco in proposal.Accommodations | filter: { ParentID: null } ">
-                            <tr>
+                            <tr ng-repeat="acco in proposal.Accommodations | filter: { ParentID: null } ">
                                 <td>Accommodations</td>
                                 <td>{{ acco.Address.AddressName }}</td>
                                 <td>{{ acco.CheckInDate | date:'d MMMM yyyy' }}</td>
-                                <td></td>
                                 <td>
                                     <div class="btn-group btn-group-sm">
                                         <a ng-click="updateTemplateUrl('Accommodation', acco)"
@@ -248,35 +112,10 @@
                                             <i class="fa fa-plus"></i>
                                             Add Option
                                         </a>
-                                        <a ng-click="info=!info"
-                                           class="btn btn-sm btn-default">
-                                            <i class="fa fa-info-circle"></i>
-                                            More Info
-                                        </a>
                                     </div>
                                 </td>
                             </tr>
-                            <tr ng-show="info">
-                                <td colspan="1"></td>
-                                <td colspan="100">
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <h5>Financial</h5>
-                                            <strong>Costs: </strong>{{ acco.Cost ? acco.Cost : '-' }}<br />
-                                            <strong>Secondary Costs: </strong>{{ acco.CostSecondary }} {{ acco.SecondaryCurrency }}<br /><br />
-
-                                        </div>
-                                        <div class="col-md-4">
-
-                                        </div>
-                                        <div class="col-md-4">
-                                            <h5>Notes</h5>
-                                            <div class="well">{{ acco.Note }}</div>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
+                            </tbody>
                     </table>
                 </div>
             </div>
@@ -313,9 +152,9 @@
                 <div class="list-group">
                     <div ng-click="showFlights = !showFlights" ng-show="proposal.FlightRequests.length > initialFlightCount" style="cursor:pointer">
                         <div class="list-group-item">Flights: <span class="badge">{{ proposal.FlightRequests.length - initialFlightCount }}</span></div>
-                        <div class="list-group-item" ng-show="showFlights" ng-repeat="flight in proposal.FlightRequests | filter: { CopyOf: !null}">
-                            <p>{{ flight.DepartureDate | date:'d MMMM yyyy' }}: {{ flight.DepartureAddress.City }} - {{ flight.DestinationAddress.City }}</p>
-                            <p>{{ flight.Cost | number:2 }} &euro; | {{ flight.CostSecondary | number:2 }} {{ flight.SecondaryCurrency }}</p>
+                        <div class="list-group-item" ng-if="$index >= initialFlightCount"  ng-show="showFlights" ng-repeat="flight in proposal.FlightRequests | filter: { CopyOf: !null}">
+                             <p>{{ flight.DepartureDate | date:'d MMMM yyyy' }}: {{ flight.DepartureAddress.City }} - {{ flight.DestinationAddress.City }}</p>
+                             <p>{{ flight.Cost | number:2 }} &euro; | {{ flight.CostSecondary | number:2 }} {{ flight.SecondaryCurrency }}</p>
                         </div>
                     </div>
                     <div class="list-group-item" ng-click="showAccommodations = !showAccommodations" ng-show="proposal.Accommodations.length > initialAccoCount" style="cursor:pointer">

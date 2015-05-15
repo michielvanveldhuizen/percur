@@ -306,6 +306,21 @@ namespace Percurrentis.Context
                         }
                     }
                 }
+                if (changedEntity.Entity is EuroTunnelRequest)
+                {
+                    var specEntity = changedEntity.Entity as EuroTunnelRequest;
+                    if ((specEntity.TravelProposalID).Equals(0))
+                    {
+                        specEntity.TravelProposalID = null;
+                    }
+                    else
+                    {
+                        if (specEntity.TravelRequestID.Equals(0))
+                        {
+                            specEntity.TravelRequestID = null;
+                        }
+                    }
+                }
                 if (changedEntity.Entity is FerryRequest)
                 {
                     var specEntity = changedEntity.Entity as FerryRequest;

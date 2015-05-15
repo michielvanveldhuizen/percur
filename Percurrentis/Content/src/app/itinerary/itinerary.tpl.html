@@ -274,7 +274,7 @@
         <div class="block-title">
             <h4><i class="gi gi-train"></i> EuroTunnel Request Details</h4>
         </div>
-        <div class="row" data-ng-repeat="euroreq in request.EuroTunnelRequests">
+        <div class="row" data-ng-repeat="euroreq in request.EuroTunnelRequests | filter: { IsDeleted: false }">
             <div class="col-md-10">
                 <div class="table">
                     <table class="table table-vcenter table-condensed table-striped">
