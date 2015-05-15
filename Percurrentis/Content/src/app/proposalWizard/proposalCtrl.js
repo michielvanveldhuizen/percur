@@ -535,6 +535,7 @@
         $scope.calcTotal = function () {
             var sum = 0;
             jQuery(".euro_cost.true").each(function () {
+                console.log(jQuery(this).text());
                 sum += jQuery(this).text();
             });
             $scope.totalCost = sum;

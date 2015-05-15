@@ -88,8 +88,8 @@
                             {{ fe.DepartureDate | date:'d MMMM yyyy' }}
                         </div>
                         <div class="col-md-3" style="text-align: right">
-                            {{ fe.Cost | number:2 }}€ | {{ fe.CostSecondary | number:2 }} {{ fe.SecondaryCurrency }}
-                        </div>
+                            <span class="euro_cost {{ rc.Chosen }}">{{ fe.Cost | number:2 }}</span>€ | {{ fe.CostSecondary | number:2 }} {{ fe.SecondaryCurrency }}
+</div>
                     </div>
                 </div>
             </div>
@@ -115,8 +115,8 @@
                             {{ tu.DepartureDate | date:'d MMMM yyyy' }}
                         </div>
                         <div class="col-md-3" style="text-align: right">
-                            {{ tu.Cost | number:2 }}€ | {{ tu.CostSecondary | number:2 }} {{ tu.SecondaryCurrency }}
-                        </div>
+                            <span class="euro_cost {{ tu.Chosen }}">{{ tu.Cost | number:2 }}</span>€ | {{ tu.CostSecondary | number:2 }} {{ tu.SecondaryCurrency }}
+</div>
                     </div>
                 </div>
             </div>
@@ -137,12 +137,11 @@
                                 <i ng-if="rc.Note != NULL" class="gi gi-comments" data-tooltip="{{ rc.Note }}"></i>
                             </div>
                             <div class="col-md-3">
-                                <span class="badge"> {{ rc.Chosen }}</span>
                                 {{ rc.StartDate | date:'d MMMM yyyy' }}
                             </div>
                             <div class="col-md-3" style="text-align: right">
-                                {{ rc.Cost | number:2 }}&euro; | {{ rc.CostSecondary | number:2 }} {{ rc.SecondaryCurrency }}
-                            </div>
+                                <span class="euro_cost {{ rc.Chosen }}">{{ rc.Cost | number:2 }}</span>&euro; | {{ rc.CostSecondary | number:2 }} {{ rc.SecondaryCurrency }}
+</div>
                         </div>
                     
                 </div>
@@ -169,8 +168,8 @@
                             {{ ta.DepartureDate | date:'d MMMM yyyy' }}
                         </div>
                         <div class="col-md-3" style="text-align: right">
-                            {{ ta.Cost | number:2 }}€ | {{ ta.CostSecondary  | number:2}} {{ ta.SecondaryCurrency }}
-                        </div>
+                            <span class="euro_cost {{ ta.Chosen }}">{{ ta.Cost | number:2 }}</span>€ | {{ ta.CostSecondary  | number:2}} {{ ta.SecondaryCurrency }}
+</div>
                     </div>
                 </div>
             </div>
