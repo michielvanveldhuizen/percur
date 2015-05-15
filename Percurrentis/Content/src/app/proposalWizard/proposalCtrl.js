@@ -483,10 +483,19 @@
             $scope.addresses = query.results;
         });
 
+        var previous;
+
         // Set selected item per group.
         $scope.select = function (iets, id) {
             if ($scope.proposal.IsApproved == '0') {
-                iets.Chosen = !iets.Chosen;
+                //iets.Chosen = !iets.Chosen;
+                if (previous != null) {
+                    if (previous.Id != iets.Id) {
+                        iets.Chosen = true;
+                        previous.Chosen = false;
+                    }
+                }
+                previous = iets;
                 iets.TravelRequestID = 0;
                 $scope.costs[iets.ParentID] = iets.Cost;
                 $scope.updateTotal();
