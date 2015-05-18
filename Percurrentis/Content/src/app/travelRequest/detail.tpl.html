@@ -29,8 +29,13 @@
                     <div data-form-control-static data-label="Reason of Approval" data-ng-show="request.TravelRequestApproval.HasApproved == 2">
                         {{request.TravelRequestApproval.Note}}
                     </div>
-                    <div data-form-control-static data-label="Reason of Rejected" data-ng-show="request.TravelRequestApproval.HasApproved == 1">
+                    <div data-form-control-static data-label="Reason of Rejection" data-ng-show="request.TravelRequestApproval.HasApproved == 1">
                         {{request.TravelRequestApproval.Note}}
+                    </div>
+                    <div data-form-control-static data-label="Last update">
+                        <div ng-show="request.UpdatedDate == null">{{ request.CreatedDate | date: 'dd/MM/yyyy - hh:mm' }}</div>
+                        <div ng-show="request.UpdatedDate != null">{{ request.UpdatedDate | date: 'dd/MM/yyyy - hh:mm' }}</div>
+                         by {{ request.UpdatedBy }}
                     </div>
                     <div data-ng-show="isTravelAgency()" data-form-control-static>
                         <button class="btn btn-sm btn-default"
@@ -39,7 +44,6 @@
                             Create Itinerary
                         </button>
                     </div>
-                    <div class="ding"></div>
                 </div>
             </div>
             <div class="block">

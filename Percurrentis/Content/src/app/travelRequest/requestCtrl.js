@@ -443,6 +443,7 @@
                               "This action will archive the travelrequest (cannot be undone!) and create an itinerary. Continue?",
                               function succes()
                               {
+                                  request.UpdatedBy = currentUser;
                                   request.IsItinerary = true;
                                   travelRequestService.saveChanges(request,
                                               undefined,

@@ -195,6 +195,7 @@
                 }
 
                 try {
+                    $scope.model.UpdatedBy = userName;
                     travelRequestService.saveChanges($scope.model, $scope.options, function (result) {
                         $location.path('/Request/Submitted');
                     },

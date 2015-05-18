@@ -72,16 +72,17 @@
                     $scope.proposal.EuroTunnelRequests.push(copy);
                 });
 
+                $scope.proposal.CreatedBy = currentUser;
+
                 travelRequestService.saveChanges(
                 $scope.proposal,
                 undefined,
                 function (result) {
-                    console.log("Saved the new items");
-                    console.log(result);
+                    //console.log("Saved the new items");
                     //$location.path("TravelAgency/#/Itinerary/#Final");
                 },
                 function () {
-                    console.log("Save failed");
+                    //console.log("Save failed");
                 }
              );
             });
@@ -164,6 +165,7 @@
         $scope.saveProposal = function () {
             // Maybe check if the proposal isn't empty?
             $scope.proposal.IsApproved = 0;
+            $scope.proposal.UpdatedBy = currentUser;
             
             modalService.open("Confirm ready?", "Are you sure you are done editing this proposal?",
                     function yes() {
@@ -478,6 +480,7 @@
                 });
         });
 
+
         // Load all the addresses again -.-'
         travelRequestService.getAddresses().then(function (query) {
             $scope.addresses = query.results;
@@ -495,7 +498,12 @@
                         previous.Chosen = false;
                     }
                 }
-                previous = iets;
+                else
+                {
+                    iets.Chosen = true;
+                    previous = iets;
+                }
+                
                 iets.TravelRequestID = 0;
                 $scope.costs[iets.ParentID] = iets.Cost;
                 $scope.updateTotal();
@@ -535,7 +543,6 @@
         $scope.calcTotal = function () {
             var sum = 0;
             jQuery(".euro_cost.true").each(function () {
-                console.log(jQuery(this).text());
                 sum += jQuery(this).text();
             });
             $scope.totalCost = sum;
@@ -561,7 +568,7 @@
             jQuery(".option_row").addClass("disabled");
 
             $scope.proposal.IsApproved = 1;
-            // > notify TA?
+            // > notify TA? start new sequence?
 
             $scope.mode = 'rejectConfirmed';
 
@@ -585,7 +592,7 @@
 
             var copyOfID = 0;
 
-            // Iterate thorugh all the requests in the proposal, copy the chosen ones to the itinerary
+            // Iterate through all the requests in the proposal, copy the chosen ones to the itinerary
             angular.forEach($scope.proposal.FlightRequests, function (value, key) {
                 if (value.CopyOf != null)
                 {
@@ -692,6 +699,8 @@
             // Make the appropriate status changes for the Proposal and TravelRequest
             $scope.proposal.IsApproved = 2;
             $scope.proposal.TravelRequest.IsFinal = true;
+            $scope.proposal.UpdatedBy = currentUser;
+            $scope.proposal.TravelRequest.UpdatedBy = currentUser;
 
             travelRequestService.saveChanges(
                 $scope.proposal,

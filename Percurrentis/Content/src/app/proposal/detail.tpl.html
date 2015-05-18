@@ -34,6 +34,7 @@
                         <span class="label label-success" data-ng-show="proposal.IsApproved == 2">Approved</span>
                     </li>
                     <li class="list-group-item"><strong>Purpose: </strong>{{ proposal.TravelRequest.Purpose }}</li>
+                    <li class="list-group-item"><strong>Last update: </strong>{{ proposal.UpdatedDate |date:'d MMMM yyyy - H:mm' }} by {{ proposal.UpdatedBy }}</li>
                 </ul>
             </div>
         </div>
@@ -57,6 +58,7 @@
                             <i ng-if="fl.Note != NULL" class="gi gi-comments" data-tooltip="{{ fl.Note }}"></i>
                         </div>
                         <div class="col-md-3">
+                            {{ fl.Chosen }} - 
                             {{ fl.DepartureDate | date:'d MMMM yyyy' }}
                         </div>
                         <div class="col-md-3" style="text-align: right">

@@ -343,7 +343,7 @@ namespace Percurrentis.Context
                     if (specEntity.IsDeleted == true)
                     {
                         specEntity.DeletedDate = DateTime.Now;
-                        specEntity.DeletedBy = 1;
+                        specEntity.DeletedBy = "1";
                     }
                 }
                 //TravelRequestApproval

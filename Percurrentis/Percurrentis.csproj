@@ -492,6 +492,14 @@
     <Compile Include="Migrations\201505120616342_addedProposalFlag.Designer.cs">
       <DependentUpon>201505120616342_addedProposalFlag.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201505180623001_UpdatedByToString.cs" />
+    <Compile Include="Migrations\201505180623001_UpdatedByToString.Designer.cs">
+      <DependentUpon>201505180623001_UpdatedByToString.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201505180755390_UpdatedByNoLongerMandatory.cs" />
+    <Compile Include="Migrations\201505180755390_UpdatedByNoLongerMandatory.Designer.cs">
+      <DependentUpon>201505180755390_UpdatedByNoLongerMandatory.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Context\DatabaseContext.cs" />
     <Compile Include="Notification\Notification.cs" />
@@ -1706,6 +1714,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201505120616342_addedProposalFlag.resx">
       <DependentUpon>201505120616342_addedProposalFlag.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201505180623001_UpdatedByToString.resx">
+      <DependentUpon>201505180623001_UpdatedByToString.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201505180755390_UpdatedByNoLongerMandatory.resx">
+      <DependentUpon>201505180755390_UpdatedByNoLongerMandatory.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
