@@ -150,11 +150,11 @@
                     </button>
                 </p>
                 <div class="list-group">
-                    <div ng-click="showFlights = !showFlights" ng-show="proposal.FlightRequests.length > initialFlightCount" style="cursor:pointer">
+                    <div ng-click="showFlights=!showFlights" ng-show="proposal.FlightRequests.length > initialFlightCount" style="cursor:pointer">
                         <div class="list-group-item">Flights: <span class="badge">{{ proposal.FlightRequests.length - initialFlightCount }}</span></div>
-                        <div class="list-group-item" ng-if="$index >= initialFlightCount"  ng-show="showFlights" ng-repeat="flight in proposal.FlightRequests | filter: { CopyOf: !null}">
-                             <p>{{ flight.DepartureDate | date:'d MMMM yyyy' }}: {{ flight.DepartureAddress.City }} - {{ flight.DestinationAddress.City }}</p>
-                             <p>{{ flight.Cost | number:2 }} &euro; | {{ flight.CostSecondary | number:2 }} {{ flight.SecondaryCurrency }}</p>
+                        <div class="list-group-item" ng-if="$index >= initialFlightCount" ng-show="showFlights" ng-repeat="flight in proposal.FlightRequests">
+                            <p>{{ flight.DepartureDate | date:'d MMMM yyyy' }}: {{ flight.DepartureAddress.City }} - {{ flight.DestinationAddress.City }}</p>
+                            <p>{{ flight.Cost | number:2 }} &euro; | {{ flight.CostSecondary | number:2 }} {{ flight.SecondaryCurrency }}</p>
                         </div>
                     </div>
                     <div class="list-group-item" ng-click="showAccommodations = !showAccommodations" ng-show="proposal.Accommodations.length > initialAccoCount" style="cursor:pointer">

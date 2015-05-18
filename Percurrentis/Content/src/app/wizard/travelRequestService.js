@@ -1083,12 +1083,7 @@
             var destination = manager.createEntity("Accommodation");
 
             destination.Address = manager.createEntity("Address");
-            destination.Address.AddressName = source.Address.AddressName;
-            destination.Address.Street = source.Address.Street;
-            destination.Address.PostalCode = source.Address.PostalCode;
-            destination.Address.City = source.Address.City;
-            destination.Address.StateProvince = source.Address.StateProvince;
-            destination.Address.CountryRegionID = source.Address.CountryRegionID;
+            destination.Address.Id = source.Address.Id;
 
             destination.CheckInDate = source.CheckInDate;
             destination.CheckOutDate = source.CheckOutDate;
