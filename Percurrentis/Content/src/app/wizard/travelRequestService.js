@@ -22,6 +22,7 @@
             getProposals: getProposals,
             getProposalById: getProposalById,
             getProposalIdFromItinerary: getProposalIdFromItinerary,
+            getProposalsForItinerary: getProposalsForItinerary,
             getTravelRequestById: getTravelRequestById,
             getTravelRequestByHash: getTravelRequestByHash,
             getCurrentTravels: getCurrentTravels,
@@ -267,6 +268,21 @@
 
             //terugvindcomment
             var query = new breeze.EntityQuery('Proposals');
+            var promise = manager.executeQuery(query).catch(queryFailed);
+            return promise;
+
+            function queryFailed(error) {
+                console.log(error.message, 'query failed');
+                throw error;
+            }
+        }
+
+        function getProposalsForItinerary(id) {
+            manager = new breeze.EntityManager(serviceName);
+
+            //terugvindcomment
+            var query = new breeze.EntityQuery('Proposals')
+                .where('TravelRequestID', 'eq', parseInt(id));
             var promise = manager.executeQuery(query).catch(queryFailed);
             return promise;
 

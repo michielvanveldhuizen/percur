@@ -8,7 +8,7 @@
         <div class="row">
             <div class="col-md-6">
                 <span><strong>Departure: </strong>{{ proposal.TravelRequest.DepartureDate|date:'EEEE d MMMM yyyy - H:mm'}}</span><br />
-                <span><strong>Return: </strong>{{ proposal.TravelRequest.ReturnDate|date:'EEEE d MMMM yyyy - H:mm'}}</span>
+                <span><strong>Return: </strong>{{ proposal.TravelRequest.ReturnDate|date:'EEEE d MMMM yyyy - H:mm'}}</span><br /><br />
                 <div><strong>Traveler<span ng-show="proposal.TravelRequest.RequestTravellers.length > 1">s</span>:</strong></div>
                 <div class="table">
                     <table class="table table-vcenter table-condensed table-striped">
@@ -228,7 +228,7 @@
                 <div data-ng-show="mode == 'init'">
                     <div class="col-xs-9">
                         <textarea class="form-control"
-                                  data-ng-model="comments"
+                                  data-ng-model="proposal.Reason"
                                   rows="4"
                                   placeholder="Comments / Reason of approve / rejection  (optional)"></textarea>
                     </div>

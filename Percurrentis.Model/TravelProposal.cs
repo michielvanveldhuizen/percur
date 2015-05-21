@@ -14,6 +14,7 @@ namespace Percurrentis.Model
         public int IsApproved { get; set; }
         public int TravelRequestID { get; set; }
         public int? TravelRequestApprovalID { get; set; }
+        public string Reason { get; set; }
 
         public virtual TravelRequest TravelRequest { get; set; }
         public virtual TravelRequestApproval TravelRequestApproval { get; set; }

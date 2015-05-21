@@ -4,7 +4,7 @@
 
 .disabled {
     z-index: 1000;
-    background-color: lightgrey;
+    background-color: lightgray;
     opacity: 0.6;
 }
 

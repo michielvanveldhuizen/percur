@@ -149,13 +149,11 @@
         .then(function (query) {
             $scope.request = query.results[0];
             $scope.total = 0;
-            travelRequestService.getProposalIdFromItinerary($scope.request.Id)
+            travelRequestService.getProposalsForItinerary($scope.request.Id)
             .then(function (query) {
-                if (query.results.length > 0) {
-                    $scope.proposalID = query.results[0].Id;
-                }
+                    $scope.proposals = query.results;
             });
-            return query.results[0];
+            return query.results;
         })
         .then(function (request) {
             return travelRequestService.getEmployeeByObjectGuid(request.SuperiorID);

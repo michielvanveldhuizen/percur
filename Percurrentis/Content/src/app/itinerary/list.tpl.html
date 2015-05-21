@@ -69,9 +69,9 @@
                         <td data-ng-click="go('/Itinerary/' + request.Hash)">{{request.ApplicantID}}</td>
                         <td data-ng-click="go('/Itinerary/' + request.Hash)">
                             <ul class="fa-ul">
-                                <li data-ng-repeat="traveller in request.RequestTravellers">
+                                <li data-ng-repeat="traveller in request.TravelRequest_RequestTravellers">
                                     <i class="fa fa-user text-muted"></i>
-                                    {{traveller.FirstName}} {{traveller.FamilyName}}
+                                    {{traveller.RequestTraveller.FirstName}} {{traveller.RequestTraveller.FamilyName}}
                                 </li>
                             </ul>
                         </td>

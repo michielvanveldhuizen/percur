@@ -459,6 +459,10 @@
         travelRequestService.getProposals()
         .then(function (query) {
             $scope.proposals = query.results;
+
+            travelRequestService.getCountries().then(function (query) {
+                $scope.countries = query.results;
+            });
         });
     }
 
@@ -576,7 +580,7 @@
                 $scope.proposal,
                 undefined,
                 function (result) {
-                    //$location.path("TravelAgency/#/");
+                    $location.path("TravelAgency/#/");
                 },
                 function () {
                     //console.log("Save failed");
@@ -706,9 +710,9 @@
                 $scope.proposal,
                 undefined,
                 function (result) {
-                    console.log(result);
-                    console.log("Saved");
-                    //$location.path("TravelAgency/#/Itinerary/#Final");
+                    //console.log(result);
+                    //console.log("Saved");
+                    $location.path("TravelAgency/#/Itinerary/#Final");
                 },
                 function () {
                     console.log("Save failed");

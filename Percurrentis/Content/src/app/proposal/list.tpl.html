@@ -8,9 +8,10 @@
             <table class="table table-vcenter table-condensed table-hover">
                 <thead>
                     <tr>
-                        <th class="col-md-3">Created By</th>
-                        <th class="col-md-3">Last update</th>
-                        <th class="col-md-1">Sent</th>
+                        <th class="col-md-2">Traveller(s)</th>
+                        <th class="col-md-2">Destination</th>
+                        <th class="col-md-1">Supervisor</th>
+                        <th class="col-md-2">Updated</th>
                         <th class="col-md-1">Approval</th>
                         <th class="col-md-2">Actions</th>
                     </tr>
@@ -18,12 +19,19 @@
                 <tbody>
                     <tr data-ng-repeat="proposal in proposals | orderBy:'UpdatedDate'"
                         style="cursor:pointer">
-                        <td data-ng-click="go('/Proposal/' + proposal.Id)">{{ proposal.TravelRequest.ApplicantID }}</td>
-                        <td data-ng-click="go('/Itinerary/' + proposal.Id)">
-                            {{ proposal.TravelRequest.UpdatedDate|date:'d MMMM yyyy, H:mm' }}
+                        
+                        <td data-ng-click="go('/Proposal/' + proposal.Id)">
+                            <ul class="fa-ul">
+                                <li data-ng-repeat="traveller in proposal.TravelRequest.TravelRequest_RequestTravellers">
+                                    <i class="fa fa-user text-muted"></i>
+                                    {{traveller.RequestTraveller.FirstName}} {{traveller.RequestTraveller.FamilyName}}
+                                </li>
+                            </ul>
                         </td>
+                        <td data-ng-click="go('/Proposal/' + proposal.Id)">{{ proposal.TravelRequest.Country.Name}}</td>
+                        <td data-ng-click="go('/Proposal/' + proposal.Id)">{{ proposal.TravelRequest.ApplicantID }}</td>
                         <td>
-                            <span class="info-hover" data-tooltip="{{ proposal.CreatedDate|date:'EEEE H:mm, d MMMM yyyy' }}">{{proposal.CreatedDate|date:'d MMM'}}</span>
+                            <span>{{ proposal.CreatedDate|date:'d MMMM yyyy H:mm' }}</span>
                         </td>
                         <td data-ng-click="go('/Proposal/' + proposal.Id)">
                             <span class="label label-warning" data-ng-show="proposal.IsApproved == 0">Awaiting</span>

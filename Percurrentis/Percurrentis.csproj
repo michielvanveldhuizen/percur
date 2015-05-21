@@ -500,6 +500,10 @@
     <Compile Include="Migrations\201505180755390_UpdatedByNoLongerMandatory.Designer.cs">
       <DependentUpon>201505180755390_UpdatedByNoLongerMandatory.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201505181114378_AddedReasonToProposal.cs" />
+    <Compile Include="Migrations\201505181114378_AddedReasonToProposal.Designer.cs">
+      <DependentUpon>201505181114378_AddedReasonToProposal.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Context\DatabaseContext.cs" />
     <Compile Include="Notification\Notification.cs" />
@@ -1720,6 +1724,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201505180755390_UpdatedByNoLongerMandatory.resx">
       <DependentUpon>201505180755390_UpdatedByNoLongerMandatory.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201505181114378_AddedReasonToProposal.resx">
+      <DependentUpon>201505181114378_AddedReasonToProposal.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
