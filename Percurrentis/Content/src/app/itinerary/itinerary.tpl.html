@@ -43,7 +43,7 @@
 
     <div class="block">
         <div class="block-title">
-            <h4><i class="fa fa-folder-open"></i> - Proposal History</h4>
+            <h4><i class="fa fa-folder-open"></i>  Proposal History</h4>
         </div>
         <div class="table" ng-if="proposals.length > 0">
             <table class="table table-vcenter table-condensed table-striped">
@@ -56,7 +56,7 @@
                         <td></td>
                     </tr>
                 </thead>
-                <tr ng-repeat="tp in proposals" ng-class="{'disabled': tp.IsApproved == 1 }">
+                <tr ng-repeat="tp in proposals | filter: checkmark" ng-class="{'disabled': tp.IsApproved == 1 }">
                     <td>
                         <span class="label label-warning" data-ng-show="tp.IsApproved == 0">Awaiting</span>
                         <span class="label label-danger" data-ng-show="tp.IsApproved == 1">Rejected</span>
@@ -123,7 +123,7 @@
 
                             <!-- Maybe this ng-if has to be changed to another group sometime in the future -->
                             <div ng-if="isTravelAgency()">
-                                <strong>Costs: </strong><br /><br />{{ flightreq.Cost | number:2 }}&euro; | {{ flightreq.CostSecondary | number:2 }} {{ flightreq.SecondaryCurrency }}
+                                <strong>Costs: </strong><br /><br /><span class="euro_cost">{{ flightreq.Cost | number:2 }}</span>&euro; | {{ flightreq.CostSecondary | number:2 }} {{ flightreq.SecondaryCurrency }}
                             </div>
                         </div>
                     </div>
@@ -175,8 +175,8 @@
                         </div>
                     </div>
                     <div class="col-md-2" ng-if="isTravelAgency()">
-                        <strong>Costs: </strong><br /><br />{{ accomreq.Cost | number:2 }}&euro; | {{ accomreq.CostSecondary | number:2 }} {{ accomreq.SecondaryCurrency }}
-                    </div>
+                        <strong>Costs: </strong><br /><br /><span class="euro_cost">{{ accomreq.Cost | number:2 }}</span>&euro; | {{ accomreq.CostSecondary | number:2 }} {{ accomreq.SecondaryCurrency }}
+</div>
                 </div>
             </div>
 
@@ -216,8 +216,8 @@
                         <!-- Maybe this ng-if has to be changed to another group sometime in the future -->
                         <div ng-if="isTravelAgency()">
                             <strong>Costs: </strong><br /><br />
-                            {{ ferryreq.Cost | number:2 }}&euro; | {{ ferryreq.CostSecondary | number:2 }} {{ ferryreq.SecondaryCurrency }}
-                        </div>
+                            <span class="euro_cost">{{ ferryreq.Cost | number:2 }}</span>&euro; | {{ ferryreq.CostSecondary | number:2 }} {{ ferryreq.SecondaryCurrency }}
+</div>
                     </div>
                 </div>
             </div>
@@ -250,91 +250,64 @@
                         </div>
                         <div class="col-md-2">
                             <strong>Costs: </strong><br /><br />
-                            {{ taxireq.Cost | number:2 }}&euro; | {{ taxireq.CostSecondary | number:2 }} {{ taxireq.SecondaryCurrency }}
-                        </div>
+                            <span class="euro_cost">{{ taxireq.Cost | number:2 }}</span>&euro; | {{ taxireq.CostSecondary | number:2 }} {{ taxireq.SecondaryCurrency }}
+</div>
                     </div>
                 </div>
             </div>
-            <div class="block" data-ng-show="request.RentalCarRequests.length > 0">
-                <div class="block-title">
-                    <h4><i class="gi gi-cars"></i>   Rentalcar Request Details</h4>
-                </div>
-                <div class="row" data-ng-repeat="rcarreq in request.RentalCarRequests | filter: { IsDeleted: false }">
-                    <div class="col-md-4">
-                        <div class="table">
-                            <table class="table table-vcenter table-condensed table-striped">
-                                <tbody>
-                                    td>{{
- rcarreq.ServiceCompany.Name
-                                    }}</td></tr>-->
-                                    <!--<tr><td>Phonenumber<
-                                /td><td>{{ rcarreq.ServiceCompany.
-                                PhoneNumber }}</td></tr>-->
-                                    <tr>
-                                        <td>StartDate</td>
-                                        <t d>
-                                            </{{
- rcarreq.StartDate|date:'d M
-                            <tr><td>
-                            PhoneNumber
-                                            }}</
-td></tr>-->
-                            <tr><td>StartDate</td><t
-                                            
- </td
-                                    </tr></
--->
-                                    
-
-                                    <tr>
-                                        <td></
-StartDate
-                                        
-                                        </td>
-                                        <t
-                            </td><td></{{ rcarreq.StartDate|date:'d MMMM yyyy' }}</td>
-                                    </tr>
-                                    <tr><td>EndDate</td><td>{{ rcarreq.EndDate|date:'d MMMM yyyy' }}</td></tr>
-                                    <tr>
-                                        <td>Pickup Address: </td>
-                                        <td>
-                                            <strong>{{ rcarreq.Address.AddressName }}</strong><br>
-                                            {{ rcarreq.Address.Street }}<br>
-                                            {{ rcarreq.Address.City }}, {{ rcarreq.Address.PostalCode }}<br>
-                                            <span ng-if="(rcarreq.Address.Longitude != null) && ( rcarreq.Address.Latitude != null)">
-                                                <a class="btn btn-sm btn-primary"
-                                                   target="_blank"
-                                                   href="http://maps.google.com/?q={{rcarreq.Address.Longitude}}, {{rcarreq.Address.Latitude}}">
-                                                    <i class="gi gi-google_maps"></i>
-                                                    Google Maps
-                                                </a><br />
-                                            </span><br />
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <ul class="list-group">
-                            <li class="list-group-item disabled"><strong>Primary Driver</strong></li>
-                            <li class=" list-group-item">{{ rcarreq.Driver.FullName }}</li>
-                            <li class="list-group-item">{{ rcarreq.Driver.PhoneNumberID }}</li>
-                        </ul>
-                    </div>
-                    <div class="col-md-3">
-                        <ul class="list-group" ng-if="rcarreq.SecondaryDriverID != null">
-                            <li class="list-group-item disabled"><strong>Secondary Driver</strong></li>
-                            <li class=" list-group-item">{{ rcarreq.SecondaryDriver.FullName }}</li>
-                            <li class="list-group-item">{{ rcarreq.SecondaryDriver.PhoneNumberID }}</li>
-                        </ul>
-                    </div>
-                    <div class="col-md-2">
-                        <strong>Costs: </strong><br /><br />
-                        {{ rcarreq.Cost | number:2 }}&euro; | {{ rcarreq.CostSecondary | number:2 }} {{ rcarreq.SecondaryCurrency }}
-                    </div>
+    <div class="block" data-ng-show="request.RentalCarRequests.length > 0">
+        <div class="block-title">
+            <h4><i class="gi gi-cars"></i>   Rentalcar Request Details</h4>
+        </div>
+        <div class="row" data-ng-repeat="rcarreq in request.RentalCarRequests | filter: { IsDeleted: false }">
+            <div class="col-md-4">
+                <div class="table">
+                    <table class="table table-vcenter table-condensed table-striped">
+                        <tbody>
+                            <!--<tr><td>Company</td><td>{{ rcarreq.ServiceCompany.Name }}</td></tr>-->
+                            <!--<tr><td>Phonenumber</td><td>{{ rcarreq.ServiceCompany.PhoneNumber }}</td></tr>-->
+                            <tr><td>StartDate</td><td>{{ rcarreq.StartDate|date:'d MMMM yyyy' }}</td></tr>
+                            <tr><td>EndDate</td><td>{{ rcarreq.EndDate|date:'d MMMM yyyy' }}</td></tr>
+                            <tr>
+                                <td>Pickup Address: </td>
+                                <td>
+                                    <strong>{{ rcarreq.Address.AddressName }}</strong><br>
+                                    {{ rcarreq.Address.Street }}<br>
+                                    {{ rcarreq.Address.City }}, {{ rcarreq.Address.PostalCode }}<br>
+                                    <span ng-if="(rcarreq.Address.Longitude != null) && ( rcarreq.Address.Latitude != null)">
+                                        <a class="btn btn-sm btn-primary"
+                                           target="_blank"
+                                           href="http://maps.google.com/?q={{rcarreq.Address.Longitude}}, {{rcarreq.Address.Latitude}}">
+                                            <i class="gi gi-google_maps"></i>
+                                            Google Maps
+                                        </a><br />
+                                    </span><br />
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
+            <div class="col-md-3">
+                <ul class="list-group">
+                    <li class="list-group-item disabled"><strong>Primary Driver</strong></li>
+                    <li class=" list-group-item">{{ rcarreq.Driver.FullName }}</li>
+                    <li class="list-group-item">{{ rcarreq.Driver.PhoneNumberID }}</li>
+                </ul>
+            </div>
+            <div class="col-md-3">
+                <ul class="list-group" ng-if="rcarreq.SecondaryDriverID != null">
+                    <li class="list-group-item disabled"><strong>Secondary Driver</strong></li>
+                    <li class=" list-group-item">{{ rcarreq.SecondaryDriver.FullName }}</li>
+                    <li class="list-group-item">{{ rcarreq.SecondaryDriver.PhoneNumberID }}</li>
+                </ul>
+            </div>
+            <div class="col-md-2">
+                <strong>Costs: </strong><br /><br />
+                <span class="euro_cost">{{ rcarreq.Cost | number:2 }}</span>&euro; | {{ rcarreq.CostSecondary | number:2 }} {{ rcarreq.SecondaryCurrency }}
+</div>
+        </div>
+    </div>
             <div class="block" data-ng-show="request.EuroTunnelRequests.length > 0">
                 <div class="block-title">
                     <h4><i class="gi gi-train"></i> EuroTunnel Request Details</h4>
@@ -371,7 +344,7 @@ StartDate
                     </div>
                 </div>
             </div>
-            <div class="block" style="padding-bottom: 15px;" ng-if="request.IsFinal == true">
-                <!-- Total amount stuff. -->
+            <div class="block" style="text-align: right; padding-bottom: 15px;" ng-if="request.IsFinal == true">
+                Total: {{ calcTotal() | number:2 }} &euro;
             </div>
         </div>

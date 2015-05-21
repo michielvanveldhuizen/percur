@@ -40,7 +40,6 @@
         </div>
         <!-- End of basic proposal info -->
 
-
         <!-- Start of block containing all the flights -->
         <div ng-repeat="flight in proposal.FlightRequests | filter: { ParentID: null}">
             <div class="list-group form-group option-group">
@@ -208,12 +207,11 @@
 
             <a class="list-group-item active" style="text-align: right">
                 <span ng-if="proposal.IsApproved == 2">{{ calcTotal() }}</span>
-                Total: {{ totalCost | number:2 }} €
+                Total: {{ totalCost | number:2 }} &euro;
             </a>
         </div>
-
-
     </div>
+
     <!-- Footer -->
     <footer class="clearfix"
             style="min-height: 168px;"
@@ -230,7 +228,7 @@
                         <textarea class="form-control"
                                   data-ng-model="proposal.Reason"
                                   rows="4"
-                                  placeholder="Comments / Reason of approve / rejection  (optional)"></textarea>
+                                  placeholder="Comments / Reason of approval / rejection  (optional)"></textarea>
                     </div>
                     <div class="col-xs-3">
                         <a class="btn btn-success btn-block" ng-class="{disabled: approvalMode != true }"

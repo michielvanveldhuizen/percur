@@ -16,7 +16,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr id="flight_{{ flight.Id }}" class="datarow" ng-repeat="flight in proposal.FlightRequests | filter: { ParentID: null } | orderBy:'DepartureDate'" ng-model="flight">
+                            <tr id="flight_{{ flight.Id }}" class="datarow" ng-repeat="flight in proposal.FlightRequests | filter: { ParentID: null, IsDeleted: false } | orderBy:'DepartureDate'" ng-model="flight">
 
                                 <td>Flight</td>
                                 <td>{{ flight.DepartureAddress.City }} to {{ flight.DestinationAddress.City }} <i class="fa fa-caret-down" ng-click="showBox = !showBox"></i>

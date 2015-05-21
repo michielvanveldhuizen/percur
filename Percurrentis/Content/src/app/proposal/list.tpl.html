@@ -31,7 +31,7 @@
                         <td data-ng-click="go('/Proposal/' + proposal.Id)">{{ proposal.TravelRequest.Country.Name}}</td>
                         <td data-ng-click="go('/Proposal/' + proposal.Id)">{{ proposal.TravelRequest.ApplicantID }}</td>
                         <td>
-                            <span>{{ proposal.CreatedDate|date:'d MMMM yyyy H:mm' }}</span>
+                            <span>{{ proposal.UpdatedDate|date:'d MMMM yyyy H:mm' }}</span>
                         </td>
                         <td data-ng-click="go('/Proposal/' + proposal.Id)">
                             <span class="label label-warning" data-ng-show="proposal.IsApproved == 0">Awaiting</span>

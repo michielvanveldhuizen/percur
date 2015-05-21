@@ -138,7 +138,6 @@
     angular.module('app').controller('itineraryDetailCtrl',
         ['$scope', '$route', '$location', 'travelRequestService', "modalService", itineraryDetailCtrl]);
 
-
     function itineraryDetailCtrl($scope, $route, $location, travelRequestService, modalService) {
         var request;
         $scope.totalPrice = 0;
@@ -164,6 +163,15 @@
 
         $scope.isTravelAgency = function () {
             return roles.TravelAgency;
+        }
+
+        // Calculate total cost for approved proposal
+        $scope.calcTotal = function () {
+            var sum = 0;
+            jQuery(".euro_cost").each(function () {
+                sum += jQuery(this).text();
+            });
+            return sum;
         }
 
         $scope.go = function (path, hash) {
@@ -195,6 +203,8 @@
             }
         }
 
+
+
         $scope.startProposalWizard = function(request)
         {
             $location.path('/ProposalWizard/' + request.Hash);
@@ -210,6 +220,8 @@
                 // Thats fine, just go back. 
             });
         };
+
+
 
         $scope.CalculateStayDuration = function (start, end) {
             var completeDay = 24 * 60 * 60 * 1000;

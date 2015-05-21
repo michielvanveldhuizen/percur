@@ -574,6 +574,32 @@
             $scope.proposal.IsApproved = 1;
             // > notify TA? start new sequence?
 
+            // Set all proposed items to deleted
+            angular.forEach($scope.proposal.FlightRequests, function (value, key) {
+                value.IsDeleted = true;
+                value.TravelRequestID = 0;
+            });
+            angular.forEach($scope.proposal.FerryRequests, function (value, key) {
+                value.IsDeleted = true;
+                value.TravelRequestID = 0;
+            });
+            angular.forEach($scope.proposal.RentalCarRequests, function (value, key) {
+                value.IsDeleted = true;
+                value.TravelRequestID = 0;
+            });
+            angular.forEach($scope.proposal.TaxiRequests, function (value, key) {
+                value.IsDeleted = true;
+                value.TravelRequestID = 0;
+            });
+            angular.forEach($scope.proposal.EuroTunnelRequests, function (value, key) {
+                value.IsDeleted = true;
+                value.TravelRequestID = 0;
+            });
+            angular.forEach($scope.proposal.Accommodations, function (value, key) {
+                value.IsDeleted = true;
+                value.TravelRequestID = 0;
+            });
+
             $scope.mode = 'rejectConfirmed';
 
             travelRequestService.saveChanges(
@@ -712,7 +738,7 @@
                 function (result) {
                     //console.log(result);
                     //console.log("Saved");
-                    $location.path("TravelAgency/#/Itinerary/#Final");
+                    $location.path("TravelAgency/#/Itinerary/");
                 },
                 function () {
                     console.log("Save failed");
