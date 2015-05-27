@@ -8,6 +8,10 @@
     opacity: 0.6;
 }
 
+.alwaysvisible {
+    opacity: 1;
+}
+
 .enabled {
     z-index: 1000;
 }

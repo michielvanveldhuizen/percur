@@ -4,15 +4,20 @@
     angular.module('app').controller('proposalCtrl',
         ['$scope', '$route', 'wizard', '$location', 'travelRequestService', 'modalService', proposalCtrl]);
 
+    // Controller for the proposalWizard.
     function proposalCtrl($scope, $route, wizard, $location, travelRequestService, modalService) {
+        $scope.disposeList = [];
         travelRequestService.getTravelRequestByHash($route.current.params.Hash)
         .then(function (query) {
+            // Get all itinerary data
             $scope.itinerary = query.results[0];
         })
         .then(function () {
+            // Create empty base proposal.
             travelRequestService.createTravelProposal()
             .then(function (request) {
                 $scope.proposal = request;
+                // Link the proposal to the corresponding TravelRequest.
                 $scope.proposal.TravelRequestID = $scope.itinerary.Id;
             })
             .then(function () {
@@ -78,8 +83,10 @@
                 $scope.proposal,
                 undefined,
                 function (result) {
+                    angular.forEach(result.entities, function (v, k) {
+                        $scope.disposeList.push({ "type" : v.entityAspect._entityKey.entityType.shortName, "id" : v.Id });                        
+                    });
                     //console.log("Saved the new items");
-                    //$location.path("TravelAgency/#/Itinerary/#Final");
                 },
                 function () {
                     //console.log("Save failed");
@@ -88,7 +95,8 @@
             });
         });
 
-        // Load all the stuffs!
+        
+        // Load all the elements needed to populate form option fields.
         travelRequestService.getFerries().then(function (query) {
             var uniqueResults = [];
             var alreadyHad = [];
@@ -150,9 +158,13 @@
         $scope.templateUrl = '/TravelAgency/Content/src/app/proposalWizard/partials/index.tpl.html';
 
         $scope.isEurotunnelToFolkstone = function (eurotunnel) {
-            return eurotunnel.DestinationAddress.AddressName == "Eurotunnel Folkstone";
+            // Execute only when eurotunnel exists
+            if (eurotunnel) {
+                return eurotunnel.DestinationAddress.AddressName == "Eurotunnel Folkstone";
+            }
         };
         
+        // Switch between the two possible EuroTunnel destinations
         $scope.eurotunnelChangeDestination = function (eurotunnel, val) {
             if (eurotunnel.DestinationAddress.AddressName != val) {
                 var tempAddress = eurotunnel.DepartureAddress;
@@ -163,10 +175,11 @@
 
         // Save when proposal is completed.
         $scope.saveProposal = function () {
-            // Maybe check if the proposal isn't empty?
+
             $scope.proposal.IsApproved = 0;
             $scope.proposal.UpdatedBy = currentUser;
-            
+
+            // Open modal confirming save and do so when user accepts.
             modalService.open("Confirm ready?", "Are you sure you are done editing this proposal?",
                     function yes() {
                         travelRequestService.saveChanges($scope.proposal,
@@ -181,29 +194,15 @@
                     function no() {
                         // No actions needed.
                     },
-                    '/TravelAgency/Content/src/app/modal/editBtnSet.tpl.html');
-           
-        }
-
-        $scope.infoEnabled = false;
-        $scope.toggleInfo = function (data, type) {
-            var dataString = "";
-            if ($scope.infoEnabled) {
-                $scope.infoEnabled = false;
-                jQuery("#inforow").remove();
-            }
-            else {
-                $scope.infoEnabled = true;
-                var newrow = "<tr id='inforow'><td colspan='100%'>" + dataString + "</td></tr>";
-                jQuery(newrow).insertAfter("#" + type + "_" + data.Id);
-            }
+                    '/TravelAgency/Content/src/app/modal/editBtnSet.tpl.html');    
         }
 
         // Discard the current proposal.
         $scope.discardProposal = function () {
             modalService.open("Discard changes?", "Do you wish to discard this complete proposal?",
                     function yes() {
-                        $location.path('/Itinerary/');
+                        console.log($scope.disposeList);
+                        //$location.path('/Itinerary/');
                     },
                     function no() {
                         // No actions needed.
@@ -211,7 +210,6 @@
                     '/TravelAgency/Content/src/app/modal/discardBtnSet.tpl.html');
             
         }
-
         // Include correct partial and create new entity
         $scope.updateTemplateUrl = function(type, request)
         {
@@ -308,6 +306,13 @@
                     $scope.currentEntity = $scope.proposal.EuroTunnelRequests[$scope.currentIndex];
                     $scope.currentEntity.IsProposalItem = true;
                     $scope.currentEntity.ParentID = request.Id;
+
+                    // DepartureAddress
+                    $scope.currentEntity.DepartureAddressID = request.DepartureAddressID;
+                    $scope.currentEntity.DepartureAddress = request.DepartureAddress;
+                    // DestinationAddress
+                    $scope.currentEntity.DestinationAddressID = request.DestinationAddressID;
+                    $scope.currentEntity.DestinationAddress = request.DestinationAddress;
 
                     $scope.currentEntity.Cost = request.Cost;
                     $scope.currentEntity.CostSecondary = request.CostSecondary;
@@ -445,6 +450,7 @@
             $scope.currentlyAdding = false;
             $scope.type = "";
             $scope.currentEntity = null;
+            $scope.resetVariables = true;
             $scope.currentIndex = null;
             // Revert to default template
             $scope.templateUrl = '/TravelAgency/Content/src/app/proposalWizard/partials/index.tpl.html';
@@ -495,7 +501,6 @@
         // Set selected item per group.
         $scope.select = function (iets, id) {
             if ($scope.proposal.IsApproved == '0') {
-                //iets.Chosen = !iets.Chosen;
                 if (previous != null) {
                     if (previous.Id != iets.Id) {
                         iets.Chosen = true;

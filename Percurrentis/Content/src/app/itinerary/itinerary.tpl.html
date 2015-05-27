@@ -35,13 +35,13 @@
                         <span class="label label-default" data-ng-show="request.IsFinal == true">Committed</span>
                     </li>
                     <li class="list-group-item"><strong>Purpose: </strong>{{ request.Purpose }}</li>
-                    <li class="list-group-item"><strong>Last update: </strong>{{ request.UpdatedDate |date:'d MMMM yyyy - H:mm' }} by {{ request.UpdatedBy }}</li>
+                    <li class="list-group-item"><strong>Last update: </strong>{{ request.UpdatedDate | date: 'dd MMM yyyy H:mm' }} by {{ request.UpdatedBy }}</li> 
                 </ul>
             </div>
         </div>
     </div>
 
-    <div class="block">
+    <div class="block" style="padding-bottom: 15px;">
         <div class="block-title">
             <h4><i class="fa fa-folder-open"></i>  Proposal History</h4>
         </div>
@@ -56,26 +56,23 @@
                         <td></td>
                     </tr>
                 </thead>
-                <tr ng-repeat="tp in proposals | filter: checkmark" ng-class="{'disabled': tp.IsApproved == 1 }">
+                <tr ng-repeat="tp in proposals" ng-class="{'disabled': tp.IsApproved != 0 }">
                     <td>
                         <span class="label label-warning" data-ng-show="tp.IsApproved == 0">Awaiting</span>
                         <span class="label label-danger" data-ng-show="tp.IsApproved == 1">Rejected</span>
                         <span class="label label-success" data-ng-show="tp.IsApproved == 2">Approved</span>
                     </td>
-                    <td>{{ tp.Reason }}</td>
+                    <td>{{ tp.Reason != null ? tp.Reason : 'No reason was supplied.' }}</td>
                     <td>{{ tp.UpdatedDate | date:"dd/M/yyyy" }}</td>
                     <td>{{ tp.UpdatedBy }}</td>
                     <td>
-                        <button class="btn btn-sm btn-default" data-ng-click="go('/Proposal/' + tp.Id)">Open</button>
+                        <button class="btn btn-sm btn-default alwaysvisible" data-ng-click="go('/Proposal/' + tp.Id)"><i class="fa fa-eye"></i> View</button>
                     </td>
                 </tr>
             </table>
         </div>
-        <button class="btn btn-sm btn-success" ng-if="request.IsFinal != true" data-ng-click="startProposalWizard(request)">Create New</button>
-        </div>
-
-
-
+        <button class="btn btn-sm btn-success" ng-if="!hasOpenProposal" data-ng-click="startProposalWizard(request)">Create New</button>
+    </div>
 
             <!-- Information for all attached flights -->
             <div class="block" data-ng-show="request.FlightRequests.length > 0">

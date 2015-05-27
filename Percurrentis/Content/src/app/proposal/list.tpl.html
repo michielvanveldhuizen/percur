@@ -10,6 +10,7 @@
                     <tr>
                         <th class="col-md-2">Traveller(s)</th>
                         <th class="col-md-2">Destination</th>
+                        <th class="col-md-2">Traveldate</th>
                         <th class="col-md-1">Supervisor</th>
                         <th class="col-md-2">Updated</th>
                         <th class="col-md-1">Approval</th>
@@ -19,7 +20,6 @@
                 <tbody>
                     <tr data-ng-repeat="proposal in proposals | orderBy:'UpdatedDate'"
                         style="cursor:pointer">
-                        
                         <td data-ng-click="go('/Proposal/' + proposal.Id)">
                             <ul class="fa-ul">
                                 <li data-ng-repeat="traveller in proposal.TravelRequest.TravelRequest_RequestTravellers">
@@ -29,6 +29,9 @@
                             </ul>
                         </td>
                         <td data-ng-click="go('/Proposal/' + proposal.Id)">{{ proposal.TravelRequest.Country.Name}}</td>
+                        <td data-ng-click="go('/Proposal/' + proposal.Id)">
+                            <span>{{ proposal.TravelRequest.DepartureDate|date:'d MMMM yyyy' }}</span>
+                        </td>
                         <td data-ng-click="go('/Proposal/' + proposal.Id)">{{ proposal.TravelRequest.ApplicantID }}</td>
                         <td>
                             <span>{{ proposal.UpdatedDate|date:'d MMMM yyyy H:mm' }}</span>
@@ -45,12 +48,12 @@
                                     <i class="fa fa-eye"></i>
                                     View
                                 </a>
-                                <!--<a data-ng-click="toggleArchive(request)"
-                   class="btn btn-sm btn-default"
-                   data-tooltip="{{request.IsArchived ? 'Unarchive' : 'Archive'}}"
-                   href="javascript:void(0)">
-                    <i class="fa fa-archive"></i>
-                </a>-->
+                                <a data-ng-click="toggleArchive(request)"
+                                   class="btn btn-sm btn-default"
+                                   data-tooltip="{{request.IsArchived ? 'Unarchive' : 'Archive'}}"
+                                   href="javascript:void(0)">
+                                    <i class="fa fa-archive"></i>
+                                </a>
                                 <a data-ng-click="toggleDelete(request)"
                                    data-ng-show="request.IsFinal == false"
                                    class="btn btn-sm"

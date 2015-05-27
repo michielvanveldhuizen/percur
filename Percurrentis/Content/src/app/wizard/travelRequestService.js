@@ -927,7 +927,9 @@
             var destination = manager.createEntity('EuroTunnelRequest');
 
             destination.DepartureDate = source.DepartureDate;
+            destination.DepartureAddress = manager.createEntity("Address");
             destination.DepartureAddressID = source.DepartureAddressID;
+            destination.DestinationAddress = manager.createEntity("Address");
             destination.DestinationAddressID = source.DestinationAddressID;
 
             destination.LicensePlate = source.LicensePlate;

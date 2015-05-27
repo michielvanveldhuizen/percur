@@ -141,6 +141,7 @@
     function itineraryDetailCtrl($scope, $route, $location, travelRequestService, modalService) {
         var request;
         $scope.totalPrice = 0;
+        $scope.hasOpenProposal = false;
         $scope.editInProgress = false;
         var items = [];
 
@@ -150,7 +151,10 @@
             $scope.total = 0;
             travelRequestService.getProposalsForItinerary($scope.request.Id)
             .then(function (query) {
-                    $scope.proposals = query.results;
+                $scope.proposals = query.results;
+                $scope.hasOpenProposal = $scope.proposals.some(function (p) {
+                    return p.IsApproved === 0;
+                });
             });
             return query.results;
         })
@@ -165,7 +169,7 @@
             return roles.TravelAgency;
         }
 
-        // Calculate total cost for approved proposal
+        // Calculate total cost for the current items in the itinerary.
         $scope.calcTotal = function () {
             var sum = 0;
             jQuery(".euro_cost").each(function () {
@@ -210,6 +214,7 @@
             $location.path('/ProposalWizard/' + request.Hash);
         }
 
+
         $scope.CommitItinerary = function () {
             modalService.open("Commit this Itinerary?", "Committing this itinerary means that it will be marked 'final' which means it can no longer be edited. Continue?", 
             function succes() {
@@ -222,7 +227,7 @@
         };
 
 
-
+        // Calculate the number of days between start and end, primarily used for Accommodations.
         $scope.CalculateStayDuration = function (start, end) {
             var completeDay = 24 * 60 * 60 * 1000;
             var diffDays = Math.round(Math.abs((start.getTime() - end.getTime()) / (completeDay)));
@@ -231,9 +236,8 @@
 
         $scope.onApprove = function () {
             $scope.mode = 'approve';
-
-           
         };
+
         $scope.onReject = function () {
             $scope.mode = 'reject';
         };

@@ -48,7 +48,6 @@
                 </div>
             </div>
         </div>
-
         <div class="table-responsive">
             Select one of the options in the "Actions" column in order to view, archive or delete the itinerary. <br />
             <table class="table table-vcenter table-condensed table-hover">
@@ -57,7 +56,7 @@
                         <th class="col-md-3">From</th>
                         <th class="col-md-3">Travellers</th>
                         <th class="col-md-2">Options</th>
-                        <th class="col-md-1">Sent</th>
+                        <th class="col-md-1">Traveldate</th>
                         <th class="col-md-1">Approval</th>
                         <th class="col-md-2">Actions</th>
                     </tr>
@@ -84,7 +83,7 @@
                             <i data-ng-show="request.Accommodations.length > 0" data-tooltip="Accommodation" class="fa-fw gi gi-home"></i>
                         </td>
                         <td>
-                            <span class="info-hover" data-tooltip="{{request.CreatedDate|date:'EEEE H:mm, d MMMM yyyy'}}">{{request.CreatedDate|date:'d MMM'}}</span>
+                            <span class="info-hover" data-tooltip="{{request.DepartureDate | date:'EEEE H:mm'}}">{{request.DepartureDate|date:'d MMM yyyy'}}</span>
                         </td>
                         <td data-ng-click="go('/Itinerary/' + request.Hash)">
                             <span class="label label-warning" data-ng-show="request.IsApproved == 0 && request.IsFinal == false">Awaiting</span>
