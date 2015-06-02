@@ -491,11 +491,12 @@
         });
 
 
-        // Load all the addresses again -.-'
+        // Load all the addresses
         travelRequestService.getAddresses().then(function (query) {
             $scope.addresses = query.results;
         });
 
+        // Create var for keeping status of previously selected item.
         var previous;
 
         // Set selected item per group.
@@ -537,6 +538,8 @@
             if (!hasEmpty) {
                 $scope.approvalMode = true;
             }
+            $scope.proposal.HasEmpty = 0;
+            $scope.proposal.UpdatedBy = currentUser;
         };
 
         // Update total cost amount in Euro
