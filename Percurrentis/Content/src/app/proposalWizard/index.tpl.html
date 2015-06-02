@@ -164,6 +164,15 @@
                             <p>{{ tunnel.Cost | number:2 }} &euro; | {{ tunnel.CostSecondary | number:2 }} {{ tunnel.SecondaryCurrency }}</p>
                         </div>
                     </div>
+                    <div ng-click="showTaxis=!showTaxis" ng-show="proposal.TaxiRequests.length > initialTaxiCount" style="cursor:pointer">
+                        <div class="list-group-item">Taxis: <span class="badge">{{ proposal.TaxiRequests.length - initialTaxiCount }}</span></div>
+                        <div class="list-group-item" ng-if="$index >= initialTaxiCount" ng-show="showTaxis" ng-repeat="taxi in proposal.TaxiRequests">
+                            <p>{{ taxi.DepartureDate | date:'d MMMM yyyy' }}: {{ taxi.DepartureAddress.Name }} in {{ taxi.DepartureAddress.City }}</p>
+                            <p>{{ taxi.Cost | number:2 }} &euro; | {{ taxi.CostSecondary | number:2 }} {{ taxi.SecondaryCurrency }}</p>
+                        </div>
+                    </div>
+                    <!-- till here up to date ^ -->
+
                     <div class="list-group-item" ng-click="showAccommodations = !showAccommodations" ng-show="proposal.Accommodations.length > initialAccoCount" style="cursor:pointer">
                         Accommodations: <span class="badge">{{ proposal.Accommodations.length - initialAccoCount }}</span>
                         <div ng-repeat="acco in proposal.Accommodations">
@@ -181,14 +190,6 @@
                             </div>
                         </div>
                     </div>
-                    <div class="list-group-item" ng-click="showTaxiRequests = !showTaxiRequests" ng-show="proposal.TaxiRequests.length > initialTaxiCount" style="cursor:pointer">
-                        Taxi Requests: <span class="badge">{{ proposal.TaxiRequests.length - initialTaxiCount }}</span>
-                        <div ng-repeat="taxi in proposal.TaxiRequests">
-                            <span ng-show="showTaxiRequests">
-                                {{ taxi.DepartureDate | date:'d MMMM yyyy' }}: {{ taxi.DepartureAddress.Name }} in {{ taxi.DepartureAddress.City }}
-                            </span>
-                        </div>
-                    </div>
                 </div>
                 <div class="list-group">
                     <div ng-click="showRentalCarRequests = !showRentalCarRequests" ng-show="proposal.RentalCarRequests.length > initialRentalCount" style="cursor:pointer">
@@ -199,8 +200,6 @@
                         </div>
                     </div>
                 </div>
-
-
             </div>
 
         </div>
