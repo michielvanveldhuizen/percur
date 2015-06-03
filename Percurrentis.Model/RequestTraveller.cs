@@ -5,11 +5,12 @@
 // <summary>Model classes for the database</summary>
 
 using Percurrentis.Model.Validation.Attributes;
+using System;
 using System.Collections.Generic;
 
 namespace Percurrentis.Model
 {
-    public class RequestTraveller
+    public class RequestTraveller : MetaEntity
     {
         public int Id { get; set; }
         [Mandatory]
@@ -33,6 +34,17 @@ namespace Percurrentis.Model
         public virtual Company Company { get; set; }
         //[ValidateObject]
         //public FlyerMemberCard FlyerMemberCard { get; set; }
+
+        public string PassportNumber { get; set; }
+        public DateTime PassportExpiryDate { get; set; }
+        public DateTime DateOfBirth { get; set; }
+        public string Gender { get; set; }
+        public string Nationality { get; set; }
+
+        public string Note { get; set; }
+
+        public int? AddressID { get; set; }
+        public virtual Address Address { get; set; }
 
         public virtual ICollection<TravelRequest_RequestTraveller> TravelRequest_RequestTravellers { get; set; }
     }

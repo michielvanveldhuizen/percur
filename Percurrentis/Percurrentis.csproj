@@ -228,6 +228,7 @@
     <Compile Include="Mapping\CompanyMap.cs" />
     <Compile Include="Mapping\CountryInformationMap.cs" />
     <Compile Include="Mapping\ExchangeRateMap.cs" />
+    <Compile Include="Mapping\MailErrorMap.cs" />
     <Compile Include="Mapping\ServiceCompanyTypeMap.cs" />
     <Compile Include="Mapping\ContactPersonMap.cs" />
     <Compile Include="Mapping\EuroTunnelRequestMap.cs" />
@@ -504,6 +505,10 @@
     <Compile Include="Migrations\201505181114378_AddedReasonToProposal.Designer.cs">
       <DependentUpon>201505181114378_AddedReasonToProposal.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201506031219279_michsstuff.cs" />
+    <Compile Include="Migrations\201506031219279_michsstuff.Designer.cs">
+      <DependentUpon>201506031219279_michsstuff.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Context\DatabaseContext.cs" />
     <Compile Include="Notification\Notification.cs" />
@@ -511,6 +516,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\src\app\app.js" />
+    <Content Include="Content\src\app\calendar\calendar.tpl.html" />
+    <Content Include="Content\src\app\calendar\calendarCtrl.js" />
+    <Content Include="Content\src\app\calendar\calendarService.js" />
     <Content Include="Content\src\app\current\currentCtrl.js" />
     <Content Include="Content\src\app\current\travels.tpl.html" />
     <Content Include="Content\src\app\home\home.tpl.html" />
@@ -523,6 +531,7 @@
     <Content Include="Content\src\app\modal\editBtnSet.tpl.html" />
     <Content Include="Content\src\app\modal\custommodal.tpl.html" />
     <Content Include="Content\src\app\modal\modalAddTraveller.tpl.html" />
+    <Content Include="Content\src\app\modal\modalCalendarTravel.tpl.html" />
     <Content Include="Content\src\app\modal\primaryBtnSet.tpl.html" />
     <Content Include="Content\src\app\modal\deleteBtnSet.tpl.html" />
     <Content Include="Content\src\app\modal\modal.tpl.html" />
@@ -536,6 +545,7 @@
     <Content Include="Content\src\app\proposalWizard\partials\taxi.tpl.html" />
     <Content Include="Content\src\app\proposal\detail.tpl.html" />
     <Content Include="Content\src\app\proposal\list.tpl.html" />
+    <Content Include="Content\src\app\travellers\add.tpl.html" />
     <Content Include="Content\src\app\travellers\detail.tpl.html" />
     <Content Include="Content\src\app\travellers\list.tpl.html" />
     <Content Include="Content\src\app\travellers\travellersCtrl.js" />
@@ -1727,6 +1737,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201505181114378_AddedReasonToProposal.resx">
       <DependentUpon>201505181114378_AddedReasonToProposal.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201506031219279_michsstuff.resx">
+      <DependentUpon>201506031219279_michsstuff.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

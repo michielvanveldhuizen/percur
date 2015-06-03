@@ -8,7 +8,7 @@
  *  sure to remove its initialization from uiInit().
  */
 
-NProgress.start();
+//NProgress.start();
 
 var App = function() {
 
@@ -558,4 +558,4 @@ var App = function() {
 }();
 
 /* Initialize app when page loads */
-$(function () { App.init(); NProgress.done(); });
+$(function () { App.init(); /*NProgress.done();*/ });

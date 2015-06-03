@@ -5,13 +5,15 @@
         ['$scope', '$location', 'travelRequestService', requestCtrl]);
 
     function requestCtrl($scope, $location, travelRequestService) {
+        //Starting loading bar
+        NProgress.start();
         //Getting employees and filling the dbGuidToName
         travelRequestService.getEmployees().then(function (query) {
             angular.forEach(query.results, function (value, key) {
                 dbGuidToName[value.objectGuid] = value.userName;
             });
         });
-
+        
         //Getting all travel Requests
         travelRequestService.getTravelRequests(false)
         .then(function (query) {
@@ -26,6 +28,9 @@
             }) || $scope.filters.current;
 
             $scope.currentFilter.filter();
+
+            //ending loading bar
+            NProgress.done();
         });
 
        
@@ -151,9 +156,9 @@
                         }, 'All', 0, 'fa-bars', 'View both open and archived travel requests.'),
                         current: new Filter(function () {
                             return _.filter($scope.allRequests, function (req) {
-                                return req.IsArchived == false && req.IsDeleted == false && req.IsApproved == 0 && ownGuid == req.SuperiorID;
+                                return req.IsArchived == false && req.IsDeleted == false && req.IsApproved == 0;
                             });
-                        }, 'Awaiting', 1, 'fa-inbox', 'View requests that are awaiting approval.'),
+                        }, 'Awaiting for me', 1, 'fa-inbox', 'View requests that are awaiting approval.'),
                         approved: new Filter(function () {
                             return _.filter($scope.allRequests, function (req) {
                                 if (ownGuid == $scope.c) {
@@ -168,20 +173,20 @@
                             return _.filter($scope.allRequests, function (req) {
                                 if (ownGuid == $scope.c) {
                                     if (req.CountryID == 173) {
-                                        return req.IsApproved == 1 && req.IsDeleted == false && ownGuid == req.SuperiorID;
+                                        return req.IsApproved == 1 && req.IsDeleted == false ;
                                     }
                                 }
-                                return req.IsApproved == 1 && req.IsDeleted == false && ownGuid == req.SuperiorID;;
+                                return req.IsApproved == 1 && req.IsDeleted == false;
                             });
                         }, 'Rejected', 3, 'fa-times', 'View rejected travel requests.'),
                         archived: new Filter(function () {
                             return _.filter($scope.allRequests, function (req) {
-                                return req.IsArchived == true && req.IsDeleted == false && ownGuid == req.SuperiorID;;
+                                return req.IsArchived == true && req.IsDeleted == false ;
                             });
                         }, 'Archived', 4, 'fa-archive', 'View archived travel requests.'),
                         deleted: new Filter(function () {
                             return _.filter($scope.allRequests, function (req) {
-                                return req.IsDeleted == true && ownGuid == req.SuperiorID && ownGuid == req.SuperiorID;;
+                                return req.IsDeleted == true;
                             });
                         }, 'Deleted', 5, 'fa-ban', 'View deleted travel requests.'),
                     }
@@ -299,6 +304,27 @@
         ['$scope', '$route', '$location', 'travelRequestService', 'modalService', requestDetailCtrl]);
 
     function requestDetailCtrl($scope, $route, $location, travelRequestService, modalService) {
+
+        $scope.showMoreTravellerInfo = false;
+
+        if (roles.TravelAgency || roles.ProjectManager || roles.COO) {
+            $scope.showMoreTravellerInfo = true;
+        }
+        
+        //Starting loading bar
+        NProgress.start();
+
+        //Used for onclick to go to another page
+        $scope.go = function (path) {
+            $location.path(path);
+            $location.hash('');
+        };
+
+        $scope.reverse = function (array) {
+            var copy = [].concat(array);
+            return copy.reverse();
+        }
+
         //Getting all the page details
         travelRequestService.getTravelRequestByHash($route.current.params.Hash)
         .then(function (query) {
@@ -346,6 +372,8 @@
                                           function () {},
                         '/TravelAgency/Content/src/app/modal/singleBtnSet.tpl.html');
                     }
+                    //ending loading bar 
+                    NProgress.done();
                 });
                 
             }

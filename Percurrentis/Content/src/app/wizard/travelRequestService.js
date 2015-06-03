@@ -135,6 +135,9 @@
 
         //creating a TravelRequest
         function createTravelRequest() {
+            //start loading bar
+            NProgress.start();
+
             manager = new breeze.EntityManager(serviceName);
             var deferred = $q.defer();
 
@@ -730,7 +733,7 @@
                 }
 
                 var departure = new Date();
-                departure.setHours(0, 0, 0);
+                departure.setHours(12, 0, 0);
 
                 entity.DepartureDate = departure;
                 entity.LargeLuggageCount = 0;
@@ -740,7 +743,7 @@
             }
 
             
-            entity.DepartureDate.setHours(0, 0, 0);
+            entity.DepartureDate.setHours(12, 0, 0);
 
             request.FlightRequests.push(entity);
         }
@@ -843,7 +846,7 @@
             entity.DepartureAddress = manager.createEntity('Address');
             entity.DestinationAddress = manager.createEntity('Address');
             entity.DepartureDate = new Date();
-            entity.DepartureDate.setHours(0, 0, 0);
+            entity.DepartureDate.setHours(12, 0, 0);
             entity.CarHeight = entity.CarLength = 0;
             entity.Title = "Ferry";
 
@@ -915,7 +918,7 @@
                     entity.DepartureAddress = coquellesQuery.results[0];
                     entity.DestinationAddress = folkstoneQuery.results[0];
                     entity.DepartureDate = new Date();
-                    entity.DepartureDate.setHours(0, 0, 0);
+                    entity.DepartureDate.setHours(12, 0, 0);
                     entity.Title = "Eurotunnel";
                     request.EuroTunnelRequests.push(entity);
                 })
@@ -959,9 +962,9 @@
 
             entity.Address = manager.createEntity('Address');
             entity.StartDate = new Date();
-            entity.StartDate.setHours(0, 0, 0);
+            entity.StartDate.setHours(12, 0, 0);
             entity.EndDate = new Date();
-            entity.EndDate.setHours(0, 0, 0);
+            entity.EndDate.setHours(12, 0, 0);
             //entity.Driver = request.RequestTravellers[0];
 
             request.RentalCarRequests.push(entity);
@@ -1015,7 +1018,7 @@
         function addTaxi(request) {
             var entity = manager.createEntity('TaxiRequest');
             entity.DepartureDate = new Date();
-            entity.DepartureDate.setHours(0, 0, 0);
+            entity.DepartureDate.setHours(12, 0, 0);
             entity.DepartureAddress = manager.createEntity('Address');
             entity.DestinationAddress = manager.createEntity('Address');
             request.TaxiRequests.push(entity);

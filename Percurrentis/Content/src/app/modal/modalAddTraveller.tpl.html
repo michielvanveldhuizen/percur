@@ -1,5 +1,5 @@
 ﻿<div class="modal-header">
-    <h3 class="model-title text-center">Add new traveller</h3>
+    <h3 class="model-title text-center">Quick Add new traveller</h3>
 </div>
 <div class="modal-body">
     <div data-ng-form="'travellerform'">
@@ -27,6 +27,14 @@
             <span class="help-block">
                 The traveler's full name according to his/her passport or other identification document.
             </span>
+        </div>
+
+        <div data-form-control data-label="Nationality">
+            <input type="text"
+                   class="form-control"
+                   data-ng-model="traveller.Nationality"
+                   placeholder="Nationality"
+                   data-z-validate />
         </div>
 
         <div data-form-control data-label="Phone Number">
@@ -68,22 +76,25 @@
                    data-z-validate />
         </div>
         <div data-form-control data-label="Copy of Travel Document">
-            <div ng-controller="myCtrl">
-                <input class="btn btn-success pull-left" style="margin-top: 5px;" type="file" file-model="myFile" />
-                <button id="upload-button" class="btn btn-success pull-left" style="padding: 7px;padding-bottom: 8px;margin-left: 5px;margin-top: 5px;" ng-click="uploadFile()">Upload</button>
+            <div ng-controller="uploadCtrl">
+                <input class="btn btn-success pull-left" style="margin-top: 5px;width:297px;" type="file" id="file-upload-selector" file-model="myFile" />
+                <input type="hidden" id="hasToUpload" value="false" />
+                <button id="upload-button" class="btn btn-success pull-left" style="padding: 7px;padding-bottom: 8px;margin-left: 5px;margin-top: 5px;" ng-click="uploadFile()">Upload file</button>
             </div>
         </div>
         <div data-form-control data-label="">
             <div class="expired" style="display:none;" id="upload-error"></div>
         </div>
     </div>
-<div class="modal-footer" style="margin-top:355px;">
-    <button class="btn btn-primary" data-ng-click="primary.action()" data-ng-disabled="primary.disabled">
-        <i class="fa fa-check"></i>
-        Save and close
-    </button>
-    <button class="btn btn-default" data-ng-click="cancel()">
-        <i class="fa fa-times"></i>
-        Cancel
-    </button>
+    <div class="modal-footer" style="margin-top:420px;">
+        <span class="expired" style="display:none;" id="save-error">Upload the file before saving it</span>
+        <button class="btn btn-primary" data-ng-click="primary.action()" data-ng-disabled="primary.disabled">
+            <i class="fa fa-check"></i>
+            Save and close
+        </button>
+        <button class="btn btn-default" data-ng-click="cancel()">
+            <i class="fa fa-times"></i>
+            Cancel
+        </button>
+    </div>
 </div>

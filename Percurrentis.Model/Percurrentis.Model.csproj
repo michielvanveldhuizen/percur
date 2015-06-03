@@ -75,6 +75,7 @@
     <Compile Include="FlightRequest.cs" />
     <Compile Include="FlyerMemberCard.cs" />
     <Compile Include="Insurance.cs" />
+    <Compile Include="MailError.cs" />
     <Compile Include="MetaEntity.cs" />
     <Compile Include="Note.cs" />
     <Compile Include="NoteCollection.cs" />

@@ -235,7 +235,14 @@
         });
 
         travelRequestService.getTravellers().then(function (query) {
-            $scope.travellers = query.results;
+            var tempList = [];
+
+            for (var x in query.results) {
+                if (!query.results[x].IsDeleted) {
+                    tempList.push(query.results[x]);
+                }
+            }
+            $scope.travellers = tempList;
         });
 
         $scope.setPreUsedCompany = function () {
@@ -264,6 +271,8 @@
                         $scope.model.CountryID = c.Id;
                     }
                 });
+                //start loading bar, THis part always takes longest to do
+                NProgress.done();
             } else {
                 setTimeout(function () {
                     setModelDates();

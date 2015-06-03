@@ -65,6 +65,12 @@
                         <div data-form-control-static data-label="Trip Purpose">
                             {{request.Purpose}}
                         </div>
+                        <div data-form-control-static data-label="Departure Date">
+                            {{request.DepartureDate|date:'EEEE, d MMMM yyyy'}}
+                        </div>
+                        <div data-form-control-static data-label="Return Date">
+                            {{request.ReturnDate|date:'EEEE, d MMMM yyyy'}}
+                        </div>
                         <div data-form-control-static data-label="Country">
                             {{request.Country.Name}}
                         </div>
@@ -119,6 +125,12 @@
                         <div data-form-control-static data-label="Company">
                             {{traveller.RequestTraveller.Company.Name}}
                         </div>
+                        <a data-ng-show="showMoreTravellerInfo"
+                           class="btn btn-sm btn-success navbar-right margin-5"
+                           target="_blank"
+                           href="#/Travellers/{{traveller.RequestTraveller.Id}}">
+                            More info about this traveller
+                        </a>
                     </fieldset>
                 </div>
             </div>
@@ -130,7 +142,28 @@
                     <fieldset data-ng-repeat="accommodation in request.Accommodations">
                         <div data-legend-title="Accommodation {{$index !== 0 ? $index+1 : ''}}"></div>
                         <div data-form-control-static data-label="Preferred Address">
-                            <div data-address data-ng-model="accommodation.Address">
+                            <div data-ng-if="accommodation.Address.AddressName || accommodation.Address.Street || accommodation.Address.City || accommodation.Address.PostalCode || accommodation.Address.StateProvince || accommodation.Address.CountryRegion">
+                                <div>
+                                    <span data-ng-show="accommodation.Address.AddressName">
+                                        <strong>{{accommodation.Address.AddressName}}<br /></strong>
+                                    </span>
+                                    <span data-ng-show="accommodation.Address.Street">
+                                        {{accommodation.Address.Street}}<br />
+                                    </span>
+                                    <span data-ng-show="accommodation.Address.City">
+                                        {{accommodation.Address.City}}
+                                    </span>
+                                    <span data-ng-show="accommodation.Address.City">
+                                        , {{accommodation.Address.PostalCode}}
+                                    </span>
+                                    <span data-ng-show="accommodation.Address.City || accommodation.Address.PostalCode"><br /></span>
+                                    <span data-ng-show="accommodation.Address.StateProvince">
+                                        {{accommodation.Address.StateProvince}},
+                                    </span>
+                                    {{accommodation.Address.CountryRegion.Name}}
+                                </div>
+                            </div>
+                            <div data-ng-if="!(accommodation.Address.AddressName || accommodation.Address.Street || accommodation.Address.City || accommodation.Address.PostalCode || accommodation.Address.StateProvince || accommodation.Address.CountryRegion)">
                                 No preferred address given.
                             </div>
                         </div>
@@ -148,7 +181,7 @@
                     <h4>Flights</h4>
                 </div>
                 <div class="form-horizontal">
-                    <fieldset data-ng-repeat="flight in request.FlightRequests">
+                    <fieldset data-ng-repeat="flight in reverse(request.FlightRequests) ">
                         <div data-legend-title="Flight {{$index !== 0 ? $index+1 : ''}}"></div>
                         <div data-form-control-static data-label="Flyer Member Card">
                             {{flight.FlyerMemberCard.FMCNumber}}

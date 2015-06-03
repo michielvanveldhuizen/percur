@@ -6,19 +6,101 @@
     // Define the factory on the module.
     // Inject the dependencies. 
     // Point to the factory definition function.
-    var myModalApp = angular.module('app').factory(serviceId, ['$modal', '$sanitize', 'fileUpload', 'travellerService', modal]);
+    var myModalApp = angular.module('app').factory(serviceId, ['$modal','$location', '$sanitize', 'fileUpload', 'travellerService', modal]);
 
-    function modal($modal, $sanitize,fileUpload, travellerService) {
+    function modal($modal,$location, $sanitize,fileUpload, travellerService) {
         // Define the functions and properties to reveal.
         var service = {
             openDelete: openDelete,
             open: open,
-            openAddTraveller: openAddTraveller
+            openAddTraveller: openAddTraveller,
+            openCalendarTravel:openCalendarTravel
         };
 
         var sTravelDocument = "";
+        var hasToBeSaved = false;
         
         return service;
+
+        //OpenCalendarEvent
+        function openCalendarTravel(fnPrimary,travelID,title,fnCancel) {
+            var modalInstance = $modal.open({
+                templateUrl: '/TravelAgency/Content/src/app/modal/modalCalendarTravel.tpl.html',
+                controller: modalCalendarTravelCtrl,
+                contentClass: '',
+                travelID: travelID,
+                title:title,
+            })
+
+            $modal.travelID = travelID;
+            $modal.title = title;
+
+            function modalCalendarTravelCtrl($scope, $modalInstance) {
+                NProgress.start();
+                //Getting the travel request
+                travellerService.getTravelRequestById($modal.travelID).
+                    then(function (query) {
+                        $scope.travelRequest = query.results[0];
+
+                        //getting the supervisor
+                        travellerService.getEmployeeByObjectGuid($scope.travelRequest.SuperiorID)
+                            .then(function (superior) {
+                                $scope.Superior = superior.userName;
+                                NProgress.done();
+                            });
+
+                        //getting the last updated by person
+                        travellerService.getEmployeeByObjectGuid($scope.travelRequest.UpdatedBy)
+                           .then(function (employee) {
+                               if (angular.isDefined(employee)) {
+                                   $scope.travelRequest.LastUpdateBy = employee.userName;
+                               }
+                           });
+
+                        //getting the created by person
+                        travellerService.getEmployeeByObjectGuid($scope.travelRequest.CreatedBy)
+                          .then(function (employee) {
+                              if (angular.isDefined(employee)) {
+                                  $scope.travelRequest.CreatedByShow = employee.userName;
+                              }
+                          });
+
+                        $scope.title = $modal.title
+                });
+
+                //Redirect and close modal
+                $scope.go = function (path) {
+                    $location.path(path);
+                    $location.hash('');
+                    $modalInstance.dismiss('cancel');
+                };
+               
+                //Not used,
+                $scope.primary = {
+                    disabled: false,
+                    action: primaryAction
+                };
+
+                //Not used,
+                function primaryAction() {
+                        console.log('ben een biene');
+                }
+
+                $scope.cancel = function () {
+                    $modalInstance.dismiss('cancel');
+                };
+            }
+
+            modalInstance.result.then(function (selected) {
+                fnPrimary();
+            }, function () {
+                if (_.isFunction(fnCancel)) {
+                    fnCancel();
+                }
+            });
+
+        }
+
 
         //Special modal just for adding travellers
         function openAddTraveller(fnPrimary, preTravellerData, fnCancel) {
@@ -46,6 +128,9 @@
                 } else {
                     //Use PreTravellerData as data to edit
                     $scope.traveller = $modal.preTravellerData;
+
+                    var DoB = new Date($scope.traveller.DateOfBirth);                 
+
                     $scope.traveller.tempCompany = $modal.preTravellerData.Company;
                 }
 
@@ -79,30 +164,41 @@
                 $scope.primary = {
                     disabled: false,
                     action: primaryAction
-                };
+                };          
 
                 function primaryAction() {
-                    try {
-                        
-                        //Setting the travelDocument name to save it in the entity if its not empty
-                        if (typeof travellerService.sTravelDocument != typeof undefined) {
-                            fileUpload.deleteOldFile($scope.traveller.TravelDocument);
+                    var doSave = true;
 
+                    //giving an error when there is a file selected but not uploaded
+                    if ($("#file-upload-selector").val().length != 0 && $("#upload-button").html() == "Upload file") {
+                        doSave = false;
+                        $("#save-error").show(500);
+                        setTimeout(function () {
+                            document.getElementById("save-error").style.display = "None";
+                        }, 5000);
+                    }
 
-                            $scope.traveller.TravelDocument = travellerService.sTravelDocument;
+                    if (doSave) {
+                        try {
+                            //Setting the travelDocument name to save it in the entity if its not empty
+                            if (typeof travellerService.sTravelDocument != typeof undefined) {
+                                fileUpload.deleteOldFile($scope.traveller.TravelDocument);
+
+                                $scope.traveller.TravelDocument = travellerService.sTravelDocument;
+                            }
+
+                            //Standard save changes to update the entities
+                            travellerService.saveChanges(function (result) {
+                                $scope.primary.disabled = true;
+                                $modalInstance.close('delete');
+                            },
+                            function (error, reason) {
+                                alert("Something went wrong. Please check the information in the form and try again.");
+                                console.log(error, reason);
+                            });
+                        } catch (ex) {
+                            console.log(ex);
                         }
-
-                        //Standard save changes to update the entities
-                        travellerService.saveChanges(function (result) {
-                            $scope.primary.disabled = true;
-                            $modalInstance.close('delete');
-                        },
-                        function (error, reason) {
-                            alert("Something went wrong. Please check the information in the form and try again.");
-                            console.log(error, reason);
-                        });
-                    } catch (ex) {
-                        console.log(ex);
                     }
 
                 };
@@ -121,7 +217,7 @@
             });
         }
 
-        //Standard way to open a modal.
+        //Standard way to open a modal. 
         function open(title, body, fnPrimary, fnCancel, btnSetUrl) {
             if (_.isUndefined(btnSetUrl)) {
                 btnSetUrl = '/TravelAgency/Content/src/app/modal/primaryBtnSet.tpl.html';
@@ -221,6 +317,7 @@
                 data = data.substring(1, data.length - 1);
                 travellerService.sTravelDocument = data;
                 document.getElementById("upload-button").innerHTML = "File saved!";
+                document.getElementById("save-error").style.display = "None";
             })
             .error(function () {
                 document.getElementById("upload-error").innerHTML = "Couldn't upload the file";
@@ -239,7 +336,7 @@
         }
     }]);
 
-    myModalApp.controller('myCtrl', ['$scope', 'fileUpload', function ($scope, fileUpload) {
+    myModalApp.controller('uploadCtrl', ['$scope', 'fileUpload', function ($scope, fileUpload) {
         $scope.uploadFile = function () {
             //Check that its only a image
             var check = false;

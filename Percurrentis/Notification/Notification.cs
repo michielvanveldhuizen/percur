@@ -9,6 +9,7 @@ using System.Net.Mail;
 using System.Threading;
 using System.Web;
 using System.Web.Hosting;
+using Percurrentis.Context;
 
 namespace Percurrentis.NotificationCenter
 {
@@ -57,23 +58,62 @@ namespace Percurrentis.NotificationCenter
         private string path;
         private string baseUrl;
 
-        Boolean shutup = true;
+        Boolean shutup = false;
+        public ADservices AD = ADservices.InstanceCreation();
 
         public Mailer()
         {
             // Create SmtpClient with hardcoded default values.
-            smtp = new SmtpClient
+            /*smtp = new SmtpClient
             {
                 Host = "smtp.gmail.com",
                 Port = 587,
                 EnableSsl = true,
                 DeliveryMethod = SmtpDeliveryMethod.Network,
                 UseDefaultCredentials = false,
-                Credentials = new NetworkCredential("testerhenkie@gmail.com", "Wachtw00rd")
-            };
+                Credentials = new NetworkCredential("testerhenkie@gmail.com", "Wachtw00rd"),
+                /*Host = "MAILRO.CSiRO.local",
+                //Port = 465,
+                EnableSsl = true,
+                DeliveryMethod = SmtpDeliveryMethod.Network,
+                UseDefaultCredentials = false,
+                Credentials = new NetworkCredential("MichielvanVeldhuizen@csiweb.ro", "csimichielv")
+            };*/
+
+            smtp = new SmtpClient("MAILRO.CSiRO.local");
+            smtp.UseDefaultCredentials = false;
+            ///////////////////////////////////////
+            // TODO MAIL
+            // EDIT THE ROW BELOW IN ORDER TO GET THE E-MAL FUNCTAIONALITY WORKING
+            ///////////////////////////////////////
+            smtp.Credentials = new NetworkCredential("MichielvanVeldhuizen@csiweb.ro", "csimichielv");
+            //smtp.Credentials = new NetworkCredential("michielv", "csimichielv");
+            smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
+
             // Set the path for the mailtemplates
             path = "/Notification/mailtemplates/";
-            baseUrl = "http://localhost:5583/TravelAgency/#/";
+            baseUrl = "http://appro.csiro.local/TravelAgency/#/";
+        }
+
+        /// <summary>
+        /// To save a mail error
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="toEmail"></param>
+        /// <param name="typeOfMail"></param>
+        public void saveError(string message,string toEmail,string typeOfMail)
+        {
+            MailError mError    = new MailError();
+            mError.Message      = message;
+            mError.ToEmail      = toEmail;
+            mError.TypeOfEmail  = typeOfMail;
+            mError.DateTime     = DateTime.Now;
+
+            using (var ctx = new DatabaseContext())
+            {
+                ctx.MailError.Add(mError);
+                ctx.SaveChanges();
+            }
         }
 
         /// <summary>
@@ -109,15 +149,66 @@ namespace Percurrentis.NotificationCenter
             
                 string templateBody = File.ReadAllText(fullpath);
                 Console.WriteLine();
-                templateBody = templateBody.Replace("{0}", recipient.userName);
-                templateBody = templateBody.Replace("{1}", baseUrl + "Request/" + tr.Hash);
+                templateBody = templateBody.Replace("{name}", recipient.userName);
+                templateBody = templateBody.Replace("{detailLink}", baseUrl + "Request/" + tr.Hash);
                 templateBody = templateBody.Replace("{2}", baseUrl + "Itinerary/" + tr.Hash);
+
+                string supervisor = "";
+
+                //Special case for Romania
+                if (tr.Country.Name.Equals("Romania"))
+                {
+                    //Romania approved
+                    if (type.Equals("Travelrequest approved"))
+                    {
+                        supervisor = AD.GetUserByGuid(tr.SuperiorID).userName + " & " + AD.GetUserByGuid(GlobalVar.COOGuid).userName;
+                    }
+                    //Romania rejected
+                    if (type.Equals("Travelrequest rejected"))
+                    {
+                        if (tr.TravelRequestApproval.COOApproved == 1)
+                        {
+                            supervisor = AD.GetUserByGuid(GlobalVar.COOGuid).userName;
+                        }
+                        
+                        if(tr.TravelRequestApproval.HasApproved == 1)
+                        {
+                            supervisor = AD.GetUserByGuid(tr.SuperiorID).userName;   
+                        }
+                    }
+                }
+
+                templateBody = templateBody.Replace("{supervisor}", supervisor);
+
+                templateBody = templateBody.Replace("{departureDate}", tr.DepartureDate.ToString("yyyy-MM-dd"));
+                templateBody = templateBody.Replace("{returnDate}", tr.ReturnDate.ToString("yyyy-MM-dd"));
+                
+
                 if (tr.TravelRequestApproval != null)
                 {
-                    templateBody = templateBody.Replace("{3}", tr.TravelRequestApproval.Note);
+                    templateBody = templateBody.Replace("{reason}", tr.TravelRequestApproval.Note);
                 }
-                MailMessage notification = new MailMessage("peterfeddema@csiweb.ro",
-                                                            "peterfeddema@csiweb.ro",
+
+                if (tr.Country != null)
+                {
+                    templateBody = templateBody.Replace("{country}", tr.Country.Name);
+                }
+
+                string travellerString = "";
+
+                if (tr.TravelRequest_RequestTravellers != null)
+                {
+                    foreach (TravelRequest_RequestTraveller TR_RT in tr.TravelRequest_RequestTravellers)
+                    {
+                        travellerString += TR_RT.RequestTraveller.FullName+" & ";
+                    }
+                    travellerString = travellerString.Substring(0, travellerString.Length - 2);
+                    templateBody = templateBody.Replace("{travellers}", travellerString);
+                }
+
+
+                MailMessage notification = new MailMessage("MichielvanVeldhuizen@csiweb.ro",
+                                                            "MichielvanVeldhuizen@csiweb.ro",
                                                             type + ".",
                                                             templateBody);
                 notification.IsBodyHtml = true;
@@ -142,6 +233,8 @@ namespace Percurrentis.NotificationCenter
             {
                 if ((mm.Body).Equals("Template doesn't exist."))
                 {
+                    string to = mm.To.ToString();
+                    saveError("Template doesn't exist.", to, mm.Subject);
                     return false;
                 }
                 else
@@ -153,7 +246,12 @@ namespace Percurrentis.NotificationCenter
                     }
                     catch (SmtpFailedRecipientException ex)
                     {
+
+                        
                         SmtpStatusCode statusCode = ex.StatusCode;
+
+                        string to = mm.To.ToString();
+                        saveError(statusCode+"---"+ex.Message, to, mm.Subject);
 
                         if (statusCode == SmtpStatusCode.MailboxBusy ||
                         statusCode == SmtpStatusCode.MailboxUnavailable ||
@@ -173,6 +271,8 @@ namespace Percurrentis.NotificationCenter
                     catch (Exception e)
                     {
                         Console.WriteLine(e.InnerException);
+                        string to = mm.To.ToString();
+                        saveError(e.Message + "___" + e.InnerException, to, mm.Subject);
                         return false;
                     }
                     finally

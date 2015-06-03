@@ -9,6 +9,7 @@ using Percurrentis.Mapping;
 using Percurrentis.Model;
 using Percurrentis.NotificationCenter;
 using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity.ModelConfiguration.Conventions;
@@ -48,6 +49,7 @@ namespace Percurrentis.Context
         public DbSet<TravelRequest_RequestTraveller> TravelRequest_RequestTraveller { get; set; }
         public DbSet<ArchivedTravelRequest> ArchivedTravelRequest { get; set; }
         public DbSet<TravelProposal> TravelProposal { get; set; }
+        public DbSet<MailError> MailError{ get; set; }
         #endregion
         public DatabaseContext()
             : base("PercurrentisContext")
@@ -82,6 +84,7 @@ namespace Percurrentis.Context
             modelBuilder.Configurations.Add(new TravelRequestApprovalMap());
             modelBuilder.Configurations.Add(new TravelRequestMap());
             modelBuilder.Configurations.Add(new TravelProposalMap());
+            modelBuilder.Configurations.Add(new MailErrorMap());
             //other declarations such as keys, properties and required attributes are 
             //described in the pocos related mapping class (eg TravelRequest is mapped 
             //in TravelRequestMap.
@@ -206,7 +209,7 @@ namespace Percurrentis.Context
                     var specEntity = changedEntity.Entity as MetaEntity;
                     if (specEntity.IsDeleted != true)
                     {
-                        specEntity.OnBeforeInsert();
+                        specEntity.OnBeforeInsert(AD.GetOwnGuid());
                     }
                 }
                 //TravelRequest
@@ -226,16 +229,15 @@ namespace Percurrentis.Context
                     TRA.Flag = false;
                     TRA.HasApproved = 0;
 
-                    // Notify superior
-                    specEntity.Hash = String.Format("{0:X}", DateTime.Now.GetHashCode());
-                    Notification.requestManagerApproval(specEntity);
-                    
-                    
 
                     //get the country based on the CountryID
                     CountryInformation country = this.CountryInformation.Single(Country => Country.Id == specEntity.CountryID);
                     specEntity.Country = country;
 
+                    // Notify superior
+                    specEntity.Hash = String.Format("{0:X}", DateTime.Now.GetHashCode());
+                    Notification.requestManagerApproval(specEntity);
+                    
                     string objectGuidTempSave = specEntity.SuperiorID;
 
                     if (country.CountryCode.Equals("RO "))
@@ -259,7 +261,15 @@ namespace Percurrentis.Context
                 if (changedEntity.Entity is MetaEntity)
                 {
                     var specEntity = changedEntity.Entity as MetaEntity;
-                    specEntity.OnBeforeUpdate();
+                    specEntity.OnBeforeUpdate(AD.GetOwnGuid());
+					if (specEntity.IsDeleted == true){
+						if (specEntity.DeletedBy == null){
+							specEntity.DeletedDate = DateTime.Now;
+							specEntity.DeletedBy = AD.GetOwnGuid();
+						}
+					}else{
+						specEntity.DeletedBy = null;
+					}
                 }
                 if (changedEntity.Entity is TaxiRequest)
                 {
@@ -343,7 +353,7 @@ namespace Percurrentis.Context
                     if (specEntity.IsDeleted == true)
                     {
                         specEntity.DeletedDate = DateTime.Now;
-                        specEntity.DeletedBy = "1";
+                        specEntity.DeletedBy = AD.GetOwnGuid();
                     }
                 }
                 //TravelRequestApproval
@@ -366,7 +376,15 @@ namespace Percurrentis.Context
                     }
 
                     if(isSaveRequest){
-                        TravelRequest travelRequest = this.TravelRequest.Single(TravelRequest => TravelRequest.TravelRequestApprovalID == specEntity.Id);
+                        TravelRequest travelRequest = this.TravelRequest.Single(                   TravelRequest                   => TravelRequest.TravelRequestApprovalID            == specEntity.Id);
+                        travelRequest.TravelRequest_RequestTravellers = this.TravelRequest_RequestTraveller.Where(TravelRequest_RequestTraveller => TravelRequest_RequestTraveller.TravelRequestID == travelRequest.Id).ToList();
+                        //IQueryable<TravelRequest_RequestTraveller> TR_RTS = this.TravelRequest_RequestTraveller.Where(TravelRequest_RequestTraveller => TravelRequest_RequestTraveller.TravelRequestID == travelRequest.Id);
+
+                        foreach (TravelRequest_RequestTraveller TR_RT in travelRequest.TravelRequest_RequestTravellers)
+                        {
+                            TR_RT.RequestTraveller = this.RequestTraveller.Single(RequestTraveller => RequestTraveller.Id == TR_RT.RequestTravellerID);
+                        }
+                        
                         CountryInformation country = this.CountryInformation.Single(Country => Country.Id == travelRequest.CountryID);
                         UserAC requester = AD.GetUserByName(travelRequest.ApplicantID);
                         

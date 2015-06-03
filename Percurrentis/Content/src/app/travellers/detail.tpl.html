@@ -4,13 +4,7 @@
             <div class="block">
                 <div class="block-title">
                     <h4>Traveller Details</h4>
-                    <button class="btn btn-sm btn-success navbar-right margin-5"
-                            data-ng-click="showTravellerEditing()">
-                        <i class="fa fa-plus"></i>
-                        Edit Traveller
-                    </button>
                 </div>
-
                 <div class="block">
                     <div class="form-horizontal">
                         <div data-form-control-static data-label="First Name">
@@ -21,6 +15,14 @@
                         </div>
                         <div data-form-control-static data-label="Full Name">
                             {{request.FullName}}
+                        </div>
+                        <div data-form-control-static data-label="Date of Birth">
+                            <span data-ng-show="request.DateOfBirthShow != 'n/a'">
+                                {{request.DateOfBirth|date:'EEEE, d MMMM yyyy'}}
+                            </span>
+                        </div>
+                        <div data-form-control-static data-label="Gender">
+                            {{request.Gender}}
                         </div>
                         <div data-form-control-static data-label="Phone Number">
                             {{request.PhoneNumberID }}
@@ -36,32 +38,84 @@
             </div>
             <div class="block">
                 <div class="block-title">
-                    <h4>Travel Document</h4>
+                    <h4>Address</h4>
                 </div>
-
                 <div class="block">
-                    <div ng-show="request.ShowTravelDocument">
-                        <img class="img-responsive" src="{{request.TravelDocumentLocation}}" />
+                    <div class="form-horizontal">
+                        <div data-form-control-static data-label="Street">
+                            {{request.Address.Street}}
+                        </div>
+                        <div data-form-control-static data-label="City">
+                            {{request.Address.City}}
+                        </div>
+                        <div data-form-control-static data-label="Postal Code">
+                            {{request.Address.PostalCode}}
+                        </div>
+                        <div data-form-control-static data-label="State/Province">
+                            {{request.Address.StateProvince}}
+                        </div>
+                        <div data-form-control-static data-label="Country">
+                            {{request.Address.CountryRegion.Name}}
+                        </div>
                     </div>
-                    <div ng-show="!request.ShowTravelDocument">
-                        No Travel Document found.
-                    </div>
+                </div>
+            </div>
+            <div class="block" data-ng-show="ShowNotes">
+                <div class=" block-title">
+                    <h4>Notes</h4>
+                </div>
+                <div class="block">
+                    <pre style="background-color:transparent;overflow:hidden;border:0px solid transparent;">{{request.Note}}</pre>
                 </div>
             </div>
         </div>
         <div class="col-md-6">
             <div class="block">
                 <div class="block-title">
+                    <h4>Travel Document</h4>
+                    <button class="btn btn-sm btn-success navbar-right margin-5"
+                            data-ng-click="go('/Travellers/Edit/'+ request.Id)">
+                        <i class="fa fa-plus"></i>
+                        Edit Traveller
+                    </button>
+                </div>
+                <div class="block">
+                    <div ng-show="request.ShowTravelDocument">
+                        <img class="img-responsive" src="{{request.TravelDocumentLocation}}" />
+                    </div>
+                    <div ng-show="!request.ShowTravelDocument">
+                        No Travel Document copy found.
+                    </div>
+                    <br />
+                    <div class="form-horizontal">
+                        <div data-form-control-static data-label="Passport Number">
+                            {{request.PassportNumber}}
+                        </div>
+                        <div data-form-control-static data-label="Expiry Date">
+                            <span data-ng-show="request.PassportExpiryDateShow != 'n/a'">
+                                {{request.PassportExpiryDate|date:'EEEE, d MMMM yyyy'}}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="block">
+                <div class="block-title">
                     <h4>Travel Requests for this traveller</h4>
                 </div>
+                <div class="block">
+                    <div ng-show="!showTravelRequests">
+                        No Travel Requests found.
+                    </div>
                     <div class="list-group">
-                        <a target="_blank" ng-href="/TravelAgency/#/{{ getLinkType(travel.TravelRequest) }}" class="list-group-item" ng-repeat="travel in travelRequests | orderBy: 'TravelRequest.DepartureDate'">
+                        <a target="_blank" ng-href="/TravelAgency/#/{{ getLinkType(travel.TravelRequest) }}" class="list-group-item" ng-repeat="travel in travelRequests | orderBy: 'TravelRequest.DepartureDate':true ">
                             {{ travel.TravelRequest.DepartureDate | date:'dd-MM-yyyy' }} - {{ travel.TravelRequest.ReturnDate | date:'dd-MM-yyyy' }}: Travelling to {{ travel.TravelRequest.Country.Name }}
                             <p class="label label-warning pull-right" data-ng-show="travel.TravelRequest.IsApproved == 0">Awaiting</p>
                             <p class="label label-danger pull-right" data-ng-show="travel.TravelRequest.IsApproved == 1">Rejected</p>
                             <p class="label label-success pull-right" data-ng-show="travel.TravelRequest.IsApproved == 2">Approved</p>
                         </a>
                     </div>
+                </div>
             </div>
         </div>
     </div>

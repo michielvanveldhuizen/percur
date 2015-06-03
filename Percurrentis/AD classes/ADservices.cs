@@ -63,6 +63,8 @@ namespace Percurrentis.AD_classes
             {
                 FillUserDictonary();
             }
+            /*userDictonary = new Dictionary<string, UserAC>();
+            FillUserDictonary();*/
         }
 
         /// <summary>
@@ -283,14 +285,14 @@ namespace Percurrentis.AD_classes
         public UserAC GetUserByGuid(string GUID)
         {
             FillUserDictonaryIfNeeded();
-            if (userDictonary.ContainsKey(GUID))
+            if (GUID != null)
             {
-                return userDictonary[GUID];
+                if (userDictonary.ContainsKey(GUID))
+                {
+                    return userDictonary[GUID];
+                }
             }
-            else
-            {
-                return new UserAC { userName = "UserNotFound" };
-            }
+            return new UserAC { userName = "UserNotFound" };
         }
 
         /// <summary>

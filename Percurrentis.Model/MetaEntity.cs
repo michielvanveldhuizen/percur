@@ -30,14 +30,16 @@ namespace Percurrentis.Model
             IsDeleted = false;
         }
 
-        public void OnBeforeInsert()
+        public void OnBeforeInsert(string guid)
         {
             this.CreatedDate = DateTime.Now;
+            this.CreatedBy = guid;
         }
 
-        public void OnBeforeUpdate()
+        public void OnBeforeUpdate(string guid)
         {
             this.UpdatedDate = DateTime.Now;
+            this.UpdatedBy = guid;
         }
     }
 }

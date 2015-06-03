@@ -127,6 +127,7 @@ namespace Percurrentis.Controllers
                 .Include("TravelRequest_RequestTravellers.RequestTraveller")
                 .Include("TravelRequest_RequestTravellers.RequestTraveller.Company")
                 .Include("TravelRequest_RequestTravellers.RequestTraveller.Company.Address")
+                .Include("TravelRequest_RequestTravellers.RequestTraveller.Address")
                 .Include("CustomerOrProspect")
                 .Include("CustomerOrProspect.Address")
                 .Include("FlightRequests")
@@ -149,7 +150,8 @@ namespace Percurrentis.Controllers
                 .Include("TaxiRequests.DestinationAddress")
                 .Include("Accommodations")
                 .Include("Accommodations.Address")
-                .Include("TravelRequestApproval");
+                .Include("TravelRequestApproval")
+                .Include("Country");
         }
 
         //retrieve travelRequestApprovals including the TravelRequest
@@ -233,6 +235,8 @@ namespace Percurrentis.Controllers
         public IQueryable<RequestTraveller> RequestTraveller()
         {
             return _contextProvider.Context.RequestTraveller
+                .Include("Address")
+                .Include("Address.CountryRegion")
                 .Include("Company")
                 .Include("Company.Address")
                 .Include("TravelRequest_RequestTravellers")

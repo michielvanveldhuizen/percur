@@ -39,6 +39,8 @@ namespace Percurrentis
                 "~/Content/src/app/travelRequest/requestCtrl.js",
                 "~/Content/src/app/travelRequest/requestApprovalCtrl.js",
                 "~/Content/src/app/insurance/insuranceCtrl.js",
+                "~/Content/src/app/calendar/calendarCtrl.js",
+                "~/Content/src/app/calendar/calendarService.js",
                 "~/Content/src/app/travellers/travellersCtrl.js",
                 "~/Content/src/app/travellers/travellerService.js",
                 "~/Content/src/app/wizard/requestCtrl.js",

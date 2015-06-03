@@ -37,22 +37,22 @@ var UiProgress = function() {
 
             // Start top loading bar and finish after 2,5 seconds just for demostration
             // You could bind NProgress.start() and NProgress.done() to Jquery events ajaxStart and ajaxStop to add progress to your ajax calls :-)
-            NProgress.start();
+            //NProgress.start();
             setTimeout(function(){
-                NProgress.done();
+                //NProgress.done();
                 startBtn.button('reset');
             }, 2500);
 
             // On start button click start loading again
             startBtn.on('click', function(){
-                NProgress.start();
+                //NProgress.start();
                 $(this).button('loading');
                 stopBtn.button('reset');
             });
 
             // On stop button click stop loading
             stopBtn.on('click', function(){
-                NProgress.done();
+                //NProgress.done();
                 $(this).button('loading');
                 startBtn.button('reset');
             });

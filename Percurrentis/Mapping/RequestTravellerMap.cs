@@ -20,6 +20,7 @@ namespace Percurrentis.Mapping
             this.Property(r => r.FirstName).IsRequired().HasMaxLength(256);
             this.Property(r => r.FullName).IsRequired().HasMaxLength(256);
             this.Property(r => r.CompanyID).IsOptional();
+            this.Property(r => r.AddressID).IsOptional();
 
 
             this.HasMany<TravelRequest_RequestTraveller>(r => r.TravelRequest_RequestTravellers)

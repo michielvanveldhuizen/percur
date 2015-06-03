@@ -275,10 +275,10 @@
                     ]
                 }
             })
-            .when('/Travellers/:Id', {
-                templateUrl: base + '/travellers/detail.tpl.html',
+            .when('/Travellers/New', {
+                templateUrl: base + '/travellers/add.tpl.html',
                 data: {
-                    title: 'Traveller Detail',
+                    title: 'Add New Traveller',
                     icon: 'gi-parents',
                     breadcrumbs: [{
                         name: "Home",
@@ -289,7 +289,60 @@
                         path: "/TravelAgency/#/Travellers"
                     },
                     {
-                        name: "Traveller Detail",
+                        name: "Add New Traveller",
+                    },
+                    ]
+                }
+            })
+            .when('/Travellers/Edit/:id', {
+                templateUrl: base + '/travellers/add.tpl.html',
+                data: {
+                    title: 'Edit Traveller',
+                    icon: 'gi-parents',
+                    breadcrumbs: [{
+                        name: "Home",
+                        path: "/TravelAgency/#/"
+                    },
+                    {
+                        name: "Travellers List",
+                        path: "/TravelAgency/#/Travellers"
+                    },
+                    {
+                        name: "Edit Traveller",
+                    },
+                    ]
+                }
+            })
+            .when('/Travellers/:Id', {
+                templateUrl: base + '/travellers/detail.tpl.html',
+                data: {
+                    title: 'Traveller Details',
+                    icon: 'gi-parents',
+                    breadcrumbs: [{
+                        name: "Home",
+                        path: "/TravelAgency/#/"
+                    },
+                    {
+                        name: "Travellers List",
+                        path: "/TravelAgency/#/Travellers"
+                    },
+                    {
+                        name: "Traveller Details",
+                    },
+                    ]
+                }
+            })
+            .when('/Calendar/', { // Route page
+                templateUrl: base + '/calendar/calendar.tpl.html', // the template location
+                data: {
+                    title: 'Calendar', // title
+                    icon: 'gi-calendar', //icon
+                    breadcrumbs: [{ //breadcrumbs 
+                        name: "Home", // first breadcrumb
+                        path: "/TravelAgency/#/" // first breadcrumb path
+                    },
+                    {
+                        name: "Calendar", // second breadcrumb, (this one has no path so links to nothing)
                     },
                     ]
                 }
@@ -327,10 +380,10 @@
             });
 
             // display loading indicator on http request start
-            requestNotificationChannel.onRequestStarted($rootScope, NProgress.start);
+            requestNotificationChannel.onRequestStarted($rootScope/*, NProgress.start*/);
 
             // hide loading indicator on http request done
-            requestNotificationChannel.onRequestEnded($rootScope, NProgress.done);
+            requestNotificationChannel.onRequestEnded($rootScope/*, NProgress.done*/);
 
             breeze.Validator.messageTemplates["required"] = 'This field is required.';
 

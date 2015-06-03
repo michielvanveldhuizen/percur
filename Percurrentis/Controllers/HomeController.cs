@@ -23,7 +23,10 @@ namespace Percurrentis.Controllers
             ADservices AD = ADservices.InstanceCreation();
             UserAC self = AD.GetSelf();
 
-            AccessLevels accessLevels = SetAccessLevels(self);
+            //ToTest if mail works
+            //NotificationCenter.Notification.notifyOfDenial(self, new TravelRequest());
+            
+            AccessLevels accessLevels = SetAccessLevels(self);     
 
             //devTools Mode to overwrite the accessLevels
             HttpCookie devTools = Request.Cookies["devTools"];

@@ -1,22 +1,50 @@
 ﻿<div data-ng-controller="travellersCtrl">
+    <div class="alert alert-info alert-dismissable"
+         data-ng-show="showDeleteAlert">
+        <button type="button"
+                class="close"
+                aria-hidden="true"
+                data-ng-click="closeDeleteAlert()">
+            ×
+        </button>
+        <i class="fa fa-info-circle"></i>
+        You have deleted a travel request. You can find it under the
+        <a href="javascript:void(0)" data-ng-click="filters.deleted.filter()" class="alert-link">Deleted</a> filter.
+    </div>
     <div class="block">
         <div class="block-title">
-            <h2> <strong>Travellers</strong></h2>
-            <!--<a ng-model="collapsed" class="navbar-right" ng-click="collapsed_1=!collapsed_1">
-                <span class="caret toggleCaret"></span>
-            </a>-->
+            <h2> <strong>{{currentFilter.title}} Travellers</strong></h2>
+            <input type="text" value="search..." onfocus="this.select();this.value=''" onmouseup="return false;" onblur="if (this.value == '') {this.value='Search by name...' }" data-ng-change="searchChange()" data-ng-model="search" />
             <button class="btn btn-sm btn-success navbar-right margin-5"
-                    data-ng-click="showTravellerAdding()">
+                    data-ng-click="go('/Travellers/New')">
                 <i class="fa fa-plus"></i>
                 Add Traveller
             </button>
+            <div class="block-options pull-right">
+                <div class="btn-group btn-group-sm">
+                    <a href="javascript:void(0)" class="btn btn-sm btn-info btn-option dropdown-toggle" data-toggle="dropdown">
+                        <i class="fa fa-filter"></i>
+                        Apply Filter
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-custom dropdown-menu-right" role="menu" aria-labelledby="dLabel">
+                        <li data-ng-repeat="filter in filters | toArray | orderBy:'order'">
+                            <a data-ng-click="filter.filter()" href="javascript:void(0)"
+                               data-tooltip="{{filter.tooltip}}"
+                               data-tooltip-placement="left">
+                                <i class="fa fa-fw" data-ng-class="filter.icon"></i>
+                                {{filter.title}}
+                                <span class="badge pull-right">{{filter.count()}}</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </div>
 
-        <div id="add-traveller" style="display:none;">
-            
-        </div>
+        
 
-        <div ng-hide="collapsed_1" class="table-responsive">
+        <div class="table-responsive">
             <table class="table table-vcenter table-condensed table-hover">
                 <thead>
                     <tr>
@@ -25,6 +53,7 @@
                         <th class="col-md-1">Full Name</th>
                         <th class="col-md-1">Department</th>
                         <th class="col-md-1">Company</th>
+                        <th class="col-md-1">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -35,6 +64,23 @@
                         <td data-ng-click="go('/Travellers/' + traveller.Id)">{{traveller.FullName}}</td>
                         <td data-ng-click="go('/Travellers/' + traveller.Id)">{{traveller.Department}}</td>
                         <td data-ng-click="go('/Travellers/' + traveller.Id)">{{traveller.Company.Name}}</td>
+                        <td>
+                            <div class="btn-group btn-group-sm">
+                                <a href="#/Travellers/{{traveller.Id}}"
+                                   class="btn btn-sm btn-default">
+                                    <i class="fa fa-eye"></i>
+                                    View
+                                </a>
+                                <a ng-show="isTravelAgency()"
+                                   data-ng-click="toggleDelete(traveller)"
+                                   class="btn btn-sm"
+                                   data-ng-class="traveller.IsDeleted ? 'btn-default' : 'btn-default'"
+                                   data-tooltip="{{traveller.IsDeleted ? 'Recover' : 'Delete'}}"
+                                   href="javascript:void(0)">
+                                    <i data-ng-show="!traveller.IsDeleted" class="fa fa-times"></i>
+                                    <i data-ng-show="traveller.IsDeleted" class="fa fa-undo"></i>
+                                </a>
+                            </div>
                     </tr>
                 </tbody>
             </table>

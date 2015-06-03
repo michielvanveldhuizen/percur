@@ -23,10 +23,17 @@
             getTravellers: getTravellers,
             getTravellerRequests: getTravellerRequests,
             getDepartments: getDepartments,
+            getCountries: getCountries,
+            addAddress: addAddress,
+            getTravelRequestById: getTravelRequestById,
+            getEmployeeByObjectGuid: getEmployeeByObjectGuid,
         };
 
-
-        return service;
+        if (roles.ProjectManager || roles.TravelAgency || roles.COO) {
+            return service;
+        } else {
+            NProgress.done();
+        }
 
         //Creating the traveller Entity based on the manager
         function createTraveller() {
@@ -52,6 +59,10 @@
                 var deferred = $q.defer();
 
                 var request = managerTraveller.createEntity('RequestTraveller');
+                
+                //setting the creator of the traveller
+                request.CreatedBy = userName;
+                
 
                 deferred.resolve(request);
                 return deferred.promise;
@@ -73,6 +84,41 @@
                 console.log(error.message, 'query failed');
                 throw error;
             }
+        }
+
+        //getting travelrequestsby id
+        function getTravelRequestById(id) {
+            var query = new breeze.EntityQuery('TravelRequests')
+                .where('Id', 'eq', parseInt(id));
+
+            var promise = managerTraveller.executeQuery(query).catch(queryFailed);
+            return promise;
+
+            function queryFailed(error) {
+                console.log(error.message, 'query failed');
+                throw error;
+            }
+        }
+
+        function getEmployeeByObjectGuid(objectGuid) {
+            var promise = $q.defer();
+
+            if (!objectGuid) {
+                promise.reject('No identifier given for the employee!');
+            }
+
+            var query = breeze.EntityQuery
+                        .from('ADusers');
+
+            managerTraveller.executeQuery(query).then(function (val) {
+                promise.resolve(_.find(val.results, function (val) { return val.objectGuid == objectGuid }));
+            }).catch(queryFailed);
+
+            function queryFailed(error) {
+                console.log(error.message, 'query failed');
+                throw error;
+            }
+            return promise.promise;
         }
 
         //Getting all departments from the AD
@@ -157,6 +203,25 @@
             var query = breeze.EntityQuery
                 .from('TravelRequest_RequestTravellers')
                 .where("RequestTravellerID", "==", parseInt(id));
+
+            var promise = managerTraveller.executeQuery(query).catch(queryFailed);
+            return promise;
+
+            function queryFailed(error) {
+                console.log(error.message, 'query failed');
+                throw error;
+            }
+        }
+
+        //adds address to a traveller
+        function addAddress(traveller) {
+            traveller.Address = managerTraveller.createEntity('Address');
+        }
+
+        //Getting all Countries
+        function getCountries() {
+            var query = breeze.EntityQuery
+                .from('CountryInformation');
 
             var promise = managerTraveller.executeQuery(query).catch(queryFailed);
             return promise;
