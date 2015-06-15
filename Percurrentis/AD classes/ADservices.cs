@@ -321,5 +321,38 @@ namespace Percurrentis.AD_classes
             string ownGuid = GetOwnGuid();
             return GetUserByGuid(ownGuid);
         }
+
+        public List<UserAC> GetListOfAdUsersByGroup(string groupName)
+        {
+            List<UserAC> userList = new List<UserAC>();
+
+            FillUserDictonaryIfNeeded();
+
+
+            DirectoryEntry entry = GetDirectoryObject();
+            DirectorySearcher search = new DirectorySearcher(entry);
+            string query = "(&(objectCategory=person)(objectClass=user)(memberOf=*))";
+            search.Filter = query;
+            search.PropertiesToLoad.Add("memberOf");
+            search.PropertiesToLoad.Add("name");
+
+            System.DirectoryServices.SearchResultCollection mySearchResultColl = search.FindAll();
+            Trace.WriteLine("Members of the "+groupName+" Group in the Domain");
+            foreach (SearchResult result in mySearchResultColl)
+            {
+                foreach (string prop in result.Properties["memberOf"])
+                {
+                    if (prop.Contains(groupName))
+                    {
+                        UserAC userAC = new UserAC();
+                        userAC = GetUserByName(result.Properties["name"][0].ToString());
+                        Trace.WriteLine(result.Properties["name"][0].ToString());
+                        userList.Add(userAC);
+                    }
+                }                
+            }
+
+            return userList;
+        }
     }
 }

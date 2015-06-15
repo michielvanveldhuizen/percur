@@ -228,6 +228,7 @@
     <Compile Include="Mapping\CompanyMap.cs" />
     <Compile Include="Mapping\CountryInformationMap.cs" />
     <Compile Include="Mapping\ExchangeRateMap.cs" />
+    <Compile Include="Mapping\InsuranceMap.cs" />
     <Compile Include="Mapping\MailErrorMap.cs" />
     <Compile Include="Mapping\ServiceCompanyTypeMap.cs" />
     <Compile Include="Mapping\ContactPersonMap.cs" />

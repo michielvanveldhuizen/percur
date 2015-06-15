@@ -85,7 +85,8 @@
             getExchangeRates: getExchangeRates,
             hasChanges: hasChanges,
             saveChanges: saveChanges,
-            manager: manager
+            manager: manager,
+            getTravelApprovers:getTravelApprovers,
         };
 
 
@@ -520,6 +521,20 @@
         function getEmployees() {
             var query = breeze.EntityQuery
                 .from('ADusers');
+
+            var promise = manager.executeQuery(query).catch(queryFailed);
+            return promise;
+
+            function queryFailed(error) {
+                console.log(error.message, 'query failed');
+                alert(error.message);
+                throw error;
+            }
+        }
+
+        function getTravelApprovers() {
+            var query = breeze.EntityQuery
+                .from('TravelApprovers');
 
             var promise = manager.executeQuery(query).catch(queryFailed);
             return promise;

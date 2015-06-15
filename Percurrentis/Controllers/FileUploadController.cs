@@ -55,6 +55,7 @@ namespace Percurrentis.Controllers
                 }
                 catch (Exception e)
                 {
+                    Debug.WriteLine(e.Message);
                     result = Request.CreateResponse(HttpStatusCode.BadRequest);
                 }
             }

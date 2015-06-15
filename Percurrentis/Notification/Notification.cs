@@ -64,7 +64,7 @@ namespace Percurrentis.NotificationCenter
         public Mailer()
         {
             // Create SmtpClient with hardcoded default values.
-            /*smtp = new SmtpClient
+            smtp = new SmtpClient
             {
                 Host = "smtp.gmail.com",
                 Port = 587,
@@ -77,10 +77,10 @@ namespace Percurrentis.NotificationCenter
                 EnableSsl = true,
                 DeliveryMethod = SmtpDeliveryMethod.Network,
                 UseDefaultCredentials = false,
-                Credentials = new NetworkCredential("MichielvanVeldhuizen@csiweb.ro", "csimichielv")
-            };*/
+                Credentials = new NetworkCredential("MichielvanVeldhuizen@csiweb.ro", "csimichielv")*/
+            };
 
-            smtp = new SmtpClient("MAILRO.CSiRO.local");
+            /*smtp = new SmtpClient("MAILRO.CSiRO.local");
             smtp.UseDefaultCredentials = false;
             ///////////////////////////////////////
             // TODO MAIL
@@ -88,7 +88,7 @@ namespace Percurrentis.NotificationCenter
             ///////////////////////////////////////
             smtp.Credentials = new NetworkCredential("MichielvanVeldhuizen@csiweb.ro", "csimichielv");
             //smtp.Credentials = new NetworkCredential("michielv", "csimichielv");
-            smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
+            smtp.DeliveryMethod = SmtpDeliveryMethod.Network;*/
 
             // Set the path for the mailtemplates
             path = "/Notification/mailtemplates/";
@@ -177,6 +177,10 @@ namespace Percurrentis.NotificationCenter
                         }
                     }
                 }
+                else
+                {
+                    supervisor = AD.GetUserByGuid(tr.SuperiorID).userName;
+                }
 
                 templateBody = templateBody.Replace("{supervisor}", supervisor);
 
@@ -207,10 +211,25 @@ namespace Percurrentis.NotificationCenter
                 }
 
 
-                MailMessage notification = new MailMessage("MichielvanVeldhuizen@csiweb.ro",
-                                                            "MichielvanVeldhuizen@csiweb.ro",
+                string mailReceiver = "MichielvanVeldhuizen@csiweb.ro";
+                if (!recipient.mail.Equals("KeesOosting@csiweb.ro"))
+                {
+                    //mailReceiver = recipient.mail;
+                }
+
+                MailMessage notification = new MailMessage("TravelAgency@csiweb.ro",
+                                                            mailReceiver,
                                                             type + ".",
                                                             templateBody);
+
+                MailMessage notificationToMe = new MailMessage("TravelAgency@csiweb.ro",
+                                                            "MichielvanVeldhuizen@csiweb.ro",
+                                                            "copy mail - "+type + ".",
+                                                            templateBody);
+                notificationToMe.IsBodyHtml = true;
+                Send(notificationToMe);
+
+
                 notification.IsBodyHtml = true;
                 return notification;
             }

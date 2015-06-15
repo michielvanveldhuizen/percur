@@ -445,6 +445,7 @@ namespace Percurrentis.Context
                             UserAC travelAgency = AD.GetUserByName("Travel Agency");
                             Notification.notifyOfApproval(travelAgency, travelRequest);
                             // Notify the person who requested the travel that it was approved
+                            Notification.notifyOfApproval(requester, travelRequest);
                         }
                         if (isRejected)
                         {

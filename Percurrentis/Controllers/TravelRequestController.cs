@@ -288,7 +288,15 @@ namespace Percurrentis.Controllers
             return List;
         }
 
-        //retrieve ActiveDirectory Users
+        //retrieve ActiveDirectory Users that are allowed to approve travellers
+        [HttpGet]
+        public List<UserAC> TravelApprovers()
+        {
+            ADservices ADservices = ADservices.InstanceCreation();
+            return ADservices.GetListOfAdUsersByGroup("Travel Approval");
+        }
+
+        //retrieve ActiveDirectory departments
         [HttpGet]
         public List<string> Departments()
         {

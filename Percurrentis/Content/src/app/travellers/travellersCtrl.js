@@ -370,8 +370,8 @@
                     //Standard save changes to update the entities
                     travellerService.saveChanges(function (result) {
                         NProgress.done();
-                        $(".text-success").show(500);
-                        var x = 5;
+                        //$(".text-success").show(500);
+                        /*var x = 5;
                         //countdown for redirect
                         var interval = setInterval(function () {
                             x--;
@@ -379,11 +379,12 @@
                             if (x == 0) {
                                 clearInterval(interval);
                             }
-                        }, 1000);
+                        }, 1000);*/
                         //redirect after 5sec
-                        var timeout = setTimeout(function () {
+						window.location.href = window.location.origin + "" + window.location.pathname + "#/Travellers/"+$scope.traveller.Id;
+                        /*var timeout = setTimeout(function () {
                             window.location.href = window.location.origin + "" + window.location.pathname + "#/Travellers/"+$scope.traveller.Id;
-                        }, 5000);
+                        }, 5000);*/
                     },
                     function (error, reason) {
                         alert("Something went wrong. Please check the information in the form and try again.");

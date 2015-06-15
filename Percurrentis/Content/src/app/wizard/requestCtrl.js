@@ -162,6 +162,7 @@
                 return true;
             },
             onSubmit: function () {
+                NProgress.start();
                 // clean up entities that should be empty
                 if (!$scope.options.hasFlight) {
                     _.each($scope.model.FlightRequests, function (v) {
@@ -197,14 +198,17 @@
                 try {
                     $scope.model.UpdatedBy = userName;
                     travelRequestService.saveChanges($scope.model, $scope.options, function (result) {
+                        NProgress.done();
                         $location.path('/Request/Submitted');
                     },
                     function (error, reason) {
                         alert("Something went wrong. Please check the information in the form and try again.");
                         console.log(error, reason);
+                        NProgress.done();
                     });
                 } catch (ex) {
                     console.log(ex);
+                    NProgress.done();
                 }
             },
             onNext: function () {
@@ -232,6 +236,10 @@
 
         travelRequestService.getEmployees().then(function (query) {
             $scope.employees = query.results;
+        });
+
+        travelRequestService.getTravelApprovers().then(function (query) {
+            $scope.travelApprovers = query.results;
         });
 
         travelRequestService.getTravellers().then(function (query) {

@@ -21,7 +21,11 @@ namespace Percurrentis.Controllers
         {
             //Using the ADservice as singleton
             ADservices AD = ADservices.InstanceCreation();
+            
             UserAC self = AD.GetSelf();
+
+
+            //List<UserAC> dingen = AD.GetListOfAdUsersByGroup("Travel Approval");
 
             //ToTest if mail works
             //NotificationCenter.Notification.notifyOfDenial(self, new TravelRequest());
@@ -68,11 +72,17 @@ namespace Percurrentis.Controllers
                 AL.TravelAgency = true;
             }
 
-            //Probably this will be removed
-            /*if (user.isManager)
+            ADservices AD = ADservices.InstanceCreation();
+
+            List<UserAC> approvalList = AD.GetListOfAdUsersByGroup("Travel Approval");
+
+            foreach (UserAC u in approvalList)
             {
-                AL.ProjectManager = true;
-            }*/
+                if (u.userName.Equals(user.userName))
+                {
+                    AL.ProjectManager = true;
+                }
+            }
 
             //Not sure if every Financial is accountant
             if (user.department != null && user.department.Equals("Financial"))

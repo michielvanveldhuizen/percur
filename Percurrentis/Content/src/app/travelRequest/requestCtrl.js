@@ -421,6 +421,7 @@
 
         //When approved is pressed in the approving dialog
         $scope.onApproveConfirm = function () {
+            NProgress.start();
             $scope.mode = 'approveConfirmed';                
             $scope.TRArequest.Flag = true;
             
@@ -433,6 +434,7 @@
             $scope.TRArequest.Note = angular.copy($scope.comments);
             $scope.TRArequest.ApprovedBy = ownGuid;
             travelRequestService.saveChanges($scope.TRArequest, undefined, function (result) {
+                NProgress.done();
                 reloadPage();
             }, angular.noop);
             
@@ -440,6 +442,7 @@
 
         //When reject is pressed in the approving dialog
         $scope.onRejectConfirm = function () {
+            NProgress.start();
             $scope.mode = 'rejectConfirmed';
             $scope.TRArequest.Flag = true;
 
@@ -451,8 +454,11 @@
             }
             $scope.TRArequest.ApprovedBy = ownGuid;
             $scope.TRArequest.Note = angular.copy($scope.comments);
-            travelRequestService.saveChanges($scope.TRArequest, undefined, angular.noop, angular.noop);
-            reloadPage();
+            travelRequestService.saveChanges($scope.TRArequest, undefined, function (result) {
+                NProgress.done();
+                reloadPage();
+            }, angular.noop);
+            
         };
 
         $scope.onCancel = function () {
