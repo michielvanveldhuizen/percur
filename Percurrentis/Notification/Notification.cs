@@ -10,6 +10,7 @@ using System.Threading;
 using System.Web;
 using System.Web.Hosting;
 using Percurrentis.Context;
+using Percurrentis.Controllers;
 
 namespace Percurrentis.NotificationCenter
 {
@@ -19,13 +20,26 @@ namespace Percurrentis.NotificationCenter
         public static Mailer mail = new Mailer();
 
         /// <summary>
-        /// Sends an email notification to the manager
+        /// Sends an email notification to the manager for TravelRequest
         /// </summary>
         /// <param name="tr"></param>
         public static void requestManagerApproval(TravelRequest tr)
         {
             UserAC manager = AD.GetUserByGuid(tr.SuperiorID);
             MailMessage m = mail.createNotification(manager, "Travelrequest waiting", tr);
+            mail.Send(m);
+        }
+
+        /// <summary>
+        /// Sends an email notification to the manager for TravelProposal
+        /// </summary>
+        /// <param name="tr"></param>
+        public static void requestManagerApproval(TravelProposal tp, TravelRequest tr)
+        {
+            // get superiorID from tp.TravelRequestID
+
+            UserAC manager = AD.GetUserByGuid(tp.TravelRequest.SuperiorID);
+            MailMessage m = mail.createNotification(manager, "Travelproposal waiting", tr, tp);
             mail.Send(m);
         }
 
@@ -58,13 +72,12 @@ namespace Percurrentis.NotificationCenter
         private string path;
         private string baseUrl;
 
-        Boolean shutup = false;
         public ADservices AD = ADservices.InstanceCreation();
 
         public Mailer()
         {
             // Create SmtpClient with hardcoded default values.
-            smtp = new SmtpClient
+            /*smtp = new SmtpClient
             {
                 Host = "smtp.gmail.com",
                 Port = 587,
@@ -72,15 +85,9 @@ namespace Percurrentis.NotificationCenter
                 DeliveryMethod = SmtpDeliveryMethod.Network,
                 UseDefaultCredentials = false,
                 Credentials = new NetworkCredential("testerhenkie@gmail.com", "Wachtw00rd"),
-                /*Host = "MAILRO.CSiRO.local",
-                //Port = 465,
-                EnableSsl = true,
-                DeliveryMethod = SmtpDeliveryMethod.Network,
-                UseDefaultCredentials = false,
-                Credentials = new NetworkCredential("MichielvanVeldhuizen@csiweb.ro", "csimichielv")*/
-            };
+            };*/
 
-            /*smtp = new SmtpClient("MAILRO.CSiRO.local");
+            smtp = new SmtpClient("MAILRO.CSiRO.local");
             smtp.UseDefaultCredentials = false;
             ///////////////////////////////////////
             // TODO MAIL
@@ -88,7 +95,7 @@ namespace Percurrentis.NotificationCenter
             ///////////////////////////////////////
             smtp.Credentials = new NetworkCredential("MichielvanVeldhuizen@csiweb.ro", "csimichielv");
             //smtp.Credentials = new NetworkCredential("michielv", "csimichielv");
-            smtp.DeliveryMethod = SmtpDeliveryMethod.Network;*/
+            smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
 
             // Set the path for the mailtemplates
             path = "/Notification/mailtemplates/";
@@ -139,7 +146,7 @@ namespace Percurrentis.NotificationCenter
         /// <param name="type">String that declares the type of notification</param>
         /// <param name="id">The id of the request (optional)</param>
         /// <returns>Mailmessage</returns>
-        public MailMessage createNotification(UserAC recipient, string type, TravelRequest tr)
+        public MailMessage createNotification(UserAC recipient, string type, TravelRequest tr, TravelProposal tp = null)
         {
             string fullpath = HostingEnvironment.ApplicationPhysicalPath + path + type + ".html";
             if (File.Exists(fullpath))
@@ -152,6 +159,10 @@ namespace Percurrentis.NotificationCenter
                 templateBody = templateBody.Replace("{name}", recipient.userName);
                 templateBody = templateBody.Replace("{detailLink}", baseUrl + "Request/" + tr.Hash);
                 templateBody = templateBody.Replace("{2}", baseUrl + "Itinerary/" + tr.Hash);
+                if (tp != null)
+                {
+                    templateBody = templateBody.Replace("{proposalLink}", baseUrl + "Proposal/" + tp.Id);
+                }
 
                 string supervisor = "";
 
@@ -248,8 +259,6 @@ namespace Percurrentis.NotificationCenter
         /// <returns>bool true when sent</returns>
         public bool Send(MailMessage mm)
         {
-            if (shutup == false)
-            {
                 if ((mm.Body).Equals("Template doesn't exist."))
                 {
                     string to = mm.To.ToString();
@@ -299,11 +308,6 @@ namespace Percurrentis.NotificationCenter
                         mm.Dispose();
                     }
                 }
-            }
-            else
-            {
-                return false;
-            }
         }
     }
 }
