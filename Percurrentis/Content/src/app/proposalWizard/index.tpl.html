@@ -19,10 +19,8 @@
                             <tr id="flight_{{ flight.Id }}" class="datarow" ng-repeat="flight in proposal.FlightRequests | filter: { ParentID: null, IsDeleted: false } | orderBy:'DepartureDate'" ng-model="flight">
 
                                 <td>Flight</td>
-                                <td>{{ flight.DepartureAddress.City }} to {{ flight.DestinationAddress.City }} <i class="fa fa-caret-down" ng-click="showBox = !showBox"></i>
-                                    <!--<span ng-if="showBox" class="infobox well" style="z-index: 100; position: fixed;">
-                                        <strong>FMC Number:</strong> {{ flight.FlyerMemberCard.FMCNumber }}<br />
-                                    </span>-->
+                                <td>{{ flight.DepartureAddress.City }} to {{ flight.DestinationAddress.City }} </i>
+                                    
                                 </td>
                                 <td>{{ flight.DepartureDate|date:'EEEE, d MMMM yyyy, H:mm' }}</td>
                                 <td>

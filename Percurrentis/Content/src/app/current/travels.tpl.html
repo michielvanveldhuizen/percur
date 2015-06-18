@@ -1,57 +1,58 @@
 ﻿<div data-ng-controller="currentCtrl">
-    <div class="block">
-        <div class="block-title" ><h4>Current travels</h4></div>
-        <div ng-show="allRequests.length != 0" class="table">
-            <table class="table table-vcenter table-condensed table-striped">
-                <thead>
-                    <tr>
-                        <td>Travellers</td>
-                        <td ng-click="changeSorting('DepartureDate')">
-                            Departure Date
-                            <i class="fa fa-arrow-up" ng-if="sort.descending == false && sort.column == 'DepartureDate'"></i>
-                            <i class="fa fa-arrow-down" ng-if="sort.descending == true && sort.column == 'DepartureDate'"></i>
-                        </td>
-                        <td ng-click="changeSorting('ReturnDate')">
-                            Return Date
-                            <i class="fa fa-arrow-up" ng-if="sort.descending == false && sort.column == 'ReturnDate'"></i>
-                            <i class="fa fa-arrow-down" ng-if="sort.descending == true && sort.column == 'ReturnDate'"></i>
-                        </td>
-                        <td>Location</td>
-                        <td></td>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr ng-repeat="request in allRequests | orderBy:sort.column:sort.descending">
-                        <td>
-                            <span ng-repeat="traveller in request.RequestTravellers">
-                                <span class="info-hover" tooltip="Phone: {{ traveller.PhoneNumberID }}">
-                                    {{ traveller.FullName }}<br />
+
+        <div class="block">
+            <div class="block-title"><h4>Current travels</h4></div>
+            <div ng-show="allRequests.length != 0" class="table">
+                <table class="table table-vcenter table-condensed table-striped">
+                    <thead>
+                        <tr>
+                            <td>Travellers</td>
+                            <td ng-click="changeSorting('DepartureDate')">
+                                Departure Date
+                                <i class="fa fa-arrow-up" ng-if="sort.descending == false && sort.column == 'DepartureDate'"></i>
+                                <i class="fa fa-arrow-down" ng-if="sort.descending == true && sort.column == 'DepartureDate'"></i>
+                            </td>
+                            <td ng-click="changeSorting('ReturnDate')">
+                                Return Date
+                                <i class="fa fa-arrow-up" ng-if="sort.descending == false && sort.column == 'ReturnDate'"></i>
+                                <i class="fa fa-arrow-down" ng-if="sort.descending == true && sort.column == 'ReturnDate'"></i>
+                            </td>
+                            <td>Location</td>
+                            <td></td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="request in allRequests | orderBy:sort.column:sort.descending">
+                            <td>
+                                <span ng-repeat="traveller in request.RequestTravellers">
+                                    <span class="info-hover" tooltip="Phone: {{ traveller.PhoneNumberID }}">
+                                        {{ traveller.FullName }}<br />
+                                    </span>
                                 </span>
-                            </span>
-                        </td>
-                        <td>{{ request.DepartureDate | date:'d MMMM yyyy' }}</td>
-                        <td>{{ request.ReturnDate | date:'d MMMM yyyy' }}</td>
-                        <td>
-                            {{ request.Country.Name }}
-                        </td>
-                        <td data-ng-click="go('/Itinerary/' + request.Hash)">
-                            <div class="btn-group btn-group-sm">
-                                <a href="#/Itinerary/{{request.Hash}}"
-                                   class="btn btn-sm btn-default">
-                                    <i class="fa fa-eye"></i>
-                                    View Itinerary
-                                </a>
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <div ng-show="allRequests.length == 0">
-            <div class="alert alert-info" role="alert">
-                There are currently no active travels.<br />
-                <br />
+                            </td>
+                            <td>{{ request.DepartureDate | date:'d MMMM yyyy' }}</td>
+                            <td>{{ request.ReturnDate | date:'d MMMM yyyy' }}</td>
+                            <td>
+                                {{ request.Country.Name }}
+                            </td>
+                            <td data-ng-click="go('/Itinerary/' + request.Hash)">
+                                <div class="btn-group btn-group-sm">
+                                    <a href="#/Itinerary/{{request.Hash}}"
+                                       class="btn btn-sm btn-default">
+                                        <i class="fa fa-eye"></i>
+                                        View Itinerary
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
-</div>
+            <div ng-show="allRequests.length == 0">
+                <div class="alert alert-info" role="alert">
+                    There are currently no active travels.<br />
+                    <br />
+                </div>
+            </div>
+        </div>
     </div>
-</div>

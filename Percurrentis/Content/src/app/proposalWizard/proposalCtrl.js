@@ -78,6 +78,9 @@
                 });
 
                 $scope.proposal.CreatedBy = currentUser;
+                $scope.proposal.inEditMode = true;
+                console.log("HAXXX");
+                console.log($scope.proposal.inEditMode);
 
                 travelRequestService.saveChanges(
                 $scope.proposal,
@@ -178,6 +181,9 @@
 
             $scope.proposal.IsApproved = 0;
             $scope.proposal.UpdatedBy = currentUser;
+            $scope.proposal.inEditMode = false;
+            console.log($scope.proposal.inEditMode);
+            
 
             // Open modal confirming save and do so when user accepts.
             modalService.open("Confirm ready?", "Are you sure you are done editing this proposal?",
@@ -185,6 +191,7 @@
                         travelRequestService.saveChanges($scope.proposal,
                                             undefined,
                                             function succes() {
+                                                // Send notification here
                                                 $location.path('/Proposal/');
                                             },
                                             function failure(error) {
@@ -215,7 +222,7 @@
         {
             // Check if editing mode is enabled already
             if (!$scope.currentlyAdding) {
-                 $scope.currentlyAdding = true;
+                $scope.currentlyAdding = true;
                 // Create copy entity of 'type' type
                 $scope.attach(type, $scope.proposal, request);
                 $scope.type = type;
@@ -434,7 +441,7 @@
                                   function () {
                                       // User wants to continue despite the empty fields.
                                       $scope.confirmCommit();
-                                      },
+                                  },
                                   function () {
                                       // Don't really need to do anything here. User cancelled the commit.
                                   },
@@ -489,7 +496,6 @@
                     $scope.supervisorName = employee.userName;
                 });
         });
-
 
         // Load all the addresses
         travelRequestService.getAddresses().then(function (query) {
@@ -739,6 +745,9 @@
             $scope.proposal.TravelRequest.IsFinal = true;
             $scope.proposal.UpdatedBy = currentUser;
             $scope.proposal.TravelRequest.UpdatedBy = currentUser;
+
+            // Insert notification logic
+            
 
             travelRequestService.saveChanges(
                 $scope.proposal,

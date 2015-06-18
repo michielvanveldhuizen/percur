@@ -510,6 +510,10 @@
     <Compile Include="Migrations\201506031219279_michsstuff.Designer.cs">
       <DependentUpon>201506031219279_michsstuff.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201506170715423_editMode.cs" />
+    <Compile Include="Migrations\201506170715423_editMode.Designer.cs">
+      <DependentUpon>201506170715423_editMode.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Context\DatabaseContext.cs" />
     <Compile Include="Notification\Notification.cs" />
@@ -520,6 +524,7 @@
     <Content Include="Content\src\app\calendar\calendar.tpl.html" />
     <Content Include="Content\src\app\calendar\calendarCtrl.js" />
     <Content Include="Content\src\app\calendar\calendarService.js" />
+    <Content Include="Content\src\app\current\blank.png" />
     <Content Include="Content\src\app\current\currentCtrl.js" />
     <Content Include="Content\src\app\current\travels.tpl.html" />
     <Content Include="Content\src\app\home\home.tpl.html" />
@@ -1486,6 +1491,7 @@
     <Content Include="Migrations\dbo_ApprovalRole.sql" />
     <Content Include="Migrations\dbo_Company.sql" />
     <Content Include="Migrations\dbo_ServiceCompanyType.sql" />
+    <Content Include="Notification\mailtemplates\TravelProposal waiting.html" />
     <Content Include="Notification\mailtemplates\Travelrequest approved.html" />
     <Content Include="Notification\mailtemplates\Travelrequest rejected.html" />
     <Content Include="Notification\mailtemplates\Travelrequest waiting.html" />
@@ -1741,6 +1747,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201506031219279_michsstuff.resx">
       <DependentUpon>201506031219279_michsstuff.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201506170715423_editMode.resx">
+      <DependentUpon>201506170715423_editMode.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

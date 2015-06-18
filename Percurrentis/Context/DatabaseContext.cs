@@ -212,11 +212,15 @@ namespace Percurrentis.Context
                         specEntity.OnBeforeInsert(AD.GetOwnGuid());
                     }
                 }
-                //TravelRequest
-                if (changedEntity.Entity is TravelProposal)
+                //TravelProposal
+                /*if (changedEntity.Entity is TravelProposal)
                 {
-                    Console.WriteLine("Proposal!");
-                }
+                    // New proposal
+                    var specEntity = changedEntity.Entity as TravelProposal;
+                    TravelRequest relatedTR = this.TravelRequest.Single(TravelRequest => TravelRequest.Id == specEntity.TravelRequestID);
+                    Notification.requestManagerApproval(relatedTR, "New TravelProposal");
+                }*/
+
                 //TravelRequest
                 if (changedEntity.Entity is TravelRequest)
                 {
@@ -229,6 +233,9 @@ namespace Percurrentis.Context
                     TRA.Flag = false;
                     TRA.HasApproved = 0;
 
+                    // Notify superior
+                    specEntity.Hash = String.Format("{0:X}", DateTime.Now.GetHashCode());
+                    Notification.requestManagerApproval(specEntity);
 
                     //get the country based on the CountryID
                     CountryInformation country = this.CountryInformation.Single(Country => Country.Id == specEntity.CountryID);
@@ -355,6 +362,21 @@ namespace Percurrentis.Context
                         specEntity.DeletedDate = DateTime.Now;
                         specEntity.DeletedBy = AD.GetOwnGuid();
                     }
+                }
+                //TravelRequest
+                if (changedEntity.Entity is TravelProposal)
+                {
+                    // send notification
+                    var specEntity = changedEntity.Entity as TravelProposal;
+                    if(!specEntity.inEditMode)
+                    {
+                        TravelRequest tr = this.TravelRequest.Single(
+                            TravelRequest => TravelRequest.Id == specEntity.TravelRequestID);
+                        CountryInformation country = this.CountryInformation.Single(Country => Country.Id == tr.CountryID);
+                        tr.Country = country;
+                        Notification.requestManagerApproval(specEntity, tr);
+                    }
+
                 }
                 //TravelRequestApproval
                 if (changedEntity.Entity is TravelRequestApproval)

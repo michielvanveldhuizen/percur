@@ -712,7 +712,8 @@
         function createTraveller() {
             return manager.createEntity('RequestTraveller')
         }
-        //Did you know that it doesn't matter what gender you are to get it cold on antarctica #theMoreYouBanana
+
+        //Did you know that it doesn't matter what gender you are to get it cold on antarctica #noAndIDontCareEither
         function removeCompanyFromTraveller(traveller) {
             if (traveller.Company && !traveller.Company.DefaultCompany) {
                 manager.detachEntity(traveller.Company);
