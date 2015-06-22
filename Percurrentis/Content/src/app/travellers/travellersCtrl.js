@@ -12,7 +12,6 @@
         //Search input text default value
         $scope.search = "Search by name...";
         
-
         travellerService.getDepartments()
         .then(function (departmentQuery) {
             var departments = departmentQuery.results;

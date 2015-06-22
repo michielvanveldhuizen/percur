@@ -326,32 +326,35 @@ namespace Percurrentis.AD_classes
         {
             List<UserAC> userList = new List<UserAC>();
 
-            FillUserDictonaryIfNeeded();
-
-
+            //Getting the domain as DirectoryEntry
             DirectoryEntry entry = GetDirectoryObject();
             DirectorySearcher search = new DirectorySearcher(entry);
+            //Search query string
             string query = "(&(objectCategory=person)(objectClass=user)(memberOf=*))";
             search.Filter = query;
             search.PropertiesToLoad.Add("memberOf");
             search.PropertiesToLoad.Add("name");
 
+            //Getting all that from the search query within the domain
             System.DirectoryServices.SearchResultCollection mySearchResultColl = search.FindAll();
-            Trace.WriteLine("Members of the "+groupName+" Group in the Domain");
+            
+            //Loops over all users
             foreach (SearchResult result in mySearchResultColl)
             {
+                //Look over all groups of a user
                 foreach (string prop in result.Properties["memberOf"])
                 {
+                    //If the group you search for is correct..
                     if (prop.Contains(groupName))
                     {
+                        //Create new user, set variables and add it to the list
                         UserAC userAC = new UserAC();
                         userAC = GetUserByName(result.Properties["name"][0].ToString());
-                        Trace.WriteLine(result.Properties["name"][0].ToString());
                         userList.Add(userAC);
                     }
                 }                
             }
-
+            //return the list
             return userList;
         }
     }
