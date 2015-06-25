@@ -35,7 +35,7 @@
                         <span class="label label-default" data-ng-show="request.IsFinal == true">Committed</span>
                     </li>
                     <li class="list-group-item"><strong>Purpose: </strong>{{ request.Purpose }}</li>
-                    <li class="list-group-item"><strong>Last update: </strong>{{ request.UpdatedDate | date: 'dd MMM yyyy H:mm' }} by {{ request.UpdatedBy }}</li> 
+                    <li class="list-group-item"><strong>Last update: </strong>{{ request.UpdatedDate | date: 'dd MMM yyyy H:mm' }}</li> 
                 </ul>
             </div>
         </div>
@@ -52,7 +52,6 @@
                         <td>Status</td>
                         <td>Reason</td>
                         <td>Last Change</td>
-                        <td>Manager</td>
                         <td></td>
                     </tr>
                 </thead>
@@ -64,7 +63,6 @@
                     </td>
                     <td>{{ tp.Reason != null ? tp.Reason : 'No reason was supplied.' }}</td>
                     <td>{{ tp.UpdatedDate | date:"dd/M/yyyy" }}</td>
-                    <td>{{ tp.UpdatedBy }}</td>
                     <td>
                         <button class="btn btn-sm btn-default alwaysvisible" data-ng-click="go('/Proposal/' + tp.Id)"><i class="fa fa-eye"></i> View</button>
                     </td>

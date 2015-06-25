@@ -212,15 +212,6 @@ namespace Percurrentis.Context
                         specEntity.OnBeforeInsert(AD.GetOwnGuid());
                     }
                 }
-                //TravelProposal
-                /*if (changedEntity.Entity is TravelProposal)
-                {
-                    // New proposal
-                    var specEntity = changedEntity.Entity as TravelProposal;
-                    TravelRequest relatedTR = this.TravelRequest.Single(TravelRequest => TravelRequest.Id == specEntity.TravelRequestID);
-                    Notification.requestManagerApproval(relatedTR, "New TravelProposal");
-                }*/
-
                 //TravelRequest
                 if (changedEntity.Entity is TravelRequest)
                 {
@@ -233,9 +224,7 @@ namespace Percurrentis.Context
                     TRA.Flag = false;
                     TRA.HasApproved = 0;
 
-                    // Notify superior
-                    specEntity.Hash = String.Format("{0:X}", DateTime.Now.GetHashCode());
-                    Notification.requestManagerApproval(specEntity);
+
 
                     //get the country based on the CountryID
                     CountryInformation country = this.CountryInformation.Single(Country => Country.Id == specEntity.CountryID);

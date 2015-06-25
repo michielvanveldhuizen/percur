@@ -156,7 +156,7 @@
                     return p.IsApproved === 0;
                 });
             });
-            return query.results;
+            return query.results[0];
         })
         .then(function (request) {
             return travelRequestService.getEmployeeByObjectGuid(request.SuperiorID);

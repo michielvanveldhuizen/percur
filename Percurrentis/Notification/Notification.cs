@@ -36,8 +36,6 @@ namespace Percurrentis.NotificationCenter
         /// <param name="tr"></param>
         public static void requestManagerApproval(TravelProposal tp, TravelRequest tr)
         {
-            // get superiorID from tp.TravelRequestID
-
             UserAC manager = AD.GetUserByGuid(tp.TravelRequest.SuperiorID);
             MailMessage m = mail.createNotification(manager, "Travelproposal waiting", tr, tp);
             mail.Send(m);

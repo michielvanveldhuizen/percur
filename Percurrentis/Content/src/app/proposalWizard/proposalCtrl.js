@@ -79,8 +79,6 @@
 
                 $scope.proposal.CreatedBy = currentUser;
                 $scope.proposal.inEditMode = true;
-                console.log("HAXXX");
-                console.log($scope.proposal.inEditMode);
 
                 travelRequestService.saveChanges(
                 $scope.proposal,
@@ -182,7 +180,6 @@
             $scope.proposal.IsApproved = 0;
             $scope.proposal.UpdatedBy = currentUser;
             $scope.proposal.inEditMode = false;
-            console.log($scope.proposal.inEditMode);
             
 
             // Open modal confirming save and do so when user accepts.
