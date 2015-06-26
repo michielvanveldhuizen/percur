@@ -473,8 +473,8 @@
 
         /* == Create Itinerary ========================================= */
         $scope.createItinerary = function (request) {
-            modalService.open("Convert to Itinerary",
-                              "This action will archive the travelrequest (cannot be undone!) and create an itinerary. Continue?",
+            modalService.open("Create Itinerary from this TravelRequest",
+                              "This action will create an itinerary based on the travelrequest. Continue?",
                               function succes()
                               {
                                   request.UpdatedBy = currentUser;

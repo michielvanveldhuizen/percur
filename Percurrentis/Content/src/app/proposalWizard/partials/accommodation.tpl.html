@@ -89,7 +89,7 @@
                        data-z-validate />
                 <input type="text"
                        class="form-control"
-                       data-typeahead="currencies.CurrencyCode as currencies.Name for currencies in currencies | filter:{Name:$viewValue} | limitTo:8"
+                       data-typeahead="currencies.CurrencyCode as currencies.CurrencyCode for currencies in currencies | filter:{CurrencyCode:$viewValue} | limitTo:8"
                        data-ng-model="currentEntity.SecondaryCurrency"
                        placeholder="Secondary Currency" />
             </div>

@@ -1119,8 +1119,8 @@
 
             var destination = manager.createEntity("Accommodation");
 
-            destination.Address = manager.createEntity("Address");
-            destination.Address.Id = source.Address.Id;
+            destination.Address = manager.createEntity('Address');
+            destination.AddressID = source.AddressID;
 
             destination.CheckInDate = source.CheckInDate;
             destination.CheckOutDate = source.CheckOutDate;

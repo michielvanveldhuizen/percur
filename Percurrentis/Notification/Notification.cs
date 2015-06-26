@@ -89,7 +89,7 @@ namespace Percurrentis.NotificationCenter
             smtp.UseDefaultCredentials = false;
             ///////////////////////////////////////
             // TODO MAIL
-            // EDIT THE ROW BELOW IN ORDER TO GET THE E-MAL FUNCTAIONALITY WORKING
+            // EDIT THE ROW BELOW IN ORDER TO GET THE E-MAIL FUNCTIONALITY WORKING
             ///////////////////////////////////////
             smtp.Credentials = new NetworkCredential("MichielvanVeldhuizen@csiweb.ro", "csimichielv");
             //smtp.Credentials = new NetworkCredential("michielv", "csimichielv");
@@ -267,7 +267,7 @@ namespace Percurrentis.NotificationCenter
                 {
                     try
                     {
-                        smtp.Send(mm);
+                        //smtp.Send(mm);
                         return true;
                     }
                     catch (SmtpFailedRecipientException ex)
@@ -285,7 +285,7 @@ namespace Percurrentis.NotificationCenter
                         {
                             // Retry sending mail after 3 seconds
                             Thread.Sleep(5000);
-                            smtp.Send(mm);
+                            //smtp.Send(mm);
                             return true;
                         }
                         else

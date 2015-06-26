@@ -31,6 +31,15 @@
                     copy.CopyOf = value.Id;
                     $scope.proposal.FlightRequests.push(copy);
                 });
+                $scope.initialAccoCount = $scope.itinerary.Accommodations.length;
+                angular.forEach($scope.itinerary.Accommodations, function (avalue, akey) {
+                    var copy = travelRequestService.copyAccommodation(avalue);
+                    copy.TravelProposalID = $scope.proposal.Id;
+                    copy.TravelRequestID = 0;
+                    copy.IsProposalItem = true;
+                    copy.CopyOf = avalue.Id;
+                    $scope.proposal.Accommodations.push(copy);
+                });
                 $scope.initialFerryCount = $scope.itinerary.FerryRequests.length;
                 angular.forEach($scope.itinerary.FerryRequests, function (fvalue, fkey) {
                     var copy = travelRequestService.copyFerry(fvalue);
@@ -57,15 +66,6 @@
                     copy.IsProposalItem = true;
                     copy.CopyOf = rvalue.Id;
                     $scope.proposal.RentalCarRequests.push(copy);
-                });
-                $scope.initialAccoCount = $scope.itinerary.Accommodations.length;
-                angular.forEach($scope.itinerary.Accommodations, function (avalue, akey) {
-                    var copy = travelRequestService.copyAccommodation(avalue);
-                    copy.TravelProposalID = $scope.proposal.Id;
-                    copy.TravelRequestID = 0;
-                    copy.IsProposalItem = true;
-                    copy.CopyOf = avalue.Id;
-                    $scope.proposal.Accommodations.push(copy);
                 });
                 $scope.initialTunnelCount = $scope.itinerary.EuroTunnelRequests.length;
                 angular.forEach($scope.itinerary.EuroTunnelRequests, function (evalue, ekey) {
@@ -742,9 +742,7 @@
             $scope.proposal.TravelRequest.IsFinal = true;
             $scope.proposal.UpdatedBy = currentUser;
             $scope.proposal.TravelRequest.UpdatedBy = currentUser;
-
-            // Insert notification logic
-            
+                        
 
             travelRequestService.saveChanges(
                 $scope.proposal,

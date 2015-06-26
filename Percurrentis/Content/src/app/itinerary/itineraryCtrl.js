@@ -173,7 +173,9 @@
         $scope.calcTotal = function () {
             var sum = 0;
             jQuery(".euro_cost").each(function () {
-                sum += jQuery(this).text();
+                var str = jQuery(this).text();
+                str = str.replace(/,/g, "");
+                sum += parseFloat(str, 10);
             });
             return sum;
         }
