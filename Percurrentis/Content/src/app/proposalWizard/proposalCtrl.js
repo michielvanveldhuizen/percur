@@ -505,18 +505,7 @@
         // Set selected item per group.
         $scope.select = function (iets, id) {
             if ($scope.proposal.IsApproved == '0') {
-                if (previous != null) {
-                    if (previous.Id != iets.Id) {
-                        iets.Chosen = true;
-                        previous.Chosen = false;
-                    }
-                }
-                else
-                {
-                    iets.Chosen = true;
-                    previous = iets;
-                }
-                
+                iets.Chosen = true;
                 iets.TravelRequestID = 0;
                 $scope.costs[iets.ParentID] = iets.Cost;
                 $scope.updateTotal();
@@ -748,8 +737,6 @@
                 $scope.proposal,
                 undefined,
                 function (result) {
-                    //console.log(result);
-                    //console.log("Saved");
                     $location.path("TravelAgency/#/Itinerary/");
                 },
                 function () {

@@ -3,6 +3,7 @@
     <div class="block">
         <div class="block-title">
             <h2><strong>Proposal</strong></h2>
+            {{ proposal.TravelRequestID }}
         </div>
         <!-- Start of basic proposal info -->
         <div class="row">
@@ -52,7 +53,6 @@
                     <div class="row option_row">
                         <div class="col-md-6">
                             <i class="check"></i>
-                            <input type="hidden" ng-model="fl.Chosen" />
                             {{ fl.DepartureAddress.City }} to {{ fl.DestinationAddress.City }}
                             <i ng-if="fl.Note != NULL" class="gi gi-comments" data-tooltip="{{ fl.Note }}"></i>
                         </div>
@@ -80,7 +80,6 @@
                     <div class="row option_row">
                         <div class="col-md-6">
                             <i class="check"></i>
-                            <input type="hidden" ng-model="fe.Chosen" />
                             {{ fe.DepartureAddress.AddressName }} to {{ fe.DestinationAddress.AddressName }}
                             <i ng-if="fe.Note != NULL" class="gi gi-comments" data-tooltip="{{ fe.Note }}"></i>
                         </div>
